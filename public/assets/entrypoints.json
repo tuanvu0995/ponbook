@@ -12,6 +12,11 @@
       "js": [
         "http://localhost:8080/assets/common.js"
       ]
+    },
+    "react-upload-form": {
+      "js": [
+        "http://localhost:8080/assets/react-upload-form.js"
+      ]
     }
   }
 }

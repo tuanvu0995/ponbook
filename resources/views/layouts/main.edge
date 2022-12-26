@@ -17,7 +17,9 @@
     @!section('body')
      
     @!section('footer')
-    
+    <script>
+      const BASE_URL = '{{ env('APP_DOMAIN') }}';
+    </script>
     <script src="{{ asset('assets/app.js') }}"></script>
     @!section('script-links')
     @!section('scripts')

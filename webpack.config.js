@@ -47,6 +47,7 @@ Encore.setPublicPath('/assets')
 */
 Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('common', './resources/js/common.js')
+Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -172,6 +173,11 @@ Encore.enableSassLoader()
 */
 Encore.enablePostCssLoader()
 // Encore.configureCssLoader(() => {})
+
+/**
+ * React loader
+ */
+Encore.enableReactPreset()
 
 /*
 |--------------------------------------------------------------------------

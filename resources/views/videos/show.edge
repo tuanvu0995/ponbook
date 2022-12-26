@@ -1,0 +1,65 @@
+@layout('layouts/main')
+@set('title', video.title)
+
+@section('body')
+<section class="section">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="{{ route("home") }}">Home</a></li>
+            <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.title }}</a></li>
+        </ul>
+    </nav>
+</section>
+<section class="mb-5">
+    <div class="container is-fluid">
+        <p class="subtitle">
+            {{ video.title}}
+          </p>
+        <div class="columns">
+            <div class="column is-8">
+                <img src="{{ env('APP_DOMAIN') }}/files/{{ video.image }}" alt="{{ video.title }}" />
+            </div>
+            <div class="column is-4">
+                <table class="table">
+                    <tr>
+                        <th>Code</th>
+                        <td>{{ video.code }}</td>
+                    </tr>
+                    <tr>
+                        <th>Release Date</th>
+                        <td>{{ video.releaseDate }}</td>
+                    </tr>
+                    <tr>
+                        <th>Duration</th>
+                        <td>{{ video.duration }} minutes</td>
+                    </tr>
+                    <tr>
+                        <th>Cast</th>
+                        <td><a href="/cast/{{ video.cast.uid }}">{{ video.cast.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Director</th>
+                        <td><a href="/director/{{ video.director.uid }}">{{ video.director.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Maker</th>
+                        <td><a href="/maker/{{ video.maker.uid }}">{{ video.maker.name }}</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mb-5">
+    <div class="container is-fluid">
+        <h3>Video images ({{ video.images.length }})</h3>
+        <div class="columns is-multiline">
+            @each(image in video.images)
+            <div class="column is-3">
+                <img src="{{ env('APP_DOMAIN') }}/files/{{ image }}" alt="{{ video.title }}" />
+            </div>
+            @end
+        </div>
+    </div>
+</section>
+@end

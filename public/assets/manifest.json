@@ -1,5 +1,6 @@
 {
   "assets/app.css": "http://localhost:8080/assets/app.css",
   "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/common.js": "http://localhost:8080/assets/common.js"
+  "assets/common.js": "http://localhost:8080/assets/common.js",
+  "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js"
 }

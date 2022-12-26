@@ -20,9 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view }) => {
-  return view.render('index')
-}).as('home')
+Route.get('/', 'HomeController.index').as('home')
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')
@@ -32,5 +30,15 @@ Route.group(() => {
   Route.post('/logout', 'Auth/LoginController.logout').as('logout')
 }).as('auth')
 
-Route.resource('videos', 'VideoController').as('videos').except(['edit'])
+Route.resource('videos', 'VideoController').as('videos').except(['edit', 'update', 'show'])
 Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit')
+Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
+Route.put('/videos/:uid', 'VideoController.update').as('videos.update')
+
+Route.get('files/:kind/:name', 'FileController.download').as('files:download').middleware('auth')
+
+Route.group(() => {
+  Route.post('/videos/:uid/image', 'VideoController.uploadImage').as('videos.uploadImage')
+})
+  .as('api')
+  .prefix('api')

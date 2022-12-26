@@ -34,6 +34,9 @@ export default class extends BaseSchema {
       table.integer('view_count').defaultTo(0)
       table.integer('comment_count').defaultTo(0)
 
+      table.boolean('is_draft').defaultTo(true)
+      table.boolean('is_published').defaultTo(false)
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

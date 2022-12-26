@@ -14,8 +14,18 @@
 </section>
 <section>
   <div class="container py-5">
-    <form action="{{ route("videos.store") }}" method="POST">
-      <div class="columns">
+    <form action="{{ route("videos.update", { uid: video.uid }) }}?_method=PUT" method="POST">
+      {{ csrfField() }}
+
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          @if(flashMessages.has('success'))
+            <div class="notification is-success">
+                <button class="delete"></button> {{ flashMessages.get('success') }}
+            </div>
+            @endif
+          </div>
+
         <div class="column is-6">
           <div class="field">
             <label class="label">Title</label>
@@ -40,24 +50,58 @@
           <div class="field">
             <label class="label">Release date</label>
             <div class="control">
-              <input class="input" type="text" placeholder="e.g. 2022-02-25" name="releaseDate">
+              <input class="input" type="text" placeholder="e.g. 2022-02-25" name="releaseDate" value="{{ video.releaseDate || "" }}">
             </div>
           </div>
           <div class="field">
             <label class="label">Duration</label>
             <div class="control">
-              <input class="input" type="text" placeholder="e.g. 120min" name="duration">
+              <input class="input" type="text" placeholder="e.g. 120min" name="duration" value="{{ video.duration || "" }}">
             </div>
           </div>
+
+          <div class="field">
+            <label class="label">Director</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="e.g. Tokuda" name="director" value="{{ video.director?.name || "" }}">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Maker</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="e.g. 120min" name="maker" value="{{ video.maker?.name || "" }}"> 
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Cast</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="e.g. Maria Ozawa" name="cast" value="{{ video.cast?.name || "" }}">
+            </div>
+          </div>
+
+          <div class="field" for="publish-video-checkbox">
+            <label  class="checkbox">
+              <input type="checkbox" id="publish-video-checkbox" name="isPublished"
+                @if(video.isPublished)
+                  checked
+                @endif
+                >
+              Publish this video
+            </label>
+          </div>
         </div>
-        <div class="column is-6"></div>
+        <div class="column is-6">
+          <div id="upload-form"></div>
+        </div>
         <div class="column is-12">
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-link">Dave</button>
+              <button class="button is-link">Save</button>
             </div>
             <div class="control">
-              <button class="button is-link is-light">Delete</button>
+              <button class="button is-dark">Delete</button>
             </div>
           </div>
         </div>
@@ -66,3 +110,11 @@
   </div>
 </section>
 @end
+
+@section('scripts')
+<script src="{{ asset('assets/react-upload-form.js') }}"></script>
+<script>
+  const videoData = JSON.parse(`{{{ stringify(video) }}}`)
+  renderUploadForm('upload-form')
+</script>
+@endsection

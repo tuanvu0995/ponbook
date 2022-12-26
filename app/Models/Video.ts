@@ -40,8 +40,19 @@ export default class Video extends BaseModel {
   @column()
   public image: string
 
-  @column()
-  public images: string
+  @column({
+    serialize: (value: string): string[] => {
+      try {
+        return JSON.parse(value)
+      } catch (error) {
+        return []
+      }
+    },
+    prepare: (value: string[]): string => {
+      return JSON.stringify(value)
+    },
+  })
+  public images: string[]
 
   @column()
   public video: string
@@ -59,7 +70,7 @@ export default class Video extends BaseModel {
   public releaseDate: string
 
   @column()
-  public duration: string
+  public duration: number
 
   @column()
   public rate: number
@@ -72,6 +83,12 @@ export default class Video extends BaseModel {
 
   @column()
   public commentCount: number
+
+  @column()
+  public isDraft: boolean
+
+  @column()
+  public isPublished: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
