@@ -1,0 +1,11 @@
+<nav class="pagination is-small" role="navigation" aria-label="pagination">
+    <a class="pagination-previous">Previous</a>
+    <a class="pagination-next">Next page</a>
+    <ul class="pagination-list">
+        @each(anchor in paginator.getUrlsForRange(1, paginator.lastPage))
+        <li>
+            <a class="pagination-link" aria-label="Goto page href="{{ anchor.url }}" {{ anchor.page }}">{{ anchor.page }}</a>
+        </li>
+        @endeach
+    </ul>
+</nav>

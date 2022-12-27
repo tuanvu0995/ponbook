@@ -31,14 +31,23 @@ Route.group(() => {
 }).as('auth')
 
 Route.resource('videos', 'VideoController').as('videos').except(['edit', 'update', 'show'])
-Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit')
+Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit').middleware('auth')
 Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
-Route.put('/videos/:uid', 'VideoController.update').as('videos.update')
+Route.put('/videos/:uid', 'VideoController.update').as('videos.update').middleware('auth')
 
-Route.get('files/:kind/:name', 'FileController.download').as('files:download').middleware('auth')
+Route.get('files/:kind/:name', 'FileController.download').as('files:download')
 
 Route.group(() => {
-  Route.post('/videos/:uid/image', 'VideoController.uploadImage').as('videos.uploadImage')
+  Route.get('/cast/:uid', 'ListController.cast').as('cast')
+  Route.get('/director/:uid', 'ListController.director').as('director')
+  Route.get('/maker/:uid', 'ListController.maker').as('maker')
+}).as('list')
+
+Route.group(() => {
+  Route.post('/videos/:uid/image', 'VideoController.uploadImage')
+    .as('videos.uploadImage')
+    .middleware('auth')
+  Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag').middleware('auth')
 })
   .as('api')
   .prefix('api')

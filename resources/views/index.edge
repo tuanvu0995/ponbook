@@ -4,33 +4,45 @@
 @section('body')
   <section class="hero is-warning">
     <div class="hero-body">
-      <p class="title is-3">
-        Popular videos
-      </p>
+      <h1 class="title is-3">
+        Home
+      </h1>
       <p class="subtitle">
         Subtitle
       </p>
     </div>
   </section>
   <section>
-    <div class="container py-5">
+    <div class="container is-fluid py-5">
+      <h2 class="title is-4">Popular videos</h1>
       <div class="columns is-multipline">
         @each(video in videos)
-          <div class="column is-3">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image is-4by3">
-                  <img src="{{ env("APP_DOMAIN") }}/files/{{ video.image }}" alt="{{ video.title }}">
-                </figure>
-              </div>
-              <div class="card-content">
-                <div class="content">
-                  <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link">{{ video.title }}</a>
-                  <br>
-                  <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                </div>
-              </div>
-            </div>
+          <div class="column is-2">
+            @!component('partials/videoItem', { video })
+          </div>
+        @end
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container is-fluid py-5">
+      <h2 class="title is-4">New release</h1>
+      <div class="columns is-multipline">
+        @each(video in videos)
+          <div class="column is-2">
+            @!component('partials/videoItem', { video })
+          </div>
+        @end
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container is-fluid py-5">
+      <h2 class="title is-4">Recently release</h1>
+      <div class="columns is-multipline">
+        @each(video in videos)
+          <div class="column is-2">
+            @!component('partials/videoItem', { video })
           </div>
         @end
       </div>

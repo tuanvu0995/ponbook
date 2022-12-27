@@ -2,5 +2,6 @@
   "assets/app.css": "http://localhost:8080/assets/app.css",
   "assets/app.js": "http://localhost:8080/assets/app.js",
   "assets/common.js": "http://localhost:8080/assets/common.js",
-  "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js"
+  "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
+  "assets/images/owl.video.play.png": "http://localhost:8080/assets/images/owl.video.play.7f01b071.png"
 }

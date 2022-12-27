@@ -6,6 +6,7 @@ import Maker from 'App/Models/Maker'
 import Video from 'App/Models/Video'
 import UpdateVideoValidator from 'App/Validators/UpdateVideoValidator'
 import { nanoid } from 'nanoid'
+import Tag from 'App/Models/Tag'
 
 export default class VideoController {
   public async index({ view }: HttpContextContract) {
@@ -61,7 +62,6 @@ export default class VideoController {
     }
 
     const body = await request.validate(UpdateVideoValidator)
-    console.log(body)
     video.merge({
       ...body,
       isPublished: body.isPublished === 'on',
@@ -141,6 +141,44 @@ export default class VideoController {
 
     return response.json({
       image: filename,
+    })
+  }
+
+  public async addTag({ request, response, params, view, session }: HttpContextContract) {
+    const video = await Video.query().where('uid', params.uid).first()
+    if (!video) {
+      return response.json({
+        error: 'Video not found',
+      })
+    }
+
+    const tagInput: string = request.input('tag')?.trim()
+
+    if (!tagInput) {
+      return response.json({
+        error: 'Tag is required',
+      })
+    }
+
+    let tag = await Tag.query().where('slug', tagInput).first()
+    if (!tag) {
+      tag = new Tag()
+      tag.name = tagInput
+      tag.slug = tagInput
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '')
+      await tag.save()
+      await video.related('tags').attach([tag.id])
+    } else {
+      if (!(await video.related('tags').query().where('id', tag.id).first())) {
+        await video.related('tags').attach([tag.id])
+      }
+    }
+
+    return response.json({
+      success: true,
+      data: tag,
     })
   }
 }

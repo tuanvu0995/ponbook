@@ -1,3 +1,4 @@
+import 'owl.carousel'
 import '../scss/app.scss'
 
 $(document).ready(function () {

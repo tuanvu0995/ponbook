@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-image">
+        <figure class="image">
+        <img src="{{ env("APP_DOMAIN") }}/files/{{ video.image }}" alt="{{ video.title }}">
+        </figure>
+    </div>
+    <div class="card-content">
+        <div class="content">
+        <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link" title="{{ video.title }}">{{ video.title }}</a>
+        <br>
+        @if(video.cast)
+        <a class="is-size-7 has-text-weight-bold" href="{{ route("list.cast", { uid: video.cast.uid }) }}">{{ video.cast.name }}</a>
+        <br>
+        @end
+        <time class="is-size-7" datetime="{{ video.releaseDate }}">{{ video.releaseDate }}</time>
+        </div>
+    </div>
+</div>

@@ -3,14 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="title" content="{{ title || "Ponbook" }}">
+    <meta name="description" content="{{ description || "Ponbook" }}">
     <title>{{ title || "Ponbook" }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
     <script src="{{ asset('assets/common.js') }}"></script>
     @!section('head')
   </head>
-  <body>
+  <body class="{{ bodyClass || '' }}">
 
     @include('partials/navbar')
 

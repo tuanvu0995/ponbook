@@ -5,6 +5,15 @@ export default class Tag extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public name: string
+
+  @column()
+  public slug: string
+
+  @column()
+  public description: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
