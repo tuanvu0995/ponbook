@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Drive from '@ioc:Adonis/Core/Drive'
 import Cast from 'App/Models/Cast'
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
@@ -23,6 +22,7 @@ export default class VideoController {
     await video.load('maker')
     await video.load('cast')
 
+    // @ts-ignore
     video.images = JSON.parse(video.images || '[]')
 
     return view.render('videos/show', { video })
@@ -104,7 +104,7 @@ export default class VideoController {
     return response.redirect().toRoute('videos.edit', { uid: video.uid })
   }
 
-  public async uploadImage({ request, response, params, view, session }: HttpContextContract) {
+  public async uploadImage({ request, response, params, view }: HttpContextContract) {
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
       return view.render('errors/not-found')
@@ -144,7 +144,7 @@ export default class VideoController {
     })
   }
 
-  public async addTag({ request, response, params, view, session }: HttpContextContract) {
+  public async addTag({ request, response, params }: HttpContextContract) {
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
       return response.json({

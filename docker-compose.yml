@@ -1,0 +1,55 @@
+version: '3.8'
+
+volumes:
+  postgres_volume:
+  redis_volume:
+  nginx_volume:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    volumes:
+      - nginx_volume:/data
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - adonis_app
+      - ucmapp
+
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+      - ./docker/config/postgres-dev-init.sql:/docker-entrypoint-initdb.d/init.sql # will setup dev database adonis_app for us
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+
+  redis:
+    container_name: redis
+    image: redis:6-alpine
+    volumes:
+      - redis_volume:/data
+    ports:
+      - 6379:6379
+
+  ponbook:
+    container_name: ponbook
+    image: tuanvu0995/ponbook:latest
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+    environment:
+      - PG_HOST=postgres
+      - REDIS_HOST=redis
+    volumes:
+      - /home/pi/filedata:/home/node/app/tmp
+    restart: always

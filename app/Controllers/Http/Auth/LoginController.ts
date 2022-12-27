@@ -2,7 +2,6 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
 import { isEmail } from 'App/utils/isEmail'
-import BadRequestException from 'App/Exceptions/BadRequestException'
 
 export default class LoginController {
   public async index({ view }: HttpContextContract) {
