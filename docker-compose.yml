@@ -16,8 +16,7 @@ services:
       - 80:80
     restart: always
     depends_on:
-      - adonis_app
-      - ucmapp
+      - ponbook
 
   postgres:
     container_name: postgres
