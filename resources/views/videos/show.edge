@@ -21,7 +21,7 @@
         </h1>
         <div class="columns">
             <div class="column is-8">
-                <img src="{{ env('APP_DOMAIN') }}/files/{{ video.image }}" alt="{{ video.title }}" />
+                <img src="{{ video.image }}" alt="{{ video.title }}" />
             </div>
             <div class="column is-5">
                 <table class="table">
@@ -86,9 +86,9 @@
     <div class="container is-fluid">
         <h3>Video images ({{ video.images.length }})</h3>
         <div class="owl-carousel owl-theme">
-            @each(image in video.images)
+            @each(image in video.imageUrls)
             <div>
-                <img src="{{ env('APP_DOMAIN') }}/files/{{ image }}" alt="{{ video.title }}" />
+                <img src="{{ image }}" alt="{{ video.title }}" />
             </div>
             @end
           </div>

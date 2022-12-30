@@ -71,6 +71,10 @@ export default class ListController {
 
     videos.baseUrl(`/director/${director.uid}`)
 
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
     return view.render('director', { director, videos, title, description })
   }
 
@@ -93,6 +97,10 @@ export default class ListController {
 
     videos.baseUrl(`/maker/${maker.uid}`)
 
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
     return view.render('maker', { maker, videos, title, description })
   }
 
@@ -114,6 +122,10 @@ export default class ListController {
     const description = `List of all the movies that ${tag.name} has been in`
 
     videos.baseUrl(`/tag/${tag.slug}`)
+
+    for (const video of videos) {
+      await video.preloadImages()
+    }
 
     return view.render('tag', { tag, videos, title, description })
   }

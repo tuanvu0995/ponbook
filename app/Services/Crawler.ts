@@ -123,15 +123,10 @@ export default class Crawler {
     const filename = `images/${Date.now()}-${nanoid()}.jpg`
     await Drive.put(filename, data)
     video.image = filename
-    if (typeof video.images === 'string') {
-      video.images = JSON.parse(video.images)
-    }
 
-    if (!Array.isArray(video.images)) {
-      video.images = []
-    }
-
-    video.images.push(filename)
+    const images = JSON.parse(video.images || '[]')
+    images.push(filename)
+    video.images = JSON.stringify(images)
 
     await video.save()
 

@@ -5,11 +5,13 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  computed,
   HasMany,
   hasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
+import Drive from '@ioc:Adonis/Core/Drive'
 import { nanoid } from 'nanoid'
 import Cast from './Cast'
 import Director from './Director'
@@ -40,19 +42,11 @@ export default class Video extends BaseModel {
   @column()
   public image: string
 
-  @column({
-    serialize: (value: string): string[] => {
-      try {
-        return JSON.parse(value)
-      } catch (error) {
-        return []
-      }
-    },
-    prepare: (value: string[]): string => {
-      return JSON.stringify(value)
-    },
-  })
-  public images: string[]
+  @column()
+  public images: string
+
+  @column()
+  public imageUrls?: string[]
 
   @column()
   public video: string
@@ -119,4 +113,21 @@ export default class Video extends BaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
+
+  @computed()
+  public get imageGalleries() {
+    return JSON.parse(this.images || '[]')
+  }
+
+  public async preloadImages({ includeGalleries = false } = {}) {
+    const mainImageUrl = await Drive.getSignedUrl(this.image)
+    this.image = mainImageUrl
+
+    if (includeGalleries) {
+      const images = await Promise.all(
+        this.imageGalleries.map((image) => Drive.getSignedUrl(image))
+      )
+      this.imageUrls = images
+    }
+  }
 }

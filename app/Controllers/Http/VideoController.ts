@@ -24,7 +24,7 @@ export default class VideoController {
     await video.load('tags')
 
     // @ts-ignore
-    video.images = JSON.parse(video.images || '[]')
+    await video.preloadImages({ includeGalleries: true })
 
     return view.render('videos/show', { video })
   }
@@ -96,7 +96,7 @@ export default class VideoController {
         cast.name = body.cast
         await cast.save()
       }
-      video.castId = cast.id
+      video.related('casts').attach([cast.id])
     }
 
     await video.save()
@@ -130,13 +130,9 @@ export default class VideoController {
       video.image = filename
     }
 
-    let images = video.images
-    if (typeof video.images === 'string') {
-      images = JSON.parse(video.images)
-    }
-
+    const images = JSON.parse(video.images || '[]')
     images.push(filename)
-    video.images = images
+    video.images = JSON.stringify(images)
 
     await video.save()
 
