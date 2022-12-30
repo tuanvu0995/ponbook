@@ -38,9 +38,12 @@ Route.put('/videos/:uid', 'VideoController.update').as('videos.update').middlewa
 Route.get('files/:kind/:name', 'FileController.download').as('files:download')
 
 Route.group(() => {
+  Route.get('/popular', 'ListController.popular').as('popular')
+  Route.get('/new-release', 'ListController.newRelease').as('newRelease')
   Route.get('/cast/:uid', 'ListController.cast').as('cast')
   Route.get('/director/:uid', 'ListController.director').as('director')
   Route.get('/maker/:uid', 'ListController.maker').as('maker')
+  Route.get('/tag/:slug', 'ListController.tags').as('tag')
 }).as('list')
 
 Route.group(() => {
@@ -51,3 +54,5 @@ Route.group(() => {
 })
   .as('api')
   .prefix('api')
+
+Route.post('crawler', 'CrawlerController.crawl').as('crawler')

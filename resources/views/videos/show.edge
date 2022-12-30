@@ -23,7 +23,7 @@
             <div class="column is-8">
                 <img src="{{ env('APP_DOMAIN') }}/files/{{ video.image }}" alt="{{ video.title }}" />
             </div>
-            <div class="column is-4">
+            <div class="column is-5">
                 <table class="table">
                     <tr>
                         <th class="has-text-right">Code</th>
@@ -39,15 +39,43 @@
                     </tr>
                     <tr>
                         <th  class="has-text-right">Cast</th>
-                        <td><a href="{{ route("list.cast", { uid: video.cast.uid }) }}">{{ video.cast.name }}</a></td>
+                        <td>
+                            @if(video.casts.length > 0)
+                            @each(cast in video.casts)
+                            <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>
+                            @end
+                            @else
+                            ---
+                            @end
+                        </td>
                     </tr>
                     <tr>
                         <th  class="has-text-right">Director</th>
-                        <td><a href="{{ route("list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a></td>
+                        <td>
+                            @if(video.director)
+                            <a href="{{ route("list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
+                            @else
+                            ---
+                            @end
+                        </td>
+                    </tr>
+                    <tr>
+                        <th  class="has-text-right">Tags</th>
+                        <td class="tags">
+                            @each(tag in video.tags)
+                            <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
+                            @end
+                        </td>
                     </tr>
                     <tr>
                         <th  class="has-text-right">Maker</th>
-                        <td><a href="{{ route("list.maker", { uid: video.maker.uid }) }}">{{ video.maker.name }}</a></td>
+                        <td>
+                            @if(video.maker)
+                            <a href="{{ route("list.maker", { uid: video.maker.uid }) }}">{{ video.maker.name }}</a>
+                            @else
+                            ---
+                            @end
+                        </td>
                     </tr>
                 </table>
             </div>

@@ -1,0 +1,8 @@
+.container.is-fluid {
+  max-width: 100%;
+
+  @include mobile {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

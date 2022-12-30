@@ -7,7 +7,10 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "dockerAttach": "docker exec -it adonis_app /bin/sh",
+    "dockerAttachRedis": "docker exec -it redis /bin/sh",
+    "dockerAttachPostgres": "docker exec -it postgres /bin/sh"
   },
   "eslintConfig": {
     "extends": [
@@ -77,6 +80,7 @@
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
     "@adonisjs/view": "^6.1.0",
+    "cheerio": "^1.0.0-rc.12",
     "luxon": "^3.1.1",
     "nanoid": "^3.3.4",
     "pg": "^8.8.0",

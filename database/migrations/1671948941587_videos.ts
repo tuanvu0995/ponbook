@@ -20,7 +20,6 @@ export default class extends BaseSchema {
       table.string('release_date').nullable()
       table.integer('duration').defaultTo(0)
 
-      table.integer('cast_id').unsigned().references('id').inTable('casts').onDelete('CASCADE')
       table
         .integer('director_id')
         .unsigned()

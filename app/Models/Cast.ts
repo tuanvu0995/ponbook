@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
 import Video from './Video'
 
@@ -31,8 +31,10 @@ export default class Cast extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Video)
-  public videos: HasMany<typeof Video>
+  @manyToMany(() => Video, {
+    pivotTable: 'video_casts',
+  })
+  public videos: ManyToMany<typeof Video>
 
   @beforeCreate()
   public static async generateUID(cast: Cast) {

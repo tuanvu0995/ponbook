@@ -64,9 +64,6 @@ export default class Video extends BaseModel {
   public makerId: number
 
   @column()
-  public castId: number
-
-  @column()
   public releaseDate: string
 
   @column()
@@ -104,8 +101,10 @@ export default class Video extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Cast)
-  public cast: BelongsTo<typeof Cast>
+  @manyToMany(() => Cast, {
+    pivotTable: 'video_casts',
+  })
+  public casts: ManyToMany<typeof Cast>
 
   @belongsTo(() => Director)
   public director: BelongsTo<typeof Director>

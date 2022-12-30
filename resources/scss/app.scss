@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import './variables.scss';
 @import '~bulma/bulma';
+@import "./responsive.scss";
 
 @import '~owl.carousel/dist/assets/owl.carousel.css';
 
@@ -111,12 +112,13 @@ main code {
   }
 }
 
-.card {
+.card.video-item__container {
   .card-content {
     padding: 6px;
   }
   .content {
     .content-title {
+      min-height: 2.5rem;
       font-size: 0.8rem;
       font-weight: bold;
       overflow: hidden;
@@ -127,9 +129,27 @@ main code {
       -webkit-box-orient: vertical;
     }
   }
+
+  .card-image {
+    .image {
+      position: relative;
+      width: 100%;
+    }
+
+    .image:after {
+      content: "";
+      display: block;
+      padding-bottom: 70%;
+    }
+
+    img {
+      position: absolute;
+      width: 100%;
+      height: auto;
+    }
+  }
 }
 .owl-carousel {
-  
   .owl-nav {
     position: absolute;
     top: -25px;
@@ -143,7 +163,8 @@ main code {
       }
     }
 
-    .owl-next.disabled, .owl-prev.disabled {
+    .owl-next.disabled,
+    .owl-prev.disabled {
       .slide-nav-button {
         color: #787878;
       }
@@ -151,11 +172,11 @@ main code {
   }
 }
 
-
 .video-show {
   .table {
     background-color: transparent;
-    th, td {
+    th,
+    td {
       border: none;
     }
   }

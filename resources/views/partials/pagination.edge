@@ -1,10 +1,25 @@
 <nav class="pagination is-small" role="navigation" aria-label="pagination">
-    <a class="pagination-previous">Previous</a>
-    <a class="pagination-next">Next page</a>
+    @if(paginator.getPreviousPageUrl())
+     <a class="pagination-previous" href="{{ paginator.getPreviousPageUrl() }}">Previous</a>
+    @else
+    <a class="pagination-previous is-disabled">Previous</a>
+    @end
+
+    @if(paginator.getNextPageUrl())
+    <a class="pagination-next" href="{{ paginator.getNextPageUrl() }}">Next page</a>
+    @else
+    <a class="pagination-next is-disabled"">Next page</a>
+    @end
+    
+    
     <ul class="pagination-list">
         @each(anchor in paginator.getUrlsForRange(1, paginator.lastPage))
         <li>
-            <a class="pagination-link" aria-label="Goto page href="{{ anchor.url }}" {{ anchor.page }}">{{ anchor.page }}</a>
+            @if(paginator.currentPage === anchor.page)
+            <a class="pagination-link is-current">{{ anchor.page }}</a>
+            @else
+            <a class="pagination-link" aria-label="Goto page {{ anchor.page }}" href="{{ anchor.url }}">{{ anchor.page }}</a>
+            @end
         </li>
         @endeach
     </ul>

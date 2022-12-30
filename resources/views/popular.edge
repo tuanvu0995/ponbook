@@ -1,20 +1,20 @@
 @layout('layouts/main')
-@set('bodyClass', "cast-show")
+@set('bodyClass', "director-show")
 
 @section('body')
 <section class="hero is-warning">
     <div class="hero-body">
       <h1 class="title is-3">
-        {{ cast.name }}
+        {{title}}
       </h1>
     </div>
   </section>
 <section>
     <div class="container is-fluid py-5">
-      <h2 class="title is-5">Collection of {{ cast.name }}</h1>
-      <div class="columns is-multiline">
+      <h2 class="title is-5">{{ description }}</h1>
+      <div class="columns is-multiline is-mobile">
         @each(video in videos)
-          <div class="column is-2">
+          <div class="column is-6-mobile is-5-tablet is-2-desktop">
             @!component('partials/videoItem', { video })
           </div>
         @end

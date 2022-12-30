@@ -65,7 +65,7 @@ const ReactUploadForm = () => {
 
       <form className="columns is-multiline">
         {images.map((image, index) => (
-          <div key={image + 'index'} className="column is-4 px-2 py-2 ">
+          <div key={image + 'index'} className="column is-5 px-2 py-2 ">
             <figure className="image is-square">
               <img src={`${BASE_URL}/files/${image}`} />
             </figure>

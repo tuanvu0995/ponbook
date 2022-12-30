@@ -20,7 +20,8 @@ export default class VideoController {
 
     await video.load('director')
     await video.load('maker')
-    await video.load('cast')
+    await video.load('casts')
+    await video.load('tags')
 
     // @ts-ignore
     video.images = JSON.parse(video.images || '[]')
@@ -50,7 +51,7 @@ export default class VideoController {
 
     await video.load('director')
     await video.load('maker')
-    await video.load('cast')
+    await video.load('casts')
 
     return view.render('videos/edit', { video })
   }
