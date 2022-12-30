@@ -62,7 +62,7 @@ export default class VideoController {
       return view.render('errors/not-found')
     }
 
-    const body = await request.validate(UpdateVideoValidator)
+    const { cast, ...body } = await request.validate(UpdateVideoValidator)
     video.merge({
       ...body,
       isPublished: body.isPublished === 'on',
@@ -89,14 +89,14 @@ export default class VideoController {
       video.makerId = maker.id
     }
 
-    if (body.cast) {
-      let cast = await Cast.query().where('name', body.cast).first()
-      if (!cast) {
-        cast = new Cast()
-        cast.name = body.cast
-        await cast.save()
+    if (cast) {
+      let castItem = await Cast.query().where('name', cast).first()
+      if (!castItem) {
+        castItem = new Cast()
+        castItem.name = cast
+        await castItem.save()
       }
-      video.related('casts').attach([cast.id])
+      video.related('casts').attach([castItem.id])
     }
 
     await video.save()

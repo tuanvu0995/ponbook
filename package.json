@@ -8,7 +8,7 @@
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
-    "dockerAttach": "docker exec -it adonis_app /bin/sh",
+    "dockerAttach": "docker exec -it ponbook /bin/sh",
     "dockerAttachRedis": "docker exec -it redis /bin/sh",
     "dockerAttachPostgres": "docker exec -it postgres /bin/sh"
   },
@@ -50,7 +50,7 @@
     "@types/proxy-addr": "^2.0.0",
     "@types/source-map-support": "^0.5.6",
     "adonis-preset-ts": "^2.1.0",
-    "axios": "^1.2.1",
+    
     "bulma": "^0.9.4",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
@@ -68,9 +68,7 @@
     "sass-loader": "^13.2.0",
     "typescript": "~4.6",
     "webpack": "^5.72",
-    "webpack-cli": "^4.9.1",
-    "youch": "^3.2.2",
-    "youch-terminal": "^2.1.5"
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "@adonisjs/auth": "^8.2.3",
@@ -81,13 +79,16 @@
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
     "@adonisjs/view": "^6.1.0",
+    "axios": "^1.2.1",
     "cheerio": "^1.0.0-rc.12",
     "luxon": "^3.1.1",
     "nanoid": "^3.3.4",
     "pg": "^8.8.0",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "youch": "^3.2.2",
+    "youch-terminal": "^2.1.5"
   },
   "browserslist": [
     "> 0.5%",

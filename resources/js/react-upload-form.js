@@ -13,7 +13,7 @@ const ReactUploadForm = () => {
   const [images, setImages] = useState([])
 
   useEffect(() => {
-    setImages(videoData.images)
+    setImages(videoData.imageGalleries)
   }, [])
 
   const onFileSelected = async () => {

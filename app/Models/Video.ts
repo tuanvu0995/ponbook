@@ -42,7 +42,9 @@ export default class Video extends BaseModel {
   @column()
   public image: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public images: string
 
   @column()

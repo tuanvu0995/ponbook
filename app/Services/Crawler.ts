@@ -13,7 +13,9 @@ export default class Crawler {
   constructor() {}
 
   public async crawl(url: string) {
-    const rsp = await axios.get(url, { headers: { 'Accept-Encoding': 'gzip,deflate,compress' } })
+    const rsp = await axios.get(url, {
+      headers: { 'Accept-Encoding': 'gzip,deflate,compress', 'User-Agent': 'Axios 1.2.1' },
+    })
 
     const $ = cheerio.load(rsp.data)
 

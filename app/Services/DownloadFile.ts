@@ -5,6 +5,7 @@ export default async function DownloadFile(url: string): Promise<any> {
     url,
     method: 'GET',
     responseType: 'arraybuffer',
+    headers: { 'User-Agent': 'Axios 1.2.1' },
   })
 
   return response.data
