@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Drive from '@ioc:Adonis/Core/Drive'
 import Cast from 'App/Models/Cast'
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
@@ -52,6 +53,8 @@ export default class VideoController {
     await video.load('director')
     await video.load('maker')
     await video.load('casts')
+
+    await video.preloadImages({ includeGalleries: true })
 
     return view.render('videos/edit', { video })
   }
@@ -112,20 +115,22 @@ export default class VideoController {
     }
 
     const image = request.file('image', {
-      size: '2mb',
+      size: '5mb',
       extnames: ['jpg', 'png', 'gif'],
     })
 
     if (!image) {
-      return
+      return response.json({ error: 'Image are required' })
     }
 
     if (!image.isValid) {
-      return image.errors
+      return response.json(image.errors)
     }
+
     const filename = `images/${Date.now()}-${nanoid()}.${image.extname}`
 
     await image.moveToDisk('./', { name: filename })
+
     if (!video.image) {
       video.image = filename
     }
@@ -137,7 +142,7 @@ export default class VideoController {
     await video.save()
 
     return response.json({
-      image: filename,
+      image: await Drive.getSignedUrl(filename),
     })
   }
 

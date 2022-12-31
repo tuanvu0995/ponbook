@@ -13,7 +13,7 @@ const ReactUploadForm = () => {
   const [images, setImages] = useState([])
 
   useEffect(() => {
-    setImages(videoData.imageGalleries)
+    setImages(videoData.image_urls)
   }, [])
 
   const onFileSelected = async () => {
@@ -67,7 +67,7 @@ const ReactUploadForm = () => {
         {images.map((image, index) => (
           <div key={image + 'index'} className="column is-5 px-2 py-2 ">
             <figure className="image is-square">
-              <img src={`${BASE_URL}/files/${image}`} />
+              <img src={image} />
             </figure>
           </div>
         ))}

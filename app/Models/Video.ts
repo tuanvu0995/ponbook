@@ -122,14 +122,16 @@ export default class Video extends BaseModel {
   }
 
   public async preloadImages({ includeGalleries = false } = {}) {
-    const mainImageUrl = await Drive.getSignedUrl(this.image)
-    this.image = mainImageUrl
+    if (this.image) {
+      const mainImageUrl = await Drive.getSignedUrl(this.image)
+      this.image = mainImageUrl
+    }
 
     if (includeGalleries) {
       const images = await Promise.all(
         this.imageGalleries.map((image) => Drive.getSignedUrl(image))
       )
-      this.imageUrls = images
+      this.imageUrls = images.map((image) => image)
     }
   }
 }

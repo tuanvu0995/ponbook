@@ -49,4 +49,6 @@ services:
     environment:
       - PG_HOST=postgres
       - REDIS_HOST=redis
+    volumes:
+      - ./tmp:/home/node/app/tmp
     restart: always
