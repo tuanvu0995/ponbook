@@ -1,6 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Drive from '@ioc:Adonis/Core/Drive'
-import Cast from 'App/Models/Cast'
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Video from 'App/Models/Video'
