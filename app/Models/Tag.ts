@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import slugify from 'limax'
+import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
 
 export default class Tag extends BaseModel {
@@ -25,4 +26,9 @@ export default class Tag extends BaseModel {
     pivotTable: 'video_tags',
   })
   public videos: ManyToMany<typeof Video>
+
+  @beforeCreate()
+  public static async generateSlug(tag: Tag) {
+    tag.slug = slugify(tag.name)
+  }
 }

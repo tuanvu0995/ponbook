@@ -15,6 +15,10 @@ export default class ListController {
 
     videos.baseUrl('/popular')
 
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
     return view.render('popular', { videos, title, description })
   }
 
@@ -26,6 +30,10 @@ export default class ListController {
     const description = 'List of video that have been recently released'
 
     videos.baseUrl('/new-release')
+
+    for (const video of videos) {
+      await video.preloadImages()
+    }
 
     return view.render('newRelease', { videos, title, description })
   }
@@ -48,6 +56,10 @@ export default class ListController {
     const description = `List of all the movies that ${cast.name} has been in`
 
     videos.baseUrl(`/cast/${cast.uid}`)
+
+    for (const video of videos) {
+      await video.preloadImages()
+    }
 
     return view.render('cast', { cast, videos, title, description })
   }

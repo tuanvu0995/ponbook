@@ -77,7 +77,14 @@
           <div class="field">
             <label class="label">Cast</label>
             <div class="control">
-              <input class="input" type="text" placeholder="e.g. Maria Ozawa" name="cast" value="{{ video.cast?.name || "" }}">
+              <input class="input" type="text" placeholder="e.g. Maria Ozawa" name="cast" value="{{ video.casts?.map(cast => cast.name).join(", ") || "" }}">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Tags</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="e.g. Blow, Solowork, Beautiful Girl" name="tag" value="{{ video.tags?.map(tag => tag.name).join(", ") || "" }}">
             </div>
           </div>
 

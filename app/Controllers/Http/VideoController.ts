@@ -53,6 +53,7 @@ export default class VideoController {
     await video.load('director')
     await video.load('maker')
     await video.load('casts')
+    await video.load('tags')
 
     await video.preloadImages({ includeGalleries: true })
 
@@ -65,7 +66,7 @@ export default class VideoController {
       return view.render('errors/not-found')
     }
 
-    const { cast, ...body } = await request.validate(UpdateVideoValidator)
+    const { cast, casts, tag, tags, ...body } = await request.validate(UpdateVideoValidator)
     video.merge({
       ...body,
       isPublished: body.isPublished === 'on',
@@ -92,17 +93,25 @@ export default class VideoController {
       video.makerId = maker.id
     }
 
-    if (cast) {
-      let castItem = await Cast.query().where('name', cast).first()
-      if (!castItem) {
-        castItem = new Cast()
-        castItem.name = cast
-        await castItem.save()
-      }
-      video.related('casts').attach([castItem.id])
+    if (typeof casts !== 'undefined') {
+      let castArray = casts.map((item) => item.trim())
+      await video.saveCasts(video, castArray)
     }
 
-    await video.save()
+    if (typeof cast !== 'undefined') {
+      let castArray = cast.split(',').map((item) => item.trim())
+      await video.saveCasts(video, castArray)
+    }
+
+    if (typeof tags !== 'undefined') {
+      let tagsArray = tags.map((item) => item.trim())
+      await video.saveTags(video, tagsArray)
+    }
+
+    if (typeof tag !== 'undefined') {
+      let tagsArray = tag.split(',').map((item) => item.trim())
+      await video.saveTags(video, tagsArray)
+    }
 
     session.flash('success', 'Video updated successfully')
     return response.redirect().toRoute('videos.edit', { uid: video.uid })

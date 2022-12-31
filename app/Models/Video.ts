@@ -134,4 +134,24 @@ export default class Video extends BaseModel {
       this.imageUrls = images.map((image) => image)
     }
   }
+
+  public async saveTags(video: Video, tags: string[]) {
+    const tagIds = await Promise.all(
+      tags.map(async (tag) => {
+        const tagModel = await Tag.firstOrCreate({ name: tag }, { name: tag })
+        return tagModel.id
+      })
+    )
+    await video.related('tags').sync(tagIds)
+  }
+
+  public async saveCasts(video: Video, casts: string[]) {
+    const castIds = await Promise.all(
+      casts.map(async (cast) => {
+        const castModel = await Cast.firstOrCreate({ name: cast }, { name: cast })
+        return castModel.id
+      })
+    )
+    await video.related('casts').sync(castIds)
+  }
 }
