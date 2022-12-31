@@ -8,6 +8,10 @@ const getUploadUrl = (uid) => {
   return `${UPLOAD_URL}/${uid}/image`
 }
 
+const deleteImageUrl = (uid) => {
+  return getUploadUrl(uid)
+}
+
 const ReactUploadForm = () => {
   const fileRef = React.useRef(null)
   const [images, setImages] = useState([])
@@ -36,6 +40,17 @@ const ReactUploadForm = () => {
       setImages([...images, rsp.data.image])
     } catch (err) {
       console.log('Error uploading file: ', err)
+    }
+  }
+
+  const deleteImage = async (image) => {
+    try {
+      await axios.delete(deleteImageUrl(videoData.uid), {
+        data: { image },
+      })
+      setImages(images.filter((img) => img !== image))
+    } catch (err) {
+      console.log('Error deleting file: ', err)
     }
   }
 
@@ -68,6 +83,7 @@ const ReactUploadForm = () => {
           <div key={image + 'index'} className="column is-5 px-2 py-2 ">
             <figure className="image is-square">
               <img src={image} />
+              <a class="delete is-small is-delete-top-right" onClick={() => deleteImage(image)}></a>
             </figure>
           </div>
         ))}

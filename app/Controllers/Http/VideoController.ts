@@ -183,4 +183,58 @@ export default class VideoController {
       data: tag,
     })
   }
+
+  public async delete({ request, view }: HttpContextContract) {
+    const uid = request.param('uid')
+    const video = await Video.query().where('uid', uid).first()
+    if (!video) {
+      return view.render('errors/not-found')
+    }
+    return view.render('videos/delete', { video })
+  }
+
+  public async destroy({ request, view, response }: HttpContextContract) {
+    const uid = request.param('uid')
+    const video = await Video.query().where('uid', uid).first()
+    if (!video) {
+      return view.render('errors/not-found')
+    }
+    await video.related('tags').detach()
+    await video.related('casts').detach()
+    await video.delete()
+
+    return response.redirect().toRoute('home')
+  }
+
+  public async deleteImage({ request, response }: HttpContextContract) {
+    const uid = request.param('uid')
+    const imagePath = request.input('image')
+    const video = await Video.query().where('uid', uid).first()
+    if (!video) {
+      return response.json({
+        error: 'Video not found',
+      })
+    }
+
+    if (imagePath.includes(video.image)) {
+      video.image = ''
+    }
+
+    let images = JSON.parse(video.images || '[]')
+
+    images = images.filter((image) => !imagePath.includes(image))
+    video.images = JSON.stringify(images)
+
+    await video.save()
+
+    try {
+      await Drive.delete(imagePath)
+    } catch (error) {
+      console.log('Error when delete image: ', error)
+    }
+
+    return response.json({
+      success: true,
+    })
+  }
 }

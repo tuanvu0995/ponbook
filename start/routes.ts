@@ -30,12 +30,14 @@ Route.group(() => {
   Route.post('/logout', 'Auth/LoginController.logout').as('logout')
 }).as('auth')
 
-Route.resource('videos', 'VideoController').as('videos').except(['edit', 'update', 'show'])
+Route.resource('videos', 'VideoController')
+  .as('videos')
+  .except(['edit', 'update', 'show', 'destroy'])
 Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit').middleware('auth')
 Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
 Route.put('/videos/:uid', 'VideoController.update').as('videos.update').middleware('auth')
-
-Route.get('files/:kind/:name', 'FileController.download').as('files:download')
+Route.get('videos/:uid/delete', 'VideoController.delete').as('videos.delete').middleware('auth')
+Route.delete('videos/:uid', 'VideoController.destroy').as('videos.destroy').middleware('auth')
 
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')
@@ -51,6 +53,9 @@ Route.group(() => {
     .as('videos.uploadImage')
     .middleware('auth')
   Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag').middleware('auth')
+  Route.delete('/videos/:uid/image', 'VideoController.deleteImage')
+    .as('videos.deleteImage')
+    .middleware('auth')
 })
   .as('api')
   .prefix('api')
