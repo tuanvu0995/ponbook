@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import { nanoid } from 'nanoid'
 
 export default class Comment extends BaseModel {
   @column({ isPrimary: true })
@@ -50,4 +51,9 @@ export default class Comment extends BaseModel {
 
   @belongsTo(() => Comment)
   public parent: BelongsTo<typeof Comment>
+
+  @beforeCreate()
+  public static async generateUid(comment: Comment) {
+    comment.uid = nanoid()
+  }
 }

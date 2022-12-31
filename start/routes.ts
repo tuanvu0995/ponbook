@@ -34,10 +34,13 @@ Route.group(() => {
 Route.resource('videos', 'VideoController')
   .as('videos')
   .except(['edit', 'update', 'show', 'destroy'])
+Route.post('/videos/:uid/comments', 'CommentController.store')
+  .as('videos.comments.store')
+  .middleware('auth')
 Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit').middleware('auth')
 Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
 Route.put('/videos/:uid', 'VideoController.update').as('videos.update').middleware('auth')
-Route.get('videos/:uid/delete', 'VideoController.delete').as('videos.delete').middleware('auth')
+Route.get('/videos/:uid/delete', 'VideoController.delete').as('videos.delete').middleware('auth')
 Route.delete('videos/:uid', 'VideoController.destroy').as('videos.destroy').middleware('auth')
 
 Route.group(() => {

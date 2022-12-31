@@ -1,0 +1,41 @@
+<section>
+    <div class="container is-fluid">
+        <h3 class="title is-5">Comments ({{ comments.length }})</h3>
+        @each(comment in comments)
+        @!component('partials/commentItem', { comment })
+        @end
+    </div>
+</section>
+
+<section>
+    <div class="container is-fluid py-5">
+        @!component('partials/pagination', { paginator: comments })
+    </div>
+</section>
+
+<section class="container is-fluid">
+    <div>
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <form action="{{ route("videos.comments.store", { uid: video.uid }) }}" method="POST">
+                    {{ csrfField() }}
+                    <div class="field">
+                        <p class="control">
+                            <textarea class="textarea" placeholder="Add a comment..." name="content"></textarea>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <button type="submit" class="button">Post comment</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,21 @@
+<article class="media">
+    <figure class="media-left">
+        <p class="image is-64x64">
+            <img src="https://bulma.io/images/placeholders/128x128.png">
+        </p>
+    </figure>
+    <div class="media-content">
+        <div class="content">
+            <p>
+                <strong>{{ comment.owner.username }}</strong>
+                @if(comment.owner.firstName && comment.owner.lastName)
+                    <small>{{ comment.owner.firstName }} {{ comment.owner.lastName }}</small>
+                @end
+                <br>
+                {{ safe(nl2br(comment.content)) }}
+                <br>
+                <small><a>Like</a> · <a>Reply</a> · {{ dateFromNow(comment.createdAt) }}</small>
+            </p>
+        </div>
+    </div>
+</article>

@@ -1,4 +1,5 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
+import { DateTime } from 'luxon'
 
 export default class AppProvider {
   constructor(protected app: ApplicationContract) {}
@@ -8,7 +9,10 @@ export default class AppProvider {
   }
 
   public async boot() {
-    // IoC container is ready
+    const View = await this.app.container.use('Adonis/Core/View')
+    View.global('dateFromNow', (value: DateTime) => {
+      return value.toRelative()
+    })
   }
 
   public async ready() {

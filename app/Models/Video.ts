@@ -125,12 +125,12 @@ export default class Video extends BaseModel {
     if (this.image) {
       const mainImageUrl = await Drive.getUrl(this.image)
 
-      this.image = mainImageUrl.replace('cdndev.ponbook.net/images', 'images')
+      this.image = mainImageUrl
     }
 
     if (includeGalleries) {
       const images = await Promise.all(this.imageGalleries.map((image) => Drive.getUrl(image)))
-      this.imageUrls = images.map((image) => image.replace('cdndev.ponbook.net/images', 'images'))
+      this.imageUrls = images.map((image) => image)
     }
   }
 

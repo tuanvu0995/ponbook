@@ -4,7 +4,6 @@ import { Readable } from 'stream'
 import Cast from 'App/Models/Cast'
 import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
-import { Ioc } from '@adonisjs/core/build/standalone'
 
 async function getVideos() {
   const videos = await Video.all()
@@ -42,7 +41,6 @@ async function getCasts() {
 export default async function SitemapGenerator() {
   const results = await Promise.all([getVideos(), getTags(), getCasts()])
   const urls = results.flat()
-  console.log(urls)
   const stream = new SitemapStream({ hostname: Env.get('APP_DOMAIN') })
 
   return streamToPromise(Readable.from(urls).pipe(stream)).then((data) => data.toString())

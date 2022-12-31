@@ -13,6 +13,7 @@ export default class VideoController {
   }
 
   public async show({ params, view }: HttpContextContract) {
+    const { page = 1, limit = 20 } = params
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
       return view.render('errors/not-found')
@@ -22,11 +23,14 @@ export default class VideoController {
     await video.load('maker')
     await video.load('casts')
     await video.load('tags')
+    const comments = await video.related('comments').query().preload('owner').paginate(page, limit)
+
+    comments.baseUrl('/videos/' + video.uid)
 
     // @ts-ignore
     await video.preloadImages({ includeGalleries: true })
 
-    return view.render('videos/show', { video })
+    return view.render('videos/show', { video, comments })
   }
 
   public async create({ response, auth }: HttpContextContract) {

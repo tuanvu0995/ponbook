@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.string('uid').notNullable().unique().index()
-      table.string('content').notNullable()
+      table.text('content').notNullable()
       table.integer('video_id').unsigned().references('id').inTable('videos').onDelete('CASCADE')
       table.integer('parent_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
       table.boolean('is_reply').defaultTo(false)
