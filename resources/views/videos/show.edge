@@ -16,7 +16,7 @@
 </section>
 <section class="mb-5">
     <div class="container is-fluid">
-        <h1 class="subtitle">
+        <h1 class="subtitle is-5">
             {{ video.title}}
         </h1>
         <div class="columns">
@@ -84,7 +84,7 @@
 </section>
 <section class="mb-5">
     <div class="container is-fluid">
-        <h3>Video images ({{ video.images.length }})</h3>
+        <h3>Video images ({{ video.imageGalleries.length }})</h3>
         <div class="owl-carousel owl-theme">
             @each(image in video.imageUrls)
             <div>

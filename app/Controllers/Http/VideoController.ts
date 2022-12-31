@@ -65,11 +65,14 @@ export default class VideoController {
       return view.render('errors/not-found')
     }
 
-    const { cast, casts, tag, tags, ...body } = await request.validate(UpdateVideoValidator)
+    const { cast, casts, tag, tags, published, ...body } = await request.validate(
+      UpdateVideoValidator
+    )
+    console.log(body, 'published', published)
     video.merge({
       ...body,
-      isPublished: body.isPublished === 'on',
-      isDraft: body.isPublished !== 'on',
+      isPublished: published === 'on',
+      isDraft: published !== 'on',
     })
 
     if (body.director) {
@@ -111,6 +114,8 @@ export default class VideoController {
       let tagsArray = tag.split(',').map((item) => item.trim())
       await video.saveTags(video, tagsArray)
     }
+
+    await video.save()
 
     session.flash('success', 'Video updated successfully')
     return response.redirect().toRoute('videos.edit', { uid: video.uid })
@@ -174,10 +179,6 @@ export default class VideoController {
     if (!tag) {
       tag = new Tag()
       tag.name = tagInput
-      tag.slug = tagInput
-        .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '')
       await tag.save()
       await video.related('tags').attach([tag.id])
     } else {

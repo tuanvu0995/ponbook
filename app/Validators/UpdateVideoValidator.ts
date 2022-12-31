@@ -35,7 +35,7 @@ export default class UpdateVideoValidator {
     maker: schema.string.optional(),
     releaseDate: schema.string.optional(),
     duration: schema.number.optional(),
-    isPublished: schema.enum.optional(['on', 'off'] as const),
+    published: schema.enum.optional(['on', 'off'] as const),
   })
 
   /**
