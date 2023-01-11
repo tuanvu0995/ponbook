@@ -20,7 +20,7 @@ async function getTags() {
   const tags = await Tag.all()
   return tags.map((tag) => {
     return {
-      url: `/tags/${tag.slug}`,
+      url: `/tag/${tag.slug}`,
       changefreq: 'daily',
       priority: 0.3,
     }
@@ -31,7 +31,7 @@ async function getCasts() {
   const casts = await Cast.all()
   return casts.map((cast) => {
     return {
-      url: `/casts/${cast.uid}`,
+      url: `/cast/${cast.uid}`,
       changefreq: 'daily',
       priority: 0.3,
     }
