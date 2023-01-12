@@ -126,7 +126,7 @@ export default class Crawler {
 
     const data = await DownloadFile('http:' + videoData.imageUrl)
     const filename = `images/${video.slug}-${nanoid()}.jpg`
-    await Drive.use('s3').put(filename, data)
+    await Drive.put(filename, data)
     console.log('Uploaded image', filename)
     video.image = filename
 
