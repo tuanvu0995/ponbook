@@ -37,6 +37,9 @@ export default class Video extends BaseModel {
   public title: string
 
   @column()
+  public slug: string
+
+  @column()
   public description: string
 
   @column()

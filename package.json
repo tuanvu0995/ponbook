@@ -87,6 +87,7 @@
     "nanoid": "^3.3.4",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
+    "simple-web-image": "^2.0.0",
     "sitemap": "^7.1.1",
     "source-map-support": "^0.5.21",
     "youch": "^3.2.2",

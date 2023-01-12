@@ -11,7 +11,12 @@ export default class extends BaseSchema {
       table.string('uid').notNullable().unique().index()
       table.text('content').notNullable()
       table.integer('video_id').unsigned().references('id').inTable('videos').onDelete('CASCADE')
-      table.integer('parent_id').unsigned().references('id').inTable('comments').onDelete('CASCADE')
+      table
+        .bigInteger('parent_id')
+        .unsigned()
+        .references('id')
+        .inTable('comments')
+        .onDelete('CASCADE')
       table.boolean('is_reply').defaultTo(false)
       table.boolean('is_approved').defaultTo(false)
       table.boolean('is_blocked').defaultTo(false)

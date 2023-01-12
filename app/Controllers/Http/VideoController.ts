@@ -6,6 +6,7 @@ import Video from 'App/Models/Video'
 import UpdateVideoValidator from 'App/Validators/UpdateVideoValidator'
 import { nanoid } from 'nanoid'
 import Tag from 'App/Models/Tag'
+import slugify from 'App/utils/slugify'
 
 export default class VideoController {
   public async index({ view }: HttpContextContract) {
@@ -40,6 +41,7 @@ export default class VideoController {
     if (!video) {
       video = new Video()
       video.title = 'Untitled video'
+      video.slug = slugify(video.title)
       video.userId = user.id
       await video.save()
     }
@@ -119,6 +121,21 @@ export default class VideoController {
       await video.saveTags(video, tagsArray)
     }
 
+    video.slug = slugify(video.title)
+
+    const newImages: string[] = []
+    if (video.$dirty.slug !== video.$original.slug) {
+      const images = JSON.parse(video.images || '[]')
+      for (const image of images) {
+        const newImageName = image.replace(video.$original.slug, video.slug)
+        await Drive.move(image, newImageName)
+        newImages.push(newImageName)
+      }
+
+      video.image = newImages[0]
+      video.images = JSON.stringify(newImages)
+    }
+
     await video.save()
 
     session.flash('success', 'Video updated successfully')
@@ -133,7 +150,7 @@ export default class VideoController {
 
     const image = request.file('image', {
       size: '5mb',
-      extnames: ['jpg', 'png', 'gif'],
+      extnames: ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'],
     })
 
     if (!image) {
@@ -144,7 +161,7 @@ export default class VideoController {
       return response.json(image.errors)
     }
 
-    const filename = `images/${Date.now()}-${nanoid()}.${image.extname}`
+    const filename = `images/${video.slug}-${nanoid()}.${image.extname}`
 
     await image.moveToDisk('./', { name: filename })
 

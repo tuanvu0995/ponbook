@@ -4,6 +4,7 @@ import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
+import slugify from 'App/utils/slugify'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { nanoid } from 'nanoid'
@@ -121,8 +122,10 @@ export default class Crawler {
       }
     }
 
+    video.slug = slugify(video.title)
+
     const data = await DownloadFile('http:' + videoData.imageUrl)
-    const filename = `images/${Date.now()}-${nanoid()}.jpg`
+    const filename = `images/${video.slug}-${nanoid()}.jpg`
     await Drive.use('s3').put(filename, data)
     console.log('Uploaded image', filename)
     video.image = filename

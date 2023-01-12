@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'HomeController.index').as('home')
 Route.get('/sitemap.xml', 'WebController.sitemap').as('sitemap')
+Route.get('/uploads/images/*', 'WebController.image').as('image')
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')
