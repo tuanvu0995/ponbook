@@ -7,7 +7,7 @@
 
 import Env from '@ioc:Adonis/Core/Env'
 import { driveConfig } from '@adonisjs/core/build/config'
-import Application from '@ioc:Adonis/Core/Application'
+// import Application from '@ioc:Adonis/Core/Application'
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ export default driveConfig({
       | files.
       |
       */
-      root: Application.tmpPath('uploads'),
+      root: '/home/vu/uploads',
 
       /*
       |--------------------------------------------------------------------------
