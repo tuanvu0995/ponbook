@@ -98,5 +98,9 @@
     "last 2 versions",
     "Firefox ESR",
     "not dead"
-  ]
+  ],
+  "main": "index.js",
+  "repository": "git@github.com:tuanvu0995/ponbook.git",
+  "author": "tuanvu0995 <tuanvu0995@gmail.com>",
+  "license": "MIT"
 }

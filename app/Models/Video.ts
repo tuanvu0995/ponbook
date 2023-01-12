@@ -43,6 +43,9 @@ export default class Video extends BaseModel {
   public description: string
 
   @column()
+  public cover: string
+
+  @column()
   public image: string
 
   @column({

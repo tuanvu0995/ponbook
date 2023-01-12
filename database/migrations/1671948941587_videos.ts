@@ -14,6 +14,7 @@ export default class extends BaseSchema {
       table.string('title').notNullable().defaultTo('')
       table.string('slug').notNullable().defaultTo('').index()
       table.string('description').nullable()
+      table.text('cover').nullable()
       table.text('image').nullable()
       table.text('video').nullable()
       table.text('images').nullable()

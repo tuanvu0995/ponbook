@@ -23,6 +23,7 @@ export default class Crawler {
     const title = $('#video_title > h3 > a').text()
 
     const imageUrl = $('#video_jacket_img').attr('src')
+    const coverUrl = imageUrl?.replace('pl.', 'ps.')
 
     const videoID = $('#video_id td.text').text().trim()
     const videoDate = $('#video_date td.text').text().trim()
@@ -55,6 +56,7 @@ export default class Crawler {
       casts: videoCasts,
       genres,
       imageUrl,
+      coverUrl,
     }
   }
 
@@ -129,6 +131,12 @@ export default class Crawler {
     await Drive.put(filename, data)
     console.log('Uploaded image', filename)
     video.image = filename
+
+    const coverData = await DownloadFile('http:' + videoData.coverUrl)
+    const coverFileName = `images/${video.slug}-${nanoid()}.jpg`
+    await Drive.put(coverFileName, coverData)
+    console.log('Uploaded image', coverFileName)
+    video.cover = coverFileName
 
     const images = JSON.parse(video.images || '[]')
     images.push(filename)
