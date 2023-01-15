@@ -17,8 +17,10 @@
         <li>
             @if(paginator.currentPage === anchor.page)
             <a class="pagination-link is-current">{{ anchor.page }}</a>
-            @else
+            @elseif(anchor.page === 1 || anchor.page + 3 < paginator.currentPage || anchor.page - 3 > paginator.currentPage)
             <a class="pagination-link" aria-label="Goto page {{ anchor.page }}" href="{{ anchor.url }}">{{ anchor.page }}</a>
+            @else
+            <span>...</span>
             @end
         </li>
         @endeach

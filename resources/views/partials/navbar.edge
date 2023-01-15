@@ -58,6 +58,11 @@
             <a class="navbar-item">
               Profile
             </a>
+            @can('ManagerPolicy.management')
+            <a class="navbar-item" href="{{ route('admin.dashboard') }}">
+              Admin Panel
+            </a>
+            @end
             <a class="navbar-item">
               Setting
             </a>

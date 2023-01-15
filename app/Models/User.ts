@@ -13,6 +13,7 @@ import {
 import { nanoid } from 'nanoid'
 import Activity from './Activity'
 import Group from './Group'
+import Policy from './Policy'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -97,4 +98,9 @@ export default class User extends BaseModel {
     pivotTable: 'user_groups',
   })
   public groups: ManyToMany<typeof Group>
+
+  @manyToMany(() => Policy, {
+    pivotTable: 'user_policies',
+  })
+  public policies: ManyToMany<typeof Policy>
 }

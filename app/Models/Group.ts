@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import generateUid from 'App/utils/generateUid'
 import User from './User'
+import Policy from './Policy'
 
 export default class Group extends BaseModel {
   @column({ isPrimary: true })
@@ -18,9 +19,6 @@ export default class Group extends BaseModel {
 
   @column()
   public description: string
-
-  @column()
-  public policies: string
 
   @column()
   public isDeleted: boolean
@@ -40,4 +38,9 @@ export default class Group extends BaseModel {
     pivotTable: 'user_groups',
   })
   public users: ManyToMany<typeof User>
+
+  @manyToMany(() => Policy, {
+    pivotTable: 'group_policies',
+  })
+  public policies: ManyToMany<typeof Policy>
 }

@@ -75,4 +75,5 @@ export const { actions } = Bouncer.before((user: User | null) => {
 */
 export const { policies } = Bouncer.registerPolicies({
   VideoPolicy: () => import('App/Policies/VideoPolicy'),
+  ManagerPolicy: () => import('App/Policies/ManagerPolicy'),
 })
