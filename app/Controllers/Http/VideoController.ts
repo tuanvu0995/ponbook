@@ -37,7 +37,7 @@ export default class VideoController {
   public async create({ response, auth }: HttpContextContract) {
     const user = await auth.authenticate()
 
-    let video = await Video.query().where('user_id', user.id).where('is_draft', true).first()
+    let video = await Video.query().where('user_id', user.id).where('is_published', false).first()
     if (!video) {
       video = new Video()
       video.title = 'Untitled video'

@@ -19,10 +19,9 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-
-Route.get('/', 'HomeController.index').as('home')
-Route.get('/sitemap.xml', 'WebController.sitemap').as('sitemap')
-Route.get('/uploads/images/*', 'WebController.image').as('image')
+import './routes/public'
+import './routes/admin'
+import './routes/user'
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')
@@ -31,38 +30,5 @@ Route.group(() => {
   Route.post('/register', 'Auth/RegisterController.register').as('post:register')
   Route.post('/logout', 'Auth/LoginController.logout').as('logout')
 }).as('auth')
-
-Route.resource('videos', 'VideoController')
-  .as('videos')
-  .except(['edit', 'update', 'show', 'destroy'])
-Route.post('/videos/:uid/comments', 'CommentController.store')
-  .as('videos.comments.store')
-  .middleware('auth')
-Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit').middleware('auth')
-Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
-Route.put('/videos/:uid', 'VideoController.update').as('videos.update').middleware('auth')
-Route.get('/videos/:uid/delete', 'VideoController.delete').as('videos.delete').middleware('auth')
-Route.delete('videos/:uid', 'VideoController.destroy').as('videos.destroy').middleware('auth')
-
-Route.group(() => {
-  Route.get('/popular', 'ListController.popular').as('popular')
-  Route.get('/new-release', 'ListController.newRelease').as('newRelease')
-  Route.get('/cast/:uid', 'ListController.cast').as('cast')
-  Route.get('/director/:uid', 'ListController.director').as('director')
-  Route.get('/maker/:uid', 'ListController.maker').as('maker')
-  Route.get('/tag/:slug', 'ListController.tags').as('tag')
-}).as('list')
-
-Route.group(() => {
-  Route.post('/videos/:uid/image', 'VideoController.uploadImage')
-    .as('videos.uploadImage')
-    .middleware('auth')
-  Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag').middleware('auth')
-  Route.delete('/videos/:uid/image', 'VideoController.deleteImage')
-    .as('videos.deleteImage')
-    .middleware('auth')
-})
-  .as('api')
-  .prefix('api')
 
 Route.post('crawler', 'CrawlerController.crawl').as('crawler')

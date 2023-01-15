@@ -1,0 +1,45 @@
+@layout('layouts/admin')
+@set('title', "Video management")
+
+@section('body')
+<section class="hero is-warning">
+    <div class="hero-body">
+        <h1 class="title is-3">
+            Video management
+        </h1>
+    </div>
+</section>
+<section>
+    <div class="container is-fluid py-5">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><abbr title="ID">UID</abbr></th>
+                        <th>Cover</th>
+                        <th>Title</th>
+                        <th><abbr title="CreatedAt">Created At</abbr></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @each(video in videos)
+                        <tr>
+                            <th>{{ video.uid }}</th>
+                            <td>
+                                <figure class="image is-48x48">
+                                    <img src="/uploads/{{ video.cover }}" style="height: 100%; width: auto">
+                                </figure>
+                            </td>
+                            <td>{{ video.title }}</td>
+                            <th>{{ video.createdAt }}</th>
+                        </tr>
+                        @end
+                    </tr>
+                </tbody>
+            </table>
+            @!component('partials/pagination', { paginator: videos })
+        </div>
+    </div>
+</section>
+@end

@@ -45,4 +45,5 @@ Server.middleware.register([
 Server.middleware.registerNamed({
   auth: () => import('App/Middleware/Auth'),
   guestOnly: () => import('App/Middleware/GuestOnly'),
+  role: () => import('App/Middleware/Role'),
 })

@@ -1,7 +1,18 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  beforeSave,
+  BaseModel,
+  beforeCreate,
+  hasMany,
+  HasMany,
+  manyToMany,
+  ManyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
+import Activity from './Activity'
+import Group from './Group'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -78,4 +89,12 @@ export default class User extends BaseModel {
   public static async generateUID(User: User) {
     User.uid = nanoid()
   }
+
+  @hasMany(() => Activity)
+  public activities: HasMany<typeof Activity>
+
+  @manyToMany(() => Group, {
+    pivotTable: 'user_groups',
+  })
+  public groups: ManyToMany<typeof Group>
 }

@@ -1,0 +1,41 @@
+@layout('layouts/admin')
+@set('title', "User management")
+
+@section('body')
+<section class="hero is-warning">
+    <div class="hero-body">
+        <h1 class="title is-3">
+            User management
+        </h1>
+    </div>
+</section>
+<section>
+    <div class="container is-fluid py-5">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><abbr title="ID">UID</abbr></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th><abbr title="CreatedAt">Created At</abbr></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @each(user in users)
+                    <tr>
+                        <th>{{ user.uid }}</th>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.accountStatus }}</td>
+                        <th>{{ user.createdAt }}</th>
+                    </tr>
+                    @end
+                </tbody>
+            </table>
+            @!component('partials/pagination', { paginator: users })
+        </div>
+    </div>
+</section>
+@end

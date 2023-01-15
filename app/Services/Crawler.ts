@@ -142,6 +142,8 @@ export default class Crawler {
     images.push(filename)
     video.images = JSON.stringify(images)
 
+    video.isPublished = true
+
     await video.save()
 
     return video
