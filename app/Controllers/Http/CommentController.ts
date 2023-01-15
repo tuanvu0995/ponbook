@@ -16,6 +16,7 @@ export default class CommentController {
     comment.content = content
     comment.userId = user.id
     comment.videoId = video.id
+    comment.attachmentImages = ''
     if (parentId) {
       comment.parentId = parentId
       comment.isReply = true
