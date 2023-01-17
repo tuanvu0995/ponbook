@@ -37,6 +37,7 @@ export default class VideoController {
       .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
       .whereIn('video_tags.tag_id', tagIds)
       .where('videos.id', '!=', video.id)
+      .groupBy('videos.id')
       .limit(6)
 
     return view.render('videos/show', { video, comments, relatedVideos })
