@@ -64,6 +64,11 @@ Encore.copyFiles({
   to: 'images/[path][name].[hash:8].[ext]',
 })
 
+Encore.copyFiles({
+  from: 'node_modules/quill/assets/icons',
+  to: 'images/[path][name].[hash:8].[ext]',
+})
+
 /*
 |--------------------------------------------------------------------------
 | Split shared code

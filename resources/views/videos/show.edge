@@ -142,5 +142,28 @@
         ]
       })
     });
+
+    var options = {
+        debug: 'info',
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'image', 'blockquote', 'code-block']
+            ]
+        },
+        placeholder: 'Enter your comment...',
+        theme: 'snow',
+    }
+
+    var editor = new Quill('#comment-editor', options)
+    quillImageHandler(editor, { videoId: {{ video.id }} })
+
+    const textarea = document.getElementById('comment-textarea')
+
+    editor.on('text-change', function(delta, oldDelta, source) {
+        textarea.value =editor.root.innerHTML
+    });
 </script>
 @end

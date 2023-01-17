@@ -22,9 +22,8 @@
             <form action="{{ route("videos.comments.store", { uid: video.uid }) }}" method="POST">
                 {{ csrfField() }}
                 <div class="field">
-                    <p class="control">
-                        <textarea class="textarea" placeholder="Add a comment..." name="content"></textarea>
-                    </p>
+                    @!component('partials/textEditor')
+                    <textarea id="comment-textarea" style="display: none" name="content"></textarea>
                 </div>
                 <div class="field">
                     <p class="control">

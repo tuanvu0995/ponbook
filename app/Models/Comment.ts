@@ -40,6 +40,9 @@ export default class Comment extends BaseModel {
   @column()
   public attachmentImages: string
 
+  @column()
+  public isDraft: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

@@ -14,6 +14,8 @@ Route.group(() => {
   Route.post('/videos/:uid/image', 'VideoController.uploadImage').as('videos.uploadImage')
   Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag')
   Route.delete('/videos/:uid/image', 'VideoController.deleteImage').as('videos.deleteImage')
+
+  Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
 })
   .as('api')
   .prefix('api')
