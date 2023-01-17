@@ -12,7 +12,17 @@ export default class CommentController {
     const user = await auth.authenticate()
 
     const { content, parentId } = request.all()
-    const comment = new Comment()
+
+    let comment = await Comment.query()
+      .where('video_id', video.id)
+      .where('user_id', user.id)
+      .where('is_draft', true)
+      .first()
+
+    if (!comment) {
+      comment = new Comment()
+    }
+
     comment.content = content
     comment.userId = user.id
     comment.videoId = video.id
@@ -21,6 +31,7 @@ export default class CommentController {
       comment.parentId = parentId
       comment.isReply = true
     }
+    comment.isDraft = false
     await comment.save()
 
     video.commentCount += 1

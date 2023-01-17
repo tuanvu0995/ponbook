@@ -42,7 +42,6 @@ export default class UploadsController {
         .where('user_id', user.id)
         .where('is_draft', true)
         .first()
-        console.log('relatedModel', relatedModel)
       if (!relatedModel) {
         relatedModel = await Comment.create({
           userId: user.id,

@@ -24,7 +24,12 @@ export default class VideoController {
     await video.load('maker')
     await video.load('casts')
     await video.load('tags')
-    const comments = await video.related('comments').query().preload('owner').paginate(page, limit)
+    const comments = await video
+      .related('comments')
+      .query()
+      .where('is_draft', false)
+      .preload('owner')
+      .paginate(page, limit)
 
     comments.baseUrl('/videos/' + video.uid)
 
