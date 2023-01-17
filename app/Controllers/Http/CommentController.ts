@@ -22,6 +22,10 @@ export default class CommentController {
       comment.isReply = true
     }
     await comment.save()
+
+    video.commentCount += 1
+    await video.save()
+
     console.log('comment saved')
     return response.redirect().back()
   }

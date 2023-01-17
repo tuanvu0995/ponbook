@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Collection from 'App/Models/Collection'
+import Video from 'App/Models/Video'
 
 export default class HomeController {
   public async index({ view }: HttpContextContract) {
@@ -14,6 +15,12 @@ export default class HomeController {
       }
     }
 
-    return view.render('index', { collections })
+    const newlyUpdatedVideos = await Video.query().orderBy('updated_at', 'desc').limit(12)
+    for (const video of newlyUpdatedVideos) {
+      await video.preloadImages()
+      await video.loadAggregate('comments', (query) => query.count('*').as('commentsCount'))
+    }
+
+    return view.render('index', { collections, newlyUpdatedVideos })
   }
 }
