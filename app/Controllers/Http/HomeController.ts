@@ -10,6 +10,7 @@ export default class HomeController {
     for (const collection of collections) {
       for (const video of collection.videos) {
         await video.preloadImages()
+        await video.loadAggregate('comments', (query) => query.count('*').as('commentsCount'))
       }
     }
 

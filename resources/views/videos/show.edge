@@ -48,7 +48,7 @@
                                     <td>
                                         @if(video.casts.length > 0)
                                         @each(cast in video.casts)
-                                        <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>
+                                        <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>&nbsp;&nbsp;
                                         @end
                                         @else
                                         ---

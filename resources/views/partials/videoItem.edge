@@ -13,13 +13,16 @@
     <div class="card-content">
         <div class="content">
             <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link" title="{{ video.title }}">{{ video.title }}</a>
-            <br>
             @if(video.cast)
             <a class="is-size-7 has-text-weight-bold" href="{{ route("list.cast", { uid: video.cast.uid }) }}">{{ video.cast.name }}</a>
-            <br>
             @end
-            <strong>{{ video.code }}</strong>
-            <time class="is-size-7" datetime="{{ video.releaseDate }}">{{ video.releaseDate }}</time>
+            <div class="video__info">
+                <strong>{{ video.code }}</strong>
+                @if(video.$extras.commentsCount)
+                <span class="is-size-7">{{ video.$extras.commentsCount }} comments</span>
+                @end
+            </div>
+            <time class="is-size-7" datetime="{{ video.releaseDate }}">Released {{ video.releaseDate }}</time>
         </div>
     </div>
 </div>

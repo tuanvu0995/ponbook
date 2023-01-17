@@ -3,8 +3,8 @@
   "assets/app.js": "http://localhost:8080/assets/app.js",
   "assets/common.js": "http://localhost:8080/assets/common.js",
   "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
+  "assets/images/logo.svg": "http://localhost:8080/assets/images/logo.80d62872.svg",
   "assets/images/owl.video.play.png": "http://localhost:8080/assets/images/owl.video.play.7f01b071.png",
   "assets/images/favicon.png": "http://localhost:8080/assets/images/favicon.68b41c23.png",
-  "assets/images/Icon.svg": "http://localhost:8080/assets/images/Icon.2b0e8e4e.svg",
-  "assets/images/logo.svg": "http://localhost:8080/assets/images/logo.80d62872.svg"
+  "assets/images/Icon.svg": "http://localhost:8080/assets/images/Icon.2b0e8e4e.svg"
 }
