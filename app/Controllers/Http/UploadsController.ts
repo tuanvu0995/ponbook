@@ -38,10 +38,11 @@ export default class UploadsController {
     let relatedModel: any = null
     if (type === 'comment') {
       relatedModel = await Comment.query()
-        .where('id', videoId)
+        .where('video_id', videoId)
         .where('user_id', user.id)
         .where('is_draft', true)
         .first()
+        console.log('relatedModel', relatedModel)
       if (!relatedModel) {
         relatedModel = await Comment.create({
           userId: user.id,
