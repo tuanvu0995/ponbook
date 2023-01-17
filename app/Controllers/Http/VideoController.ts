@@ -33,6 +33,7 @@ export default class VideoController {
 
     const tagIds = video.tags.map((tag) => tag.id)
     const relatedVideos = await Video.query()
+      .preload('casts')
       .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
       .whereIn('video_tags.tag_id', tagIds)
       .where('videos.id', '!=', video.id)
