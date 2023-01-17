@@ -47,9 +47,11 @@ export default class ListController {
   public async cast({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
     const { page = 1, limit = 30 } = request.qs()
+    console.log(uid)
     const cast = await Cast.query().where('uid', uid).first()
+    console.log(cast)
     if (!cast) {
-      return view.render('errors/404')
+      return view.render('errors/not-found')
     }
 
     const videos = await cast
@@ -75,7 +77,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const director = await Director.query().where('uid', uid).first()
     if (!director) {
-      return view.render('errors/404')
+      return view.render('errors/not-found')
     }
 
     const videos = await director
@@ -101,7 +103,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const maker = await Maker.query().where('uid', uid).first()
     if (!maker) {
-      return view.render('errors/404')
+      return view.render('errors/not-found')
     }
 
     const videos = await maker
@@ -127,7 +129,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const tag = await Tag.query().where('slug', slug).first()
     if (!tag) {
-      return view.render('errors/404')
+      return view.render('errors/not-found')
     }
 
     const videos = await tag
