@@ -9,93 +9,114 @@
         <nav class="breadcrumb py-5" aria-label="breadcrumbs">
             <ul>
                 <li><a href="{{ route("home") }}">Home</a></li>
-                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.title }}</a></li>
+                @if(video.casts.length > 0)
+                <li><a href="{{ route("list.cast", { uid: video.casts[0].uid }) }}">{{ video.casts[0].name }}</a></li>
+                @end
+                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
             </ul>
         </nav>
     </div>
 </section>
-<section class="mb-5">
+<section>
     <div class="container is-fluid">
-        <h1 class="subtitle is-5">
-            {{ video.title}}
-        </h1>
         <div class="columns">
-            <div class="column is-8">
-                <img src="{{ video.image }}" alt="{{ video.title }}" />
+            <div class="column is10">
+                <section class="mb-5">
+                    <div class="container is-fluid">
+                        <h1 class="subtitle is-5">
+                            {{ video.title}}
+                        </h1>
+                        <div class="columns">
+                            <div class="column is-8">
+                                <img src="{{ video.image }}" alt="{{ video.title }}" />
+                            </div>
+                            <div class="column is-4">
+                                <table class="table">
+                                    <tr>
+                                        <th class="has-text-right">Code</th>
+                                        <td>{{ video.code }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Release Date</th>
+                                        <td>{{ video.releaseDate }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Duration</th>
+                                        <td>{{ video.duration }} minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Cast</th>
+                                        <td>
+                                            @if(video.casts.length > 0)
+                                            @each(cast in video.casts)
+                                            <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>
+                                            @end
+                                            @else
+                                            ---
+                                            @end
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Director</th>
+                                        <td>
+                                            @if(video.director)
+                                            <a href="{{ route("list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
+                                            @else
+                                            ---
+                                            @end
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Tags</th>
+                                        <td>
+                                            <div class="tags">
+                                                @each(tag in video.tags)
+                                                <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
+                                                @end
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th  class="has-text-right">Maker</th>
+                                        <td>
+                                            @if(video.maker)
+                                            <a href="{{ route("list.maker", { uid: video.maker.uid }) }}">{{ video.maker.name }}</a>
+                                            @else
+                                            ---
+                                            @end
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="mb-5">
+                    <div class="container is-fluid">
+                        <h3 class="title is-5">Video images ({{ video.imageGalleries.length }})</h3>
+                        <div class="owl-carousel owl-theme">
+                            @each(image in video.imageUrls)
+                            <div>
+                                <img src="{{ image }}" alt="{{ video.title }}" />
+                            </div>
+                            @end
+                          </div>
+                    </div>
+                </section>
+                @include('videos/comment')
             </div>
-            <div class="column is-5">
-                <table class="table">
-                    <tr>
-                        <th class="has-text-right">Code</th>
-                        <td>{{ video.code }}</td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Release Date</th>
-                        <td>{{ video.releaseDate }}</td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Duration</th>
-                        <td>{{ video.duration }} minutes</td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Cast</th>
-                        <td>
-                            @if(video.casts.length > 0)
-                            @each(cast in video.casts)
-                            <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>
-                            @end
-                            @else
-                            ---
-                            @end
-                        </td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Director</th>
-                        <td>
-                            @if(video.director)
-                            <a href="{{ route("list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
-                            @else
-                            ---
-                            @end
-                        </td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Tags</th>
-                        <td class="tags">
-                            @each(tag in video.tags)
-                            <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
-                            @end
-                        </td>
-                    </tr>
-                    <tr>
-                        <th  class="has-text-right">Maker</th>
-                        <td>
-                            @if(video.maker)
-                            <a href="{{ route("list.maker", { uid: video.maker.uid }) }}">{{ video.maker.name }}</a>
-                            @else
-                            ---
-                            @end
-                        </td>
-                    </tr>
-                </table>
+            <div class="column is-2">
+                <h2 class="is-title is-3">Related videos</h3>
+                <div>
+                    @each(video in relatedVideos)
+                    @!component('partials/videoItem', { video, isTransparent: true })
+                    @end
+                </div>
             </div>
         </div>
     </div>
 </section>
-<section class="mb-5">
-    <div class="container is-fluid">
-        <h3 class="title is-5">Video images ({{ video.imageGalleries.length }})</h3>
-        <div class="owl-carousel owl-theme">
-            @each(image in video.imageUrls)
-            <div>
-                <img src="{{ image }}" alt="{{ video.title }}" />
-            </div>
-            @end
-          </div>
-    </div>
-</section>
 
-@include('videos/comment')
 @end
 
 @section('scripts')

@@ -1,4 +1,8 @@
-<div class="card video-item__container">
+<div class="card video-item__container"
+    @if(isTransparent)
+    style="background-color: transparent; box-shadow: none;"
+    @end
+    >
     <div class="card-image">
         <figure class="image">
             <div class="inner-image">
@@ -14,6 +18,7 @@
             <a class="is-size-7 has-text-weight-bold" href="{{ route("list.cast", { uid: video.cast.uid }) }}">{{ video.cast.name }}</a>
             <br>
             @end
+            <strong>{{ video.code }}</strong>
             <time class="is-size-7" datetime="{{ video.releaseDate }}">{{ video.releaseDate }}</time>
         </div>
     </div>
