@@ -17,7 +17,8 @@
   "preloads": [
     "./start/routes",
     "./start/kernel",
-    "./start/bouncer"
+    "./start/bouncer",
+    "./start/limiter"
   ],
   "providers": [
     "./providers/AppProvider",
@@ -28,7 +29,9 @@
     "@adonisjs/lucid",
     "@adonisjs/auth",
     "@adonisjs/drive-s3",
-    "@adonisjs/bouncer"
+    "@adonisjs/bouncer",
+    "@adonisjs/limiter",
+    "@adonisjs/redis"
   ],
   "metaFiles": [
     {

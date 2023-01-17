@@ -1,10 +1,10 @@
 {
-  "assets/app.css": "/assets/app.4199a01b.css",
-  "assets/app.js": "/assets/app.a66dfa2e.js",
-  "assets/common.js": "/assets/common.458cb0b8.js",
-  "assets/react-upload-form.js": "/assets/react-upload-form.c78c23de.js",
-  "assets/images/owl.video.play.png": "/assets/images/owl.video.play.7f01b071.png",
-  "assets/images/favicon.png": "/assets/images/favicon.68b41c23.png",
-  "assets/images/Icon.svg": "/assets/images/Icon.2b0e8e4e.svg",
-  "assets/images/logo.svg": "/assets/images/logo.e997650c.svg"
+  "assets/app.css": "http://localhost:8080/assets/app.css",
+  "assets/app.js": "http://localhost:8080/assets/app.js",
+  "assets/common.js": "http://localhost:8080/assets/common.js",
+  "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
+  "assets/images/owl.video.play.png": "http://localhost:8080/assets/images/owl.video.play.7f01b071.png",
+  "assets/images/favicon.png": "http://localhost:8080/assets/images/favicon.68b41c23.png",
+  "assets/images/Icon.svg": "http://localhost:8080/assets/images/Icon.2b0e8e4e.svg",
+  "assets/images/logo.svg": "http://localhost:8080/assets/images/logo.e997650c.svg"
 }
