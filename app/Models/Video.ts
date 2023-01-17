@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import {
   BaseModel,
   beforeCreate,
+  beforeFind,
   BelongsTo,
   belongsTo,
   column,
@@ -10,6 +11,7 @@ import {
   hasMany,
   ManyToMany,
   manyToMany,
+  ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
 import Drive from '@ioc:Adonis/Core/Drive'
 import { nanoid } from 'nanoid'
@@ -89,6 +91,9 @@ export default class Video extends BaseModel {
   @column()
   public isPublished: boolean
 
+  @column()
+  public isDeleted: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -125,6 +130,11 @@ export default class Video extends BaseModel {
   @computed()
   public get imageGalleries() {
     return JSON.parse(this.images || '[]')
+  }
+
+  @beforeFind()
+  public static where(query: ModelQueryBuilderContract<typeof Video>) {
+    query.where('is_deleted', false)
   }
 
   public async preloadImages({ includeGalleries = false } = {}) {

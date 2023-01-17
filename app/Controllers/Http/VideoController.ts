@@ -43,10 +43,11 @@ export default class VideoController {
   }
 
   public async create({ response, auth }: HttpContextContract) {
-    const user = await auth.authenticate()
+    const user = auth.user!
 
     let video = await Video.query().where('user_id', user.id).where('is_published', false).first()
-    if (!video) {
+    console.log(video)
+    if (!video || video.isPublished) {
       video = new Video()
       video.title = 'Untitled video'
       video.slug = slugify(video.title)
@@ -54,6 +55,7 @@ export default class VideoController {
       await video.save()
     }
 
+    console.log('video', video.uid)
     return response.redirect().toRoute('videos.edit', { uid: video.uid })
   }
 
@@ -82,7 +84,6 @@ export default class VideoController {
     const { cast, casts, tag, tags, published, ...body } = await request.validate(
       UpdateVideoValidator
     )
-    console.log(body, 'published', published)
     video.merge({
       ...body,
       isPublished: published === 'on',
@@ -136,7 +137,9 @@ export default class VideoController {
       const images = JSON.parse(video.images || '[]')
       for (const image of images) {
         const newImageName = image.replace(video.$original.slug, video.slug)
-        await Drive.move(image, newImageName)
+        if (newImageName !== image) {
+          await Drive.move(image, newImageName)
+        }
         newImages.push(newImageName)
       }
 
@@ -237,9 +240,8 @@ export default class VideoController {
     if (!video) {
       return view.render('errors/not-found')
     }
-    await video.related('tags').detach()
-    await video.related('casts').detach()
-    await video.delete()
+    video.isDeleted = true
+    await video.save()
 
     return response.redirect().toRoute('home')
   }
@@ -270,6 +272,40 @@ export default class VideoController {
     } catch (error) {
       console.log('Error when delete image: ', error)
     }
+
+    return response.json({
+      success: true,
+    })
+  }
+
+  public async setVideoImage({ request, response, auth }: HttpContextContract) {
+    const uid = request.param('uid')
+    const imagePath = request.input('image')
+    const toType = request.input('toType')
+
+    const user = auth.user!
+
+    if (!['cover', 'image'].includes(toType)) {
+      return response.badRequest("toType must be 'cover' or 'image'")
+    }
+
+    if (!imagePath) {
+      return response.badRequest('Image path is required')
+    }
+
+    const video = await Video.query().where('uid', uid).where('user_id', user.id).first()
+    if (!video) {
+      return response.json({
+        error: 'Video not found',
+      })
+    }
+    if (imagePath.startsWith('/uploads')) {
+      video[toType] = imagePath.replace('/uploads', '')
+    } else {
+      video[toType] = imagePath
+    }
+
+    await video.save()
 
     return response.json({
       success: true,

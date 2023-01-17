@@ -1,6 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
+  Route.resource('tests', 'TestsController')
   Route.get('/videos', 'VideoController.index').as('videos.index')
   Route.get('/videos/create', 'VideoController.create').as('videos.create')
   Route.post('/videos/:uid/comments', 'CommentController.store').as('videos.comments.store')
@@ -11,6 +12,7 @@ Route.group(() => {
 }).middleware('auth')
 
 Route.group(() => {
+  Route.put('/videos/:uid/image', 'VideoController.setVideoImage').as('videos.setVideoImage')
   Route.post('/videos/:uid/image', 'VideoController.uploadImage').as('videos.uploadImage')
   Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag')
   Route.delete('/videos/:uid/image', 'VideoController.deleteImage').as('videos.deleteImage')

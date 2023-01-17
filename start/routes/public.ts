@@ -3,7 +3,7 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', 'HomeController.index').as('home')
 Route.get('/sitemap.xml', 'WebController.sitemap').as('sitemap')
 Route.get('/uploads/images/*', 'WebController.image').as('image')
-Route.get('/videos/:uid', 'VideoController.show').as('videos.show')
+Route.get('/v/:uid', 'VideoController.show').as('videos.show')
 
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')

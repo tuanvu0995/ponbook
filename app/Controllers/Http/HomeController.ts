@@ -6,7 +6,9 @@ export default class HomeController {
   public async index({ view }: HttpContextContract) {
     const collections = await Collection.query()
       .where('is_deleted', false)
-      .preload('videos', (q) => q.orderBy('video_collections.order', 'asc').limit(12))
+      .preload('videos', (q) =>
+        q.where('is_published', true).orderBy('video_collections.order', 'asc').limit(12)
+      )
 
     for (const collection of collections) {
       for (const video of collection.videos) {
@@ -14,7 +16,10 @@ export default class HomeController {
       }
     }
 
-    const newlyUpdatedVideos = await Video.query().orderBy('updated_at', 'desc').limit(12)
+    const newlyUpdatedVideos = await Video.query()
+      .where('is_published', true)
+      .orderBy('updated_at', 'desc')
+      .limit(12)
     for (const video of newlyUpdatedVideos) {
       await video.preloadImages()
     }

@@ -4,8 +4,8 @@
 @import './responsive.scss';
 
 @import '~owl.carousel/dist/assets/owl.carousel.css';
-@import "~quill/dist/quill.core.css";
-@import "~quill/dist/quill.snow.css";
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
 
 html,
 body {
@@ -152,3 +152,40 @@ body {
   }
 }
 
+/** Upload image */
+.imageUpload__container {
+  .imageUpload__list {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+  }
+  .imageUpload__button {
+    height: 100px;
+    width: 100px;
+  }
+  .imageUpload__item {
+
+    img {
+      object-fit: cover;
+      width: auto;
+      height: 100%
+    }
+  }
+
+  .imageUpload__square {
+    position: relative;
+    width: 50%;
+    &::after {
+      content: '';
+      display: block;
+      padding-bottom: 100%;
+    }
+    .imageUpload__squareContent {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      
+    }
+  }
+}

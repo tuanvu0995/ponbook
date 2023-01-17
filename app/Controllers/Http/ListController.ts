@@ -8,7 +8,10 @@ import Video from 'App/Models/Video'
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
     const { page = 1, limit = 30 } = request.qs()
-    const videos = await Video.query().orderBy('id', 'desc').paginate(page, limit)
+    const videos = await Video.query()
+      .where('is_published', true)
+      .orderBy('id', 'desc')
+      .paginate(page, limit)
 
     const title = 'Popular Videos'
     const description = 'List of the most popular videos'
@@ -24,7 +27,10 @@ export default class ListController {
 
   public async newRelease({ request, view }: HttpContextContract) {
     const { page = 1, limit = 30 } = request.qs()
-    const videos = await Video.query().orderBy('release_date', 'desc').paginate(page, limit)
+    const videos = await Video.query()
+      .where('is_published', true)
+      .orderBy('release_date', 'desc')
+      .paginate(page, limit)
 
     const title = 'New Release Videos'
     const description = 'List of video that have been recently released'
