@@ -18,7 +18,8 @@
     "./start/routes",
     "./start/kernel",
     "./start/bouncer",
-    "./start/limiter"
+    "./start/limiter",
+    "./start/events"
   ],
   "providers": [
     "./providers/AppProvider",

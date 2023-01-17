@@ -11,14 +11,12 @@ export default class HomeController {
     for (const collection of collections) {
       for (const video of collection.videos) {
         await video.preloadImages()
-        await video.loadAggregate('comments', (query) => query.count('*').as('commentsCount'))
       }
     }
 
     const newlyUpdatedVideos = await Video.query().orderBy('updated_at', 'desc').limit(12)
     for (const video of newlyUpdatedVideos) {
       await video.preloadImages()
-      await video.loadAggregate('comments', (query) => query.count('*').as('commentsCount'))
     }
 
     return view.render('index', { collections, newlyUpdatedVideos })

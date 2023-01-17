@@ -18,8 +18,8 @@
             @end
             <div class="video__info">
                 <strong>{{ video.code }}</strong>
-                @if(video.$extras.commentsCount)
-                <span class="is-size-7">{{ video.$extras.commentsCount }} comments</span>
+                @if(video.commentCount)
+                <span class="is-size-7">{{ video.commentCount }} comments</span>
                 @end
             </div>
             <time class="is-size-7" datetime="{{ video.releaseDate }}">Released {{ video.releaseDate }}</time>
