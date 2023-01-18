@@ -17,8 +17,13 @@ export default class HomeController {
     }
 
     const newlyUpdatedVideos = await Video.query()
+      .innerJoin('comments', 'videos.id', 'comments.video_id')
       .where('is_published', true)
-      .orderBy('updated_at', 'desc')
+      .where('comments.is_blocked', false)
+      .where('comments.is_draft', false)
+      .groupBy('videos.id')
+      .orderBy('comments.created_at', 'desc')
+      .select('videos.*')
       .limit(12)
     for (const video of newlyUpdatedVideos) {
       await video.preloadImages()

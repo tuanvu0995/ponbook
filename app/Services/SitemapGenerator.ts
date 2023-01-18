@@ -9,7 +9,7 @@ async function getVideos() {
   const videos = await Video.all()
   return videos.map((video) => {
     return {
-      url: `/videos/${video.uid}`,
+      url: `/v/${video.uid}`,
       changefreq: 'daily',
       priority: 0.3,
     }
