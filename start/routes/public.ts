@@ -4,6 +4,8 @@ Route.get('/', 'HomeController.index').as('home')
 Route.get('/sitemap.xml', 'WebController.sitemap').as('sitemap')
 Route.get('/uploads/images/*', 'WebController.image').as('image')
 Route.get('/v/:uid', 'VideoController.show').as('videos.show')
+Route.post('/search', 'WebController.postSearch').as('web.postSearch')
+Route.get('/search/:searchId', 'WebController.search').as('web.search')
 
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')
