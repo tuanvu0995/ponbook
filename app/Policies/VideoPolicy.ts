@@ -10,7 +10,7 @@ export default class VideoPolicy extends BasePolicy {
   }
 
   public async viewList(user: User) {
-    return await user.hasPermission('umr:videos/read:*')
+    return await user?.hasPermission('umr:videos/read:*')
   }
   public async view(user: User, video: Video) {
     return user.id === video.userId || (await user.hasPermission('umr:videos/read:*'))
