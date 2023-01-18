@@ -71,6 +71,7 @@ export default class ListController {
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
       .orderBy('comments.created_at', 'desc')
+      .select('videos.*')
       .paginate(page, limit)
 
     const title = 'New Comments'
@@ -95,7 +96,7 @@ export default class ListController {
     const videos = await cast
       .related('videos')
       .query()
-      .orderBy('created_at', 'desc')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
     const title = cast.name
@@ -121,7 +122,7 @@ export default class ListController {
     const videos = await director
       .related('videos')
       .query()
-      .orderBy('created_at', 'desc')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
     const title = director.name
@@ -147,7 +148,7 @@ export default class ListController {
     const videos = await maker
       .related('videos')
       .query()
-      .orderBy('created_at', 'desc')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
     const title = maker.name
