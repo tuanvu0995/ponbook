@@ -12,8 +12,8 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
 import Activity from './Activity'
-import Group from './Group'
-import Policy from './Policy'
+import Permission from './Permission'
+import Role from './Role'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -94,13 +94,26 @@ export default class User extends BaseModel {
   @hasMany(() => Activity)
   public activities: HasMany<typeof Activity>
 
-  @manyToMany(() => Group, {
-    pivotTable: 'user_groups',
+  @manyToMany(() => Role, {
+    pivotTable: 'user_roles',
+    pivotTimestamps: true,
   })
-  public groups: ManyToMany<typeof Group>
+  public roles: ManyToMany<typeof Role>
 
-  @manyToMany(() => Policy, {
-    pivotTable: 'user_policies',
+  @manyToMany(() => Permission, {
+    pivotTable: 'user_permissions',
+    pivotTimestamps: true,
   })
-  public policies: ManyToMany<typeof Policy>
+  public permissions: ManyToMany<typeof Permission>
+
+  public async hasPermission(permission: string): Promise<boolean> {
+    const result = await Permission.query()
+      .innerJoin('user_permissions', 'permissions.id', 'user_permissions.permission_id')
+      .where('user_permissions.user_id', this.id)
+      .where('permissions.full_action', permission)
+      .where('user_permissions.allow', true)
+      .where('permissions.is_deleted', false)
+      .first()
+    return result ? true : false
+  }
 }

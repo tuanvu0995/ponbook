@@ -6,9 +6,7 @@
  */
 
 import Bouncer from '@ioc:Adonis/Addons/Bouncer'
-import Comment from 'App/Models/Comment'
 import User from 'App/Models/User'
-import Video from 'App/Models/Video'
 
 /*
 |--------------------------------------------------------------------------
@@ -37,18 +35,6 @@ export const { actions } = Bouncer.before((user: User | null) => {
     return true
   }
 })
-  .define('umr:video/update', (user: User, video: Video) => {
-    return user.id === video.userId
-  })
-  .define('umr:video/delete', (user: User, video: Video) => {
-    return user.id === video.userId
-  })
-  .define('umr:comment/update', (user: User, comment: Comment) => {
-    return user.id === comment.userId
-  })
-  .define('umr:comment/delete', (user: User, comment: Comment) => {
-    return user.id === comment.userId
-  })
 
 /*
 |--------------------------------------------------------------------------

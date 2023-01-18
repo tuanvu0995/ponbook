@@ -2,9 +2,9 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import generateUid from 'App/utils/generateUid'
 import User from './User'
-import Policy from './Policy'
+import Permission from './Permission'
 
-export default class Group extends BaseModel {
+export default class Role extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -30,17 +30,19 @@ export default class Group extends BaseModel {
   public updatedAt: DateTime
 
   @beforeCreate()
-  public static async generateUID(group: Group) {
-    group.uid = generateUid()
+  public static async generateUID(role: Role) {
+    role.uid = generateUid()
   }
 
   @manyToMany(() => User, {
-    pivotTable: 'user_groups',
+    pivotTable: 'user_roles',
+    pivotTimestamps: true,
   })
   public users: ManyToMany<typeof User>
 
-  @manyToMany(() => Policy, {
-    pivotTable: 'group_policies',
+  @manyToMany(() => Permission, {
+    pivotTable: 'role_permissions',
+    pivotTimestamps: true,
   })
-  public policies: ManyToMany<typeof Policy>
+  public permissions: ManyToMany<typeof Permission>
 }

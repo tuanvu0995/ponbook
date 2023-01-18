@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Policy extends BaseModel {
+export default class Permission extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -9,7 +9,16 @@ export default class Policy extends BaseModel {
   public name: string
 
   @column()
+  public resource: string
+
+  @column()
+  public scope: string
+
+  @column()
   public action: string
+
+  @column()
+  public fullAction: string
 
   @column()
   public isDeleted: boolean
