@@ -86,7 +86,7 @@ export default class UploadsController {
     video.description = body.description
     video.slug = body.slug
     video.userId = 1
-    video.save()
+    await video.save()
 
     if (body.director) {
       await video.saveDirector(video, body.director)
