@@ -2,20 +2,20 @@
   "entrypoints": {
     "app": {
       "css": [
-        "http://localhost:8080/assets/app.css"
+        "/assets/app.a03e5084.css"
       ],
       "js": [
-        "http://localhost:8080/assets/app.js"
+        "/assets/app.45129397.js"
       ]
     },
     "common": {
       "js": [
-        "http://localhost:8080/assets/common.js"
+        "/assets/common.c234a06e.js"
       ]
     },
     "react-upload-form": {
       "js": [
-        "http://localhost:8080/assets/react-upload-form.js"
+        "/assets/react-upload-form.c6e5ecc8.js"
       ]
     }
   }

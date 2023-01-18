@@ -44,12 +44,50 @@ export default class ListController {
     return view.render('newRelease', { videos, title, description })
   }
 
+  public async recent({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 30 } = request.qs()
+    const videos = await Video.query()
+      .where('is_published', true)
+      .orderBy('created_at', 'desc')
+      .paginate(page, limit)
+
+    const title = 'Recently Added Videos'
+    const description = 'List of video that have been added'
+
+    videos.baseUrl('/recent')
+
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
+    return view.render('recent', { videos, title, description })
+  }
+
+  public async newComments({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 30 } = request.qs()
+    const videos = await Video.query()
+      .innerJoin('comments', 'videos.id', 'comments.video_id')
+      .where('is_published', true)
+      .where('comments.is_blocked', false)
+      .where('comments.is_draft', false)
+      .orderBy('comments.created_at', 'desc')
+      .paginate(page, limit)
+
+    const title = 'New Comments'
+    const description = 'List of video that have new comments'
+
+    videos.baseUrl('/new-comments')
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
+    return view.render('recent', { videos, title, description })
+  }
+
   public async cast({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
     const { page = 1, limit = 30 } = request.qs()
-    console.log(uid)
     const cast = await Cast.query().where('uid', uid).first()
-    console.log(cast)
     if (!cast) {
       return view.render('errors/not-found')
     }
@@ -148,5 +186,17 @@ export default class ListController {
     }
 
     return view.render('tag', { tag, videos, title, description })
+  }
+
+  public async stars({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 30 } = request.qs()
+    const casts = await Cast.query().orderBy('name', 'asc').paginate(page, limit)
+
+    const title = 'Stars list'
+    const description = `List of all av actresses`
+
+    casts.baseUrl(`/stars`)
+
+    return view.render('stars', { casts, title, description })
   }
 }
