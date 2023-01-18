@@ -96,6 +96,20 @@
       @else
       <div class="navbar-end">
         <div class="navbar-item">
+          <form id="search-form" action="{{ route('web.postSearch') }}" method="POST">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input is-small" type="text" placeholder="Search videos" name="keyword">
+              </div>
+              <div class="control">
+                <a class="button is-primary is-small" onclick="document.getElementById('search-form').submit();">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="navbar-item">
           <div class="buttons">
             <a class="button is-primary is-small" href="{{ route("auth.register") }}">
               <strong>Sign up</strong>

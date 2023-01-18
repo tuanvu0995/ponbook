@@ -11,7 +11,7 @@
   </section>
 <section>
     <div class="container is-fluid py-5">
-      <h2 class="title is-5">Results of {{ videoFilter.key }}</h1>
+      <h2 class="title is-5">Results of {{ videoFilter.key }} ({{ videos.total }} videos)</h1>
       <div class="columns is-multiline">
         @each(video in videos)
           <div class="column is-2">
