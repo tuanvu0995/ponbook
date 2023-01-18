@@ -169,4 +169,24 @@ export default class Video extends BaseModel {
     )
     await video.related('casts').sync(castIds)
   }
+
+  public async saveDirector(video: Video, director: string) {
+    let d = await Director.query().where('name', director).first()
+    if (!d) {
+      d = new Director()
+      d.name = director
+      await d.save()
+    }
+    video.directorId = d.id
+  }
+
+  public async saveMaker(video: Video, maker: string) {
+    let m = await Maker.query().where('name', maker).first()
+    if (!m) {
+      m = new Maker()
+      m.name = maker
+      await m.save()
+    }
+    video.makerId = m.id
+  }
 }

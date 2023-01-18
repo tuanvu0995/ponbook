@@ -31,4 +31,6 @@ Route.group(() => {
   Route.post('/logout', 'Auth/LoginController.logout').as('logout')
 }).as('auth')
 
-Route.post('crawler', 'CrawlerController.crawl').as('crawler')
+Route.post('crawler', 'UploadsController.videoFromBot').as('crawler')
+Route.post('crawler/image', 'UploadsController.imageFromBot').as('crawler:image')
+
