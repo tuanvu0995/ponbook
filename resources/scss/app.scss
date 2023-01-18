@@ -16,6 +16,8 @@ body {
   font-weight: 400;
   color: #46444c;
   position: relative;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .columns {
