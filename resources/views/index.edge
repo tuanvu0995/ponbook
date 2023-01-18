@@ -15,26 +15,14 @@
   <section>
     <div class="container is-fluid py-5">
       <h2 class="title is-5">New updated</h1>
-      <div class="columns is-multiline">
-        @each(video in newlyUpdatedVideos)
-          <div class="column is-2">
-            @!component('partials/videoItem', { video })
-          </div>
-        @end
-      </div>
+      @!component('partials/videoList', { videos: newlyUpdatedVideos })
     </div>
   </section>
   @each(collection in collections)
   <section>
     <div class="container is-fluid py-5">
       <h2 class="title is-5">{{ collection.name }} videos</h1>
-      <div class="columns is-multiline">
-        @each(video in collection.videos)
-          <div class="column is-2">
-            @!component('partials/videoItem', { video })
-          </div>
-        @end
-      </div>
+      @!component('partials/videoList', { videos: collection.videos })
     </div>
   </section>
   @end

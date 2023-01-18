@@ -18,6 +18,12 @@ body {
   position: relative;
 }
 
+.columns {
+  .column {
+    display: inline-block;
+  }
+}
+
 .ReactUploadForm {
   padding: 8px;
 

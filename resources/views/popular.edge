@@ -12,13 +12,7 @@
 <section>
     <div class="container is-fluid py-5">
       <h2 class="title is-5">{{ description }}</h1>
-      <div class="columns is-multiline is-mobile">
-        @each(video in videos)
-          <div class="column is-6-mobile is-5-tablet is-2-desktop">
-            @!component('partials/videoItem', { video })
-          </div>
-        @end
-      </div>
+        @!component('partials/videoList', { videos: newlyUpdatedVideos })
     </div>
   </section>
   <section>
