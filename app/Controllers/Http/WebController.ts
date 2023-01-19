@@ -28,7 +28,7 @@ export default class WebController {
 
   public async postSearch({ request, response }: HttpContextContract) {
     const keyword = request.input('keyword')?.trim()
-    if (!keyword) return response.redirect().back()
+    if (!keyword || keyword.length <= 2) return response.redirect().back()
 
     const key = keyword.toLowerCase()
     const existsFilter = await VideoFilter.query().where('key', key).first()
