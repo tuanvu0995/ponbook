@@ -74,7 +74,8 @@ export default class ListController {
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
       .where('videos.is_deleted', false)
-      .orderBy('comments.created_at', 'desc')
+      .orderBy('videos.updated_at', 'desc')
+      .groupBy('videos.id')
       .select('videos.*')
       .paginate(page, limit)
 
