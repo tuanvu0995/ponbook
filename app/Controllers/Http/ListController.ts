@@ -183,7 +183,7 @@ export default class ListController {
       .related('videos')
       .query()
       .where('is_deleted', false)
-      .orderBy('created_at', 'desc')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
     const title = tag.name
