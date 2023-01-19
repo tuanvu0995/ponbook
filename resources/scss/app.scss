@@ -26,6 +26,13 @@ body {
   }
 }
 
+.navbar-link.is-arrowless {
+  padding-right: 0.75rem;
+  &::after {
+    border: 0px solid transparent;
+  }
+}
+
 .ReactUploadForm {
   padding: 8px;
 
@@ -160,6 +167,13 @@ body {
   }
 }
 
+.ql-container {
+  .ql-editor {
+    min-height: 120px;
+    max-height: 600px;
+  }
+}
+
 /** Upload image */
 .imageUpload__container {
   .imageUpload__list {
@@ -172,11 +186,10 @@ body {
     width: 100px;
   }
   .imageUpload__item {
-
     img {
       object-fit: cover;
       width: auto;
-      height: 100%
+      height: 100%;
     }
   }
 
@@ -192,8 +205,6 @@ body {
       position: absolute;
       width: 100%;
       height: 100%;
-
-      
     }
   }
 }

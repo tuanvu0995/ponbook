@@ -1,4 +1,5 @@
 import axios from 'axios'
+import dropdowns from './utils/dropdown'
 import 'owl.carousel'
 import '../scss/app.scss'
 
@@ -11,9 +12,8 @@ $(document).ready(function () {
     $('.navbar-menu').toggleClass('is-active')
   })
 
-  $('#user-dropdown-link').click(function () {
-    $('#user-dropdown').toggleClass('is-active')
-  })
+  dropdowns('.navbar-item.has-dropdown')
+  dropdowns('.dropdown')
 })
 
 function quillImageHandler(editor, options = {}) {

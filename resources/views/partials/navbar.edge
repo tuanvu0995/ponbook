@@ -63,12 +63,13 @@
         <div class="navbar-item">
           <a class="button is-primary is-small" href="{{ route("videos.create") }}">Add video</a>
         </div>
+        @include('partials.navbar-notification')
         <div id="user-dropdown" class="navbar-item has-dropdown">
           <a id="user-dropdown-link" class="navbar-link">
             <span>@</span>{{ auth.user.username }}
           </a>
   
-          <div class="navbar-dropdown is-right">
+          <div class="navbar-dropdown is-right is-boxed">
             <a class="navbar-item">
               Profile
             </a>

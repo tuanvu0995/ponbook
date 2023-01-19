@@ -4,6 +4,7 @@ import Comment from 'App/Models/Comment'
 import Video from 'App/Models/Video'
 import slugify from 'App/utils/slugify'
 import { nanoid } from 'nanoid'
+import VideoFilter from 'App/Models/VideoFilter'
 
 const ACCEPT_TYPES = ['comment', 'cover', 'main']
 
@@ -108,6 +109,8 @@ export default class UploadsController {
 
     await video.save()
 
+    await VideoFilter.newVideoAdded(video).then(() => console.log('Video filter indexed!'))
+
     return response.json({ success: true, videoId: video.id })
   }
 
@@ -151,5 +154,21 @@ export default class UploadsController {
     await video.save()
 
     return response.json({ imageSuccess: true })
+  }
+
+  public async codeExists({ request, response }: HttpContextContract) {
+    const token = request.input('token')
+    if (token !== Env.get('BOT_TOKEN')) {
+      return response.badRequest('Invalid token')
+    }
+    const code = request.input('code')
+
+    if (!code) {
+      return response.badRequest('Code is required')
+    }
+
+    const existsVideo = await Video.query().where('code', code).first()
+
+    return response.json({ exists: !!existsVideo })
   }
 }
