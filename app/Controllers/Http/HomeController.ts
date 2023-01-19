@@ -21,6 +21,7 @@ export default class HomeController {
       .where('is_published', true)
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
+      .where('videos.is_deleted', false)
       .groupBy('videos.id')
       .orderBy('comments.created_at', 'desc')
       .select('videos.*')

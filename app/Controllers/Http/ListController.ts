@@ -10,6 +10,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const videos = await Video.query()
       .where('is_published', true)
+      .where('is_deleted', false)
       .orderBy('id', 'desc')
       .paginate(page, limit)
 
@@ -29,6 +30,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const videos = await Video.query()
       .where('is_published', true)
+      .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
@@ -48,6 +50,7 @@ export default class ListController {
     const { page = 1, limit = 30 } = request.qs()
     const videos = await Video.query()
       .where('is_published', true)
+      .where('is_deleted', false)
       .orderBy('created_at', 'desc')
       .paginate(page, limit)
 
@@ -70,6 +73,7 @@ export default class ListController {
       .where('is_published', true)
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
+      .where('videos.is_deleted', false)
       .orderBy('comments.created_at', 'desc')
       .select('videos.*')
       .paginate(page, limit)
@@ -96,6 +100,7 @@ export default class ListController {
     const videos = await cast
       .related('videos')
       .query()
+      .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
@@ -122,6 +127,7 @@ export default class ListController {
     const videos = await director
       .related('videos')
       .query()
+      .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
@@ -148,6 +154,7 @@ export default class ListController {
     const videos = await maker
       .related('videos')
       .query()
+      .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
 
@@ -174,6 +181,7 @@ export default class ListController {
     const videos = await tag
       .related('videos')
       .query()
+      .where('is_deleted', false)
       .orderBy('created_at', 'desc')
       .paginate(page, limit)
 
