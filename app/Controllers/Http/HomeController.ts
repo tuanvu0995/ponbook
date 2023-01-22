@@ -4,13 +4,16 @@ import Video from 'App/Models/Video'
 
 export default class HomeController {
   public async index({ view }: HttpContextContract) {
-    const collections = await Collection.query()
-      .where('is_deleted', false)
-      .preload('videos', (q) =>
-        q.where('is_published', true).orderBy('video_collections.order', 'asc').limit(12)
-      )
+    const collections = await Collection.query().where('is_deleted', false)
 
     for (const collection of collections) {
+      await collection.load('videos', (query) =>
+        query
+          .where('is_published', true)
+          .where('is_deleted', false)
+          .orderBy('video_collections.order', 'asc')
+          .limit(12)
+      )
       for (const video of collection.videos) {
         await video.preloadImages()
       }
