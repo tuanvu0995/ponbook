@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Cast from 'App/Models/Cast'
+import Collection from 'App/Models/Collection'
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Tag from 'App/Models/Tag'
@@ -8,7 +9,10 @@ import Video from 'App/Models/Video'
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
     const { page = 1, limit = 30 } = request.qs()
-    const videos = await Video.query()
+    const popularCollection = await Collection.findByOrFail('slug', 'popular')
+    const videos = await popularCollection
+      .related('videos')
+      .query()
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('id', 'desc')
