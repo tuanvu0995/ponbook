@@ -15,11 +15,6 @@ export default class WebController {
     return response.send(sitemap)
   }
 
-  public async robot({ response }: HttpContextContract) {
-    response.header('Content-Type', 'text/plain')
-    return response.send(`User-agent: *\nDisallow: /`)
-  }
-
   public async image({ request, response }: HttpContextContract) {
     const location = `/images/${request.param('path')}`
 

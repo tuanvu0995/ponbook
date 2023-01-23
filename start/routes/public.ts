@@ -2,7 +2,6 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'HomeController.index').as('home')
 Route.get('/sitemap.xml', 'WebController.sitemap').as('sitemap')
-Route.get('/robot.txt', 'WebController.robot').as('robots')
 Route.get('/uploads/images/*', 'WebController.image').as('image')
 Route.get('/v/:uid', 'VideoController.show').as('videos.show')
 Route.post('/search', 'WebController.postSearch').as('web.postSearch')
