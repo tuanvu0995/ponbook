@@ -45,7 +45,13 @@ export default class VideoController {
       .groupBy('videos.id')
       .limit(6)
 
-    return view.render('videos/show', { video, comments, relatedVideos })
+    const keyword = [
+      video.code,
+      ...video.casts.map((cast) => cast.name),
+      ...video.tags.map((tag) => tag.name),
+    ].join(', ')
+
+    return view.render('videos/show', { video, comments, relatedVideos, keyword })
   }
 
   public async create({ response, auth }: HttpContextContract) {

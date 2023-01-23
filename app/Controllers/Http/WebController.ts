@@ -15,6 +15,11 @@ export default class WebController {
     return response.send(sitemap)
   }
 
+  public async robot({ response }: HttpContextContract) {
+    response.header('Content-Type', 'text/plain')
+    return response.send(`User-agent: *\nDisallow: /`)
+  }
+
   public async image({ request, response }: HttpContextContract) {
     const location = `/images/${request.param('path')}`
 
@@ -68,7 +73,8 @@ export default class WebController {
       .paginate(page, perPage)
 
     videos.baseUrl(`/search/${params.searchId}`)
+    const title = `Search: ${videoFilter.key}`
 
-    return view.render('search', { videos, videoFilter })
+    return view.render('search', { videos, videoFilter, title })
   }
 }

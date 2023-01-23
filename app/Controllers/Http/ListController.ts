@@ -27,7 +27,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('popular', { videos, title, description })
+    const keyword = 'popular porn videos'
+
+    return view.render('popular', { videos, title, description, keyword })
   }
 
   public async newRelease({ request, view }: HttpContextContract) {
@@ -47,7 +49,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('newRelease', { videos, title, description })
+    const keyword = 'New release porn videos'
+
+    return view.render('newRelease', { videos, title, description, keyword })
   }
 
   public async recent({ request, view }: HttpContextContract) {
@@ -67,7 +71,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('recent', { videos, title, description })
+    const keyword = 'Recently added videos'
+
+    return view.render('recent', { videos, title, description, keyword })
   }
 
   public async newComments({ request, view }: HttpContextContract) {
@@ -91,7 +97,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('recent', { videos, title, description })
+    const keyword = 'New comments'
+
+    return view.render('recent', { videos, title, description, keyword })
   }
 
   public async cast({ request, view }: HttpContextContract) {
@@ -118,7 +126,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('cast', { cast, videos, title, description })
+    const keyword = cast.name
+
+    return view.render('cast', { cast, videos, title, description, keyword })
   }
 
   public async director({ request, view }: HttpContextContract) {
@@ -145,7 +155,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('director', { director, videos, title, description })
+    const keyword = director.name
+
+    return view.render('director', { director, videos, title, description, keyword })
   }
 
   public async maker({ request, view }: HttpContextContract) {
@@ -172,7 +184,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('maker', { maker, videos, title, description })
+    const keyword = maker.name
+
+    return view.render('maker', { maker, videos, title, description, keyword })
   }
 
   public async tags({ request, view }: HttpContextContract) {
@@ -199,7 +213,9 @@ export default class ListController {
       await video.preloadImages()
     }
 
-    return view.render('tag', { tag, videos, title, description })
+    const keyword = tag.name
+
+    return view.render('tag', { tag, videos, title, description, keyword })
   }
 
   public async stars({ request, view }: HttpContextContract) {

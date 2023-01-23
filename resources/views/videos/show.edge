@@ -152,10 +152,10 @@
 @end
 
 @section('head')
-<meta property="og:url" content="{{ env('APP_DOMAIN') }}{{ route('videos.show', { uid: video.uid }) }}" />
-<meta property="og:title" content="{{ video.title }}" />
-<meta property="og:description" content="{{ video.description }}" />
-<meta property="og:image" content="{{ env('APP_DOMAIN') }}{{ video.image }}" />
+    <meta property="og:url" content="{{ env('APP_DOMAIN') }}{{ route('videos.show', { uid: video.uid }) }}" />
+    <meta property="og:title" content="{{ video.title }}" />
+    <meta property="og:description" content="{{ video.description }}" />
+    <meta property="og:image" content="{{ env('APP_DOMAIN') }}{{ video.image }}" />
 @end
 
 @section('scripts')
