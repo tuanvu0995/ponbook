@@ -37,7 +37,8 @@
       "@adonisjs/drive-s3",
       "@adonisjs/bouncer",
       "@adonisjs/limiter",
-      "@adonisjs/redis"
+      "@adonisjs/redis",
+      "@adonisjs/mail"
     ]
   }
 }

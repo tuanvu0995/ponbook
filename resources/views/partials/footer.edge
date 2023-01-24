@@ -1,7 +1,40 @@
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>
-            Copyright 2022 by <a href="{{ route('home') }}">Ponbook.net</a>. All Rights Reserved.
-        </p>
+<footer class="footer container is-fluid">
+    <div class="columns">
+        <div class="column is-4">
+            <h4 class="bd-footer-title">
+                Copyright © 2022-2023 by <a href="{{ route('home') }}">Ponbook.net</a>.
+            </h4>
+
+            <div class="bd-footer-tsp">
+                All Rights Reserved
+            </div>
+
+        </div>
+        <div class="column is-4">
+            <h4 class="bd-footer-title">
+                <a href="{{ route('web.about') }}">About</a> .
+                <a href="{{ route('web.terms') }}">Terms</a> .
+                <a href="{{ route('web.privacy') }}">Privacy</a> .
+                <a href="{{ route('web.faq') }}">Faq</a> .
+                <a href="{{ route('web.contact') }}">Contact</a>
+                <br>
+            </h4>
+        </div>
+        <div class="column is-4">
+            <h4 class="bd-footer-title">
+                <strong>Share</strong> on social media
+            </h4>
+
+            <div class="bd-footer-iframe">
+                <a href="https://twitter.com/share" class="twitter-share-button"
+                    data-text="Bulma: Free, open source, and modern CSS framework based on Flexbox"
+                    data-url="https://bulma.io" data-count="horizontal" data-via="jgthms"
+                    data-related="jgthms:Creator of Bulma" data-size="large">Tweet</a>
+
+                <div class="fb-like" data-href="https://www.facebook.com/bulmaio" data-layout="button"
+                    data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
+            </div>
+
+        </div>
     </div>
 </footer>

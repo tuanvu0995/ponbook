@@ -72,4 +72,24 @@ export default class WebController {
 
     return view.render('search', { videos, videoFilter, title })
   }
+
+  public async about({ view }: HttpContextContract) {
+    return view.render('about')
+  }
+
+  public async contact({ view }: HttpContextContract) {
+    return view.render('contact')
+  }
+
+  public async privacy({ view }: HttpContextContract) {
+    return view.render('privacy')
+  }
+
+  public async terms({ view }: HttpContextContract) {
+    return view.render('terms')
+  }
+
+  public async faq({ view }: HttpContextContract) {
+    return view.render('faq')
+  }
 }

@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
+import User from 'App/Models/User'
+import Event from '@ioc:Adonis/Core/Event'
 
 export default class RegisterController {
   public async index({ view }: HttpContextContract) {
@@ -13,6 +14,8 @@ export default class RegisterController {
     const user = await User.create(payload)
 
     await auth.use('web').login(user)
+
+    await Event.emit('user:created', user)
 
     return response.redirect().toRoute('home')
   }

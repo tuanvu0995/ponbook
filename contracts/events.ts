@@ -5,6 +5,8 @@
  * file.
  */
 
+import User from "App/Models/User";
+
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -26,6 +28,6 @@ declare module '@ioc:Adonis/Core/Event' {
   |
   */
   interface EventsList {
-    //
+    'user:created': User
   }
 }
