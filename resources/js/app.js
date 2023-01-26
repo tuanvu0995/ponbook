@@ -1,9 +1,11 @@
 import axios from 'axios'
 import dropdowns from './utils/dropdown'
+import globalAjaxButton from './utils/globalAjaxButton'
 import 'owl.carousel'
 import '../scss/app.scss'
 
-$(document).ready(function () {
+$(function () {
+  globalAjaxButton()
   /**
    * Navigation bar
    */

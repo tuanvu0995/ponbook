@@ -12,38 +12,50 @@
                 @if(video.casts.length === 1)
                 <li><a href="{{ route("list.cast", { uid: video.casts[0].uid }) }}">{{ video.casts[0].name }}</a></li>
                 @end
-                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
+                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{
+                        video.code }}</a></li>
             </ul>
         </nav>
-        <div class="dropdown is-right">
-            <div class="dropdown-trigger">
-              <a class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
-                <span>Actions</span>
+        <div class="is-flex is-align-items-center">
+            <a class="button is-danger is-light is-small is-ajax" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post">
+                <span class="icon is-small">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </span>
+                <span>Favorite</span>
             </a>
+            <div class="dropdown is-right">
+                <div class="dropdown-trigger">
+                    <a class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                        <span>Actions</span>
+                        <span class="icon is-small">
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                        @can('VideoPolicy.update', video)
+                        <a href="{{ route("videos.edit", { uid: video.uid }) }}" class="dropdown-item">
+                            Edit
+                        </a>
+                        @end
+                        <a class="dropdown-item">
+                            Archive
+                        </a>
+                        <a href="#" class="dropdown-item is-active">
+                            Delete
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            Unpublish
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a href="#" class="dropdown-item">
+                            Report
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                @can('VideoPolicy.update', video)
-                <a href="{{ route("videos.edit", { uid: video.uid }) }}" class="dropdown-item">
-                  Edit
-                </a>
-                @end
-                <a class="dropdown-item">
-                  Archive
-                </a>
-                <a href="#" class="dropdown-item is-active">
-                  Delete
-                </a>
-                <a href="#" class="dropdown-item">
-                  Unpublish
-                </a>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                  Report
-                </a>
-              </div>
-            </div>
-          </div>
+        </div>
     </div>
 </section>
 <section>
@@ -149,10 +161,10 @@
 @end
 
 @section('head')
-    <meta property="og:url" content="{{ env('APP_DOMAIN') }}{{ route('videos.show', { uid: video.uid }) }}" />
-    <meta property="og:title" content="{{ video.title }}" />
-    <meta property="og:description" content="{{ video.description }}" />
-    <meta property="og:image" content="{{ env('APP_DOMAIN') }}{{ video.image }}" />
+<meta property="og:url" content="{{ env('APP_DOMAIN') }}{{ route('videos.show', { uid: video.uid }) }}" />
+<meta property="og:title" content="{{ video.title }}" />
+<meta property="og:description" content="{{ video.description }}" />
+<meta property="og:image" content="{{ env('APP_DOMAIN') }}{{ video.image }}" />
 @end
 
 @section('scripts')

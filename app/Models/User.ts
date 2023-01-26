@@ -15,6 +15,7 @@ import Activity from './Activity'
 import Permission from './Permission'
 import Role from './Role'
 import Post from './Post'
+import Video from './Video'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -109,6 +110,11 @@ export default class User extends BaseModel {
 
   @hasMany(() => Post)
   public posts: HasMany<typeof Post>
+
+  @manyToMany(() => Video, {
+    pivotTable: 'favorite_videos',
+  })
+  public favorites: ManyToMany<typeof Video>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

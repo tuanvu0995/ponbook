@@ -26,6 +26,10 @@ body {
   }
 }
 
+.is-ajax {
+  position: relative;
+}
+
 .navbar-link.is-arrowless {
   padding-right: 0.75rem;
   &::after {
@@ -207,4 +211,47 @@ body {
       height: 100%;
     }
   }
+}
+
+.is-tooltip {
+  background: #333;
+  color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+.is-tooltip-arrow,
+.is-tooltip-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.is-tooltip-arrow {
+  visibility: hidden;
+}
+
+.is-tooltip-arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.is-tooltip[data-popper-placement^='top'] > .is-tooltip-arrow {
+  bottom: -4px;
+}
+
+.is-tooltip[data-popper-placement^='bottom'] > .is-tooltip-arrow {
+  top: -4px;
+}
+
+.is-tooltip[data-popper-placement^='left'] > .is-tooltip-arrow {
+  right: -4px;
+}
+
+.is-tooltip[data-popper-placement^='right'] > .is-tooltip-arrow {
+  left: -4px;
 }

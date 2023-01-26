@@ -82,6 +82,7 @@
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
     "@adonisjs/view": "^6.1.0",
+    "@popperjs/core": "^2.11.6",
     "axios": "^1.2.1",
     "cheerio": "^1.0.0-rc.12",
     "limax": "^3.0.0",

@@ -323,4 +323,30 @@ export default class VideoController {
       success: true,
     })
   }
+
+  public async favorite({ request, response, auth }: HttpContextContract) {
+    const uid = request.param('uid')
+    const video = await Video.query().where('uid', uid).first()
+    if (!video) {
+      return response.json({
+        error: 'Video not found',
+      })
+    }
+
+    const user = auth.user!
+    let state = 'added'
+
+    if (await user.related('favorites').query().where('video_id', video.id).first()) {
+      await user.related('favorites').detach([video.id])
+      state = 'removed'
+    } else {
+      await user.related('favorites').attach([video.id])
+    }
+
+    return response.json({
+      success: true,
+      state,
+      message: 'Video ' + state + ' to favorites',
+    })
+  }
 }
