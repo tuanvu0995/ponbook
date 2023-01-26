@@ -219,14 +219,19 @@ export default class ListController {
   }
 
   public async stars({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 30 } = request.qs()
-    const casts = await Cast.query().orderBy('name', 'asc').paginate(page, limit)
+    const { page = 1, limit = 60 } = request.qs()
+    const stars = await Cast.query()
+      .orderBy('name', 'asc')
+      .withCount('videos')
+      .paginate(page, limit)
 
     const title = 'Stars list'
     const description = `List of all av actresses`
 
-    casts.baseUrl(`/stars`)
+    stars.baseUrl(`/stars`)
 
-    return view.render('stars', { casts, title, description })
+    console.log(stars)
+
+    return view.render('stars', { stars, title, description })
   }
 }

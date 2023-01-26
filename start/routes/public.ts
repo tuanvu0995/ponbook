@@ -21,4 +21,5 @@ Route.group(() => {
   Route.get('/director/:uid', 'ListController.director').as('director')
   Route.get('/maker/:uid', 'ListController.maker').as('maker')
   Route.get('/tag/:slug', 'ListController.tags').as('tag')
+  Route.get('/stars', 'ListController.stars').as('stars')
 }).as('list')

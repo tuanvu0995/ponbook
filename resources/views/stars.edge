@@ -1,0 +1,31 @@
+@layout('layouts/main')
+@set('bodyClass', "stars-show")
+
+@section('body')
+<section class="hero is-warning">
+    <div class="hero-body">
+        <h1 class="title is-3">
+            Stars
+        </h1>
+    </div>
+</section>
+<section>
+    <div class="container is-fluid py-5">
+        <div class="columns is-multiline is-mobile is-tablet is-desktop">
+           @each(star in stars)
+           <div class="column is-half-mobile is-one-third-tablet is-2-desktop">
+                <a class="box" href="{{ route("list.cast", { uid: star.uid }) }}" title="Collection of {{ star.name }}">
+                    <h2 class="title is-6">{{ star.name }}</h2>
+                    <p class="subtitle is-6">{{ star.$extras.videos_count }} videos</p>
+                </a>
+            </div>
+           @end
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container is-fluid py-5">
+        @!component('partials/pagination', { paginator: stars })
+    </div>
+</section>
+@end

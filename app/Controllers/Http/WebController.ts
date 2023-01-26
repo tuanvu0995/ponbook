@@ -38,13 +38,15 @@ export default class WebController {
 
     const videos = await Video.query()
       .where('code', 'like', `%${keyword}%`)
-      .where('title', 'like', `%${keyword}%`)
+      .orWhere('title', 'like', `%${keyword}%`)
+      .orWhereHas('casts', (query) => {
+        query.where('name', 'like', `%${keyword}%`)
+      })
       .where('is_published', true)
       .orderBy('code', 'desc')
       .select('id')
 
     const videoIds = videos.map((video) => video.id)
-    console.log(videoIds)
 
     const videoFilter = new VideoFilter()
     videoFilter.key = keyword
