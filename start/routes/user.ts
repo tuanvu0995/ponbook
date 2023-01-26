@@ -9,6 +9,10 @@ Route.group(() => {
   Route.get('/videos/:uid/delete', 'VideoController.delete').as('videos.delete')
   Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit')
   Route.delete('videos/:uid', 'VideoController.destroy').as('videos.destroy')
+
+  Route.get('/posts/create', 'PostController.create').as('posts.create')
+  Route.get('/posts/:uid/edit', 'PostController.edit').as('posts.edit')
+  Route.put('/posts/:uid', 'PostController.update').as('posts.update')
 }).middleware('auth')
 
 Route.group(() => {

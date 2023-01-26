@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>{{ title || "Ponbook" }} - Ponbook.net</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
+    <script src="{{ asset('assets/common.js') }}"></script>
+    @!section('head')
+    <style>
+        html {
+            overflow: hidden;
+        } 
+    </style>
+  </head>
+  <body class="{{ bodyClass || '' }}">
+
+    @!section('body')
+    <script>
+      const BASE_URL = '{{ env('APP_DOMAIN') }}';
+    </script>
+    <script src="{{ asset('assets/app.js') }}"></script>
+    @!section('script-links')
+    @!section('scripts')
+  </body>
+</html>

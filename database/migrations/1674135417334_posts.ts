@@ -15,6 +15,8 @@ export default class extends BaseSchema {
       table.text('attachments').nullable()
 
       table.boolean('is_top').notNullable().defaultTo(false)
+      table.boolean('is_published').notNullable().defaultTo(false)
+      table.boolean('is_draft').notNullable().defaultTo(true)
       table.boolean('is_deleted').notNullable().defaultTo(false)
 
       table.integer('vote_up_count').notNullable().defaultTo(0)

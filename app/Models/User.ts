@@ -14,6 +14,7 @@ import { nanoid } from 'nanoid'
 import Activity from './Activity'
 import Permission from './Permission'
 import Role from './Role'
+import Post from './Post'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -105,6 +106,9 @@ export default class User extends BaseModel {
     pivotTimestamps: true,
   })
   public permissions: ManyToMany<typeof Permission>
+
+  @hasMany(() => Post)
+  public posts: HasMany<typeof Post>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

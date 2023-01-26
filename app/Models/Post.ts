@@ -23,6 +23,12 @@ export default class Post extends BaseModel {
   public content: string
 
   @column()
+  public isPublished: boolean
+
+  @column()
+  public isDraft: boolean
+
+  @column()
   public isDeleted: boolean
 
   @column()
