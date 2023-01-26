@@ -13,7 +13,7 @@ export default class VideoController {
     return view.render('videos/index')
   }
 
-  public async show({ params, view }: HttpContextContract) {
+  public async show({ params, view, auth }: HttpContextContract) {
     const { page = 1, limit = 20 } = params
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
@@ -51,7 +51,13 @@ export default class VideoController {
       ...video.tags.map((tag) => tag.name),
     ].join(', ')
 
-    return view.render('videos/show', { video, comments, relatedVideos, keyword })
+    let isFavorite = false
+    if (auth.user) {
+      const favorite = await auth.user.related('favorites').query().where('video_id', video.id)
+      isFavorite = favorite.length > 0
+    }
+
+    return view.render('videos/show', { video, comments, relatedVideos, keyword, isFavorite })
   }
 
   public async create({ response, auth }: HttpContextContract) {

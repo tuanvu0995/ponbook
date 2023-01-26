@@ -16,6 +16,14 @@ export default function createPopover(parentElement, content, options = {}) {
 
   createPopper(parentElement, tooltip, {
     placement: 'bottom',
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 8],
+        },
+      },
+    ],
   })
 
   if (options.timeout) {

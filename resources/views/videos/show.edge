@@ -17,9 +17,13 @@
             </ul>
         </nav>
         <div class="is-flex is-align-items-center">
-            <a class="button is-danger is-light is-small is-ajax" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post">
+            <a class="button is-danger is-light is-small is-ajax" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
                 <span class="icon is-small">
+                    @if(isFavorite)
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    @else
                     <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    @end
                 </span>
                 <span>Favorite</span>
             </a>
