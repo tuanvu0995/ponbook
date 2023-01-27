@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import './routes/public'
 import './routes/admin'
 import './routes/user'
+import './routes/community'
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')

@@ -23,10 +23,20 @@ export default class PostController {
     return view.render('posts/edit', { post })
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
+  public async update({ request, response, params, session }: HttpContextContract) {
     const post = await Post.query().where('uid', params.uid).firstOrFail()
     post.merge(request.only(['title', 'content']))
+    console.log(request.input('published'))
+
+    const published = request.input('published')
+
+    post.isPublished = Boolean(published && published === 'on')
+    post.isDraft = !post.isPublished
+
     await post.save()
+
+    session.flash('success', 'Post updated successfully')
+
     return response.redirect().toRoute('posts.edit', { uid: post.uid })
   }
 }

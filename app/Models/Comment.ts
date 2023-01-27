@@ -1,5 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasMany,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import { nanoid } from 'nanoid'
 
@@ -43,6 +51,9 @@ export default class Comment extends BaseModel {
   @column()
   public isDraft: boolean
 
+  @column()
+  public postId: Number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -59,4 +70,9 @@ export default class Comment extends BaseModel {
   public static async generateUid(comment: Comment) {
     comment.uid = nanoid()
   }
+
+  @hasMany(() => Comment, {
+    foreignKey: 'parentId',
+  })
+  public replies: HasMany<typeof Comment>
 }

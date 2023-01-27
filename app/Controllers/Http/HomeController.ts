@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Collection from 'App/Models/Collection'
+import Post from 'App/Models/Post'
 import Video from 'App/Models/Video'
 
 export default class HomeController {
@@ -33,6 +34,12 @@ export default class HomeController {
       await video.preloadImages()
     }
 
-    return view.render('index', { collections, newlyUpdatedVideos })
+    const posts = await Post.query()
+      .preload('user')
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .limit(6)
+
+    return view.render('index', { collections, newlyUpdatedVideos, posts })
   }
 }

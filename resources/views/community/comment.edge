@@ -1,0 +1,36 @@
+@each(comment in comments)
+
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-48x48">
+      <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+    </p>
+  </figure>
+  <div class="media-content">
+    <strong>{{ comment.owner.username }} </strong> - <span>{{ dateFromNow(comment.createdAt) }}</span>
+    <div class="content">
+      {{ safe(comment.content) }}
+    </div>
+    <small><a class="reply-comment-button" data-uid="{{ comment.uid }}">Reply</a> · <a>Vote Up</a> · <a>Vote
+        Down</a></small>
+    <div id="comment-{{ comment.uid }}" class="pt-2 is-hidden">
+      <form action="{{ route('community.post:comment', { uid: post.uid }) }}" method="POST">
+        {{ csrfField() }}
+        <input type="hidden" name="parent" value="{{ comment.uid }}">
+        <textarea class="is-hidden" name="content"></textarea>
+        <div id="comment-editor-{{ comment.uid }}"></div>
+        <div class="buttons pt-2">
+          <button type="submit" class="button is-primary is-small has-loading">Reply</button>
+          <button id="comment-cancel-{{ comment.uid }}" class="button is-small">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    @if(comment.replies && comment.replies.length > 0)
+    @!component('community/comment', { comments: comment.replies, post })
+    @end
+
+  </div>
+</article>
+
+@end

@@ -13,6 +13,9 @@
   
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
+        <a class="navbar-item" href="{{ route("community.feed") }}">
+          Community
+        </a>
         <a class="navbar-item" href="{{ route("list.popular") }}">
           Popular videos
         </a>
@@ -60,9 +63,9 @@
             </div>
           </form>
         </div>
-        {{--  <div class="navbar-item">
+        <div class="navbar-item">
           <a class="button is-primary is-small" href="{{ route("posts.create") }}">Create post</a>
-        </div>  --}}
+        </div>
         @include('partials/navbar-notification')
         <div id="user-dropdown" class="navbar-item has-dropdown">
           <a id="user-dropdown-link" class="navbar-link">

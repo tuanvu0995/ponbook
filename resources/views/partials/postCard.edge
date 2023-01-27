@@ -1,0 +1,79 @@
+<div class="card is-post-card">
+
+    <div class="card-content p-4">
+        <div class="media mb-2">
+            <div class="media-left">
+                <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png"
+                        alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-6">
+                    Posted by <a href="/{{ post.user.username }}">{{'@'}}{{ post.user.username }}</a>
+                </p>
+                <p class="subtitle is-6">{{ dateFromNow(post.createdAt) }}</p>
+            </div>
+            <div class="media-right">
+                <div class="dropdown is-right">
+                    <div class="dropdown-trigger">
+                        <button class="button is-small is-text" aria-haspopup="true" aria-controls="dropdown-menu2">
+                            <span class="icon is-small">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                        <div class="dropdown-content ">
+                            <a class="dropdown-item">
+                                Edit
+                            </a>
+                            <a class="dropdown-item">
+                                Delete
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pb-2">
+            <a href="{{ route('community.post:detail', { uid: post.uid }) }}" class="subtitle is-6 has-text-weight-bold is-truncate-2">{{ post.title
+                }}</a>
+        </div>
+        <div class="content is-truncate-4 mb-2">
+            {{ excerpt(post.content, 300) }}
+        </div>
+
+    </div>
+    <nav class="level is-mobile px-4 py-2">
+        <div class="level-left">
+            <a class="level-item" href="{{ route('community.post:detail', { uid: post.uid }) }}">
+                <span class="icon is-small"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
+                <span class="is-size-7">{{ post.commentsCount }} Comments</span>
+            </a>
+            <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+                <span class="is-size-7">{{0}} Repost</span>
+            </a>
+            <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+                <span class="is-size-7">{{ post.viewsCount }} View</span>
+            </a>
+        </div>
+        <div class="level-right">
+            <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></span>
+                <span class="is-size-7">{{ post.voteUpCount }} Vote up</span>
+            </a>
+            <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></span>
+                <span class="is-size-7">{{ post.voteDownCount }} Vote down</span>
+            </a>
+        </div>
+    </nav>
+</div>

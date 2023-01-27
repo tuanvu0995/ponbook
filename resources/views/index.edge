@@ -15,6 +15,18 @@
   </section>
   <section>
     <div class="container is-fluid py-5">
+      <h2 class="title is-5">New posts</h1>
+      <div class="columns is-multiline is-mobile is-tablet is-desktop">
+        @each(post in posts)
+        <div class="column is-half-mobile is-one-third-tablet">
+          @!component('partials/postCard', { post })
+        </div>
+        @end
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container is-fluid py-5">
       <h2 class="title is-5">New comments</h1>
       @!component('partials/videoList', { videos: newlyUpdatedVideos })
     </div>

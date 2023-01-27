@@ -1,0 +1,30 @@
+@layout('layouts/main')
+@set('title', 'Community')
+@set('keyword', 'ponbook')
+
+@section('body')
+<section class="hero is-warning">
+    <div class="hero-body">
+        <h1 class="title is-3">
+            Community
+        </h1>
+        <p class="subtitle">
+            The community page
+        </p>
+    </div>
+</section>
+<section class="section px-0">
+    <div class="container is-widescreen">
+        <div class="columns">
+            <div class="column is-8">
+            @each(post in posts)
+                <div class="pb-4">
+                    @!component('partials/postCard', { post })
+                </div>
+            @end
+            </div>
+            <div class="column is-4"></div>
+        </div>
+    </div>
+</section>
+@end
