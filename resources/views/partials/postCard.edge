@@ -54,7 +54,7 @@
         <div class="level-left">
             <a class="level-item" href="{{ route('community.post:detail', { uid: post.uid }) }}">
                 <span class="icon is-small"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
-                <strong class="is-size-7">Comments 224</strong>
+                <strong class="is-size-7">Comments {{ post.commentsCount }}</strong>
             </a>
             <a class="level-item">
                 <span class="icon is-small"><i class="fa fa-retweet"></i></span>
