@@ -2,25 +2,25 @@
   "entrypoints": {
     "app": {
       "css": [
-        "/assets/app.896cefb7.css"
+        "http://localhost:8080/assets/app.css"
       ],
       "js": [
-        "/assets/app.1f3dc204.js"
+        "http://localhost:8080/assets/app.js"
       ]
     },
     "common": {
       "js": [
-        "/assets/common.c234a06e.js"
+        "http://localhost:8080/assets/common.js"
       ]
     },
     "post-comment": {
       "js": [
-        "/assets/post-comment.291f8063.js"
+        "http://localhost:8080/assets/post-comment.js"
       ]
     },
     "react-upload-form": {
       "js": [
-        "/assets/react-upload-form.c6e5ecc8.js"
+        "http://localhost:8080/assets/react-upload-form.js"
       ]
     }
   }

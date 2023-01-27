@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Comment from 'App/Models/Comment'
 import Post from 'App/Models/Post'
 
 export default class CommunityController {
@@ -38,7 +39,10 @@ export default class CommunityController {
       )
     }
 
-    return view.render('community/post-detail', { post, comments })
+    const title = post.title
+    const description = post.content
+
+    return view.render('community/post-detail', { post, comments, title, description })
   }
 
   public async postComment({ request, view, response, auth, params }: HttpContextContract) {
@@ -55,9 +59,9 @@ export default class CommunityController {
       return response.redirect().toRoute('community.post:detail', { uid: post.uid })
 
     const parent = request.input('parent', '')
-    let parentComment: any = null
+    let parentId: number = 0
     if (parent) {
-      parentComment = await post
+      const parentComment = await post
         .related('comments')
         .query()
         .where('uid', parent)
@@ -65,16 +69,28 @@ export default class CommunityController {
         .first()
       if (!parentComment)
         return response.redirect().toRoute('community.post:detail', { uid: post.uid })
+
+      if (parentComment.parentId) {
+        parentId = parentComment.parentId
+      } else {
+        parentId = parentComment.id
+      }
     }
 
-    await post.related('comments').create({
-      userId: auth.user!.id,
-      content,
-      isApproved: true,
-      isDraft: false,
-      attachmentImages: '',
-      parentId: parentComment.parentId ? parentComment.parentId : parentComment.id,
-    })
+    const newComment = new Comment()
+    newComment.postId = post.id
+    newComment.userId = auth.user!.id
+    newComment.content = content
+    newComment.isApproved = true
+    newComment.isDraft = false
+    newComment.attachmentImages = ''
+
+    if (parentId) newComment.parentId = parentId
+
+    await newComment.save()
+
+    post.commentsCount += 1
+    await post.save()
 
     return response.redirect().toRoute('community.post:detail', { uid: post.uid })
   }
