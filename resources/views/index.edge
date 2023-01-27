@@ -18,7 +18,7 @@
       <h2 class="title is-5">New posts</h1>
       <div class="columns is-multiline is-mobile is-tablet is-desktop">
         @each(post in posts)
-        <div class="column is-half-mobile is-one-third-tablet">
+        <div class="column is-full-mobile is-one-third-tablet">
           @!component('partials/postCard', { post })
         </div>
         @end
