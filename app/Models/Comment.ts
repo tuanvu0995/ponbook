@@ -7,6 +7,8 @@ import {
   column,
   HasMany,
   hasMany,
+  ManyToMany,
+  manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import { nanoid } from 'nanoid'
@@ -75,4 +77,9 @@ export default class Comment extends BaseModel {
     foreignKey: 'parentId',
   })
   public replies: HasMany<typeof Comment>
+
+  @manyToMany(() => User, {
+    pivotTable: 'votes',
+  })
+  public voters: ManyToMany<typeof User>
 }

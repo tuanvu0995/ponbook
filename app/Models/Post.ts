@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column, HasMany, hasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
 import User from './User'
 import Comment from './Comment'
@@ -66,4 +66,9 @@ export default class Post extends BaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
+
+  @manyToMany(() => User, {
+    pivotTable: 'votes',
+  })
+  public voters: ManyToMany<typeof User>
 }

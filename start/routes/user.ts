@@ -23,6 +23,8 @@ Route.group(() => {
   Route.post('/videos/:uid/favorite', 'VideoController.favorite').as('videos.favorite')
 
   Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
+
+  Route.post('/posts/:uid/vote', 'PostController.vote').as('posts.vote')
 })
   .as('api')
   .prefix('api')

@@ -38,6 +38,7 @@ export default class HomeController {
       .preload('user')
       .where('is_published', true)
       .where('is_deleted', false)
+      .orderBy('updated_at', 'desc')
       .limit(6)
 
     return view.render('index', { collections, newlyUpdatedVideos, posts })

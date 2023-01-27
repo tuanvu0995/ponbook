@@ -4,10 +4,12 @@ import globalAjaxButton from './utils/globalAjaxButton'
 import globalLoadingButton from './utils/globalLoadingButton'
 import 'owl.carousel'
 import '../scss/app.scss'
+import globalVoteButton from './utils/globalVoteButton'
 
 $(function () {
   globalAjaxButton()
   globalLoadingButton()
+  globalVoteButton()
   /**
    * Navigation bar
    */

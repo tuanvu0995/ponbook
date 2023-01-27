@@ -28,12 +28,15 @@
             </div>
             <div class="level-right">
                 <a class="level-item">
-                    <span class="icon is-small"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></span>
-                    <span class="is-size-7">{{ post.voteUpCount }} Vote up</span>
+                    <span class="is-size-7">Vote</span>
                 </a>
-                <a class="level-item">
+                <a class="level-item vote-button" title="Vote up" data-url="{{ route('api.posts.vote', { uid: post.uid }) }}" data-vote="up" data-method="POST" data-uid="{{ post.uid }}">
+                    <span class="icon is-small is-danger"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></span>
+                    <strong class="is-size-7" id="post-{{ post.uid }}-up-vote-count">{{ post.voteUpCount }}</strong>
+                </a>
+                <a class="level-item vote-button" title="Vote down" data-url="{{ route('api.posts.vote', { uid: post.uid }) }}" data-vote="down" data-method="POST" data-uid="{{ post.uid }}">
                     <span class="icon is-small"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></span>
-                    <span class="is-size-7">{{ post.voteDownCount }} Vote down</span>
+                    <strong class="is-size-7" id="post-{{ post.uid }}-down-vote-count">{{ post.voteDownCount }}</strong>
                 </a>
             </div>
         </nav>
