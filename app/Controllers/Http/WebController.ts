@@ -37,14 +37,14 @@ export default class WebController {
     }
 
     const videos = await Video.query()
-      .where('code', 'like', `%${keyword}%`)
-      .orWhere('title', 'like', `%${keyword}%`)
+      .whereRaw('LOWER(code) LIKE LOWER(?)', [`%${key}%`])
+      .whereRaw('LOWER(title) LIKE LOWER(?)', [`%${key}%`])
       .orWhereHas('casts', (query) => {
-        query.where('name', 'like', `%${keyword}%`)
+        query.whereRaw('LOWER(name) LIKE LOWER(?)', [`%${key}%`])
       })
       .where('is_published', true)
-      .orderBy('code', 'desc')
-      .select('id')
+      .orderBy('release_date', 'desc')
+      .select('id', 'release_date')
 
     const videoIds = videos.map((video) => video.id)
 
