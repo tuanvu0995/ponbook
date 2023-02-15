@@ -35,3 +35,4 @@ Route.group(() => {
 Route.post('crawler', 'UploadsController.videoFromBot').as('crawler')
 Route.post('crawler/image', 'UploadsController.imageFromBot').as('crawler:image')
 Route.post('crawler/code-exists', 'UploadsController.codeExists').as('crawler:codeExists')
+Route.post('crawler/popular', 'UploadsController.updatePopularList').as('crawler:updatePopularList')

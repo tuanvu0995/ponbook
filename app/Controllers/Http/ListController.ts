@@ -15,7 +15,7 @@ export default class ListController {
       .query()
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('id', 'desc')
+      .orderBy('video_collections.order', 'asc')
       .paginate(page, limit)
 
     const title = 'Popular Videos'

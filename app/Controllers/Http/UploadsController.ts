@@ -6,6 +6,7 @@ import slugify from 'App/utils/slugify'
 import { nanoid } from 'nanoid'
 import VideoFilter from 'App/Models/VideoFilter'
 import SimpleWImg from 'App/Services/SimpleWImg'
+import Collection from 'App/Models/Collection'
 
 const ACCEPT_TYPES = ['comment', 'cover', 'main']
 
@@ -177,5 +178,37 @@ export default class UploadsController {
     const existsVideo = await Video.query().where('code', code).first()
 
     return response.json({ exists: !!existsVideo })
+  }
+
+  public async updatePopularList({ request, response }: HttpContextContract) {
+    const token = request.input('token')
+    if (token !== Env.get('BOT_TOKEN')) {
+      return response.badRequest('Invalid token')
+    }
+
+    const codes = request.input('codes')
+    if (!Array.isArray(codes)) {
+      return response.badRequest('Codes must be array')
+    }
+
+    const popularCollection = await Collection.query().where('slug', 'popular').first()
+    if (!popularCollection) {
+      return response.badRequest('Popular collection not found')
+    }
+
+    const videoIds: number[] = []
+    for (const code of codes) {
+      const video = await Video.query().where('code', code).first()
+      if (video) {
+        videoIds.push(video.id)
+      }
+    }
+
+    const syncData = videoIds.map((id, index) => ({
+      [id]: { order: index + 1 },
+    }))
+    const syncDataObject = Object.assign({}, ...syncData)
+
+    await popularCollection.related('videos').sync(syncDataObject)
   }
 }
