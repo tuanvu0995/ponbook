@@ -13,6 +13,13 @@ export default class AppProvider {
     View.global('dateFromNow', (value: DateTime) => {
       return value.toRelative()
     })
+    View.global('imageUrl', (imageName: string) => {
+      let name = (imageName || '').split('.').slice(0, -1).join('.') + '.webp'
+      if (name.startsWith('/uploads')) {
+        name = name.replace('/uploads', '')
+      }
+      return `/uploads${name}`
+    })
   }
 
   public async ready() {

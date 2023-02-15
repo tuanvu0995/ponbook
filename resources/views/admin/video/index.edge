@@ -28,7 +28,7 @@
                             <th>{{ video.uid }}</th>
                             <td>
                                 <figure class="image is-48x48">
-                                    <img src="/uploads/{{ video.cover }}" style="height: 100%; width: auto">
+                                    <img src="{{ imageUrl(video.cover) }}" style="height: 100%; width: auto">
                                 </figure>
                             </td>
                             <td>{{ video.title }}</td>

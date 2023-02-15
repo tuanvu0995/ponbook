@@ -1,40 +1,22 @@
-// import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-// import Video from 'App/Models/Video'
-// import sharp from 'sharp'
-// import Env from '@ioc:Adonis/Core/Env'
-// import Application from '@ioc:Adonis/Core/Application'
-// import Drive from '@ioc:Adonis/Core/Drive'
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import Env from '@ioc:Adonis/Core/Env'
+import SimpleWImg from 'App/Services/SimpleWImg'
+import fs from 'fs'
 
-// export default class extends BaseSeeder {
-//   public chunk = 0
-//   public async run() {
-//     // Write your database queries inside the run method
-//     let videoLength = 0
-//     do {
-//       const videos = await Video.query()
-//         .orderBy('id', 'asc')
-//         .limit(100)
-//         .offset(this.chunk * 100)
-//       videoLength = videos.length
-
-//       for (const video of videos) {
-//         const images = JSON.parse(video.images)
-//         const processedImages = []
-//         for (const image of images) {
-//           const data = await sharp(Application.appRoot + '/' + Env.get('LOCAL_UPLOAD_PATH') + image)
-//             .webp()
-//             .toBuffer()
-//           const dist = image.replace('.jpg', '.webp')
-
-//           await Drive.put(dist, data)
-//           await Drive.delete(image)
-
-//           processedImages.push(dist)
-
-//         }
-//         video.images = JSON.stringify(processedImages)
-//       }
-//       this.chunk++
-//     } while (videoLength > 0)
-//   }
-// }
+export default class extends BaseSeeder {
+  public async run() {
+    const path = Env.get('LOCAL_UPLOAD_PATH')
+    const imageUploadPath = `${path}/images`
+    const files = fs.readdirSync(imageUploadPath)
+    for (const file of files) {
+      try {
+        const filePath = imageUploadPath + '/' + file
+        if (fs.lstatSync(filePath).isFile()) {
+          await SimpleWImg(filePath)
+        }
+      } catch (err) {
+        console.log('Error when process file: ' + err.message)
+      }
+    }
+  }
+}

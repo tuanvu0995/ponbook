@@ -72,7 +72,7 @@
                     </h1>
                     <div class="columns">
                         <div class="column is-7">
-                            <img src="{{ video.image }}" alt="{{ video.title }}" />
+                            <img src="{{ imageUrl(video.image) }}" alt="{{ video.title }}" />
                         </div>
                         <div class="column is-5">
                             <table class="table">
@@ -143,7 +143,7 @@
                     <div class="owl-carousel owl-theme">
                         @each(image in video.imageUrls)
                         <div>
-                            <img src="{{ image }}" alt="{{ video.title }}" />
+                            <img src="{{ imageUrl(image) }}" alt="{{ video.title }}" />
                         </div>
                         @end
                     </div>
