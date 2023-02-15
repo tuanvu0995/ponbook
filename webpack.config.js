@@ -47,6 +47,8 @@ Encore.setPublicPath('/assets')
 */
 Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('common', './resources/js/common.js')
+Encore.addEntry('jQuery', './resources/js/jQuery.js')
+Encore.addEntry('quill', './resources/js/quill.js')
 Encore.addEntry('post-comment', './resources/js/post-comment.js')
 Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 
