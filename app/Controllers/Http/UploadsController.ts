@@ -5,6 +5,7 @@ import Video from 'App/Models/Video'
 import slugify from 'App/utils/slugify'
 import { nanoid } from 'nanoid'
 import VideoFilter from 'App/Models/VideoFilter'
+import SimpleWImg from 'App/Services/SimpleWImg'
 
 const ACCEPT_TYPES = ['comment', 'cover', 'main']
 
@@ -24,7 +25,7 @@ export default class UploadsController {
 
     const image = request.file('image', {
       size: '5mb',
-      extnames: ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'],
+      extnames: ['jpg', 'png', 'JPG', 'PNG'],
     })
 
     if (!image) {
@@ -122,7 +123,7 @@ export default class UploadsController {
 
     const image = request.file('image', {
       size: '5mb',
-      extnames: ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'],
+      extnames: ['jpg', 'png', 'JPG', 'PNG'],
     })
 
     if (!image) {
@@ -138,15 +139,21 @@ export default class UploadsController {
       return response.badRequest('Video not found')
     }
 
-    const filename = `images/${video.slug}-${nanoid()}.${image.extname?.toLocaleLowerCase()}`
+    const filename = `images/${video.code}-${nanoid()}.${image.extname?.toLocaleLowerCase()}`
 
     await image.moveToDisk('./', { name: filename })
+    const path = Env.get('LOCAL_UPLOAD_PATH')
+
     if (request.input('type') === 'cover') {
-      video.cover = filename
+      const coverName = `images/${video.code}-cover-${nanoid()}.webp`
+      await SimpleWImg(path + '/' + filename, path + '/' + coverName)
+      video.cover = coverName
     } else {
-      video.image = filename
+      const imageName = `images/${video.code}-${nanoid()}.webp`
+      await SimpleWImg(path + '/' + filename, path + '/' + imageName)
+      video.image = imageName
       const images = JSON.parse(video.images || '[]')
-      images.push(filename)
+      images.push(imageName)
       video.images = JSON.stringify(images)
     }
 
