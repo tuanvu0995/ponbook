@@ -14,11 +14,10 @@ export default class AppProvider {
       return value.toRelative()
     })
     View.global('imageUrl', (imageName: string) => {
-      let name = (imageName || '').split('.').slice(0, -1).join('.') + '.webp'
-      if (name.startsWith('/uploads')) {
-        name = name.replace('/uploads', '')
+      if (imageName.startsWith('/uploads/')) {
+        imageName = imageName.replace('/uploads/', '')
       }
-      return `/uploads${name}`
+      return `/uploads/${imageName}`
     })
   }
 
