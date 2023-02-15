@@ -14,6 +14,7 @@ export default class AppProvider {
       return value.toRelative()
     })
     View.global('imageUrl', (imageName: string) => {
+      if (!imageName) return '/img/no-image.png'
       if (imageName.startsWith('/uploads/')) {
         imageName = imageName.replace('/uploads/', '')
       }
