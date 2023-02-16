@@ -4,6 +4,7 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import SitemapGenerator from 'App/Services/SitemapGenerator'
 import VideoFilter from 'App/Models/VideoFilter'
 import Video from 'App/Models/Video'
+import Page from 'App/Models/Page'
 
 let sitemap
 
@@ -75,23 +76,16 @@ export default class WebController {
     return view.render('search', { videos, videoFilter, title })
   }
 
-  public async about({ view }: HttpContextContract) {
-    return view.render('about')
+  public async page({ request, view }: HttpContextContract) {
+    const slug = request.param('slug')
+    if (!slug) return view.render('errors.not-found')
+
+    const page = await Page.query().where('slug', slug).first()
+    if (!page) return view.render('errors.not-found')
+
+    const layout = page.layout || 'default'
+
+    return view.render('layouts/' + layout, { page })
   }
 
-  public async contact({ view }: HttpContextContract) {
-    return view.render('contact')
-  }
-
-  public async privacy({ view }: HttpContextContract) {
-    return view.render('privacy')
-  }
-
-  public async terms({ view }: HttpContextContract) {
-    return view.render('terms')
-  }
-
-  public async faq({ view }: HttpContextContract) {
-    return view.render('faq')
-  }
 }

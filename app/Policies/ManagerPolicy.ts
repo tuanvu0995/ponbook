@@ -4,6 +4,6 @@ import User from 'App/Models/User'
 
 export default class ManagerPolicy extends BasePolicy {
   public async management(user: User) {
-    return user.superUser || (await user.hasPermission('umr:admin:*'))
+    return Boolean(user.superUser) || (await user.hasPermission('umr:admin/*'))
   }
 }

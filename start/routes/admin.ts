@@ -5,6 +5,8 @@ Route.group(() => {
   Route.get('/', 'DashboardController.index').as('dashboard')
   Route.resource('videos', 'VideoManagersController')
   Route.resource('users', 'UserManagersController')
+  Route.resource('settings', 'SettingsController')
+  Route.resource('pages', 'PagesController')
 })
   .as('admin')
   .prefix('admin')
