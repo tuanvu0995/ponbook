@@ -3,7 +3,11 @@
         <label class="label">{{label}}</label>
     @end
     <div class="control">
-        <input class="input" type="{{ type || "text" }}" name="{{ name }}" placeholder="{{ placeholder }}" value="{{ value }}">
+        <input class="input" type="{{ type || "text" }}" name="{{ name }}" placeholder="{{ placeholder || '' }}" value="{{ value || '' }}"
+        @if(disabled)
+        disabled
+        @end
+        >
     </div>
     @if(errors)
         @each(message in errors)

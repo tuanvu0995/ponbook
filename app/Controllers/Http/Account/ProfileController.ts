@@ -1,41 +1,46 @@
+import Hash from '@ioc:Adonis/Core/Hash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import ChangePasswordValidator from 'App/Validators/ChangePasswordValidator'
 import UpdateProfileValidator from '../../../Validators/UpdateProfileValidator'
 
 export default class ProfileController {
-  public async getProfile({ response, auth }: HttpContextContract) {
+  public async profile({ view, auth }: HttpContextContract) {
     const user = await auth.user
-
-    if (!user) {
-      return response.unauthorized('Invalid credentials')
-    }
-
-    return response.json({
-      status: true,
-      message: 'Profile fetched successfully.',
-      data: user.serialize({
-        fields: {
-          omit: ['id', 'created_at', 'updated_at'],
-        },
-      }),
-    })
+    return view.render('account/profile', { user })
   }
 
-  public async updateProfile(ctx: HttpContextContract) {
-    const { request, response, auth } = ctx
-    const user = await auth.user
-
-    if (!user) {
-      return response.unauthorized('Invalid credentials')
-    }
+  public async update({ request, response, auth, session }: HttpContextContract) {
+    const user = await auth.user!
 
     const payload: any = await request.validate(UpdateProfileValidator)
+    console.log(payload)
 
     user.merge(payload)
     await user.save()
 
-    return response.json({
-      status: true,
-      message: 'Profile update successfully.',
-    })
+    session.flash('success', 'Profile updated successfully')
+
+    return response.redirect().toRoute('account.profile')
+  }
+
+  public async password({ view }: HttpContextContract) {
+    return view.render('account/password')
+  }
+
+  public async changePassword({ request, response, auth, session }: HttpContextContract) {
+    const body = await request.validate(ChangePasswordValidator)
+
+    const user = await auth.authenticate()
+
+    if (!(await Hash.verify(user.password, body.password))) {
+      session.flash('error', 'Invalid password')
+      return response.redirect().back()
+    }
+
+    user.password = body.newPassword
+    await user.save()
+
+    session.flash('success', 'Password have been changed successfully')
+    return response.redirect().toRoute('account.password')
   }
 }

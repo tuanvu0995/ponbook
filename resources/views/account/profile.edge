@@ -1,0 +1,75 @@
+@layout('layouts/account')
+
+@section('body')
+<div class="box">
+    <h3 class="title is-4">Update profile</h2>
+    @if(flashMessages.has('success'))
+      <div class="notification is-success">
+        <button class="delete"></button> {{ flashMessages.get('success') }}
+      </div>
+    @endif
+    <form action="{{ route("account.updateProfile") }}?_method=PUT" method="POST" style="max-width: 400px">
+        {{ csrfField() }}
+        @!component('components/input', {
+            label: "First name",
+            name: "firstName",
+            value: user.firstName,
+            errors: flashMessages.get('errors.firstName')
+        })
+        @!component('components/input', {
+            label: "Last name",
+            name: "lastName",
+            value: user.lastName,
+            errors: flashMessages.get('errors.lastName')
+        })
+
+        @!component('components/input', {
+            label: "Email",
+            name: "email",
+            type: "email",
+            value: user.email,
+            errors: flashMessages.get('errors.email'),
+            disabled: true
+        })
+
+        @!component('components/input', {
+            label: "Username",
+            name: "username",
+            value: user.username,
+            errors: flashMessages.get('errors.username'),
+            disabled: true
+        })
+
+        @!component('components/input', {
+            label: "Birthday",
+            name: "birthday",
+            value: user.birthday,
+            errors: flashMessages.get('errors.birthday')
+        })
+
+        <div class="field">
+            <label class="label">Gender</label>
+            <div class="control">
+            <div class="select">
+                <select name="gender">
+                <option value="man">Man</option>
+                <option value="woman">Woman</option>
+                <option value="other">Other</option>
+                </select>
+            </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Bio</label>
+            <div class="control">
+              <textarea class="textarea" placeholder="Bio" name="bio">{{ user.bio || '' }}</textarea>
+            </div>
+        </div>
+        <div class="field is-grouped py-4">
+            <div class="control">
+                <button type="submit" class="button is-link">Update</button>
+            </div>
+        </div>
+</form>
+</div>
+@end

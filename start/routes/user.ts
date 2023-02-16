@@ -16,6 +16,17 @@ Route.group(() => {
 }).middleware('auth')
 
 Route.group(() => {
+  Route.get('/profile', 'ProfileController.profile').as('profile')
+  Route.put('/profile', 'ProfileController.update').as('updateProfile')
+  Route.get('/password', 'ProfileController.password').as('password')
+  Route.post('/password', 'ProfileController.changePassword').as('changePassword')
+})
+  .as('account')
+  .prefix('account')
+  .middleware('auth')
+  .namespace('App/Controllers/Http/Account')
+
+Route.group(() => {
   Route.put('/videos/:uid/image', 'VideoController.setVideoImage').as('videos.setVideoImage')
   Route.post('/videos/:uid/image', 'VideoController.uploadImage').as('videos.uploadImage')
   Route.post('/videos/:uid/tag', 'VideoController.addTag').as('videos.addTag')

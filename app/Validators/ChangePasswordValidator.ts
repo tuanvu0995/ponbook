@@ -24,9 +24,9 @@ export default class ChangePasswordValidator {
    *    ```
    */
   public schema = schema.create({
-    oldPassword: schema.string({ trim: true }),
-    password: schema.string([rules.maxLength(60), rules.minLength(8)]),
-    confirmPassword: schema.string([rules.confirmed('password')]),
+    password: schema.string({ trim: true }),
+    newPassword: schema.string([rules.maxLength(60), rules.minLength(8)]),
+    confirmPassword: schema.string([rules.confirmed('newPassword')]),
   })
 
   /**
