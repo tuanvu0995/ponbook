@@ -80,7 +80,7 @@ export default class WebController {
     const slug = request.param('slug')
     if (!slug) return view.render('errors.not-found')
 
-    const page = await Page.query().where('slug', slug).first()
+    const page = await Page.query().where('slug', slug).where('is_published', true).first()
     if (!page) return view.render('errors.not-found')
 
     const layout = page.layout || 'default'
