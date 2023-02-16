@@ -2,22 +2,28 @@
 @set('title', "Video management")
 
 @section('body')
-<section class="hero is-warning">
-    <div class="hero-body">
-        <h1 class="title is-3">
-            Video management
-        </h1>
+<section class="my-5">
+    <div class="container is-fluid">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{{ route("admin.dashboard") }}">Dashboard</a></li>
+                <li class="is-active"><a href="#" aria-current="page">Video management</a></li>
+            </ul>
+        </nav>
     </div>
 </section>
 <section>
     <div class="container is-fluid py-5">
         <div class="table-container">
-            <table class="table">
+            <table class="table is-fullwidth">
                 <thead>
                     <tr>
-                        <th><abbr title="ID">UID</abbr></th>
+                        <th><abbr title="ID">ID</abbr></th>
+                        <td>Code</td>
                         <th>Cover</th>
                         <th>Title</th>
+                        <th>Casts</th>
+                        <th>Status</th>
                         <th><abbr title="CreatedAt">Created At</abbr></th>
                     </tr>
                 </thead>
@@ -25,14 +31,29 @@
                     <tr>
                         @each(video in videos)
                         <tr>
-                            <th>{{ video.uid }}</th>
+                            <th>{{ video.id }}</th>
+                            <th>{{ video.code }}</th>
                             <td>
                                 <figure class="image is-48x48">
                                     <img src="{{ imageUrl(video.cover) }}" style="height: 100%; width: auto">
                                 </figure>
                             </td>
-                            <td>{{ video.title }}</td>
-                            <th>{{ video.createdAt }}</th>
+                            <td>{{ truncate(video.title, 30) }}</td>
+                            <td>
+                                <div class="tags" style="max-width: 300px">
+                                    @each(cast in video.casts)
+                                <span class="tag">{{ cast.name }}</span>
+                                @end
+                                </div>
+                            </td>
+                            <td>
+                                @if(Boolean(video.isPublished))
+                                <span class="tag is-success">Published</span>
+                                @else
+                                <span class="tag">Draft</span>
+                                @end
+                            </td>
+                            <th>{{ dateFromNow(video.createdAt) }}</th>
                         </tr>
                         @end
                     </tr>

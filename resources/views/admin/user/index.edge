@@ -2,20 +2,23 @@
 @set('title', "User management")
 
 @section('body')
-<section class="hero is-warning">
-    <div class="hero-body">
-        <h1 class="title is-3">
-            User management
-        </h1>
+<section class="my-5">
+    <div class="container is-fluid">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{{ route("admin.dashboard") }}">Dashboard</a></li>
+                <li class="is-active"><a href="#" aria-current="page">User management</a></li>
+            </ul>
+        </nav>
     </div>
 </section>
 <section>
     <div class="container is-fluid py-5">
         <div class="table-container">
-            <table class="table">
+            <table class="table is-fullwidth">
                 <thead>
                     <tr>
-                        <th><abbr title="ID">UID</abbr></th>
+                        <th><abbr title="ID">ID</abbr></th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Status</th>
@@ -25,11 +28,19 @@
                 <tbody>
                     @each(user in users)
                     <tr>
-                        <th>{{ user.uid }}</th>
+                        <th>{{ user.id }}</th>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.accountStatus }}</td>
-                        <th>{{ user.createdAt }}</th>
+                        <td>
+                            @if(user.accountStatus === 'pending')
+                            <span class="tag is-warning">{{ user.accountStatus }}</span>
+                            @elseif(user.accountStatus === 'actived')
+                            <span class="tag is-success">{{ user.accountStatus }}</span>
+                            @elseif(user.accountStatus === 'banned')
+                            <span class="tag is-dark">{{ user.accountStatus }}</span>
+                            @end
+                        </td>
+                        <th>{{ dateFromNow(user.createdAt) }}</th>
                     </tr>
                     @end
                 </tbody>

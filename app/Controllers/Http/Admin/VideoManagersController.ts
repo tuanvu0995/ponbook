@@ -5,7 +5,10 @@ export default class VideoManagersController {
   public async index({ request, view }: HttpContextContract) {
     const { page = 1, perPage = 20 } = request.qs()
 
-    const videos = await Video.query().orderBy('id', 'desc').paginate(page, perPage)
+    const videos = await Video.query()
+      .preload('casts')
+      .orderBy('id', 'desc')
+      .paginate(page, perPage)
 
     videos.baseUrl(`/admin/videos`)
 
