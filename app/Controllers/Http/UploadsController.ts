@@ -7,6 +7,7 @@ import { nanoid } from 'nanoid'
 import VideoFilter from 'App/Models/VideoFilter'
 import SimpleWImg from 'App/Services/SimpleWImg'
 import Collection from 'App/Models/Collection'
+import Torrent from 'App/Models/Torrent'
 
 const ACCEPT_TYPES = ['comment', 'cover', 'main']
 
@@ -210,5 +211,34 @@ export default class UploadsController {
     const syncDataObject = Object.assign({}, ...syncData)
 
     await popularCollection.related('videos').sync(syncDataObject)
+  }
+
+  public async uploadTorrent({ request, response }: HttpContextContract) {
+    const token = request.input('token')
+    if (token !== Env.get('BOT_TOKEN')) {
+      return response.badRequest('Invalid token')
+    }
+
+    const code = request.input('code')
+    if (!code) {
+      return response.badRequest('Code is required')
+    }
+
+    const videos = await Video.query().where('code', code).where('is_deleted', false)
+
+    for (const video of videos) {
+      await Torrent.create({
+        videoId: video.id,
+        name: request.input('name'),
+        magnetUrl: request.input('magnetUrl'),
+        seed: request.input('seed'),
+        leech: request.input('leech'),
+        completed: 0,
+        infoHash: request.input('infoHash'),
+        size: request.input('size'),
+      })
+    }
+
+    return response.json({ success: true })
   }
 }

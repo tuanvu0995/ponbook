@@ -20,6 +20,7 @@ export default class VideoController {
       return view.render('errors/not-found')
     }
 
+    await video.load('torrents')
     await video.load('director')
     await video.load('maker')
     await video.load('casts')

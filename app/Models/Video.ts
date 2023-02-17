@@ -21,6 +21,7 @@ import Maker from './Maker'
 import User from './User'
 import Tag from './Tag'
 import Comment from './Comment'
+import Torrent from './Torrent'
 
 export default class Video extends BaseModel {
   @column({ isPrimary: true })
@@ -126,6 +127,9 @@ export default class Video extends BaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
+
+  @hasMany(() => Torrent)
+  public torrents: HasMany<typeof Torrent>
 
   @computed()
   public get imageGalleries() {

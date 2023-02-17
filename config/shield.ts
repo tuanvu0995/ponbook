@@ -98,6 +98,7 @@ export const csrf: ShieldConfig['csrf'] = {
     '/crawler/code-exists',
     '/search',
     '/crawler/popular',
+    '/crawler/torrent',
   ],
 
   /*
