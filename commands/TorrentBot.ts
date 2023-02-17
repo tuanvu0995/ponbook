@@ -1,6 +1,7 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 import Torrent from 'App/Models/Torrent'
 import Video from 'App/Models/Video'
+import delay from 'App/utils/delay'
 import axios from 'axios'
 import cheerio from 'cheerio'
 
@@ -111,6 +112,7 @@ export default class TorrentBot extends BaseCommand {
         infoHash: torrentData.infoHash,
         size: torrentData.size,
       })
+      await delay(1000)
     }
   }
 
@@ -134,6 +136,7 @@ export default class TorrentBot extends BaseCommand {
         video.hasTorrent = true
         await video.save()
         console.log('Complete search torrent for ', video.code)
+        await delay(1000)
       } catch (error) {
         console.log(`Error when search torrent: `, error)
       }
