@@ -38,7 +38,7 @@ export default class TorrentBot extends BaseCommand {
      * you manually decide to exit the process. Don't forget to call
      * `node ace generate:manifest` afterwards.
      */
-    stayAlive: false,
+    stayAlive: true,
   }
 
   public async getTorrent(url: string): Promise<any> {
@@ -126,7 +126,7 @@ export default class TorrentBot extends BaseCommand {
         const video = await Video.query()
           .where('is_deleted', false)
           .where('has_torrent', false)
-          .orderBy('id', 'desc')
+          .orderBy('release_date', 'desc')
           .first()
         if (!video) {
           isEnded = true
