@@ -53,6 +53,7 @@ export default class TorrentBot extends BaseCommand {
     const infoHashRow = panelRows[4]
 
     const seed = $(seederRow).find('.col-md-5 span').text()
+    if (seed === '0') return null
     const leech = $(leecherRow).find('.col-md-5 span').text()
     const size = $($(sizeRow).children().toArray()[1]).text()
     const infoHash = $(infoHashRow).find('kbd').text()
@@ -86,7 +87,6 @@ export default class TorrentBot extends BaseCommand {
 
       torrent.name = fileWithSizes[0].name
     }
-    console.log(torrent)
     return torrent
   }
 
@@ -101,6 +101,7 @@ export default class TorrentBot extends BaseCommand {
       const a = $(td).find('a')
       const url = a.attr('href')!
       const torrentData = await this.getTorrent(url)
+      if (!torrentData) continue
       await Torrent.create({
         videoId: video.id,
         name: torrentData.name,
