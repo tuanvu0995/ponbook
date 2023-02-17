@@ -3,7 +3,7 @@
     "torrent:bot": {
       "settings": {
         "loadApp": true,
-        "stayAlive": true
+        "stayAlive": false
       },
       "commandPath": "./commands/TorrentBot",
       "commandName": "torrent:bot",

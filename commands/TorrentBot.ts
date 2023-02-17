@@ -38,13 +38,14 @@ export default class TorrentBot extends BaseCommand {
      * you manually decide to exit the process. Don't forget to call
      * `node ace generate:manifest` afterwards.
      */
-    stayAlive: true,
+    stayAlive: false,
   }
 
   public async getTorrent(url: string): Promise<any> {
     const response = await axios.get(this.baseUrl + url)
     const $ = cheerio.load(response.data)
 
+    const torrentFilePath = $('.panel-footer.clearfix').find('a').eq(0).attr('href')
     const magnetUrl = $('a.card-footer-item').attr('href')!
     const panelRows = $('.panel-body').children().toArray()
     const seederRow = panelRows[1]
@@ -64,6 +65,7 @@ export default class TorrentBot extends BaseCommand {
       size: humanReadableToMb(size),
       infoHash,
       name: '',
+      torrentFile: this.baseUrl + torrentFilePath,
     }
 
     const torrentFileList = $('.torrent-file-list > ul > li').toArray()
@@ -106,14 +108,14 @@ export default class TorrentBot extends BaseCommand {
         videoId: video.id,
         name: torrentData.name,
         magnetUrl: torrentData.magnetUrl,
-        torrentFile: '',
+        torrentFile: torrentData.torrentFile,
         seed: torrentData.seed,
         leech: torrentData.leech,
         completed: 0,
         infoHash: torrentData.infoHash,
         size: torrentData.size,
       })
-      await delay(1000)
+      await delay(200)
     }
   }
 
