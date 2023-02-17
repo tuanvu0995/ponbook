@@ -5,8 +5,12 @@ Route.group(() => {
   Route.get('/', 'DashboardController.index').as('dashboard')
   Route.resource('videos', 'VideoManagersController')
   Route.resource('users', 'UserManagersController')
-  Route.resource('settings', 'SettingsController')
   Route.resource('pages', 'PagesController')
+
+  Route.get('settings/information', 'SettingsController.information').as('settings.information')
+  Route.get('settings', ({ response }) =>
+    response.redirect().toRoute('admin.settings.information')
+  ).as('settings.index')
 })
   .as('admin')
   .prefix('admin')
