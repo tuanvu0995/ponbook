@@ -58,7 +58,7 @@ export default class WebController {
     return response.redirect().toRoute('web.search', { searchId: videoFilter.uid })
   }
 
-  public async search({ request, params, view }: HttpContextContract) {
+  public async search({ request, params, view, response }: HttpContextContract) {
     const { page = 1, perPage = 30 } = request.qs()
     const videoFilter = await VideoFilter.query().where('uid', params.searchId).firstOrFail()
 
@@ -69,6 +69,10 @@ export default class WebController {
       .preload('casts')
       .orderBy('code', 'desc')
       .paginate(page, perPage)
+
+    if (videos.length === 1) {
+      return response.redirect().toRoute('videos.show', { uid: videos[0].uid })
+    }
 
     videos.baseUrl(`/search/${params.searchId}`)
     const title = `Search: ${videoFilter.key}`

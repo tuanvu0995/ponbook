@@ -95,6 +95,9 @@ export default class Video extends BaseModel {
   @column()
   public isDeleted: boolean
 
+  @column()
+  public hasTorrent: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

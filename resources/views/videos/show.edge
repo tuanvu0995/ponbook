@@ -158,13 +158,11 @@
                                 <span class="panel-icon">
                                     <i class="fa fa-file-video-o" aria-hidden="true"></i>
                                   </span>
-                                  <span>
-                                      <strong class="pr-5">{{ torrent.name }}</strong>
-                                      <span>{{ torrent.size }}MB</span>
-                                  </span>
+                                <strong>{{ torrent.name }}</strong>
                             </span>
 
                             <a class="is-flex is-justify-content-center is-align-items-center" href="{{ torrent.magnetUrl }}">
+                                <span class="tag mr-2">Seed {{ torrent.seed }} / Leech {{ torrent.leech }}</span>
                                 <span class="icon is-small is-hidden-mobile is-flex-tablet">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                 </span>
