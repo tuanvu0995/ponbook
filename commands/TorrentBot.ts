@@ -115,7 +115,7 @@ export default class TorrentBot extends BaseCommand {
         infoHash: torrentData.infoHash,
         size: torrentData.size,
       })
-      await delay(200)
+      await delay(1000)
     }
   }
 
