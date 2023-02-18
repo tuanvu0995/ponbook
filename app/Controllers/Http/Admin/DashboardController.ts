@@ -10,7 +10,7 @@ export default class DashboardController {
       .whereBetween('created_at', [now.startOf('day').toString(), now.endOf('day').toString()])
       .groupBy('path')
       .groupBy('ip_address')
-      .orderBy('id', 'desc')
+      .orderBy('updated_at', 'desc')
       .select('*')
       .sum('count as total')
       .paginate(page, limit)
