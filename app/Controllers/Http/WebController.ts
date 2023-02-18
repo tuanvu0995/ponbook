@@ -91,5 +91,4 @@ export default class WebController {
 
     return view.render('layouts/' + layout, { page })
   }
-
 }

@@ -264,5 +264,4 @@ export default class UploadsController {
 
     return response.json({ code: video.code })
   }
-
 }
