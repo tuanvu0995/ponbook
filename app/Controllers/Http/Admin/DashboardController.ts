@@ -14,9 +14,7 @@ export default class DashboardController {
       .sum('count as total')
       .paginate(page, limit)
 
-    console.log(visitors)
-
     visitors.baseUrl('/admin')
-    return view.render('admin/dashboard', { visitors })
+    return view.render('admin/dashboard', { visitors, today: now })
   }
 }
