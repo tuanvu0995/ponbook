@@ -85,6 +85,7 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^1.2.1",
     "cheerio": "^1.0.0-rc.12",
+    "device-detector-js": "^3.0.3",
     "limax": "^3.0.0",
     "luxon": "^3.1.1",
     "mjml": "^4.13.0",

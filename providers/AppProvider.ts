@@ -1,7 +1,9 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import { DateTime } from 'luxon'
+import DeviceDetector from 'device-detector-js'
 
 export default class AppProvider {
+  private deviceDetector = new DeviceDetector()
   constructor(protected app: ApplicationContract) {}
 
   public register() {
@@ -22,6 +24,13 @@ export default class AppProvider {
         imageName = imageName.replace('/uploads/', '')
       }
       return `/uploads/${imageName}`
+    })
+    View.global('deviceInfo', (userAgent: string) => {
+      const { client, os, device, bot } = this.deviceDetector.parse(userAgent)
+      if (bot) {
+        return `${bot?.name}/${bot?.category}`
+      }
+      return `${client?.name}/${os?.name} ${os?.version} (${device?.type}/${device?.brand}}`
     })
   }
 
