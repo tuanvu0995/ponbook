@@ -7,11 +7,13 @@
 | boot.
 |
 */
+import { DateTime } from 'luxon'
 import Event from '@ioc:Adonis/Core/Event'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Application from '@ioc:Adonis/Core/Application'
 import Mail from '@ioc:Adonis/Addons/Mail'
+import Visitor from 'App/Models/Visitor'
 
 Event.on('db:query', (query) => {
   if (Application.inProduction) {
@@ -35,4 +37,37 @@ Event.on('user:created', async (user) => {
       oTags: ['signup'],
     }
   )
+})
+
+Event.on('visitor:visit', async (request: any) => {
+  // check if path has file extension
+  if (request.url().includes('.')) {
+    return
+  }
+
+  console.log('visitor:visit')
+  const ipAddress = request.ip()
+  const path = request.url()
+
+  const now = DateTime.now()
+  const exists = await Visitor.query()
+    .where('ip_address', ipAddress)
+    .where('path', path)
+    // from 00:00:00 to 23:59:59
+    .whereBetween('created_at', [now.startOf('day').toString(), now.endOf('day').toString()])
+    .first()
+  if (exists) {
+    exists.count += 1
+    await exists.save()
+    return
+  }
+  const data = {
+    ip_address: request.ip(),
+    user_agent: request.header('user-agent'),
+    method: request.method(),
+    headers: JSON.stringify(request.headers()),
+    path: request.url(),
+    count: 1,
+  }
+  await Visitor.create(data)
 })
