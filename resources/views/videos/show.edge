@@ -12,8 +12,7 @@
                 @if(video.casts.length === 1)
                 <li><a href="{{ route("list.cast", { uid: video.casts[0].uid }) }}">{{ video.casts[0].name }}</a></li>
                 @end
-                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{
-                        video.code }}</a></li>
+                <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
             </ul>
         </nav>
         <div class="is-flex is-align-items-center">
@@ -93,8 +92,7 @@
                                     <td>
                                         @if(video.casts.length > 0)
                                         @each(cast in video.casts)
-                                        <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name
-                                            }}</a>&nbsp;&nbsp;
+                                        <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>&nbsp;&nbsp;
                                         @end
                                         @else
                                         ---
@@ -105,8 +103,7 @@
                                     <th class="has-text-right">Director</th>
                                     <td>
                                         @if(video.director)
-                                        <a href="{{ route("list.director", { uid: video.director.uid }) }}">{{
-                                            video.director.name }}</a>
+                                        <a href="{{ route("list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
                                         @else
                                         ---
                                         @end
@@ -117,8 +114,7 @@
                                     <td>
                                         <div class="tags">
                                             @each(tag in video.tags)
-                                            <a class="tag is-info is-light"
-                                                href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
+                                            <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
                                                 @end
                                         </div>
                                     </td>

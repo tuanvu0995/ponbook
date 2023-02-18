@@ -62,7 +62,7 @@
                             <span class="tag is-warning">Draft</span>
                             @end
                         </td>
-                        <th>{{ dateFromNow(page.createdAt) }}</th>
+                        <th>{{ humanReadableDate(page.createdAt) }}</th>
                         <td>
                             <a class="button is-small" href="{{ route('admin.pages.edit', { id: page.id }) }}">Edit</a>
                             <a class="button is-small is-danger js-modal-trigger" data-target="modal-js-{{ page.uid }}">Delete</a>

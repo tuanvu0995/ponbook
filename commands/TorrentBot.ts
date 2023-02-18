@@ -115,7 +115,6 @@ export default class TorrentBot extends BaseCommand {
 
     const rows = $('tr.default').toArray()
     for (const row of rows) {
-      // get td 2nd
       const td = $(row).find('td').eq(1)
       const a = $(td).find('a')
       const url = a.attr('href')!

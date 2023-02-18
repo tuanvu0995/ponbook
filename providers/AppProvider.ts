@@ -13,6 +13,9 @@ export default class AppProvider {
     View.global('dateFromNow', (value: DateTime) => {
       return value.toRelative()
     })
+    View.global('humanReadableDate', (value: DateTime) => {
+      return value.toLocaleString(DateTime.DATETIME_SHORT)
+    })
     View.global('imageUrl', (imageName: string) => {
       if (!imageName) return '/img/no-image.png'
       if (imageName.startsWith('/uploads/')) {

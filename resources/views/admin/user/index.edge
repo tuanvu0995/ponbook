@@ -40,7 +40,7 @@
                             <span class="tag is-dark">{{ user.accountStatus }}</span>
                             @end
                         </td>
-                        <th>{{ dateFromNow(user.createdAt) }}</th>
+                        <th>{{ humanReadableDate(user.createdAt) }}</th>
                     </tr>
                     @end
                 </tbody>
