@@ -40,7 +40,7 @@ Event.on('user:created', async (user) => {
 })
 
 Event.on('visitor:visit', async (request: any) => {
-  const excludes = ['/api', '/crawler', '/admin']
+  const excludes = ['/api', '/crawler', '/admin', '/account', '/login', '/logout', '/register']
   const isExcluded = excludes.some((exclude) => request.url().startsWith(exclude))
   // check if path has file extension
   if (request.url().includes('.') || isExcluded) {
