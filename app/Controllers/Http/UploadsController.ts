@@ -226,11 +226,20 @@ export default class UploadsController {
 
     const videos = await Video.query().where('code', code).where('is_deleted', false)
 
+    if (request.input('done')) {
+      for (const video of videos) {
+        video.hasTorrent = true
+        await video.save()
+      }
+      return response.json({ success: true })
+    }
+
     for (const video of videos) {
       await Torrent.create({
         videoId: video.id,
         name: request.input('name'),
         magnetUrl: request.input('magnetUrl'),
+        torrentFile: request.input('torrentFile'),
         seed: request.input('seed'),
         leech: request.input('leech'),
         completed: 0,
@@ -241,4 +250,19 @@ export default class UploadsController {
 
     return response.json({ success: true })
   }
+
+  public async nextCode({ response }: HttpContextContract) {
+    const video = await Video.query()
+      .where('is_deleted', false)
+      .where('has_torrent', false)
+      .orderBy('release_date', 'desc')
+      .first()
+
+    if (!video) {
+      return response.json({ code: null })
+    }
+
+    return response.json({ code: video.code })
+  }
+
 }
