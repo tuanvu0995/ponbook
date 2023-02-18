@@ -1,7 +1,22 @@
+import { DateTime } from 'luxon'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Visitor from 'App/Models/Visitor'
 
 export default class DashboardController {
-  public async index({ view }: HttpContextContract) {
-    return view.render('admin/dashboard')
+  public async index({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 20 } = request.qs()
+    const now = DateTime.now()
+    const visitors = await Visitor.query()
+      .whereBetween('created_at', [now.startOf('day').toString(), now.endOf('day').toString()])
+      .groupBy('path')
+      .orderBy('id')
+      .select('*')
+      .sum('count as total')
+      .paginate(page, limit)
+
+    console.log(visitors)
+
+    visitors.baseUrl('/admin')
+    return view.render('admin/dashboard', { visitors })
   }
 }

@@ -2,11 +2,46 @@
 @set('title', "Dashboard")
 
 @section('body')
-<section class="hero is-warning">
-    <div class="hero-body">
-        <h1 class="title is-3">
-            Dashboard
-        </h1>
+<section class="my-5">
+    <div class="container is-fluid">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"><a href="#" aria-current="page">Dashboard</a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+<section>
+    <div class="container is-fluid py-5">
+        <div class="table-container">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th><abbr title="ID">ID</abbr></th>
+                        <td>IP</td>
+                        <th>Path</th>
+                        <th>User-agent</th>
+                        <th>Total</th>
+                        <th><abbr title="CreatedAt">Date</abbr></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @each(visitor in visitors)
+                        <tr>
+                            <th>{{ visitor.id }}</th>
+                            <th>{{ visitor.ipAddress }}</th>
+                            <th>{{ visitor.path }}</th>
+                            <th>{{ visitor.userAgent }}</th>
+                            <th>{{ visitor.$extras.total }}</th>
+                            <th>{{ humanReadableDate(visitor.createdAt) }}</th>
+                        </tr>
+                        @end
+                    </tr>
+                </tbody>
+            </table>
+            @!component('partials/pagination', { paginator: visitors })
+        </div>
     </div>
 </section>
 @end
