@@ -14,6 +14,23 @@ function humanReadableToMb(size: string) {
 
 export default class TorrentBot extends BaseCommand {
   public baseUrl = 'https://sukebei.nyaa.si'
+  public proxy = {
+    protocol: 'http',
+    host: '69.243.253.67',
+    port: 80,
+    // auth: {
+    //   username: Env.get('PROXY_USERNAME'),
+    //   password: Env.get('PROXY_PASSWORD'),
+    // },
+  }
+
+  public options = {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',
+    },
+    // proxy: this.proxy,
+  }
 
   /**
    * Command name is used to run the command
@@ -42,7 +59,7 @@ export default class TorrentBot extends BaseCommand {
   }
 
   public async getTorrent(url: string): Promise<any> {
-    const response = await axios.get(this.baseUrl + url)
+    const response = await axios.get(this.baseUrl + url, this.options)
     const $ = cheerio.load(response.data)
 
     const torrentFilePath = $('.panel-footer.clearfix').find('a').eq(0).attr('href')
@@ -93,7 +110,7 @@ export default class TorrentBot extends BaseCommand {
   }
 
   public async search(video: Video) {
-    const response = await axios.get(`${this.baseUrl}/?f=0&c=0_0&q=${video.code}`)
+    const response = await axios.get(`${this.baseUrl}/?f=0&c=0_0&q=${video.code}`, this.options)
     const $ = cheerio.load(response.data)
 
     const rows = $('tr.default').toArray()
