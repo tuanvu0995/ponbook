@@ -13,10 +13,10 @@ export default class AppProvider {
   public async boot() {
     const View = await this.app.container.use('Adonis/Core/View')
     View.global('dateFromNow', (value: DateTime) => {
-      return value.toRelative()
+      return value.setZone('Asia/Ho_Chi_Minh').toRelative()
     })
     View.global('humanReadableDate', (value: DateTime) => {
-      return value.toLocaleString(DateTime.DATETIME_SHORT)
+      return value.setZone('Asia/Ho_Chi_Minh').toLocaleString(DateTime.DATETIME_SHORT)
     })
     View.global('imageUrl', (imageName: string) => {
       if (!imageName) return '/img/no-image.png'

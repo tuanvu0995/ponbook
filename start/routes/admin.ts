@@ -8,6 +8,10 @@ Route.group(() => {
   Route.resource('pages', 'PagesController')
 
   Route.get('settings/information', 'SettingsController.information').as('settings.information')
+  Route.get('settings/sitemap', 'SettingsController.sitemap').as('settings.sitemap')
+  Route.post('settings/sitemap/generate', 'SettingsController.generateSitemap').as(
+    'settings.generateSitemap'
+  )
   Route.get('settings', ({ response }) =>
     response.redirect().toRoute('admin.settings.information')
   ).as('settings.index')

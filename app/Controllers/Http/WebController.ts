@@ -1,21 +1,11 @@
 import { extname } from 'path'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Drive from '@ioc:Adonis/Core/Drive'
-import SitemapGenerator from 'App/Services/SitemapGenerator'
 import VideoFilter from 'App/Models/VideoFilter'
 import Video from 'App/Models/Video'
 import Page from 'App/Models/Page'
 
-let sitemap
-
 export default class WebController {
-  public async sitemap({ response }: HttpContextContract) {
-    response.header('Content-Type', 'application/xml')
-    if (sitemap) return response.send(sitemap)
-    sitemap = await SitemapGenerator()
-    return response.send(sitemap)
-  }
-
   public async image({ request, response }: HttpContextContract) {
     const location = `/images/${request.param('path')}`
 
