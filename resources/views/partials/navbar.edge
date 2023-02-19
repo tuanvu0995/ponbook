@@ -14,34 +14,34 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
         <a class="navbar-item" href="{{ route("community.feed") }}">
-          Community
+          {{ t('navbar.community')}}
         </a>
         <a class="navbar-item" href="{{ route("list.popular") }}">
-          Popular videos
+          {{ t('navbar.popular')}}
         </a>
   
         <a class="navbar-item" href="{{ route("list.newRelease") }}">
-          New release
+          {{ t('navbar.newRelease')}}
         </a>
   
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            More
+            {{ t('navbar.more')}}
           </a>
   
           <div class="navbar-dropdown">
             <a class="navbar-item" href="{{ route("list.recent") }}">
-              Recently Videos
+              {{ t('navbar.recently')}}
             </a>
             <a class="navbar-item" href="{{ route("list.newComments") }}">
-              New comments
+              {{ t('navbar.newComments')}}
             </a>
             <a class="navbar-item" href="{{ route("list.stars") }}">
-              Stars
+              {{ t('navbar.stars')}}
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="{{ route("home") }}">
-              Categories
+              {{ t('navbar.categories')}}
             </a>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <form id="search-form" action="{{ route('web.postSearch') }}" method="POST">
             <div class="field has-addons">
               <div class="control">
-                <input class="input is-small" type="text" placeholder="Search videos" name="keyword">
+                <input class="input is-small" type="text" placeholder="{{ t('navbar.search') }}" name="keyword">
               </div>
               <div class="control">
                 <a class="button is-primary is-small" onclick="document.getElementById('search-form').submit();">
@@ -64,7 +64,7 @@
           </form>
         </div>
         <div class="navbar-item">
-          <a class="button is-primary is-small" href="{{ route("posts.create") }}">Create post</a>
+          <a class="button is-primary is-small" href="{{ route("posts.create") }}">{{ t('navbar.createPost') }}</a>
         </div>
         @include('partials/navbar-notification')
         <div id="user-dropdown" class="navbar-item has-dropdown">
@@ -74,24 +74,24 @@
   
           <div class="navbar-dropdown is-right is-boxed">
             <a class="navbar-item" href="{{ route('account.profile') }}">
-              Profile
+              {{ t('navbar.profile')}}
             </a>
             @can('ManagerPolicy.management')
             <a class="navbar-item" href="{{ route('admin.dashboard') }}">
-              Admin Panel
+              {{ t('navbar.adminPanel')}}
             </a>
             @end
             <a class="navbar-item">
-              Setting
+              {{ t('navbar.settings')}}
             </a>
             <a class="navbar-item">
-              Help
+              {{ t('navbar.help')}}
             </a>
             <hr class="navbar-divider">
             <form id="logout-form" action="{{ route("auth.logout") }}" method="POST">
               {{ csrfField() }}
               <a class="navbar-item" href="javascript:{}" onclick="document.getElementById('logout-form').submit();">
-                Logout
+                {{ t('navbar.logout')}}
               </a>
             </form>
           </div>
