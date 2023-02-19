@@ -230,8 +230,27 @@ export default class ListController {
 
     stars.baseUrl(`/stars`)
 
-    console.log(stars)
-
     return view.render('stars', { stars, title, description })
+  }
+
+  public async categories({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 60, keyword } = request.qs()
+    const key = keyword ? keyword.trim() : ''
+    const tags = await Tag.query()
+      .where((qs) => {
+        if (key) {
+          qs.whereRaw('LOWER(name) LIKE LOWER(?)', [`%${key}%`])
+        }
+      })
+      .orderBy('name', 'asc')
+      .withCount('videos')
+      .paginate(page, limit)
+
+    const title = 'Categories'
+    const description = `List of all categories`
+
+    tags.baseUrl(`/categories`)
+
+    return view.render('category', { categories: tags, title, description, keyword })
   }
 }
