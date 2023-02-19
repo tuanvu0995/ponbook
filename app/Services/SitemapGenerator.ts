@@ -10,8 +10,8 @@ async function getVideos() {
   return videos.map((video) => {
     return {
       url: `/v/${video.uid}`,
-      changefreq: 'daily',
-      priority: 0.3,
+      changefreq: 'monthly',
+      priority: 0.1,
     }
   })
 }
@@ -21,7 +21,7 @@ async function getTags() {
   return tags.map((tag) => {
     return {
       url: `/tag/${tag.slug}`,
-      changefreq: 'daily',
+      changefreq: 'weekly',
       priority: 0.3,
     }
   })
@@ -32,8 +32,8 @@ async function getCasts() {
   return casts.map((cast) => {
     return {
       url: `/cast/${cast.uid}`,
-      changefreq: 'daily',
-      priority: 0.3,
+      changefreq: 'weekly',
+      priority: 0.2,
     }
   })
 }
