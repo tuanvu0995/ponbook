@@ -1,6 +1,12 @@
+User-agent: SemrushBot-SA
+User-agent: SemrushBot-BA
+User-agent: SemrushBot-SI
+User-agent: SemrushBot-SWA
+User-agent: SemrushBot-BM
+User-agent: SemrushBot-CT
+Disallow: /
+
 User-agent: *
 Allow: /
 Sitemap: https://ponbook.net/sitemap.xml
-
-User-agent: SemrushBot
-Disallow: /
+Disallow: /search/
