@@ -19,4 +19,20 @@ export default class SettingsController {
     session.flash('success', 'Sitemap has been generated')
     return response.redirect().toRoute('admin.settings.sitemap')
   }
+
+  public async robots({ view }: HttpContextContract) {
+    const robotsPath = Application.publicPath('robots.txt')
+    const robots = fs.readFileSync(robotsPath, 'utf8')
+    return view.render('admin/settings/robots', { robots })
+  }
+
+  public async saveRobot({ request, response, session }: HttpContextContract) {
+    const robots = request.input('robots')
+    const robotsPath = Application.publicPath('robots.txt')
+    console.log(robots)
+    fs.writeFileSync(robotsPath, robots)
+
+    session.flash('success', 'Robots.txt has been generated')
+    return response.redirect().toRoute('admin.settings.robots')
+  }
 }

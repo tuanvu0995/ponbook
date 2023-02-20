@@ -45,7 +45,7 @@
                 </p>
                 <ul class="menu-list">
                   <li><a class="{{ request.matchesRoute('admin.settings.information') ? 'is-active' : '' }}" href="{{ route("admin.settings.information") }}">Information</a></li>
-                  <li><a class="{{ request.matchesRoute('account.password') ? 'is-active' : '' }}" href="{{ route("account.password") }}">SEO</a></li>
+                  <li><a class="{{ request.matchesRoute('admin.settings.robots') ? 'is-active' : '' }}" href="{{ route("admin.settings.robots") }}">Robots</a></li>
                   <li><a class="{{ request.matchesRoute('admin.settings.sitemap') ? 'is-active' : '' }}" href="{{ route("admin.settings.sitemap") }}">Sitemap</a></li>
                 </ul>
                 <p class="menu-label">
