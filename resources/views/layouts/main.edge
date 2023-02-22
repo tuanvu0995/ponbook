@@ -10,9 +10,8 @@
 
     @!include('partials/meta/keyword')
   
-    <meta name="twitter:card" content="{{ description }}" /> 
-    <meta name="twitter:site" content="ponbook.net" />
-    <meta name="twitter:creator" content="Ponbook" />
+    @!include('partials/meta/og')
+    @!include('partials/meta/twitter')
 
     <title>{{ title || "Ponbook" }} - Ponbook.net</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" defer/>

@@ -58,7 +58,20 @@ export default class VideoController {
       isFavorite = favorite.length > 0
     }
 
-    return view.render('videos/show', { video, comments, relatedVideos, keyword, isFavorite })
+    const title = video.title
+    const description = video.description
+    const metaImage = video.image
+
+    return view.render('videos/show', {
+      title,
+      description,
+      metaImage,
+      video,
+      comments,
+      relatedVideos,
+      keyword,
+      isFavorite,
+    })
   }
 
   public async create({ response, auth }: HttpContextContract) {
