@@ -4,7 +4,7 @@ import Visitor from 'App/Models/Visitor'
 
 export default class DashboardController {
   public async index({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 20, bot = 'all' } = request.qs()
+    const { page = 1, limit = 30, bot = 'all' } = request.qs()
     const now = DateTime.now()
     const visitors = await Visitor.query()
       .where((qs) => {

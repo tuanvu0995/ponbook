@@ -23,6 +23,10 @@
         <a class="navbar-item" href="{{ route("list.newRelease") }}">
           {{ t('navbar.newRelease')}}
         </a>
+
+        <a class="navbar-item" href="{{ route("list.recent") }}">
+          {{ t('navbar.recently')}}
+        </a>
   
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
@@ -30,9 +34,7 @@
           </a>
   
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="{{ route("list.recent") }}">
-              {{ t('navbar.recently')}}
-            </a>
+            
             <a class="navbar-item" href="{{ route("list.newComments") }}">
               {{ t('navbar.newComments')}}
             </a>
