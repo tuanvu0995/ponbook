@@ -47,7 +47,6 @@ Event.on('visitor:visit', async (request: any) => {
     return
   }
 
-  console.log('visitor:visit')
   const ipAddress = request.ip()
   const path = request.url()
 

@@ -16,6 +16,27 @@
         <div class="table-container p-4">
             <h2 class="title">Today: {{ humanReadableDate(today) }}</h2>
             <h3 class="subtitle">Total visitors: {{ totalVisitors }}</h3>
+            <form id="dashboard-filter" action="{{ route('admin.dashboard') }}" method="GET">
+                <div class="select">
+                    <select name="bot" onchange="document.getElementById('dashboard-filter').submit();">
+                        <option value="all"
+                            @if(withBot === 'all')
+                                selected
+                            @end
+                        >All</option>
+                        <option value="yes"
+                            @if(withBot === 'yes')
+                                selected
+                            @end
+                        >With bot</option>
+                        <option value="no"
+                        @if(withBot === 'no')
+                            selected
+                        @end
+                        >No bot</option>
+                    </select>
+                </div>
+            </form>
             <table class="table is-fullwidth">
                 <thead>
                     <tr>
@@ -30,15 +51,15 @@
                 <tbody>
                     <tr>
                         @each(visitor in visitors)
-                        <tr>
-                            <th>{{ visitor.id }}</th>
-                            <th>{{ visitor.ipAddress }}</th>
-                            <th>{{ visitor.path }}</th>
-                            <th>{{ deviceInfo(visitor.userAgent) }}</th>
-                            <th>{{ visitor.$extras.total }}</th>
-                            <th>{{ humanReadableDate(visitor.createdAt) }}</th>
-                        </tr>
-                        @end
+                    <tr>
+                        <th>{{ visitor.id }}</th>
+                        <th>{{ visitor.ipAddress }}</th>
+                        <th>{{ visitor.path }}</th>
+                        <th>{{ deviceInfo(visitor.userAgent) }}</th>
+                        <th>{{ visitor.$extras.total }}</th>
+                        <th>{{ humanReadableDate(visitor.createdAt) }}</th>
+                    </tr>
+                    @end
                     </tr>
                 </tbody>
             </table>

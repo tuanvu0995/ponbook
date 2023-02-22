@@ -1,8 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
+import DeviceDetector from 'device-detector-js'
 
 export default class Visitor extends BaseModel {
+  private static deviceDetector = new DeviceDetector()
+
   @column({ isPrimary: true })
   public id: number
 
@@ -27,6 +30,9 @@ export default class Visitor extends BaseModel {
   @column()
   public count: number
 
+  @column()
+  public isBot: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -36,5 +42,11 @@ export default class Visitor extends BaseModel {
   @beforeCreate()
   public static async generateUid(visitor: Visitor) {
     visitor.uid = nanoid()
+  }
+
+  @beforeSave()
+  public static async checkIsBot(visitor: Visitor) {
+    const { bot } = this.deviceDetector.parse(visitor.userAgent)
+    if (bot) visitor.isBot = true
   }
 }
