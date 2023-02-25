@@ -53,7 +53,14 @@
                         @each(visitor in visitors)
                     <tr>
                         <th>{{ visitor.id }}</th>
-                        <th>{{ visitor.ipAddress }}</th>
+                        <th style="text-transform:uppercase">
+                            @if(visitor.country && visitor.country !== 'unknown')
+                            <img width="20px" src="/flags/{{visitor.country}}.svg"/>
+                            {{ visitor.country }}
+                            /
+                            @end
+                            {{ visitor.ipAddress }}
+                        </th>
                         <th>{{ visitor.path }}</th>
                         <th>{{ deviceInfo(visitor.userAgent) }}</th>
                         <th>{{ visitor.$extras.total }}</th>

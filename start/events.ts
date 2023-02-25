@@ -69,6 +69,7 @@ Event.on('visitor:visit', async (request: any) => {
     headers: JSON.stringify(request.headers()),
     path: request.url(),
     count: 1,
+    country: request.header('cf-ipcountry')?.toLocaleLowerCase() || 'unknown',
   }
   await Visitor.create(data)
 })

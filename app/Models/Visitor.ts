@@ -33,6 +33,9 @@ export default class Visitor extends BaseModel {
   @column()
   public isBot: boolean
 
+  @column()
+  public country: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

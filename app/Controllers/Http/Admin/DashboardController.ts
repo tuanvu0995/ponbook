@@ -20,7 +20,6 @@ export default class DashboardController {
       .sum('count as total')
       .paginate(page, limit)
 
-
     const queryObject = request.qs() || {}
     visitors.baseUrl('/admin').queryString(queryObject)
     const totalVisitors = visitors.total
