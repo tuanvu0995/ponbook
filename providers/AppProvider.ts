@@ -26,32 +26,32 @@ export default class AppProvider {
       return `/uploads/${imageName}`
     })
     View.global('deviceInfo', (userAgent: string) => {
+      if (!userAgent) return 'None'
       const { client, os, device, bot } = this.deviceDetector.parse(userAgent)
       if (bot) return `${bot?.name}/${bot?.category}`
       if (!os) return userAgent
 
       const arr: string[] = []
+
       if (client) {
-        const clientInfo: string[] = [client.name]
-        if (client?.version) {
-          clientInfo.push(`/${client?.version}`)
-        }
-        arr.push(`${clientInfo.join('')}`)
+        arr.push(`${client.name}`)
       }
+
+      arr.push(`(${os?.name}/${os?.version})`)
+
       if (device) {
         const deviceInfo: string[] = []
         if (device?.type) {
           deviceInfo.push(`${device?.type}`)
         }
         if (device?.brand) {
-          deviceInfo.push(`/${device?.brand}`)
+          deviceInfo.push(`${device?.brand}`)
         }
         if (deviceInfo.length) {
-          arr.push(`|${deviceInfo.join('')}`)
+          arr.push(`${deviceInfo.join('/')}`)
         }
       }
-      arr.push(`(${os?.name}/${os?.version})`)
-      return arr.join('')
+      return arr.join(' ')
     })
   }
 
