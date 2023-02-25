@@ -34,13 +34,12 @@ export default class HomeController {
       await video.preloadImages()
     }
 
-    // const posts = await Post.query()
-    //   .preload('user')
-    //   .where('is_published', true)
-    //   .where('is_deleted', false)
-    //   .orderBy('updated_at', 'desc')
-    //   .limit(6)
+    const recentVideos = await Video.query()
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('created_at', 'desc')
+      .limit(12)
 
-    return view.render('index', { collections, newlyUpdatedVideos, posts: [] })
+    return view.render('index', { collections, newlyUpdatedVideos, posts: [], recentVideos })
   }
 }
