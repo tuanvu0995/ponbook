@@ -25,7 +25,8 @@ export default class DashboardController {
       .orderBy('updated_at', 'desc')
       .sum('count as total')
 
-    visitors.baseUrl('/admin')
+    const queryObject = request.qs() || {}
+    visitors.baseUrl('/admin').queryString(queryObject)
     const totalVisitors = results[0].$extras.total
     return view.render('admin/dashboard', { visitors, today: now, totalVisitors, withBot: bot })
   }
