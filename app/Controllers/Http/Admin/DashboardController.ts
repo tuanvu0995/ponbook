@@ -20,14 +20,10 @@ export default class DashboardController {
       .sum('count as total')
       .paginate(page, limit)
 
-    const results = await Visitor.query()
-      .whereBetween('created_at', [now.startOf('day').toString(), now.endOf('day').toString()])
-      .orderBy('updated_at', 'desc')
-      .sum('count as total')
 
     const queryObject = request.qs() || {}
     visitors.baseUrl('/admin').queryString(queryObject)
-    const totalVisitors = results[0].$extras.total
+    const totalVisitors = visitors.total
     return view.render('admin/dashboard', { visitors, today: now, totalVisitors, withBot: bot })
   }
 }
