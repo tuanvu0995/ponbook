@@ -48,7 +48,7 @@ Event.on('visitor:visit', async (request: any) => {
   }
 
   const ipAddress = request.ip()
-  const path = request.url()
+  const path = request.url(true)
 
   const now = DateTime.now()
   const exists = await Visitor.query()
@@ -67,7 +67,7 @@ Event.on('visitor:visit', async (request: any) => {
     user_agent: request.header('user-agent'),
     method: request.method(),
     headers: JSON.stringify(request.headers()),
-    path: request.url(),
+    path,
     count: 1,
     country: request.header('cf-ipcountry')?.toLocaleLowerCase() || 'unknown',
   }

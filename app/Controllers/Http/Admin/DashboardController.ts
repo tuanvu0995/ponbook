@@ -13,8 +13,7 @@ export default class DashboardController {
         }
       })
       .whereBetween('created_at', [now.startOf('day').toString(), now.endOf('day').toString()])
-      .groupBy('path')
-      .groupBy('ip_address')
+      .groupBy(['ip_address', 'path'])
       .orderBy('updated_at', 'desc')
       .select('*')
       .sum('count as total')
