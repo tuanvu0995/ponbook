@@ -32,6 +32,11 @@
       "js": [
         "http://localhost:8080/assets/react-upload-form.js"
       ]
+    },
+    "player": {
+      "js": [
+        "http://localhost:8080/assets/player.js"
+      ]
     }
   }
 }
