@@ -26,6 +26,7 @@
                 </span>
                 <span>Favorite</span>
             </a>
+            @if(auth.isLoggedIn)
             <div class="dropdown is-right">
                 <div class="dropdown-trigger">
                     <a class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -58,6 +59,7 @@
                     </div>
                 </div>
             </div>
+            @end
         </div>
     </div>
 </section>
@@ -172,11 +174,7 @@
                 @include('videos/comment')
             </div>
             <div class="column is-2">
-                <div class="pb-6">
-                    <a title="Only the hottest Asian bunnies!" href="https://prtord.com/?siteId=las&cobrandId=&superCategoryName=girls&categoryName=&pageName=listpage&prm[psid]=vulai2022&prm[pstool]=201_41&prm[psprogram]=revs&prm[campaign_id]=&subAffId={SUBAFFID}" align="center" target="_blank">
-                    <img class="img" alt="Only the hottest Asian bunnies!" src="https://pt-static1.ptwmstcnt.com/npt/banner/s1_livesexasian/250xx250.jpg?sid=cdb3078d&psid=vulai2022&pstool=201_41&psprogram=revs&campaign_id=" border="0" />
-                    </a>
-                </div>
+
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
                     <div class="py-5">
                         @each(video in relatedVideos)

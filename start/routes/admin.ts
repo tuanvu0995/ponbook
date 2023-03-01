@@ -17,6 +17,11 @@ Route.group(() => {
   Route.get('settings/robots', 'SettingsController.robots').as('settings.robots')
   Route.post('settings/robots/save', 'SettingsController.saveRobot').as('settings.saveRobot')
 
+  Route.get('settings/pop-under', 'SettingsController.popUnder').as('settings.popUnder')
+  Route.post('settings/pop-under/save', 'SettingsController.savePopUnder').as(
+    'settings.savePopUnder'
+  )
+
   Route.get('settings', ({ response }) =>
     response.redirect().toRoute('admin.settings.information')
   ).as('settings.index')

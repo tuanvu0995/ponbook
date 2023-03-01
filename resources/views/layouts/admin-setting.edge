@@ -53,7 +53,7 @@
                 </p>
                 <ul class="menu-list">
                   <li><a>Banner</a></li>
-                  <li><a>Popover</a></li>
+                  <li><a class="{{ request.matchesRoute('admin.settings.popUnder') ? 'is-active' : '' }}" href="{{ route("admin.settings.popUnder") }}">Popunder</a></li>
                   <li><a>Site</a></li>
                   <li><a>Link</a></li>
                 </ul>

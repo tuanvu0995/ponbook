@@ -4,6 +4,7 @@
   "assets/common.js": "http://localhost:8080/assets/common.js",
   "assets/jQuery.js": "http://localhost:8080/assets/jQuery.js",
   "assets/quill.js": "http://localhost:8080/assets/quill.js",
+  "assets/popup.js": "http://localhost:8080/assets/popup.js",
   "assets/post-comment.js": "http://localhost:8080/assets/post-comment.js",
   "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
   "assets/images/logo.svg": "http://localhost:8080/assets/images/logo.80d62872.svg",
