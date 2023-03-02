@@ -5,7 +5,7 @@ Route.get('/uploads/images/*', 'WebController.image').as('image')
 Route.get('/v/:uid', 'VideoController.show').as('videos.show')
 Route.post('/search', 'WebController.postSearch').as('web.postSearch')
 Route.get('/search/:searchId', 'WebController.search').as('web.search')
-Route.get('/pop-link', 'WebController.popLink').as('web.popLink')
+Route.get('/pop-link.js', 'WebController.popLink').as('web.popLink')
 
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')
