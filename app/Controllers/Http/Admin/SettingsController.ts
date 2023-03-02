@@ -61,4 +61,8 @@ export default class SettingsController {
     session.flash('success', 'PopUnder settings has been saved')
     return response.redirect().toRoute('admin.settings.popUnder')
   }
+
+  public async data({ view }) {
+    return view.render('admin/settings/data')
+  }
 }
