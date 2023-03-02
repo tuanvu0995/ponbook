@@ -14,11 +14,6 @@ Light.Popup = {
   popName: 'DavidDo-LightPopup',
   alwaysPop: false, // refresh = new pop
   onNewTab: true,
-  /**
-   * 1: window onclick,
-   * 2: window onload -> document onclick
-   */
-  eventType: 1,
   defaults: {
     width: window.screen.width,
     height: window.screen.height,
@@ -43,7 +38,7 @@ Light.Popup = {
     var optionsOriginal = (options = options || {})
     var me = this
     var popName = me.popName + '_' + me.__counter++
-    var keys = ['onNewTab', 'eventType', 'cookieExpires', 'alwaysPop']
+    var keys = ['onNewTab', 'cookieExpires', 'alwaysPop']
     for (var i in keys) {
       var key = keys[i]
       if (typeof options[key] !== 'undefined') {
@@ -73,7 +68,7 @@ Light.Popup = {
     }
     params = params.join(',')
     var executed = false
-    var execute = function () {
+    var execute = function (clickedLink) {
       if (me.cookie(popName) === null && !executed) {
         // Jul 5, 2013 - Anti Google Chrome Blocker
         if (
@@ -86,8 +81,7 @@ Light.Popup = {
         }
         executed = true
         if (onNewTab) {
-          var currentUrl = window.location.href
-          var w = window.open(currentUrl, popName)
+          var w = window.open(clickedLink, '_blank')
           if (w) {
             window.location.href = link
           }
@@ -109,22 +103,22 @@ Light.Popup = {
         }
       }
     }
-    // Jul 25, 2013 - Fixed bugs on IE 6,7,8
-    if (eventType === 2 || navigator.userAgent.match(/msie\s+(6|7|8)/i)) {
-      if (!window.addEventListener) {
-        window.attachEvent('onload', function () {
-          document.body.attachEvent('onclick', execute)
-        })
-      } else {
-        window.addEventListener('load', function () {
-          document.body.addEventListener('click', execute)
-        })
-      }
-    } else if (eventType === 1) {
-      if (!window.addEventListener) {
-        window.attachEvent('onclick', execute)
-      } else {
-        window.addEventListener('click', execute)
+
+    if (me.cookie(popName) === null && !executed) {
+      const pageLinks = document.querySelectorAll('a')
+      console.log('page links', pageLinks.length)
+      for (let pageLink of pageLinks) {
+        if (!pageLink.href) continue
+        const onClickHandler = (e) => {
+          execute(pageLink.href)
+        }
+        if (!pageLink.addEventListener) {
+          pageLink.setAttribute('target', '_blank')
+          pageLink.attachEvent('onclick', onClickHandler)
+        } else {
+          pageLink.setAttribute('target', '_blank')
+          pageLink.addEventListener('click', onClickHandler)
+        }
       }
     }
   },
