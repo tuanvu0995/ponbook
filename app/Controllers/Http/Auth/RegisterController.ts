@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
 import User from 'App/Models/User'
-import Event from '@ioc:Adonis/Core/Event'
+// import Event from '@ioc:Adonis/Core/Event'
 
 export default class RegisterController {
   public async index({ view }: HttpContextContract) {
