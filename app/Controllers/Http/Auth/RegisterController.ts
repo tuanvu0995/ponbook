@@ -15,7 +15,8 @@ export default class RegisterController {
 
     await auth.use('web').login(user)
 
-    await Event.emit('user:created', user)
+    // todo: fix email sender issue to uncomment this line
+    // await Event.emit('user:created', user)
 
     return response.redirect().toRoute('home')
   }

@@ -17,7 +17,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" defer/>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" type="text/css" defer>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
-    <script src="{{ asset('assets/jQuery.js') }}"></script> 
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script> 
     <script defer src="{{ asset('assets/common.js') }}"></script> 
     @if(env('NODE_ENV') == 'production')
     <!-- Google tag (gtag.js) -->
@@ -50,6 +50,8 @@
     <script src="{{ asset('assets/app.js') }}"></script>
     @!section('script-links')
     @!section('scripts')
+    @if(env('NODE_ENV') == 'production')
     <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fwww.liquidfire.mobi%2Fredirect%3Fsl%3D16%26t%3Ddr%26track%3D185704_286256%26siteid%3D286256"></script>
+    @end
   </body>
 </html>

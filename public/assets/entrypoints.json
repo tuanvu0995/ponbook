@@ -13,16 +13,6 @@
         "http://localhost:8080/assets/common.js"
       ]
     },
-    "jQuery": {
-      "js": [
-        "http://localhost:8080/assets/jQuery.js"
-      ]
-    },
-    "quill": {
-      "js": [
-        "http://localhost:8080/assets/quill.js"
-      ]
-    },
     "popup": {
       "js": [
         "http://localhost:8080/assets/popup.js"

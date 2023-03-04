@@ -58,7 +58,10 @@ export default class VideoController {
       isFavorite = favorite.length > 0
     }
 
-    const title = video.title
+    const castNames = video.casts.map((cast) => cast.name).join(', ')
+
+    let title = video.code
+    if (castNames) title += ` - ${castNames}`
     const description = video.description
     const metaImage = video.image
 
