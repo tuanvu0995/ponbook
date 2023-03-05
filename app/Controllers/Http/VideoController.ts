@@ -44,7 +44,8 @@ export default class VideoController {
       .whereIn('video_tags.tag_id', tagIds)
       .where('videos.id', '!=', video.id)
       .groupBy('videos.id')
-      .limit(6)
+      .orderByRaw('RAND()')
+      .limit(8)
 
     const keyword = [
       video.code,
