@@ -18,6 +18,9 @@ export default class AppProvider {
     View.global('humanReadableDate', (value: DateTime) => {
       return value.setZone('Asia/Ho_Chi_Minh').toLocaleString(DateTime.DATETIME_SHORT)
     })
+    View.global('dateFormat', (value: DateTime) => {
+      return value.toLocaleString()
+    })
     View.global('imageUrl', (imageName: string) => {
       if (!imageName) return '/img/no-image.png'
       if (imageName.startsWith('/uploads/')) {
