@@ -50,8 +50,14 @@
     <script src="{{ asset('assets/app.js') }}"></script>
     @!section('script-links')
     @!section('scripts')
-    @if(env('NODE_ENV') == 'production')
-    <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fwww.liquidfire.mobi%2Fredirect%3Fsl%3D16%26t%3Ddr%26track%3D185704_286256%26siteid%3D286256"></script>
+    @if(env('NODE_ENV') === 'production')
+    <script async defer src="/js/show-promote.min.js"></script>
+    <script>
+      var popURL = "https://www.liquidfire.mobi/redirect?sl=16&t=dr&track=185704_286256&siteid=286256";
+      function onPopUnderLoaded() {
+          this.useTabUnder(true).frequency(1, 0).pop(popURL);
+      }
+      </script>
     @end
   </body>
 </html>
