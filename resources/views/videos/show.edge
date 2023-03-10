@@ -172,8 +172,12 @@
                 @include('videos/comment')
             </div>
             <div class="column is-3">
-                <div class="pb-6">
-                    @include('components/live-player')
+                <div
+                    id="live-player"
+                    class="mb-4"
+                    style="border-radius: 6px"
+                    data-stream-url="https://edge-hls.doppiocdn.com/hls/93397001/master/93397001_480p.m3u8"
+                    data-model-name="Moon_9x">
                 </div>
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
                     <div class="py-5">
@@ -250,50 +254,7 @@ video::fullscreen { display: none;}
 
 <script src="{{ asset('assets/player.js') }}"></script>
 <script>
-    var video = document.getElementById('video');
-    var videoSrc = 'https://edge-hls.doppiocdn.com/hls/100501705/master/100501705.m3u8';
-    //
-    // First check for native browser HLS support
-    //
-
-    if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = videoSrc;
-      //
-      // If no native HLS support, check if HLS.js is supported
-      //
-    } else if (Hls.isSupported()) {
-      var hls = new Hls();
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-      const videoControls = document.getElementById('video-controls');
-
-        const videoWorks = !!document.createElement('video').canPlayType;
-        if (videoWorks) {
-            video.controls = false;
-            video.play()
-            // videoControls.classList.remove('hidden');
-        }
-
-      const playButton = document.getElementById('video-playbutton');
-      // Add functions here
-
-        // togglePlay toggles the playback state of the video.
-        // If the video playback is paused or ended, the video is played
-        // otherwise, the video is paused
-        function togglePlay() {
-            if (video.paused || video.ended) {
-                video.play();
-            } else {
-                video.pause();
-            }
-        }
-        playButton.addEventListener('click', togglePlay);
-
-        const volumeMute = document.getElementById('video-mutebutton');
-        function toggleMute() {
-            video.muted = !video.muted;
-        }
-        volumeMute.addEventListener('click', toggleMute);
-    }
-  </script>
+    const liveContainer = document.getElementById('live-player')
+    initLivePlayer(liveContainer, { refId: "81bf055de32f51a4ed8de64280fdd8e4a5170fd0f6150df2c7ce2da1660a0693", lang: "{{ i18n.locale }}" })
+</script>
 @end
