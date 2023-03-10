@@ -65,4 +65,10 @@ export default class SettingsController {
   public async data({ view }) {
     return view.render('admin/settings/data')
   }
+
+  public async headerAndFooter({ view }: HttpContextContract) {
+    const header = await Setting.query().where('key', 'header').first()
+    const footer = await Setting.query().where('key', 'footer').first()
+    return view.render('admin/settings/headerAndFooter', { header, footer })
+  }
 }
