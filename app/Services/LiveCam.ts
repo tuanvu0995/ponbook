@@ -1,16 +1,16 @@
-const CATEGORIES = [
-  'girl',
-  'hot_flirt',
-  'soul_mate',
-  'mature',
-  'fetish',
-  'boy',
-  'gay',
-  'transgender',
-  'lesbian',
-  'couple',
-  'freemium',
-]
+// const CATEGORIES = [
+//   'girl',
+//   'hot_flirt',
+//   'soul_mate',
+//   'mature',
+//   'fetish',
+//   'boy',
+//   'gay',
+//   'transgender',
+//   'lesbian',
+//   'couple',
+//   'freemium',
+// ]
 
 class LiveCamAds {
   private baseUrl: string = 'https://wmpuem.com/pu'
