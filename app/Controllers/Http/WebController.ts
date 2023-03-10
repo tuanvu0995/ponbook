@@ -1,4 +1,5 @@
 import { extname } from 'path'
+import axios from 'axios'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Drive from '@ioc:Adonis/Core/Drive'
 import VideoFilter from 'App/Models/VideoFilter'
@@ -80,5 +81,14 @@ export default class WebController {
     const layout = page.layout || 'default'
 
     return view.render('layouts/' + layout, { page })
+  }
+
+  public async popLink({ response }: HttpContextContract) {
+    const rsp = await axios.get(
+      'https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fwww.liquidfire.mobi%2Fredirect%3Fsl%3D16%26t%3Ddr%26track%3D185704_286256%26siteid%3D286256'
+    )
+
+    response.header('content-type', 'text/javascript')
+    return response.send(rsp.data)
   }
 }

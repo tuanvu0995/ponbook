@@ -44,7 +44,8 @@ export default class VideoController {
       .whereIn('video_tags.tag_id', tagIds)
       .where('videos.id', '!=', video.id)
       .groupBy('videos.id')
-      .limit(6)
+      .orderByRaw('RAND()')
+      .limit(8)
 
     const keyword = [
       video.code,
@@ -58,7 +59,10 @@ export default class VideoController {
       isFavorite = favorite.length > 0
     }
 
-    const title = video.title
+    const castNames = video.casts.map((cast) => cast.name).join(', ')
+
+    let title = video.code
+    if (castNames) title += ` - ${castNames}`
     const description = video.description
     const metaImage = video.image
 

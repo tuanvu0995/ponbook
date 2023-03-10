@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import SitemapGenerator from 'App/Services/SitemapGenerator'
 import Application from '@ioc:Adonis/Core/Application'
+import Setting from 'App/Models/Setting'
 
 export default class SettingsController {
   public async information({ view }: HttpContextContract) {
@@ -34,5 +35,40 @@ export default class SettingsController {
 
     session.flash('success', 'Robots.txt has been generated')
     return response.redirect().toRoute('admin.settings.robots')
+  }
+
+  public async popUnder({ view }: HttpContextContract) {
+    const popUnderSettings = await Setting.query().where('key', 'popunder')
+    return view.render('admin/settings/popunder', { popUnderSettings })
+  }
+
+  public async savePopUnder({ request, response, session }: HttpContextContract) {
+    const id = request.input('id')
+    const key = request.input('key')
+    const value = request.input('value')
+
+    if (id) {
+      const popUnderSetting = await Setting.findBy('id', id)
+      if (popUnderSetting) {
+        popUnderSetting.key = key
+        popUnderSetting.value = value
+        await popUnderSetting.save()
+      }
+    } else {
+      await Setting.create({ key, value, type: 'string' })
+    }
+
+    session.flash('success', 'PopUnder settings has been saved')
+    return response.redirect().toRoute('admin.settings.popUnder')
+  }
+
+  public async data({ view }) {
+    return view.render('admin/settings/data')
+  }
+
+  public async headerAndFooter({ view }: HttpContextContract) {
+    const header = await Setting.query().where('key', 'header').first()
+    const footer = await Setting.query().where('key', 'footer').first()
+    return view.render('admin/settings/headerAndFooter', { header, footer })
   }
 }

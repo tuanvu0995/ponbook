@@ -9,7 +9,7 @@ permissions: {}
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     permissions:
       contents: write # to create release (changesets/action)
       pull-requests: write # to create pull request (changesets/action)
@@ -35,6 +35,16 @@ jobs:
         run: npm run build
       
       - name: Deploy application
-        run: |
-          chmod +x ./scripts/deploy.sh
-          ./scripts/deploy.sh
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: 'app/'
+          ARGS: "-r"
+          SOURCE: "build/"
+          EXCLUDE: "/dist/, /node_modules/"
+          SCRIPT_AFTER: |
+            whoami
+            npm ci --production
+            pm2 reload ponbook --update-env

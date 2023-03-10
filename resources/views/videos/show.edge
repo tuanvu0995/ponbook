@@ -1,12 +1,10 @@
 @layout('layouts/main')
-@set('title', video.title)
-@set('description', video.description)
 @set('bodyClass', "video-show")
 
 @section('body')
 <section>
-    <div class="container is-fluid is-flex is-justify-content-space-between	is-align-items-center">
-        <nav class="breadcrumb py-5 is-flex-grow-1" aria-label="breadcrumbs">
+    <div class="container is-fluid is-flex is-justify-content-space-between is-flex-direction-column">
+        <nav class="breadcrumb py-3 is-flex-grow-1 mb-0" aria-label="breadcrumbs">
             <ul>
                 <li><a href="{{ route("home") }}">Home</a></li>
                 @if(video.casts.length === 1)
@@ -15,7 +13,7 @@
                 <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
             </ul>
         </nav>
-        <div class="is-flex is-align-items-center">
+        <div class="is-flex is-justify-content-right pb-3">
             <a class="button is-danger is-light is-small is-ajax" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
                 <span class="icon is-small">
                     @if(isFavorite)
@@ -26,38 +24,6 @@
                 </span>
                 <span>Favorite</span>
             </a>
-            <div class="dropdown is-right">
-                <div class="dropdown-trigger">
-                    <a class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
-                        <span>Actions</span>
-                        <span class="icon is-small">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </a>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-                        @can('VideoPolicy.update', video)
-                        <a href="{{ route("videos.edit", { uid: video.uid }) }}" class="dropdown-item">
-                            Edit
-                        </a>
-                        @end
-                        <a class="dropdown-item">
-                            Archive
-                        </a>
-                        <a href="#" class="dropdown-item is-active">
-                            Delete
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            Unpublish
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            Report
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -175,16 +141,14 @@
                 <div
                     id="live-player"
                     class="mb-4"
-                    style="border-radius: 6px"
-                    data-stream-url="https://edge-hls.doppiocdn.com/hls/93397001/master/93397001_480p.m3u8"
-                    data-model-name="Moon_9x">
+                    style="border-radius: 6px">
                 </div>
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
-                    <div class="py-5">
-                        @each(video in relatedVideos)
-                        @!component('partials/videoListItem', { video, isTransparent: true })
-                        @end
-                    </div>
+                <div class="py-5">
+                    @each(video in relatedVideos)
+                    @!component('partials/videoListItem', { video, isTransparent: true })
+                    @end
+                </div>
             </div>
         </div>
     </div>
@@ -193,7 +157,6 @@
 @end
 
 @section('head')
-<script src="{{ asset('assets/quill.js') }}"></script>
 <style>
     audio::-webkit-media-controls-timeline,
 video::-webkit-media-controls-timeline {
@@ -201,6 +164,7 @@ video::-webkit-media-controls-timeline {
 }
 video::fullscreen { display: none;}
 </style>
+<script src="{{ asset('assets/js/quill.min.js') }}"></script>
 @end
 
 @section('scripts')

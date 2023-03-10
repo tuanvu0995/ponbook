@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
 import User from 'App/Models/User'
-import Event from '@ioc:Adonis/Core/Event'
+// import Event from '@ioc:Adonis/Core/Event'
 
 export default class RegisterController {
   public async index({ view }: HttpContextContract) {
@@ -15,7 +15,8 @@ export default class RegisterController {
 
     await auth.use('web').login(user)
 
-    await Event.emit('user:created', user)
+    // todo: fix email sender issue to uncomment this line
+    // await Event.emit('user:created', user)
 
     return response.redirect().toRoute('home')
   }

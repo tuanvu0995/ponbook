@@ -1,0 +1,58 @@
+@layout('layouts/admin-setting')
+@set('title', "Information")
+
+@section('breadcrumbs')
+<li><a href="{{ route("admin.settings.index") }}">Settings</a></li>
+<li class="is-active"><a href="#" aria-current="page">Popunder</a></li>
+@end
+
+@section('body')
+<section>
+    <div class="container is-fluid py-5">
+        <div class="box">
+            <h3 class="title is-4">Sitemap</h2>
+
+                <div class="columns">
+                    <div class="column is-8">
+                        @if (popUnderSettings.length > 0)
+                        @each(setting in popUnderSettings)
+                        <a class="panel-block">
+                            <span class="panel-icon">
+                                {{ setting.key }}
+                            </span>
+                            {{ setting.value }}
+                        </a>
+                        @end
+                        @else
+                        <a class="panel-block">
+                            Empty
+                        </a>
+                        @end
+                    </div>
+                    <div class="column is-4">
+                        <form action="{{ route('admin.settings.savePopUnder') }}" method="POST">
+                            {{ csrfField() }}
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <div class="control">
+                                  <input class="input" type="text" placeholder="Text input" name="key">
+                                </div>
+                              </div>
+                              <div class="field">
+                                <label class="label">Value</label>
+                                <div class="control">
+                                  <textarea class="textarea" placeholder="Textarea" name="value"></textarea>
+                                </div>
+                              </div>
+                              <div class="field is-grouped">
+                                <div class="control">
+                                  <button submit class="button is-link">Save</button>
+                                </div>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+    </div>
+</section>
+@end

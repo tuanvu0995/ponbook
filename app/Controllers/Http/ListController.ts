@@ -5,6 +5,7 @@ import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
+import { DateTime } from 'luxon'
 
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
@@ -34,7 +35,9 @@ export default class ListController {
 
   public async newRelease({ request, view }: HttpContextContract) {
     const { page = 1, limit = 30 } = request.qs()
+    const now = DateTime.now().toFormat('yyyy-MM-dd')
     const videos = await Video.query()
+      .where('release_date', '<=', now)
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('release_date', 'desc')
