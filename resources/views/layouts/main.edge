@@ -19,9 +19,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script> 
     <script defer src="{{ asset('assets/common.js') }}"></script> 
+    <script defer src="/js/prebid-ads.js"></script> 
     @if(env('NODE_ENV') == 'production')
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/blockadblock@3.2.1/blockadblock.min.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -39,6 +41,11 @@
   <body class="{{ bodyClass || '' }}">
 
     @include('partials/navbar')
+    <div id="adnotificaton" class="px-4 pt-4 pb-0" style="display: none">
+      <div class="notification is-danger" style="font-size: 14px; padding: 8px">
+        Please disable your ad blocker to support us. Relevant and appropriate ads help us to keep the site running. Thank you!
+      </div>
+    </div>
 
     @!section('body')
      

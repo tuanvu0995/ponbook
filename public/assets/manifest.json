@@ -5,6 +5,9 @@
   "assets/popup.js": "http://localhost:8080/assets/popup.js",
   "assets/post-comment.js": "http://localhost:8080/assets/post-comment.js",
   "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
+<<<<<<< HEAD
+  "assets/player.js": "http://localhost:8080/assets/player.js",
+=======
   "assets/js/quill.min.js.map": "http://localhost:8080/assets/js/quill.min.js.7774778b.map",
   "assets/js/quill.js": "http://localhost:8080/assets/js/quill.15b75b3c.js",
   "assets/js/quill.core.js": "http://localhost:8080/assets/js/quill.core.f9ad9bba.js",
@@ -17,6 +20,7 @@
   "assets/js/jquery.slim.min.js": "http://localhost:8080/assets/js/jquery.slim.min.a5fa29a8.js",
   "assets/js/quill.bubble.css": "http://localhost:8080/assets/js/quill.bubble.27b077dd.css",
   "assets/js/quill.snow.css": "http://localhost:8080/assets/js/quill.snow.d9b7c9c0.css",
+>>>>>>> main
   "assets/images/logo.svg": "http://localhost:8080/assets/images/logo.80d62872.svg",
   "assets/js/quill.core.css": "http://localhost:8080/assets/js/quill.core.d3aad70c.css",
   "assets/images/owl.video.play.png": "http://localhost:8080/assets/images/owl.video.play.7f01b071.png",

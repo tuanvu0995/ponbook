@@ -50,6 +50,7 @@ Encore.addEntry('common', './resources/js/common.js')
 Encore.addEntry('popup', './resources/js/popup.js')
 Encore.addEntry('post-comment', './resources/js/post-comment.js')
 Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
+Encore.addEntry('player', './resources/js/player.js')
 
 /*
 |--------------------------------------------------------------------------

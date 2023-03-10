@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import './routes/public'
 import './routes/admin'
 import './routes/user'
+import './routes/api'
 // import './routes/community'
 
 Route.group(() => {
