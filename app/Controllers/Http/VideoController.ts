@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Drive from '@ioc:Adonis/Core/Drive'
+
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Video from 'App/Models/Video'
@@ -7,45 +8,27 @@ import UpdateVideoValidator from 'App/Validators/UpdateVideoValidator'
 import { nanoid } from 'nanoid'
 import Tag from 'App/Models/Tag'
 import slugify from 'App/utils/slugify'
+import VideoRepository from 'App/Repositories/VideoRepository'
+import Comment from 'App/Models/Comment'
 
 export default class VideoController {
+  protected videoRepository: VideoRepository
+
+  constructor() {
+    this.videoRepository = new VideoRepository()
+  }
+
   public async index({ view }: HttpContextContract) {
     return view.render('videos/index')
   }
 
-  public async show({ params, view, auth }: HttpContextContract) {
-    const { page = 1, limit = 20 } = params
-    const video = await Video.query().where('uid', params.uid).first()
-    if (!video) {
-      return view.render('errors/not-found')
-    }
+  public async show({ request, params, view, auth }: HttpContextContract) {
+    const { uid } = params
+    const { page = 1, limit = 20 } = request.qs()
 
-    await video.load('torrents', (qs) => qs.orderBy('seed', 'desc'))
-    await video.load('director')
-    await video.load('maker')
-    await video.load('casts')
-    await video.load('tags')
-    const comments = await video
-      .related('comments')
-      .query()
-      .where('is_draft', false)
-      .preload('owner')
-      .paginate(page, limit)
-
-    comments.baseUrl('/videos/' + video.uid)
-
-    // @ts-ignore
-    await video.preloadImages({ includeGalleries: true })
-
-    const tagIds = video.tags.map((tag) => tag.id)
-    const relatedVideos = await Video.query()
-      .preload('casts')
-      .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
-      .whereIn('video_tags.tag_id', tagIds)
-      .where('videos.id', '!=', video.id)
-      .groupBy('videos.id')
-      .orderByRaw('RAND()')
-      .limit(8)
+    const video = await this.videoRepository.getVideoByUid(uid)
+    const relatedVideos = await this.videoRepository.getRelatedVideos(video)
+    const comments = await Comment.getCommentsByVideo(video, page, limit)
 
     const keyword = [
       video.code,

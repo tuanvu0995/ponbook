@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
 import {
+  afterCreate,
+  afterUpdate,
   BaseModel,
   beforeCreate,
   beforeFind,
@@ -13,6 +15,7 @@ import {
   manyToMany,
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
+import Event from '@ioc:Adonis/Core/Event'
 import Drive from '@ioc:Adonis/Core/Drive'
 import { nanoid } from 'nanoid'
 import Cast from './Cast'
@@ -142,6 +145,16 @@ export default class Video extends BaseModel {
   @beforeFind()
   public static where(query: ModelQueryBuilderContract<typeof Video>) {
     query.where('is_deleted', false)
+  }
+
+  @afterCreate()
+  public static async emitCreatedEvent(video: Video) {
+    Event.emit('video:created', video)
+  }
+
+  @afterUpdate()
+  public static async emitUpdatedEvent(video: Video) {
+    Event.emit('video:updated', video)
   }
 
   public async preloadImages({ includeGalleries = false } = {}) {

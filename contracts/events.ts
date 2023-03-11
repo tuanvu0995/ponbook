@@ -6,6 +6,7 @@
  */
 
 import User from 'App/Models/User'
+import Video from 'App/Models/Video'
 
 declare module '@ioc:Adonis/Core/Event' {
   /*
@@ -30,5 +31,7 @@ declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
     'user:created': User
     'visitor:visit': any
+    'video:created': Video
+    'video:updated': Video
   }
 }

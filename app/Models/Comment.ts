@@ -12,6 +12,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import { nanoid } from 'nanoid'
+import Video from './Video'
 
 export default class Comment extends BaseModel {
   @column({ isPrimary: true })
@@ -82,4 +83,15 @@ export default class Comment extends BaseModel {
     pivotTable: 'votes',
   })
   public voters: ManyToMany<typeof User>
+
+  public static async getCommentsByVideo(video: Video, page, limit) {
+    const comments = await Comment.query()
+      .where('video_id', video.id)
+      .where('is_draft', false)
+      .preload('owner')
+      .paginate(page, limit)
+
+    comments.baseUrl('/videos/' + video.uid)
+    return comments
+  }
 }
