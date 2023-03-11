@@ -25,12 +25,19 @@ export default class DetectUserLocale {
     return ctx.session.get('locale') || ctx.request.language(availableLocales)
   }
 
+  protected getUserCountry(ctx: HttpContextContract) {
+    const countryName = ctx.request.header('cf-ipcountry')
+    if (!countryName) return null
+    return countryName.toLowerCase()
+  }
+
   /**
    * Handle method is called by AdonisJS automatically on every middleware
    * class.
    */
   public async handle(ctx: HttpContextContract, next: () => Promise<void>) {
     const language = this.getUserLanguage(ctx)
+    console.log(language)
 
     /**
      * Switch locale when we are able to detect the user language and it
@@ -40,11 +47,13 @@ export default class DetectUserLocale {
       ctx.i18n.switchLocale(language)
     }
 
+    const country = this.getUserCountry(ctx)
+
     /**
      * Share i18n with view
      */
     if ('view' in ctx) {
-      ctx.view.share({ i18n: ctx.i18n })
+      ctx.view.share({ i18n: ctx.i18n, userLocale: { country } })
     }
 
     await next()
