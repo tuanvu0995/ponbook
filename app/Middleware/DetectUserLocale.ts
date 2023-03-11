@@ -37,7 +37,6 @@ export default class DetectUserLocale {
    */
   public async handle(ctx: HttpContextContract, next: () => Promise<void>) {
     const language = this.getUserLanguage(ctx)
-    console.log(language)
 
     /**
      * Switch locale when we are able to detect the user language and it

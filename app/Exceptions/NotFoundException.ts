@@ -22,7 +22,7 @@ export default class NotFoundException extends Exception {
   }
 
   public async handle(error: this, ctx: HttpContextContract) {
-    if (this.isApi) {
+    if (!this.isApi) {
       return ctx.view.render('errors/not-found')
     }
     ctx.response.status(error.status).send(error.message)

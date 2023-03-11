@@ -20,6 +20,7 @@ $(function () {
 
   dropdowns('.navbar-item.has-dropdown')
   dropdowns('.dropdown')
+
 })
 
 function quillImageHandler(editor, options = {}) {

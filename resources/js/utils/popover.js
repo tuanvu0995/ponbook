@@ -11,10 +11,11 @@ export default function createPopover(parentElement, content, options = {}) {
   arrow.setAttribute('data-popper-arrow', '')
   arrow.setAttribute('class', 'is-tooltip-arrow')
   tooltip.appendChild(arrow)
+  tooltip.style.display = 'none'
 
   parentElement.appendChild(tooltip)
 
-  createPopper(parentElement, tooltip, {
+  const popperInstance = createPopper(parentElement, tooltip, {
     placement: 'bottom',
     modifiers: [
       {
@@ -24,6 +25,23 @@ export default function createPopover(parentElement, content, options = {}) {
         },
       },
     ],
+  })
+
+  const showEvents = ['mouseenter', 'focus']
+  const hideEvents = ['mouseleave', 'blur']
+
+  showEvents.forEach((event) => {
+    parentElement.addEventListener(event, () => {
+      tooltip.style.display = 'block'
+      popperInstance.update()
+    })
+  })
+
+  hideEvents.forEach((event) => {
+    parentElement.addEventListener(event, () => {
+      tooltip.style.display = 'none'
+      popperInstance.update()
+    })
   })
 
   if (options.timeout) {
