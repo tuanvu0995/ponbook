@@ -13,6 +13,7 @@ import Logger from '@ioc:Adonis/Core/Logger'
 import Application from '@ioc:Adonis/Core/Application'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import Visitor from 'App/Models/Visitor'
+import DeviceDetector from 'device-detector-js'
 
 Event.on('db:query', (query) => {
   if (Application.inProduction) {
@@ -39,6 +40,11 @@ Event.on('user:created', async (user) => {
 })
 
 Event.on('visitor:visit', async (request: any) => {
+  const { bot } = new DeviceDetector().parse(request.header('user-agent'))
+  if (bot) {
+    return
+  }
+
   const excludes = [
     '/api',
     '/crawler',
