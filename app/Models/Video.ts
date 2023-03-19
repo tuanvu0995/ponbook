@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import {
   afterCreate,
-  afterUpdate,
+  afterSave,
   BaseModel,
   beforeCreate,
   beforeFind,
@@ -152,9 +152,10 @@ export default class Video extends BaseModel {
     Event.emit('video:created', video)
   }
 
-  @afterUpdate()
+  @afterSave()
   public static async emitUpdatedEvent(video: Video) {
     Event.emit('video:updated', video)
+    Event.emit('video:created', video)
   }
 
   public async preloadImages({ includeGalleries = false } = {}) {
