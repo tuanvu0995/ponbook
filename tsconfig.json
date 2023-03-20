@@ -39,7 +39,8 @@
       "@adonisjs/limiter",
       "@adonisjs/redis",
       "@adonisjs/mail",
-      "@adonisjs/i18n"
+      "@adonisjs/i18n",
+      "adonis5-sentry"
     ]
   }
 }
