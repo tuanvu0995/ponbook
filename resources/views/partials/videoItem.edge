@@ -22,7 +22,7 @@
                 <span class="is-size-7">{{ video.commentCount }} comments</span>
                 @end
             </div>
-            <time class="is-size-7" datetime="{{ video.releaseDate }}">Released {{ video.releaseDate }}</time>
+            <time class="is-size-7" datetime="{{ video.releaseDate || video.release_date }}">Released {{ video.releaseDate || video.release_date }}</time>
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@
             @else
                 <div>Many casts</div>
             @end
-            <time class="is-size-7" datetime="{{ video.releaseDate }}">{{ video.releaseDate }}</time>
+            <time class="is-size-7" datetime="{{ video.releaseDate || video.release_date }}">{{ video.releaseDate || video.release_date }}</time>
         </div>
     </div>
 </article>
