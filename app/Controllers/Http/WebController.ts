@@ -6,6 +6,7 @@ import VideoFilter from 'App/Models/VideoFilter'
 import Video from 'App/Models/Video'
 import Page from 'App/Models/Page'
 import SearchRepository from 'App/Repositories/SearchRespositoy'
+import NotFoundException from 'App/Exceptions/NotFoundException'
 
 export default class WebController {
   public async image({ request, response }: HttpContextContract) {
@@ -19,41 +20,32 @@ export default class WebController {
     return response.stream(await Drive.getStream(location))
   }
 
-  public async postSearchCode({ request, response }: HttpContextContract) {
+  public async postSearch({ request, response, session }: HttpContextContract) {
     const keyword = request.input('keyword')?.trim()
-    if (!keyword || keyword.length <= 5) return response.redirect().back()
-    const videoFilter = await SearchRepository.searchVideosByCode(keyword)
-    return response.redirect().toRoute('web.search', { searchId: videoFilter.uid })
-  }
+    if (!keyword || keyword.length < 2) return response.redirect().back()
 
-  public async postSearch({ request, response }: HttpContextContract) {
-    const keyword = request.input('keyword')?.trim()
-    if (!keyword || keyword.length <= 2) return response.redirect().back()
-
-    const key = keyword.toLowerCase()
-    const existsFilter = await VideoFilter.query().where('key', key).first()
-    if (existsFilter) {
-      return response.redirect().toRoute('web.search', { searchId: existsFilter.uid })
+    const cat = request.input('cat')?.trim()
+    if (!['code', 'title', 'idol'].includes(cat)) {
+      return response.redirect().back()
     }
 
-    const videos = await Video.query()
-      .whereRaw('LOWER(code) LIKE LOWER(?)', [`%${key}%`])
-      .whereRaw('LOWER(title) LIKE LOWER(?)', [`%${key}%`])
-      .orWhereHas('casts', (query) => {
-        query.whereRaw('LOWER(name) LIKE LOWER(?)', [`%${key}%`])
-      })
-      .where('is_published', true)
-      .orderBy('release_date', 'desc')
-      .select('id', 'release_date')
+    session.put('search_cat', cat)
+    session.put('search_keyword', keyword)
 
-    const videoIds = videos.map((video) => video.id)
+    let videoFilter: VideoFilter | null = null
+    if (cat === 'code') {
+      videoFilter = await SearchRepository.searchVideosByCode(keyword)
+    } else if (cat === 'title') {
+      videoFilter = await SearchRepository.searchVideosByTitle(keyword)
+    } else if (cat === 'idol') {
+      videoFilter = await SearchRepository.searchVideosByCast(keyword)
+    }
 
-    const videoFilter = new VideoFilter()
-    videoFilter.key = keyword
-    await videoFilter.save()
+    if (!videoFilter) {
+      throw new NotFoundException('Search Not found')
+    }
 
-    await videoFilter.related('videos').attach(videoIds)
-
+    if (!keyword || keyword.length <= 5) return response.redirect().back()
     return response.redirect().toRoute('web.search', { searchId: videoFilter.uid })
   }
 
