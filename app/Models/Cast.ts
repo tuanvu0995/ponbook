@@ -75,7 +75,14 @@ export default class Cast extends BaseModel {
 
     let count = 1
     while (count) {
-      const exists = await Cast.query().whereNot('id', cast.id).where('slug', cast.slug).first()
+      const exists = await Cast.query()
+        .where((qs) => {
+          if (cast.id) {
+            qs.whereNot('id', cast.id)
+          }
+        })
+        .where('slug', cast.slug)
+        .first()
       if (!exists) break
       cast.slug = `${cast.slug}-${count}`
       count++

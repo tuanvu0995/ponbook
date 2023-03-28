@@ -65,7 +65,6 @@ export default class VideoController {
     const user = auth.user!
 
     let video = await Video.query().where('user_id', user.id).where('is_published', false).first()
-    console.log(video)
     if (!video || video.isPublished) {
       video = new Video()
       video.title = 'Untitled video'
@@ -74,7 +73,6 @@ export default class VideoController {
       await video.save()
     }
 
-    console.log('video', video.uid)
     return response.redirect().toRoute('videos.edit', { uid: video.uid })
   }
 
