@@ -5,6 +5,7 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import VideoFilter from 'App/Models/VideoFilter'
 import Video from 'App/Models/Video'
 import Page from 'App/Models/Page'
+import SearchRepository from 'App/Repositories/SearchRespositoy'
 
 export default class WebController {
   public async image({ request, response }: HttpContextContract) {
@@ -16,6 +17,13 @@ export default class WebController {
     response.header('content-length', size)
 
     return response.stream(await Drive.getStream(location))
+  }
+
+  public async postSearchCode({ request, response }: HttpContextContract) {
+    const keyword = request.input('keyword')?.trim()
+    if (!keyword || keyword.length <= 5) return response.redirect().back()
+    const videoFilter = await SearchRepository.searchVideosByCode(keyword)
+    return response.redirect().toRoute('web.search', { searchId: videoFilter.uid })
   }
 
   public async postSearch({ request, response }: HttpContextContract) {

@@ -14,6 +14,12 @@ export default class VideoFilter extends BaseModel {
   public key: string
 
   @column()
+  public originKeyword: string
+
+  @column()
+  public searchParams: string
+
+  @column()
   public isDeleted: boolean
 
   @column.dateTime({ autoCreate: true })

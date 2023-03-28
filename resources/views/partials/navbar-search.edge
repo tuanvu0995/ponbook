@@ -1,0 +1,13 @@
+<form id="search-form" action="{{ route('web.postSearchCode') }}" method="POST">
+    {{ csrfField() }}
+    <div class="field has-addons">
+        <div class="control">
+        <input class="input is-small" type="text" placeholder="Search code" name="keyword">
+        </div>
+        <div class="control">
+        <a class="button is-primary is-small" onclick="document.getElementById('search-form').submit();">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </a>
+        </div>
+    </div>
+</form>
