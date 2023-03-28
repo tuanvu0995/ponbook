@@ -8,7 +8,7 @@
             <ul>
                 <li><a href="{{ route("home") }}">Home</a></li>
                 @if(video.casts.length === 1)
-                <li><a href="{{ route("list.cast", { uid: video.casts[0].uid }) }}">{{ video.casts[0].name }}</a></li>
+                <li><a href="{{ route("list.castBySlug", { slug: video.casts[0].slug }) }}">{{ video.casts[0].name }}</a></li>
                 @end
                 <li class="is-active"><a href="{{ route("videos.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
             </ul>
@@ -58,7 +58,7 @@
                                     <td>
                                         @if(video.casts.length > 0)
                                         @each(cast in video.casts)
-                                        <a href="{{ route("list.cast", { uid: cast.uid }) }}">{{ cast.name }}</a>&nbsp;&nbsp;
+                                        <a href="{{ route("list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>&nbsp;&nbsp;
                                         @end
                                         @else
                                         ---

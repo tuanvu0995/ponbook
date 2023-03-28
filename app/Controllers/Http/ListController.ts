@@ -134,6 +134,35 @@ export default class ListController {
     return view.render('cast', { cast, videos, title, description, keyword })
   }
 
+  public async castsBySlug({ request, view }: HttpContextContract) {
+    const slug = request.param('slug')
+    const { page = 1, limit = 30 } = request.qs()
+    const cast = await Cast.query().where('slug', slug).first()
+    if (!cast) {
+      return view.render('errors/not-found')
+    }
+
+    const videos = await cast
+      .related('videos')
+      .query()
+      .where('is_deleted', false)
+      .orderBy('release_date', 'desc')
+      .paginate(page, limit)
+
+    const title = cast.name
+    const description = `List of all the movies that ${cast.name} has been in`
+
+    videos.baseUrl(`/av/${cast.slug}`)
+
+    for (const video of videos) {
+      await video.preloadImages()
+    }
+
+    const keyword = cast.name
+
+    return view.render('cast', { cast, videos, title, description, keyword })
+  }
+
   public async director({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
     const { page = 1, limit = 30 } = request.qs()

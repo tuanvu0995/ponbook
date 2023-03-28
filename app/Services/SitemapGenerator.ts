@@ -6,7 +6,7 @@ import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
 
 async function getVideos() {
-  const videos = await Video.all()
+  const videos = await Video.query().limit(50)
   return videos.map((video) => {
     return {
       url: `/v/${video.uid}`,
@@ -17,7 +17,7 @@ async function getVideos() {
 }
 
 async function getTags() {
-  const tags = await Tag.all()
+  const tags = await Tag.query().limit(50)
   return tags.map((tag) => {
     return {
       url: `/tag/${tag.slug}`,
@@ -28,10 +28,10 @@ async function getTags() {
 }
 
 async function getCasts() {
-  const casts = await Cast.all()
+  const casts = await Cast.query().limit(50)
   return casts.map((cast) => {
     return {
-      url: `/cast/${cast.uid}`,
+      url: `/av/${cast.slug}`,
       changefreq: 'weekly',
       priority: 0.2,
     }

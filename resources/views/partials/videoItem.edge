@@ -14,7 +14,7 @@
         <div class="content">
             <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link" title="{{ video.title }}">{{ video.title }}</a>
             @if(video.cast)
-            <a class="is-size-7 has-text-weight-bold" href="{{ route("list.cast", { uid: video.cast.uid }) }}">{{ video.cast.name }}</a>
+            <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug }) }}">{{ video.cast.name }}</a>
             @end
             <div class="video__info">
                 <strong>{{ video.code }}</strong>
