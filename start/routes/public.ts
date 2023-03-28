@@ -13,7 +13,7 @@ Route.group(() => {
   Route.get('/recent', 'ListController.recent').as('recent')
   Route.get('/new-comments', 'ListController.newComments').as('newComments')
   Route.get('/cast/:uid', 'ListController.cast').as('cast')
-  Route.get('/av/:slug', 'ListController.castsBySlug').as('castBySlug')
+  Route.get('/idol/:slug', 'ListController.castsBySlug').as('castBySlug')
   Route.get('/director/:uid', 'ListController.director').as('director')
   Route.get('/maker/:uid', 'ListController.maker').as('maker')
   Route.get('/tag/:slug', 'ListController.tags').as('tag')
