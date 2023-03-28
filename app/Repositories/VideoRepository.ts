@@ -16,7 +16,7 @@ export default class VideoRepository {
       throw new NotFoundException('Video not found')
     }
 
-    await video.load('torrents', (qs) => qs.orderBy('seed', 'desc'))
+    // await video.load('torrents', (qs) => qs.orderBy('seed', 'desc'))
     await video.load('director')
     await video.load('maker')
     await video.load('casts')
