@@ -31,7 +31,7 @@ async function getCasts() {
   const casts = await Cast.query().limit(50)
   return casts.map((cast) => {
     return {
-      url: `/idols/${cast.slug}`,
+      url: `/a/${cast.slug}`,
       changefreq: 'weekly',
       priority: 0.2,
     }
