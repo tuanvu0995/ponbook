@@ -1,7 +1,15 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeCreate,
+  beforeSave,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
 import Video from './Video'
+import slugify from 'App/utils/slugify'
 
 export default class Cast extends BaseModel {
   @column({ isPrimary: true })
@@ -9,6 +17,9 @@ export default class Cast extends BaseModel {
 
   @column()
   public uid: string
+
+  @column()
+  public slug: string
 
   @column()
   public name: string
@@ -25,6 +36,18 @@ export default class Cast extends BaseModel {
   @column()
   public productCount: number
 
+  @column()
+  public cup: string
+
+  @column()
+  public jpName: string
+
+  @column()
+  public favoriteCount: number
+
+  @column()
+  public subscribedCount: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -39,5 +62,18 @@ export default class Cast extends BaseModel {
   @beforeCreate()
   public static async generateUID(cast: Cast) {
     cast.uid = nanoid()
+  }
+
+  @beforeSave()
+  public static async generateSlug(cast: Cast) {
+    cast.slug = slugify(cast.name)
+
+    let count = 1
+    while (count) {
+      const exists = await Cast.query().where('slug', cast.slug).first()
+      if (!exists) break
+      cast.slug = `${cast.slug}-${count}`
+      count++
+    }
   }
 }

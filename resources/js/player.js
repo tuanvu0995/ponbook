@@ -7,7 +7,14 @@ const pauseIcon = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5
 
 window.initLivePlayer = function (element, options = {}) {
   getRandomModel(options, (model) => {
-    LivePlayer(element, { url: model.stream.url, name: model.username, ...options })
+    LivePlayer(element, {
+      url: model.stream.url,
+      name: model.username,
+      previewImage: model.mlPreviewImage,
+      height: model.stream.height,
+      width: model.stream.width,
+      ...options,
+    })
   })
 }
 
@@ -15,8 +22,15 @@ window.LivePlayer = function (element, { url, name, refId, ...options }) {
   element.style.display = 'none'
   const streamUrl = url
   const modelName = name
+  const previewImage = options.previewImage
+  const height = options.height
+  const width = options.width
   const video = document.createElement('video')
   element.classList.add('PLivePlayer')
+
+  video.style.width = '100%'
+  // video.style.height = height + 'px'
+  video.style.backgroundImage = `url(${previewImage})`
 
   element.appendChild(video)
 
@@ -34,10 +48,10 @@ window.LivePlayer = function (element, { url, name, refId, ...options }) {
   label.appendChild(liveStatus)
 
   const text = document.createElement('a')
-  text.innerText = modelName + ' (live)'
+  text.innerText = modelName + ' (Live on Stripchat)'
   label.appendChild(text)
 
-  createPopover(text, `Go to ${modelName}'s room`)
+  createPopover(text, `Go to ${modelName}'s room on Stripchat`)
 
   const actionList = document.createElement('div')
   actionList.classList.add('PLivePlayer__Actions')
