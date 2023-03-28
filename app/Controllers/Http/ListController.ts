@@ -152,7 +152,7 @@ export default class ListController {
     const title = cast.name
     const description = `List of all the movies that ${cast.name} has been in`
 
-    videos.baseUrl(`/av/${cast.slug}`)
+    videos.baseUrl(`/a/${cast.slug}`)
 
     for (const video of videos) {
       await video.preloadImages()

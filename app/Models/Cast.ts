@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import _ from 'lodash'
 import {
   BaseModel,
   beforeCreate,
@@ -67,6 +68,10 @@ export default class Cast extends BaseModel {
   @beforeSave()
   public static async generateSlug(cast: Cast) {
     cast.slug = slugify(cast.name)
+
+    if (_.endsWith(cast.slug, '-')) {
+      cast.slug = cast.slug.slice(0, -1)
+    }
 
     let count = 1
     while (count) {
