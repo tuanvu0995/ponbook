@@ -1,10 +1,6 @@
-import Slugify from 'slugify'
-
 export default function slugify(str: string): string {
-  return Slugify(str, {
-    lower: true,
-    remove: /[*+~.()'"!:@]/g,
-    locale: 'en',
-    trim: true,
-  })
+  return str
+    ?.trim()
+    ?.toLowerCase()
+    ?.replace(/[^a-z0-9]+/g, '-')
 }
