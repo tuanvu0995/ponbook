@@ -115,6 +115,11 @@ export default class Video extends BaseModel {
     video.uid = uniqid()
   }
 
+  @beforeCreate()
+  public static async version2(video: Video) {
+    video.version = 2
+  }
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
