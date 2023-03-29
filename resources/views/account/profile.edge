@@ -14,13 +14,13 @@
             label: "First name",
             name: "firstName",
             value: user.firstName,
-            errors: flashMessages.get('errors.firstName')
+            errors: flashMessages.get('errors/firstName')
         })
         @!component('components/input', {
             label: "Last name",
             name: "lastName",
             value: user.lastName,
-            errors: flashMessages.get('errors.lastName')
+            errors: flashMessages.get('errors/lastName')
         })
 
         @!component('components/input', {
@@ -28,7 +28,7 @@
             name: "email",
             type: "email",
             value: user.email,
-            errors: flashMessages.get('errors.email'),
+            errors: flashMessages.get('errors/email'),
             disabled: true
         })
 
@@ -36,7 +36,7 @@
             label: "Username",
             name: "username",
             value: user.username,
-            errors: flashMessages.get('errors.username'),
+            errors: flashMessages.get('errors/username'),
             disabled: true
         })
 
@@ -44,7 +44,7 @@
             label: "Birthday",
             name: "birthday",
             value: user.birthday,
-            errors: flashMessages.get('errors.birthday')
+            errors: flashMessages.get('errors/birthday')
         })
 
         <div class="field">

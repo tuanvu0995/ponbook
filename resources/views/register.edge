@@ -27,8 +27,8 @@
                   <i class="fa fa-envelope"></i>
                 </span>
               </div>
-              @if(flashMessages.has('errors.email'))
-              <p class="help is-danger">{{ flashMessages.get('errors.email') }}</p>
+              @if(flashMessages.has('errors/email'))
+              <p class="help is-danger">{{ flashMessages.get('errors/email') }}</p>
               @endif
             </div>
             <div class="field">
@@ -39,8 +39,8 @@
                   <i class="fa fa-user-circle-o"></i>
                 </span>
               </div>
-              @if(flashMessages.has('errors.username'))
-              <p class="help is-danger">{{ flashMessages.get('errors.username') }}</p>
+              @if(flashMessages.has('errors/username'))
+              <p class="help is-danger">{{ flashMessages.get('errors/username') }}</p>
               @endif
             </div>
 
@@ -52,8 +52,8 @@
                   <i class="fa fa-lock"></i>
                 </span>
               </div>
-              @if(flashMessages.has('errors.password'))
-              <p class="help is-danger">{{ flashMessages.get('errors.password') }}</p>
+              @if(flashMessages.has('errors/password'))
+              <p class="help is-danger">{{ flashMessages.get('errors/password') }}</p>
               @endif
             </div>
 

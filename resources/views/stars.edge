@@ -14,7 +14,7 @@
         <div class="columns is-multiline is-mobile is-tablet is-desktop">
            @each(star in stars)
            <div class="column is-half-mobile is-one-third-tablet is-2-desktop">
-                <a class="box" href="{{ route("list.cast", { uid: star.uid }) }}" title="Collection of {{ star.name }}">
+                <a class="box" href="{{ route("list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
                     <h2 class="title is-6">{{ star.name }}</h2>
                     <p class="subtitle is-6">{{ star.$extras.videos_count }} videos</p>
                 </a>

@@ -1,7 +1,7 @@
 <article class="media py-2 my-2">
     <figure class="media-left">
         <figure class="image" style="height: 90px; width: 70px;">
-            <img style="height: 100%; width: auto;" src="{{ imageUrl(video.videoCover) }}" alt="{{ video.title }}">
+            @!component('components/file-image', { file: video.videoCover, alt: video.title })
         </figure>
     </figure>
     <div class="media-content">

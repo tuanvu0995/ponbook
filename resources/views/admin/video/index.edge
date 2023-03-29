@@ -21,7 +21,7 @@
                         <th><abbr title="ID">ID</abbr></th>
                         <td>Code</td>
                         <th>Cover</th>
-                        <th>Title</th>
+                        <th>Release</th>
                         <th>Casts</th>
                         <th>Status</th>
                         <th><abbr title="CreatedAt">Created At</abbr></th>
@@ -32,13 +32,15 @@
                         @each(video in videos)
                         <tr>
                             <th>{{ video.id }}</th>
-                            <th>{{ video.code }}</th>
+                            <th><a href="{{ route('videos.show', { uid: video.uid }) }}" target="_blank">{{ video.code }}</a></th>
                             <td>
                                 <figure class="image is-48x48">
-                                    <img src="{{ imageUrl(video.cover) }}" style="height: 100%; width: auto">
+                                    <img src="{{ imageUrl(video.videoCover) }}" style="height: 100%; width: auto">
                                 </figure>
                             </td>
-                            <td>{{ truncate(video.title, 30) }}</td>
+                            <td>
+                                {{ video.releaseDate }}
+                            </td>
                             <td>
                                 <div class="tags" style="max-width: 300px">
                                     @each(cast in video.casts)

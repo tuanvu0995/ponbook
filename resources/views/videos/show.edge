@@ -37,7 +37,7 @@
                     </h1>
                     <div class="columns">
                         <div class="column is-7">
-                            <img src="{{ imageUrl(video.videoImage) }}" alt="{{ video.title }}" />
+                            @!component('components/file-image', { file: video.videoImage, alt: video.title })
                         </div>
                         <div class="column is-5">
                             <table class="table">

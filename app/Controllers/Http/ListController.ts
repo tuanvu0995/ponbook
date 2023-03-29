@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Cast from 'App/Models/Cast'
 import Collection from 'App/Models/Collection'
@@ -5,7 +6,6 @@ import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
-import { DateTime } from 'luxon'
 
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
@@ -62,7 +62,7 @@ export default class ListController {
     const videos = await Video.query()
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('created_at', 'desc')
+      .orderBy('id', 'desc')
       .paginate(page, limit)
 
     const title = 'Recently Added Videos'
@@ -105,33 +105,14 @@ export default class ListController {
     return view.render('recent', { videos, title, description, keyword })
   }
 
-  public async cast({ request, view }: HttpContextContract) {
+  public async cast({ request, response, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 30 } = request.qs()
     const cast = await Cast.query().where('uid', uid).first()
     if (!cast) {
       return view.render('errors/not-found')
     }
 
-    const videos = await cast
-      .related('videos')
-      .query()
-      .where('is_deleted', false)
-      .orderBy('release_date', 'desc')
-      .paginate(page, limit)
-
-    const title = cast.name
-    const description = `List of all the movies that ${cast.name} has been in`
-
-    videos.baseUrl(`/cast/${cast.uid}`)
-
-    for (const video of videos) {
-      await video.load('videoCover')
-    }
-
-    const keyword = cast.name
-
-    return view.render('cast', { cast, videos, title, description, keyword })
+    return response.redirect().toRoute('list.castBySlug', { slug: cast.slug }, { qs: request.qs() })
   }
 
   public async castsBySlug({ request, view }: HttpContextContract) {

@@ -45,7 +45,7 @@ export default class AppProvider {
     })
     View.global('imageUrl', (file: File, getThumbnail: boolean) => {
       if (!file) return '/img/no-image.png'
-      if (getThumbnail) return `${Env.get('CDN_URL')}//${file.thumbnailPath}`
+      if (getThumbnail) return `${Env.get('CDN_URL')}/${file.thumbnailPath}`
       return `${Env.get('CDN_URL')}/${file.path}`
     })
     View.global('deviceInfo', (userAgent: string) => {

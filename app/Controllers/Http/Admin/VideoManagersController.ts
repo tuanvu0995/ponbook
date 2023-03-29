@@ -6,6 +6,7 @@ export default class VideoManagersController {
     const { page = 1, perPage = 20 } = request.qs()
 
     const videos = await Video.query()
+      .preload('videoCover')
       .preload('casts')
       .orderBy('id', 'desc')
       .paginate(page, perPage)
