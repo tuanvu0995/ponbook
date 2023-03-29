@@ -50,6 +50,7 @@ export default class MigrationImage extends BaseCommand {
     this.logger.info('[ImageMigration] Start migrating images')
     do {
       const chunks = await this.getChunks()
+      this.chunkLength = chunks.length
 
       for (const video of chunks) {
         try {
