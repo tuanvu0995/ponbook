@@ -25,7 +25,7 @@ export default class ListController {
     videos.baseUrl('/popular')
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = 'popular porn videos'
@@ -49,7 +49,7 @@ export default class ListController {
     videos.baseUrl('/new-release')
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = 'New release porn videos'
@@ -71,7 +71,7 @@ export default class ListController {
     videos.baseUrl('/recent')
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = 'Recently added videos'
@@ -97,7 +97,7 @@ export default class ListController {
 
     videos.baseUrl('/new-comments')
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = 'New comments'
@@ -126,7 +126,7 @@ export default class ListController {
     videos.baseUrl(`/cast/${cast.uid}`)
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = cast.name
@@ -155,7 +155,7 @@ export default class ListController {
     videos.baseUrl(`/a/${cast.slug}`)
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = cast.name
@@ -184,7 +184,7 @@ export default class ListController {
     videos.baseUrl(`/director/${director.uid}`)
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = director.name
@@ -213,7 +213,7 @@ export default class ListController {
     videos.baseUrl(`/maker/${maker.uid}`)
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = maker.name
@@ -242,7 +242,7 @@ export default class ListController {
     videos.baseUrl(`/tag/${tag.slug}`)
 
     for (const video of videos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     const keyword = tag.name

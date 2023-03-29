@@ -27,6 +27,7 @@ Server.middleware.register([
   () => import('App/Middleware/Visitor'),
   () => import('App/Middleware/DetectUserLocale'),
   () => import('App/Middleware/DetectUserLocale'),
+  () => import('App/Middleware/BotAuth'),
 ])
 
 /*
@@ -50,4 +51,5 @@ Server.middleware.registerNamed({
   guestOnly: () => import('App/Middleware/GuestOnly'),
   role: () => import('App/Middleware/Role'),
   throttle: () => import('@adonisjs/limiter/build/throttle'),
+  botAuth: () => import('App/Middleware/BotAuth'),
 })

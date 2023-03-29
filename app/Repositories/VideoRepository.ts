@@ -16,13 +16,13 @@ export default class VideoRepository {
       throw new NotFoundException('Video not found')
     }
 
-    // await video.load('torrents', (qs) => qs.orderBy('seed', 'desc'))
     await video.load('director')
     await video.load('maker')
     await video.load('casts')
     await video.load('tags')
-
-    await video.preloadImages({ includeGalleries: true })
+    await video.load('videoCover')
+    await video.load('videoImage')
+    await video.load('images')
 
     await Redis.set(`video:${uid}`, JSON.stringify(video.toJSON()))
 
@@ -37,6 +37,7 @@ export default class VideoRepository {
 
     const tagIds = video.tags.map((tag) => tag.id)
     const relatedVideos = await Video.query()
+      .preload('videoCover')
       .preload('casts')
       .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
       .whereIn('video_tags.tag_id', tagIds)
@@ -61,6 +62,9 @@ export default class VideoRepository {
       .where('is_deleted', false)
       .orderBy('created_at', 'desc')
       .limit(12)
+    for (const video of recentVideos) {
+      await video.load('videoCover')
+    }
 
     await Redis.set('video:recent', JSON.stringify(recentVideos))
 
@@ -84,7 +88,7 @@ export default class VideoRepository {
       .groupBy('videos.id')
       .limit(12)
     for (const video of newlyUpdatedVideos) {
-      await video.preloadImages()
+      await video.load('videoCover')
     }
 
     await Redis.set('video:newly-updated', JSON.stringify(newlyUpdatedVideos))

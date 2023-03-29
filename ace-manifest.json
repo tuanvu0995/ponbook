@@ -1,5 +1,17 @@
 {
   "commands": {
+    "migration:image": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/MigrationImage",
+      "commandName": "migration:image",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "torrent:bot": {
       "settings": {
         "loadApp": true,

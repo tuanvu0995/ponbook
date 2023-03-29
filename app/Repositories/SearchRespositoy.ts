@@ -4,7 +4,6 @@ import VideoFilter from 'App/Models/VideoFilter'
 import Cast from 'App/Models/Cast'
 
 export default class SearchRepository {
-
   public static async searchVideosByCode(code: string): Promise<VideoFilter> {
     const searchValues = this.praseCode(code)
     const searchKey = `search:video:${searchValues.join('-')}`

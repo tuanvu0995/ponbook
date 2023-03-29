@@ -14,7 +14,6 @@ import { nanoid } from 'nanoid'
 import Activity from './Activity'
 import Permission from './Permission'
 import Role from './Role'
-import Post from './Post'
 import Video from './Video'
 import Comment from './Comment'
 
@@ -109,18 +108,10 @@ export default class User extends BaseModel {
   })
   public permissions: ManyToMany<typeof Permission>
 
-  @hasMany(() => Post)
-  public posts: HasMany<typeof Post>
-
   @manyToMany(() => Video, {
     pivotTable: 'favorite_videos',
   })
   public favorites: ManyToMany<typeof Video>
-
-  @manyToMany(() => Post, {
-    pivotTable: 'votes',
-  })
-  public votedPosts: ManyToMany<typeof Post>
 
   @manyToMany(() => Comment, {
     pivotTable: 'votes',

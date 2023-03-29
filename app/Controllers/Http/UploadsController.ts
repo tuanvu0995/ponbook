@@ -3,11 +3,10 @@ import Env from '@ioc:Adonis/Core/Env'
 import Comment from 'App/Models/Comment'
 import Video from 'App/Models/Video'
 import slugify from 'App/utils/slugify'
-import { nanoid } from 'nanoid'
+import uniqid from 'uniqid'
 import VideoFilter from 'App/Models/VideoFilter'
-import SimpleWImg from 'App/Services/SimpleWImg'
 import Collection from 'App/Models/Collection'
-import Torrent from 'App/Models/Torrent'
+import FileService from 'App/Services/FileService'
 
 const ACCEPT_TYPES = ['comment', 'cover', 'main']
 
@@ -38,7 +37,7 @@ export default class UploadsController {
       return response.json(image.errors)
     }
 
-    const filename = `users/images/${nanoid()}.${image.extname?.toLocaleLowerCase()}`
+    const filename = `users/images/${uniqid()}.${image.extname?.toLocaleLowerCase()}`
 
     await image.moveToDisk('./', { name: filename })
 
@@ -71,11 +70,6 @@ export default class UploadsController {
   }
 
   public async videoFromBot({ request, response }: HttpContextContract) {
-    const token = request.input('token')
-    if (token !== Env.get('BOT_TOKEN')) {
-      return response.badRequest('Invalid token')
-    }
-
     const existsVideo = await Video.query().where('code', request.input('code')).first()
     if (existsVideo) {
       return response.json({ videoId: existsVideo.id })
@@ -118,11 +112,6 @@ export default class UploadsController {
   }
 
   public async imageFromBot({ request, response }: HttpContextContract) {
-    const token = request.input('token')
-    if (token !== Env.get('BOT_TOKEN')) {
-      return response.badRequest('Invalid token')
-    }
-
     const image = request.file('image', {
       size: '5mb',
       extnames: ['jpg', 'png', 'JPG', 'PNG'],
@@ -141,22 +130,18 @@ export default class UploadsController {
       return response.badRequest('Video not found')
     }
 
-    const filename = `images/${video.code}-${nanoid()}.${image.extname?.toLocaleLowerCase()}`
+    const filename = `tmp/${uniqid()}.${image.extname?.toLocaleLowerCase()}`
 
     await image.moveToDisk('./', { name: filename })
     const path = Env.get('LOCAL_UPLOAD_PATH')
 
     if (request.input('type') === 'cover') {
-      const coverName = `images/${video.code}-cover-${nanoid()}.webp`
-      await SimpleWImg(path + '/' + filename, path + '/' + coverName)
-      video.cover = coverName
+      const file = await FileService.processFile(path + '/' + filename, 'cover')
+      await video.related('videoCover').associate(file)
     } else {
-      const imageName = `images/${video.code}-${nanoid()}.webp`
-      await SimpleWImg(path + '/' + filename, path + '/' + imageName)
-      video.image = imageName
-      const images = JSON.parse(video.images || '[]')
-      images.push(imageName)
-      video.images = JSON.stringify(images)
+      const file = await FileService.processFile(path + '/' + filename, 'cover')
+      await video.related('videoImage').associate(file)
+      await video.related('images').attach([file.id])
     }
 
     video.isPublished = true
@@ -166,27 +151,16 @@ export default class UploadsController {
   }
 
   public async codeExists({ request, response }: HttpContextContract) {
-    const token = request.input('token')
-    if (token !== Env.get('BOT_TOKEN')) {
-      return response.badRequest('Invalid token')
-    }
     const code = request.input('code')
-
     if (!code) {
       return response.badRequest('Code is required')
     }
 
     const existsVideo = await Video.query().where('code', code).first()
-
     return response.json({ exists: !!existsVideo })
   }
 
   public async updatePopularList({ request, response }: HttpContextContract) {
-    const token = request.input('token')
-    if (token !== Env.get('BOT_TOKEN')) {
-      return response.badRequest('Invalid token')
-    }
-
     const codes = request.input('codes')
     if (!Array.isArray(codes)) {
       return response.badRequest('Codes must be array')
@@ -211,44 +185,6 @@ export default class UploadsController {
     const syncDataObject = Object.assign({}, ...syncData)
 
     await popularCollection.related('videos').sync(syncDataObject)
-  }
-
-  public async uploadTorrent({ request, response }: HttpContextContract) {
-    const token = request.input('token')
-    if (token !== Env.get('BOT_TOKEN')) {
-      return response.badRequest('Invalid token')
-    }
-
-    const code = request.input('code')
-    if (!code) {
-      return response.badRequest('Code is required')
-    }
-
-    const videos = await Video.query().where('code', code).where('is_deleted', false)
-
-    if (request.input('done')) {
-      for (const video of videos) {
-        video.hasTorrent = true
-        await video.save()
-      }
-      return response.json({ success: true })
-    }
-
-    for (const video of videos) {
-      await Torrent.create({
-        videoId: video.id,
-        name: request.input('name'),
-        magnetUrl: request.input('magnetUrl'),
-        torrentFile: request.input('torrentFile'),
-        seed: request.input('seed'),
-        leech: request.input('leech'),
-        completed: 0,
-        infoHash: request.input('infoHash'),
-        size: request.input('size'),
-      })
-    }
-
-    return response.json({ success: true })
   }
 
   public async nextCode({ response }: HttpContextContract) {

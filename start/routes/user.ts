@@ -9,10 +9,6 @@ Route.group(() => {
   Route.get('/videos/:uid/delete', 'VideoController.delete').as('videos.delete')
   Route.get('/videos/:uid/edit', 'VideoController.edit').as('videos.edit')
   Route.delete('videos/:uid', 'VideoController.destroy').as('videos.destroy')
-
-  Route.get('/posts/create', 'PostController.create').as('posts.create')
-  Route.get('/posts/:uid/edit', 'PostController.edit').as('posts.edit')
-  Route.put('/posts/:uid', 'PostController.update').as('posts.update')
 }).middleware('auth')
 
 Route.group(() => {
@@ -34,8 +30,6 @@ Route.group(() => {
   Route.post('/videos/:uid/favorite', 'VideoController.favorite').as('videos.favorite')
 
   Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
-
-  Route.post('/posts/:uid/vote', 'PostController.vote').as('posts.vote')
 })
   .as('api')
   .prefix('api')

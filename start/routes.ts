@@ -33,11 +33,15 @@ Route.group(() => {
   Route.post('/logout', 'Auth/LoginController.logout').as('logout')
 }).as('auth')
 
-Route.post('crawler', 'UploadsController.videoFromBot').as('crawler')
-Route.post('crawler/image', 'UploadsController.imageFromBot').as('crawler:image')
-Route.post('crawler/code-exists', 'UploadsController.codeExists').as('crawler:codeExists')
-Route.post('crawler/popular', 'UploadsController.updatePopularList').as('crawler:updatePopularList')
-Route.post('crawler/torrent', 'UploadsController.uploadTorrent').as('crawler:uploadTorrent')
-Route.get('crawler/next-code', 'UploadsController.nextCode').as('crawler:nextCode')
+Route.group(() => {
+  Route.post('crawler', 'UploadsController.videoFromBot').as('crawler')
+  Route.post('crawler/image', 'UploadsController.imageFromBot').as('crawler:image')
+  Route.post('crawler/code-exists', 'UploadsController.codeExists').as('crawler:codeExists')
+  Route.post('crawler/popular', 'UploadsController.updatePopularList').as(
+    'crawler:updatePopularList'
+  )
+  Route.post('crawler/torrent', 'UploadsController.uploadTorrent').as('crawler:uploadTorrent')
+  Route.get('crawler/next-code', 'UploadsController.nextCode').as('crawler:nextCode')
+}).middleware('botAuth')
 
 Route.get(':slug', 'WebController.page').as('web.page')

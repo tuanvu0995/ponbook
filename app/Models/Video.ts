@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import uniqid from 'uniqid'
 import {
   afterCreate,
   afterSave,
@@ -8,7 +9,6 @@ import {
   BelongsTo,
   belongsTo,
   column,
-  computed,
   HasMany,
   hasMany,
   ManyToMany,
@@ -16,8 +16,6 @@ import {
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
 import Event from '@ioc:Adonis/Core/Event'
-import Drive from '@ioc:Adonis/Core/Drive'
-import { nanoid } from 'nanoid'
 import Cast from './Cast'
 import Director from './Director'
 import Maker from './Maker'
@@ -25,6 +23,7 @@ import User from './User'
 import Tag from './Tag'
 import Comment from './Comment'
 import Torrent from './Torrent'
+import File from './File'
 
 export default class Video extends BaseModel {
   @column({ isPrimary: true })
@@ -52,12 +51,13 @@ export default class Video extends BaseModel {
   public cover: string
 
   @column()
+  public coverFileId: number
+
+  @column()
   public image: string
 
-  @column({
-    serializeAs: null,
-  })
-  public images: string
+  @column()
+  public imageFileId: number
 
   @column()
   public imageUrls?: string[]
@@ -101,6 +101,9 @@ export default class Video extends BaseModel {
   @column()
   public hasTorrent: boolean
 
+  @column()
+  public version: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -109,7 +112,7 @@ export default class Video extends BaseModel {
 
   @beforeCreate()
   public static async generateUID(video: Video) {
-    video.uid = nanoid()
+    video.uid = uniqid()
   }
 
   @belongsTo(() => User)
@@ -137,10 +140,20 @@ export default class Video extends BaseModel {
   @hasMany(() => Torrent)
   public torrents: HasMany<typeof Torrent>
 
-  @computed()
-  public get imageGalleries() {
-    return JSON.parse(this.images || '[]')
-  }
+  @belongsTo(() => File, {
+    foreignKey: 'coverFileId',
+  })
+  public videoCover: BelongsTo<typeof File>
+
+  @belongsTo(() => File, {
+    foreignKey: 'imageFileId',
+  })
+  public videoImage: BelongsTo<typeof File>
+
+  @manyToMany(() => File, {
+    pivotTable: 'video_files',
+  })
+  public images: ManyToMany<typeof File>
 
   @beforeFind()
   public static where(query: ModelQueryBuilderContract<typeof Video>) {
@@ -156,19 +169,6 @@ export default class Video extends BaseModel {
   public static async emitUpdatedEvent(video: Video) {
     Event.emit('video:updated', video)
     Event.emit('video:created', video)
-  }
-
-  public async preloadImages({ includeGalleries = false } = {}) {
-    if (this.image) {
-      const mainImageUrl = await Drive.getUrl(this.image)
-
-      this.image = mainImageUrl
-    }
-
-    if (includeGalleries) {
-      const images = await Promise.all(this.imageGalleries.map((image) => Drive.getUrl(image)))
-      this.imageUrls = images.map((image) => image)
-    }
   }
 
   public async saveTags(video: Video, tags: string[]) {

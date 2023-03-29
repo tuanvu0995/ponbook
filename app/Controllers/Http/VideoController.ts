@@ -1,11 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Drive from '@ioc:Adonis/Core/Drive'
 
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Video from 'App/Models/Video'
 import UpdateVideoValidator from 'App/Validators/UpdateVideoValidator'
-import { nanoid } from 'nanoid'
 import Tag from 'App/Models/Tag'
 import slugify from 'App/utils/slugify'
 import VideoRepository from 'App/Repositories/VideoRepository'
@@ -86,8 +84,10 @@ export default class VideoController {
     await video.load('maker')
     await video.load('casts')
     await video.load('tags')
+    await video.load('videoCover')
+    await video.load('videoImage')
 
-    await video.preloadImages({ includeGalleries: true })
+    await video.load('images')
 
     return view.render('videos/edit', { video })
   }
@@ -149,63 +149,10 @@ export default class VideoController {
 
     video.slug = slugify(video.title)
 
-    const newImages: string[] = []
-    if (video.$dirty.slug !== video.$original.slug) {
-      const images = JSON.parse(video.images || '[]')
-      for (const image of images) {
-        const newImageName = image.replace(video.$original.slug, video.slug)
-        if (newImageName !== image) {
-          await Drive.move(image, newImageName)
-        }
-        newImages.push(newImageName)
-      }
-
-      video.image = newImages[0]
-      video.images = JSON.stringify(newImages)
-    }
-
     await video.save()
 
     session.flash('success', 'Video updated successfully')
     return response.redirect().toRoute('videos.edit', { uid: video.uid })
-  }
-
-  public async uploadImage({ request, response, params, view }: HttpContextContract) {
-    const video = await Video.query().where('uid', params.uid).first()
-    if (!video) {
-      return view.render('errors/not-found')
-    }
-
-    const image = request.file('image', {
-      size: '5mb',
-      extnames: ['jpg', 'png', 'gif', 'JPG', 'PNG', 'GIF'],
-    })
-
-    if (!image) {
-      return response.json({ error: 'Image are required' })
-    }
-
-    if (!image.isValid) {
-      return response.json(image.errors)
-    }
-
-    const filename = `images/${video.slug}-${nanoid()}.${image.extname}`
-
-    await image.moveToDisk('./', { name: filename })
-
-    if (!video.image) {
-      video.image = filename
-    }
-
-    const images = JSON.parse(video.images || '[]')
-    images.push(filename)
-    video.images = JSON.stringify(images)
-
-    await video.save()
-
-    return response.json({
-      image: await Drive.getSignedUrl(filename),
-    })
   }
 
   public async addTag({ request, response, params }: HttpContextContract) {
@@ -265,29 +212,11 @@ export default class VideoController {
 
   public async deleteImage({ request, response }: HttpContextContract) {
     const uid = request.param('uid')
-    const imagePath = request.input('image')
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
       return response.json({
         error: 'Video not found',
       })
-    }
-
-    if (imagePath.includes(video.image)) {
-      video.image = ''
-    }
-
-    let images = JSON.parse(video.images || '[]')
-
-    images = images.filter((image) => !imagePath.includes(image))
-    video.images = JSON.stringify(images)
-
-    await video.save()
-
-    try {
-      await Drive.delete(imagePath)
-    } catch (error) {
-      console.log('Error when delete image: ', error)
     }
 
     return response.json({

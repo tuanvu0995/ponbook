@@ -1,5 +1,7 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import { DateTime } from 'luxon'
+import Env from '@ioc:Adonis/Core/Env'
+import File from 'App/Models/File'
 import DeviceDetector from 'device-detector-js'
 
 declare module '@ioc:Adonis/Core/Response' {
@@ -41,12 +43,10 @@ export default class AppProvider {
     View.global('dateFormat', (value: DateTime) => {
       return value.toLocaleString()
     })
-    View.global('imageUrl', (imageName: string) => {
-      if (!imageName) return '/img/no-image.png'
-      if (imageName.startsWith('/uploads/')) {
-        imageName = imageName.replace('/uploads/', '')
-      }
-      return `/uploads/${imageName}`
+    View.global('imageUrl', (file: File, getThumbnail: boolean) => {
+      if (!file) return '/img/no-image.png'
+      if (getThumbnail) return `${Env.get('CDN_URL')}//${file.thumbnailPath}`
+      return `${Env.get('CDN_URL')}/${file.path}`
     })
     View.global('deviceInfo', (userAgent: string) => {
       if (!userAgent) return 'None'
