@@ -26,8 +26,7 @@ Server.middleware.register([
   () => import('App/Middleware/SilentAuth'),
   () => import('App/Middleware/Visitor'),
   () => import('App/Middleware/DetectUserLocale'),
-  () => import('App/Middleware/DetectUserLocale'),
-  () => import('App/Middleware/BotAuth'),
+  () => import('App/Middleware/DetectUserLocale')
 ])
 
 /*
