@@ -8,7 +8,7 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import retry from 'App/utils/retry'
 
 export default class FileService {
-  private static readonly thumbnailTransform = { size: 100, fit: 'cover' }
+  private static readonly thumbnailTransform = { size: 50, fit: 'cover' }
 
   public static async processFile(tmpPath: string, prefix: string): Promise<File> {
     const file = new File()

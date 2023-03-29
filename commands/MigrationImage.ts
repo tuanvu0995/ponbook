@@ -44,7 +44,7 @@ export default class MigrationImage extends BaseCommand {
   private chunkNumber = 0
   private chunkLength = 0
 
-  private readonly thumbnailTransform = { size: 100, fit: 'cover' }
+  private readonly thumbnailTransform = { size: 50, fit: 'cover' }
 
   public async run() {
     this.logger.info('[ImageMigration] Start migrating images')
