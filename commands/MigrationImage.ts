@@ -89,6 +89,8 @@ export default class MigrationImage extends BaseCommand {
     const { default: Video } = await import('App/Models/Video')
     return await Video.query()
       .whereNot('version', 2)
+      .whereNotNull('cover')
+      .whereNotNull('image')
       .offset(this.chunkNumber * this.chunkSize)
       .limit(this.chunkSize)
       .select('id', 'uid', 'version', 'cover', 'image', 'images')
