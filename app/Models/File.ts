@@ -13,6 +13,9 @@ export default class File extends BaseModel {
   public name: string
 
   @column()
+  public type: string
+
+  @column()
   public path: string
 
   @column()
@@ -20,9 +23,6 @@ export default class File extends BaseModel {
 
   @column()
   public size: number
-
-  @column()
-  public mime_type: string
 
   @column()
   public extension: string
@@ -45,7 +45,7 @@ export default class File extends BaseModel {
   }
 
   @beforeCreate()
-  public static initMimeType(file: File) {
-    file.mime_type = 'image/webp'
+  public static initMinitTypeimeType(file: File) {
+    file.type = 'image/webp'
   }
 }
