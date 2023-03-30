@@ -103,7 +103,7 @@ export default class Comment extends BaseModel {
       .preload('owner')
       .paginate(page, limit)
 
-    comments.baseUrl('/videos/' + video.uid)
+    comments.baseUrl('/v/' + video.uid).queryString({ page: page, limit })
     return comments
   }
 }

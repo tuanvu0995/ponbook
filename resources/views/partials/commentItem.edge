@@ -1,6 +1,6 @@
-<article class="media">
+<article class="media mb-2">
     <figure class="media-left">
-        <p class="image is-64x64">
+        <p class="image is-32x32">
             <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
         </p>
     </figure>
@@ -15,7 +15,6 @@
                 @end
                 <br>
                 {{ safe(nl2br(comment.content)) }}
-                <br>
                 <small><a>Like</a> · <a>Reply</a> · {{ dateFromNow(comment.createdAt) }}</small>
             </p>
         </div>
