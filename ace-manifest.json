@@ -1,5 +1,17 @@
 {
   "commands": {
+    "create:comment_user": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/CreateCommentUser",
+      "commandName": "create:comment_user",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "migration:image": {
       "settings": {
         "loadApp": true,

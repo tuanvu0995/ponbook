@@ -5,6 +5,7 @@
  * file.
  */
 
+import Comment from 'App/Models/Comment'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 
@@ -33,5 +34,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'visitor:visit': any
     'video:created': Video
     'video:updated': Video
+    'comment:created': Comment
   }
 }

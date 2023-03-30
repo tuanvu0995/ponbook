@@ -6,6 +6,10 @@ Route.get('/v/:uid', 'VideoController.show').as('videos.show')
 Route.post('/search', 'WebController.postSearch').as('web.postSearch')
 Route.get('/search/:searchId', 'WebController.search').as('web.search')
 
+Route.post('/videos/:uid/guest-comments', 'CommentController.createGuestComment').as(
+  'videos.createGuestComment'
+)
+
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')
   Route.get('/new-release', 'ListController.newRelease').as('newRelease')

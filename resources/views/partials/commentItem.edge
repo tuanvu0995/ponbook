@@ -1,14 +1,16 @@
 <article class="media">
     <figure class="media-left">
         <p class="image is-64x64">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
+            <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
         </p>
     </figure>
     <div class="media-content">
         <div class="content">
             <p>
                 <strong>{{ comment.owner.username }}</strong>
-                @if(comment.owner.firstName && comment.owner.lastName)
+                @if (comment.name)
+                <small>{{ comment.name }}</small>
+                @elseif(comment.owner.firstName && comment.owner.lastName)
                     <small>{{ comment.owner.firstName }} {{ comment.owner.lastName }}</small>
                 @end
                 <br>

@@ -5,6 +5,19 @@ import Video from 'App/Models/Video'
 export default class VideoRepository {
   constructor() {}
 
+  public static async getVideoByUid(uid: string): Promise<Video> {
+    const video = await Video.query().where('uid', uid).first()
+    if (!video) {
+      throw new NotFoundException('Video not found')
+    }
+
+    return video
+  }
+
+  public static async updateVideo(videoId: number, data: any): Promise<void> {
+    await Video.query().where('id', videoId).update(data)
+  }
+
   public async getVideoByUid(uid: string): Promise<Video> {
     const cachedVideo = await Redis.get(`video:${uid}`)
     if (cachedVideo) {
@@ -52,11 +65,6 @@ export default class VideoRepository {
   }
 
   public async getRecentVideos(): Promise<Video[]> {
-    const cachedRecentVideos = await Redis.get('video:recent')
-    if (cachedRecentVideos) {
-      return JSON.parse(cachedRecentVideos)
-    }
-
     const recentVideos = await Video.query()
       .where('is_published', true)
       .where('is_deleted', false)
@@ -66,17 +74,10 @@ export default class VideoRepository {
       await video.load('videoCover')
     }
 
-    await Redis.set('video:recent', JSON.stringify(recentVideos))
-
     return recentVideos
   }
 
   public async getNewlyUpdatedVideos(): Promise<Video[]> {
-    const cachedNewlyUpdatedVideos = await Redis.get('video:newly-updated')
-    if (cachedNewlyUpdatedVideos) {
-      return JSON.parse(cachedNewlyUpdatedVideos)
-    }
-
     const newlyUpdatedVideos = await Video.query()
       .innerJoin('comments', 'videos.id', 'comments.video_id')
       .where('videos.is_published', true)
@@ -90,8 +91,6 @@ export default class VideoRepository {
     for (const video of newlyUpdatedVideos) {
       await video.load('videoCover')
     }
-
-    await Redis.set('video:newly-updated', JSON.stringify(newlyUpdatedVideos))
 
     return newlyUpdatedVideos
   }

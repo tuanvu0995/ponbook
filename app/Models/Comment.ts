@@ -57,6 +57,18 @@ export default class Comment extends BaseModel {
   @column()
   public postId: Number
 
+  @column()
+  public name: string
+
+  @column()
+  public email: string
+
+  @column()
+  public ipAddress: string
+
+  @column()
+  public userAgent: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

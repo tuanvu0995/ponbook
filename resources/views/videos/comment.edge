@@ -1,3 +1,9 @@
+@if(auth.user)
+@set('commentRoute', 'videos.comments.store')
+@else
+@set('commentRoute', 'videos.createGuestComment')
+@end
+
 <section class="py-5">
     <h3 class="title is-5">Comments ({{ comments.length }})</h3>
     @each(comment in comments)
@@ -11,7 +17,9 @@
 </section>
 @end
 
-<div>
+
+
+<div style="max-width: 700px">
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
@@ -19,15 +27,28 @@
             </p>
         </figure>
         <div class="media-content">
-            <form action="{{ route("videos.comments.store", { uid: video.uid }) }}" method="POST">
+            @if(flashMessages.has('error'))
+            <div class="notification is-danger is-small pt-2 pb-2">
+                {{ flashMessages.get('error') }}
+            </div>
+            @endif
+
+            <form action="{{ route(commentRoute, { uid: video.uid }) }}" method="POST">
                 {{ csrfField() }}
+                @if(!auth.user)
+
+                <div class="field">
+                    <div class="control pb-4">
+                        <input class="input is-small" type="text" name="name" placeholder="Your name" value="{{ session.get('comment_user_name', '') }}">
+                    </div>
+                @end
                 <div class="field">
                     @!component('partials/textEditor')
                     <textarea id="comment-textarea" style="display: none" name="content"></textarea>
                 </div>
                 <div class="field">
                     <p class="control">
-                        <button type="submit" class="button">Post comment</button>
+                        <button type="submit" class="button is-small is-primary">Post comment</button>
                     </p>
                 </div>
             </form>

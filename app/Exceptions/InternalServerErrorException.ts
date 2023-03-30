@@ -9,14 +9,15 @@ import { Exception } from '@adonisjs/core/build/standalone'
 | a status code and error code for every exception.
 |
 | @example
-| new BadRequestException('message', 500, 'E_RUNTIME_EXCEPTION')
+| new InternalServerErrorException('message', 500, 'E_RUNTIME_EXCEPTION')
 |
 */
-const message = 'Bad request. Please check your request and try again.'
-const status = 400
+
+const message = 'Internal Server Error. Please check your request and try again.'
+const status = 500
 const E_RUNTIME_EXCEPTION = 'E_RUNTIME_EXCEPTION'
 
-export default class BadRequestException extends Exception {
+export default class InternalServerErrorException extends Exception {
   constructor(error?: string) {
     super(error || message, status, E_RUNTIME_EXCEPTION)
   }
