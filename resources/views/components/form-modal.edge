@@ -1,0 +1,27 @@
+<div id="{{ id }}" class="modal">
+    <div class="modal-background"></div>
+  
+    <form class="modal-content">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">{{ title }}</p>
+        </header>
+        <div class="card-content px-6">
+          {{ csrfField() }}
+
+          <div class="field">
+            <label class="label">Email to receive notification</label>
+            <div class="control">
+              <input class="input" type="text" name="email" placeholder="Enter your email">
+            </div>
+          </div>
+        </div>
+        <footer class="card-footer px-4 py-2 flex is-justify-content-flex-end">
+          <a class="button button-close is-small" aria-label="close">Cancel</a>
+          <button type="submit" class="button is-primary is-small">Save</button>
+        </footer>
+      </div>
+    </form>
+  
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>

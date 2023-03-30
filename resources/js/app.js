@@ -5,11 +5,13 @@ import globalLoadingButton from './utils/globalLoadingButton'
 import 'owl.carousel'
 import '../scss/app.scss'
 import globalVoteButton from './utils/globalVoteButton'
+import globalModalTriggers from './utils/globalModalTrigger'
 
 $(function () {
   globalAjaxButton()
   globalLoadingButton()
   globalVoteButton()
+  globalModalTriggers()
   initImageLazyLoad()
   /**
    * Navigation bar

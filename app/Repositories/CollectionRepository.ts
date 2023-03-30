@@ -16,7 +16,7 @@ export default class CollectionRepository {
           .where('is_published', true)
           .where('is_deleted', false)
           .orderBy('video_collections.order', 'asc')
-          .limit(12)
+          .limit(18)
       )
       for (const video of collection.videos) {
         await video.load('videoCover')
