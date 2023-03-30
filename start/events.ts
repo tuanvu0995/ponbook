@@ -15,6 +15,10 @@ import Mail from '@ioc:Adonis/Addons/Mail'
 import Visitor from 'App/Models/Visitor'
 import DeviceDetector from 'device-detector-js'
 
+Event.on('comment:created', 'Comment.onCommentCreated')
+Event.on('video:created', 'Video.onVideoCreated')
+Event.on('video:updated', 'Video.onVideoUpdated')
+
 Event.on('db:query', (query) => {
   if (Application.inProduction) {
     Logger.debug(JSON.stringify(query, null, 2))
