@@ -128,8 +128,8 @@ export default class Video extends BaseModel {
 
   @beforeSave()
   public static async generateSlug(video: Video) {
-    video.slug = slugify(video.title)
     video.title = video.title.substring(0, 255)
+    video.slug = slugify(video.title)
   }
 
   @belongsTo(() => User)
