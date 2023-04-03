@@ -26,8 +26,20 @@ export default class VideosController {
   }
 
   private async updateVideo(video: Video, payload: any) {
-    const { casts, tags, maker, director, cover, image, images, ...rest } = payload
+    const { casts, tags, maker, director, cover, image, images, updateBySite, ...rest } = payload
     video.merge(rest)
+    if (video.updatedBy?.includes(updateBySite)) {
+      return
+    }
+
+    if (updateBySite) {
+      if (!video.updatedBy) {
+        video.updatedBy = updateBySite
+      } else {
+        const arr = video.updatedBy.split(',')
+        video.updatedBy = _.uniq([...arr, updateBySite]).join(',')
+      }
+    }
     await video.save()
 
     if (_.isArray(casts)) {

@@ -107,6 +107,9 @@ export default class Video extends BaseModel {
   @column()
   public version: number
 
+  @column()
+  public updatedBy: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
