@@ -51,4 +51,5 @@ Server.middleware.registerNamed({
   role: () => import('App/Middleware/Role'),
   throttle: () => import('@adonisjs/limiter/build/throttle'),
   botAuth: () => import('App/Middleware/BotAuth'),
+  workerAuth: () => import('App/Middleware/WorkerAuth'),
 })

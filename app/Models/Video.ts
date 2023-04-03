@@ -6,6 +6,7 @@ import {
   BaseModel,
   beforeCreate,
   beforeFind,
+  beforeSave,
   BelongsTo,
   belongsTo,
   column,
@@ -24,6 +25,8 @@ import Tag from './Tag'
 import Comment from './Comment'
 import Torrent from './Torrent'
 import File from './File'
+import FileService from 'App/Services/FileService'
+import slugify from 'App/utils/slugify'
 
 export default class Video extends BaseModel {
   @column({ isPrimary: true })
@@ -120,6 +123,11 @@ export default class Video extends BaseModel {
     video.version = 2
   }
 
+  @beforeSave()
+  public static async generateSlug(video: Video) {
+    video.slug = slugify(video.title)
+  }
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
@@ -173,7 +181,6 @@ export default class Video extends BaseModel {
   @afterSave()
   public static async emitUpdatedEvent(video: Video) {
     Event.emit('video:updated', video)
-    Event.emit('video:created', video)
   }
 
   public async saveTags(video: Video, tags: string[]) {
@@ -214,5 +221,46 @@ export default class Video extends BaseModel {
       await m.save()
     }
     video.makerId = m.id
+  }
+
+  public async saveImages(video: Video, images: string[]) {
+    const imageIds = await Promise.all([
+      ...images.map(async (image) => {
+        const file = await FileService.processImageFromUrl(image, 'image')
+        return file.id
+      }),
+    ])
+
+    await video.related('images').sync(imageIds)
+  }
+
+  public async saveCover(video: Video, cover: string) {
+    const file = await FileService.processImageFromUrl(cover, 'cover')
+    video.coverFileId = file.id
+    await video.save()
+  }
+
+  public async saveImage(video: Video, image: string) {
+    const file = await FileService.processImageFromUrl(image, 'image')
+    video.imageFileId = file.id
+    await video.save()
+  }
+
+  public async publish(video: Video) {
+    const requiredToPublish = [
+      'title',
+      'code',
+      'coverFileId',
+      'releaseDate',
+      'duration',
+      'imageFileId',
+      'directorId',
+      'makerId',
+    ]
+    const missing = requiredToPublish.filter((field) => !video[field])
+    if (missing.length) return false
+
+    video.isPublished = true
+    await video.save()
   }
 }

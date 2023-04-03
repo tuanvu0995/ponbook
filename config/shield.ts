@@ -92,14 +92,19 @@ export const csrf: ShieldConfig['csrf'] = {
 	| ```
   |
   */
-  exceptRoutes: [
-    '/crawler',
-    '/crawler/image',
-    '/crawler/code-exists',
-    '/search',
-    '/crawler/popular',
-    '/crawler/torrent',
-  ],
+  exceptRoutes: ({ request }) => {
+    return (
+      [
+        '/crawler',
+        '/crawler/image',
+        '/crawler/code-exists',
+        '/search',
+        '/crawler/popular',
+        '/crawler/torrent',
+        '/api/worker',
+      ].findIndex((route) => request.url().includes(route)) !== -1
+    )
+  },
 
   /*
   |--------------------------------------------------------------------------

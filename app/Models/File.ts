@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import Drive from '@ioc:Adonis/Core/Drive'
+import { BaseModel, beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
+import retry from 'App/utils/retry'
 
 export default class File extends BaseModel {
   @column({ isPrimary: true })
@@ -45,7 +47,20 @@ export default class File extends BaseModel {
   }
 
   @beforeCreate()
-  public static initMinitTypeimeType(file: File) {
+  public static initTypeMimeType(file: File) {
     file.type = 'image/webp'
+  }
+
+  @beforeDelete()
+  public static async deleteFile(file: File) {
+    await retry(
+      async () => {
+        await Drive.use('s3').delete(file.path)
+      },
+      {
+        retriesCount: 3,
+        delay: 1000,
+      }
+    )
   }
 }

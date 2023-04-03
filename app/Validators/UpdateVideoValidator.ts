@@ -24,18 +24,19 @@ export default class UpdateVideoValidator {
    *    ```
    */
   public schema = schema.create({
-    title: schema.string(),
     code: schema.string(),
+    title: schema.string.optional(),
     description: schema.string.optional(),
     director: schema.string.optional(),
-    cast: schema.string.optional(),
     casts: schema.array.optional().members(schema.string()),
-    tag: schema.string.optional(),
     tags: schema.array.optional().members(schema.string()),
     maker: schema.string.optional(),
     releaseDate: schema.string.optional(),
     duration: schema.number.optional(),
     published: schema.enum.optional(['on', 'off'] as const),
+    cover: schema.string.optional(),
+    image: schema.string.optional(),
+    images: schema.array.optional().members(schema.string()),
   })
 
   /**

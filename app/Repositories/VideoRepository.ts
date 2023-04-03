@@ -10,7 +10,14 @@ export default class VideoRepository {
     if (!video) {
       throw new NotFoundException('Video not found')
     }
+    return video
+  }
 
+  public static async getVideoByCode(code: string, skipError?: boolean): Promise<Video | null> {
+    const video = await Video.query().where('code', code).first()
+    if (!video && !skipError) {
+      throw new NotFoundException('Video not found')
+    }
     return video
   }
 

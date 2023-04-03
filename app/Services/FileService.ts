@@ -4,11 +4,28 @@ import sharp from 'sharp'
 import SizeOf from 'image-size'
 import uniqid from 'uniqid'
 import File from 'App/Models/File'
+import Env from '@ioc:Adonis/Core/Env'
 import Drive from '@ioc:Adonis/Core/Drive'
 import retry from 'App/utils/retry'
+import DownloadFile from './DownloadFile'
 
 export default class FileService {
   private static readonly thumbnailTransform = { size: 50, fit: 'cover' }
+
+  public static async processImageFromUrl(imageUrl: string, prefix: string): Promise<File> {
+    const fileData = await retry(
+      async () => {
+        return await DownloadFile(imageUrl)
+      },
+      { retriesCount: 3, delay: 1000 }
+    )
+
+    const filename = `tmp/${uniqid()}.jpg`
+    await Drive.use('local').put(filename, fileData)
+    const path = Env.get('LOCAL_UPLOAD_PATH')
+
+    return await FileService.processFile(path + '/' + filename, prefix)
+  }
 
   public static async processFile(tmpPath: string, prefix: string): Promise<File> {
     const file = new File()

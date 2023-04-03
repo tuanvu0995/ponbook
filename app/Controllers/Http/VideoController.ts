@@ -97,10 +97,9 @@ export default class VideoController {
     if (!video) {
       return view.render('errors/not-found')
     }
-
-    const { cast, casts, tag, tags, published, ...body } = await request.validate(
-      UpdateVideoValidator
-    )
+    const cast = ''
+    const tag = ''
+    const { casts, tags, published, ...body } = await request.validate(UpdateVideoValidator)
     video.merge({
       ...body,
       isPublished: published === 'on',
