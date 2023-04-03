@@ -34,8 +34,10 @@ function initImageLazyLoad() {
         if (entry.isIntersecting) {
           let lazyImage = entry.target
           lazyImage.src = lazyImage.dataset.src
-          lazyImage.classList.remove('image-lazy')
           lazyImageObserver.unobserve(lazyImage)
+          lazyImage.onload = function () {
+            lazyImage.classList.remove('image-lazy')
+          }
         }
       })
     })
