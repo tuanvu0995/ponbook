@@ -11,6 +11,7 @@ import DownloadFile from './DownloadFile'
 
 export default class FileService {
   private static readonly thumbnailTransform = { size: 50, fit: 'cover' }
+  private static readonly imageTransform = { size: 1600, fit: 'cover' }
 
   public static async processImageFromUrl(imageUrl: string, prefix: string): Promise<File> {
     const fileData = await retry(
@@ -40,11 +41,13 @@ export default class FileService {
     file.width = width || 0
     file.height = height || 0
 
-    const stream = fs.createReadStream(tmpPath)
-
     await retry(
       async () => {
-        await Drive.use('s3').putStream(file.path, stream, {
+        const imageBuffer = await sharp(tmpPath)
+          .resize(this.imageTransform.size, undefined, { fit: 'cover' })
+          .webp()
+          .toBuffer()
+        await Drive.use('s3').put(file.path, imageBuffer, {
           visibility: 'public',
         })
       },
