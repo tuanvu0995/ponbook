@@ -62,7 +62,11 @@
                             {{ visitor.ipAddress }}
                         </th>
                         <th><a href="{{ visitor.path }}" target="_blank">{{ visitor.path }}</a></th>
-                        <th>{{ deviceInfo(visitor.userAgent) }}</th>
+                        <th>
+                            <a href="#" title="{{ visitor.userAgent }}">
+                                {{ deviceInfo(visitor.userAgent) }}
+                            </a>
+                        </th>
                         <th>{{ visitor.$extras.total }}</th>
                         <th>{{ humanReadableDate(visitor.createdAt) }}</th>
                     </tr>

@@ -43,6 +43,9 @@ export default class Subscription extends BaseModel {
   public plan: SubscriptionPlans
 
   @column()
+  public metadata: string
+
+  @column()
   public isActive: boolean
 
   @column.dateTime({ autoCreate: true })

@@ -16,6 +16,9 @@ export default class extends BaseSchema {
       table.string('event').notNullable()
       table.string('channel').notNullable()
       table.string('plan').notNullable()
+
+      table.text('metadata').nullable()
+
       table.boolean('is_active').defaultTo(true)
       table.boolean('is_deleted').defaultTo(false)
 

@@ -139,8 +139,11 @@ export default class UploadsController {
       const file = await FileService.processFile(path + '/' + filename, 'cover')
       await video.related('videoCover').associate(file)
     } else {
-      const file = await FileService.processFile(path + '/' + filename, 'cover')
-      await video.related('videoImage').associate(file)
+      const file = await FileService.processFile(path + '/' + filename, 'image')
+
+      if (!video.imageFileId) {
+        await video.related('videoImage').associate(file)
+      }
       await video.related('images').attach([file.id])
     }
 
