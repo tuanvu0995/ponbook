@@ -1,9 +1,3 @@
-@if(auth.user)
-@set('commentRoute', 'videos.comments.store')
-@else
-@set('commentRoute', 'videos.createGuestComment')
-@end
-
 <section class="py-5">
     <h3 class="title is-5">Comments ({{ comments.length }})</h3>
     @if(comments.total)
@@ -35,7 +29,13 @@
             </div>
             @endif
 
-            <form action="{{ route(commentRoute, { uid: video.uid }) }}" method="POST">
+            <form
+            @if(auth.user)
+            action="{{ route("videos.comments.store", { uid: video.uid }) }}"
+            @else
+            action="{{ route("videos.createGuestComment", { uid: video.uid }) }}"
+            @end
+            method="POST">
                 {{ csrfField() }}
                 @if(!auth.user)
 
