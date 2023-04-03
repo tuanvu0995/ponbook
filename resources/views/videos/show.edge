@@ -108,6 +108,12 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <h3 class="title is-5">Description</h3>
+                    <p class="mb-5">
+                        {{ video.description || video.title }}
+                    </p>
+                </div>
                 @if(video.images?.length)
                 <div>
                     <h3 class="title is-5">Video images ({{ video.images.length }})</h3>
