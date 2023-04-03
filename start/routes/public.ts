@@ -1,8 +1,8 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', 'HomeController.index').as('home')
+Route.get('/', 'HomeController.index').as('home').middleware('throttle:global')
 Route.get('/uploads/images/*', 'WebController.image').as('image')
-Route.get('/v/:uid', 'VideoController.show').as('videos.show')
+Route.get('/v/:uid', 'VideoController.show').as('videos.show').middleware('throttle:global')
 Route.post('/search', 'WebController.postSearch').as('web.postSearch')
 Route.get('/search/:searchId', 'WebController.search').as('web.search')
 
@@ -22,4 +22,6 @@ Route.group(() => {
   Route.get('/tag/:slug', 'ListController.tags').as('tag')
   Route.get('/stars', 'ListController.stars').as('stars')
   Route.get('/categories', 'ListController.categories').as('categories')
-}).as('list')
+})
+  .as('list')
+  .middleware('throttle:global')

@@ -7,6 +7,7 @@
 | boot.
 |
 */
+import _ from 'lodash'
 import Event from '@ioc:Adonis/Core/Event'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Logger from '@ioc:Adonis/Core/Logger'
@@ -45,9 +46,6 @@ Event.on('user:created', async (user) => {
 
 Event.on('visitor:visit', async (request: any) => {
   const { bot } = new DeviceDetector().parse(request.header('user-agent'))
-  if (bot) {
-    return
-  }
 
   const excludes = [
     '/api',
@@ -75,6 +73,7 @@ Event.on('visitor:visit', async (request: any) => {
     path,
     count: 1,
     country: request.header('cf-ipcountry')?.toLocaleLowerCase() || 'unknown',
+    isBot: _.isObject(bot),
   }
   await Visitor.create(data)
 })
