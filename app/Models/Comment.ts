@@ -78,6 +78,9 @@ export default class Comment extends BaseModel {
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>
 
+  @belongsTo(() => Video)
+  public video: BelongsTo<typeof Video>
+
   @belongsTo(() => Comment)
   public parent: BelongsTo<typeof Comment>
 

@@ -322,6 +322,6 @@ body {
 }
 
 .image-lazy {
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: hue-rotate(45deg);
+  -webkit-filter: hue-rotate(45deg);
 }
