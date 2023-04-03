@@ -56,6 +56,7 @@ export default class File extends BaseModel {
     await retry(
       async () => {
         await Drive.use('s3').delete(file.path)
+        console.log('Successfully deleted file', file.path)
       },
       {
         retriesCount: 3,

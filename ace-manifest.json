@@ -24,6 +24,18 @@
       "aliases": [],
       "flags": []
     },
+    "remove:unused_files": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/RemoveUnusedFiles",
+      "commandName": "remove:unused_files",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "torrent:bot": {
       "settings": {
         "loadApp": true,
