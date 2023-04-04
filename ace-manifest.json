@@ -48,6 +48,18 @@
       "aliases": [],
       "flags": []
     },
+    "update:cast_names": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/UpdateCastNames",
+      "commandName": "update:cast_names",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "update:duplicate_casts": {
       "settings": {
         "loadApp": true,
