@@ -14,36 +14,50 @@
       </p>
     </div>
   </section>
-  {{--  <section>
-    <div class="container is-fluid py-5">
-      <h2 class="title is-5">New posts</h1>
-      <div class="columns is-multiline is-mobile is-tablet is-desktop">
-        @each(post in posts)
-        <div class="column is-full-mobile is-one-third-tablet">
-          @!component('partials/postCard', { post })
+
+  <section id="main-content" class="container is-fluid py-5">
+    <div class="columns">
+      <div class="column is-10">
+          <div class="py-5">
+            <h2 class="title is-5">Recently</h1>
+            @!component('partials/homeVideoList', { videos: recentVideos })
+          </div>
+          <div class="py-5">
+            <h2 class="title is-5">New comments</h1>
+            @!component('partials/homeVideoList', { videos: newlyUpdatedVideos })
+          </div>
+          @each(collection in collections)
+          <div class="py-5">
+            <h2 class="title is-5">{{ collection.name }} videos</h1>
+            @!component('partials/homeVideoList', { videos: collection.videos })
+          </div>
+          @end
+      </div>
+      <div id="sidebar" class="column is-2 p-0">
+        <div class="sidebar__inner px-3 pt-5">
+          <h2 class="title is-5">Radom Genres</h1>
+            <div class="tags">
+              @each(tag in tags)
+              <a class="tag is-primary" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+              @end
+          </div>
+          @if(viewedVideos.length > 0)
+          <div class="pt-4">
+            <h2 class="is-title is-3"><strong>Viewed videos</strong></h3>
+              <div class="py-4">
+                  @each(video in viewedVideos)
+                    @!component('partials/videoListItem', { video, isTransparent: true })
+                  @end
+              </div>
+          </div>
+          @end
         </div>
-        @end
       </div>
     </div>
-  </section>  --}}
-  <section>
-    <div class="container is-fluid py-5">
-      <h2 class="title is-5">Recently</h1>
-      @!component('partials/videoList', { videos: recentVideos })
-    </div>
   </section>
-  <section>
-    <div class="container is-fluid py-5">
-      <h2 class="title is-5">New comments</h1>
-      @!component('partials/videoList', { videos: newlyUpdatedVideos })
-    </div>
-  </section>
-  @each(collection in collections)
-  <section>
-    <div class="container is-fluid py-5">
-      <h2 class="title is-5">{{ collection.name }} videos</h1>
-      @!component('partials/videoList', { videos: collection.videos })
-    </div>
-  </section>
-  @end
+@end
+
+@section('scripts')
+<script src="{{ asset('assets/js/lib/resize-sensor.js') }}" defer async></script>
+<script src="{{ asset('assets/sticky-sidebar.js') }}" defer async></script>
 @end

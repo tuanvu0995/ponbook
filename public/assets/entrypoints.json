@@ -27,6 +27,11 @@
       "js": [
         "http://localhost:8080/assets/player.js"
       ]
+    },
+    "sticky-sidebar": {
+      "js": [
+        "http://localhost:8080/assets/sticky-sidebar.js"
+      ]
     }
   }
 }

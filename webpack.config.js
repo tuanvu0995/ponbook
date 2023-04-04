@@ -50,6 +50,7 @@ Encore.addEntry('common', './resources/js/common.js')
 Encore.addEntry('post-comment', './resources/js/post-comment.js')
 Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 Encore.addEntry('player', './resources/js/player.js')
+Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,11 @@ Encore.copyFiles({
 Encore.copyFiles({
   from: 'node_modules/quill/dist',
   to: 'js/[path][name].[hash:8].[ext]',
+})
+
+Encore.copyFiles({
+  from: './resources/js/lib',
+  to: 'js/lib/[path][name].[hash:8].[ext]',
 })
 
 /*

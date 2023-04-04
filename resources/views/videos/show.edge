@@ -84,12 +84,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="has-text-right">Tags</th>
+                                    <th class="has-text-right">Genre(s)</th>
                                     <td>
                                         <div class="tags">
                                             @each(tag in video.tags)
-                                            <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</span>
-                                                @end
+                                            <a class="tag is-info is-light" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+                                            @end
                                         </div>
                                     </td>
                                 </tr>

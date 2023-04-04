@@ -6,7 +6,7 @@
 @import '~owl.carousel/dist/assets/owl.carousel.css';
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.snow.css';
-@import "./liveplayer.scss";
+@import './liveplayer.scss';
 
 html,
 body {
@@ -267,7 +267,6 @@ body {
   left: -4px;
 }
 
-
 .is-truncate-2 {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -312,7 +311,7 @@ body {
   }
 
   .dropdown-menu {
-    top: 0
+    top: 0;
   }
 }
 
@@ -324,4 +323,18 @@ body {
 .image-lazy {
   filter: blur(8px);
   -webkit-filter: blur(8px);
+}
+
+.navbar {
+  box-shadow: 0 2px 5px rgba(10, 10, 10, 0.1);
+}
+
+.sidebar {
+  will-change: min-height;
+}
+
+.sidebar__inner {
+  transform: translate(0, 0); /* For browsers don't support translate3d. */
+  transform: translate3d(0, 0, 0);
+  will-change: position, transform;
 }

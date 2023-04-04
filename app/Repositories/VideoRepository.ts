@@ -89,7 +89,7 @@ export default class VideoRepository {
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('id', 'desc')
-      .limit(18)
+      .limit(16)
     for (const video of recentVideos) {
       await video.load('videoCover')
     }
@@ -107,7 +107,7 @@ export default class VideoRepository {
       .select('videos.*')
       .orderBy('videos.updated_at', 'desc')
       .groupBy('videos.id')
-      .limit(18)
+      .limit(16)
     for (const video of newlyUpdatedVideos) {
       await video.load('videoCover')
     }

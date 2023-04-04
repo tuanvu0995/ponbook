@@ -1,0 +1,7 @@
+<div class="columns is-multiline is-mobile is-tablet is-desktop">
+    @each(video in videos)
+      <div class="column is-half-mobile is-one-third-tablet is-3-desktop">
+        @!component('partials/videoItem', { video })
+      </div>
+    @end
+</div>
