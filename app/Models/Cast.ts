@@ -88,4 +88,15 @@ export default class Cast extends BaseModel {
       count++
     }
   }
+
+  public static async getCastByName(name: string, exceptIds: number[] = []) {
+    const reName = name.split(' ').reverse().join(' ')
+    const cast = await Cast.query()
+      .whereNotIn('id', exceptIds)
+      .where((qs) => {
+        qs.where('name', name).orWhere('name', reName)
+      })
+      .first()
+    return cast
+  }
 }
