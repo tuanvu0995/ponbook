@@ -118,7 +118,7 @@ export default class ListController {
   public async castsBySlug({ request, view }: HttpContextContract) {
     const slug = request.param('slug')
     const { page = 1, limit = 30 } = request.qs()
-    const cast = await Cast.query().where('slug', slug).first()
+    const cast = await Cast.query().preload('castImage').where('slug', slug).first()
     if (!cast) {
       return view.render('errors/not-found')
     }
@@ -234,6 +234,7 @@ export default class ListController {
   public async stars({ request, view }: HttpContextContract) {
     const { page = 1, limit = 60 } = request.qs()
     const stars = await Cast.query()
+      .preload('castImage')
       .orderBy('name', 'asc')
       .withCount('videos')
       .paginate(page, limit)

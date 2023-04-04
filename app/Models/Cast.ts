@@ -79,7 +79,9 @@ export default class Cast extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => File)
+  @belongsTo(() => File, {
+    foreignKey: 'imageFileId',
+  })
   public castImage: BelongsTo<typeof File>
 
   @manyToMany(() => Video, {

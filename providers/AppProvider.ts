@@ -40,6 +40,10 @@ export default class AppProvider {
     View.global('humanReadableDate', (value: DateTime) => {
       return value.setZone('Asia/Ho_Chi_Minh').toLocaleString(DateTime.DATETIME_SHORT)
     })
+    View.global('formatDate', (value: Date) => {
+      const date = DateTime.fromJSDate(value)
+      return date.toISODate()
+    })
     View.global('dateFormat', (value: DateTime) => {
       return value.toLocaleString()
     })
