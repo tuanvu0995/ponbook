@@ -57,6 +57,7 @@ export default class WebController {
       .where('vfv.video_filter_id', videoFilter.id)
       .where('is_published', true)
       .preload('casts')
+      .preload('videoCover')
       .orderBy('code', 'desc')
       .paginate(page, perPage)
 
