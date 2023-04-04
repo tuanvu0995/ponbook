@@ -4,6 +4,8 @@ import {
   BaseModel,
   beforeCreate,
   beforeSave,
+  BelongsTo,
+  belongsTo,
   column,
   ManyToMany,
   manyToMany,
@@ -11,6 +13,7 @@ import {
 import { nanoid } from 'nanoid'
 import Video from './Video'
 import slugify from 'App/utils/slugify'
+import File from './File'
 
 export default class Cast extends BaseModel {
   @column({ isPrimary: true })
@@ -32,16 +35,37 @@ export default class Cast extends BaseModel {
   public image: string
 
   @column()
+  public imageFileId: number
+
+  @column()
   public birthday: DateTime
 
   @column()
   public productCount: number
 
   @column()
-  public cup: string
+  public cup?: string
 
   @column()
-  public jpName: string
+  public jpName?: string
+
+  @column()
+  public cityOfBorn?: DateTime
+
+  @column()
+  public height?: string
+
+  @column()
+  public hobby?: string
+
+  @column()
+  public bloodType?: string
+
+  @column()
+  public skill?: string
+
+  @column()
+  public other?: string
 
   @column()
   public favoriteCount: number
@@ -54,6 +78,9 @@ export default class Cast extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => File)
+  public castImage: BelongsTo<typeof File>
 
   @manyToMany(() => Video, {
     pivotTable: 'video_casts',
