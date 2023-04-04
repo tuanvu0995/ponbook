@@ -82,14 +82,14 @@ export default class ListController {
   public async newComments({ request, view }: HttpContextContract) {
     const { page = 1, limit = 30 } = request.qs()
     const videos = await Video.query()
+      .select('videos.*')
+      .where('videos.is_published', true)
+      .where('videos.is_deleted', false)
       .innerJoin('comments', 'videos.id', 'comments.video_id')
-      .where('is_published', true)
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
-      .where('videos.is_deleted', false)
-      .orderBy('videos.updated_at', 'desc')
+      .orderByRaw('MAX(comments.id) desc')
       .groupBy('videos.id')
-      .select('videos.*')
       .paginate(page, limit)
 
     const title = 'New Comments'

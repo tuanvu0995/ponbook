@@ -99,13 +99,13 @@ export default class VideoRepository {
 
   public async getNewlyUpdatedVideos(): Promise<Video[]> {
     const newlyUpdatedVideos = await Video.query()
-      .innerJoin('comments', 'videos.id', 'comments.video_id')
+      .select('videos.*')
       .where('videos.is_published', true)
+      .where('videos.is_deleted', false)
+      .innerJoin('comments', 'videos.id', 'comments.video_id')
       .where('comments.is_blocked', false)
       .where('comments.is_draft', false)
-      .where('videos.is_deleted', false)
-      .select('videos.*')
-      .orderBy('videos.updated_at', 'desc')
+      .orderByRaw('MAX(comments.id) desc')
       .groupBy('videos.id')
       .limit(16)
     for (const video of newlyUpdatedVideos) {
