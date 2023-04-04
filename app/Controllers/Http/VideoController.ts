@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Director from 'App/Models/Director'
@@ -8,6 +9,7 @@ import Tag from 'App/Models/Tag'
 import slugify from 'App/utils/slugify'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import Comment from 'App/Models/Comment'
+import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/contants'
 
 export default class VideoController {
   protected videoRepository: VideoRepository
@@ -20,7 +22,7 @@ export default class VideoController {
     return view.render('videos/index')
   }
 
-  public async show({ request, params, view, auth }: HttpContextContract) {
+  public async show({ request, params, view, auth, session }: HttpContextContract) {
     const { uid } = params
     const { page = 1, limit = 20 } = request.qs()
 
@@ -47,6 +49,16 @@ export default class VideoController {
     const description = video.description
     const metaImage = video.image
 
+    const viewedIds = JSON.parse(session.get(VIEWED_LIST, '[]'))
+    if (!_.includes(viewedIds, video.id)) {
+      if (viewedIds.length > MAX_VIEWED_LIST) {
+        viewedIds.shift()
+      }
+      viewedIds.unshift(video.id)
+      session.put(VIEWED_LIST, JSON.stringify(viewedIds))
+    }
+    const viewedVideos = await VideoRepository.getVideoByIds(viewedIds)
+
     return view.render('videos/show', {
       title,
       description,
@@ -56,6 +68,7 @@ export default class VideoController {
       relatedVideos,
       keyword,
       isFavorite,
+      viewedVideos,
     })
   }
 

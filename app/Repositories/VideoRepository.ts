@@ -25,6 +25,14 @@ export default class VideoRepository {
     await Video.query().where('id', videoId).update(data)
   }
 
+  public static async getVideoByIds(videoIds: number[]): Promise<Video[]> {
+    const videos = await Video.query()
+      .preload('videoCover')
+      .preload('casts')
+      .whereIn('id', videoIds)
+    return videos.sort((a, b) => videoIds.indexOf(a.id) - videoIds.indexOf(b.id))
+  }
+
   public async getVideoByUid(uid: string): Promise<Video> {
     const cachedVideo = await Redis.get(`video:${uid}`)
     if (cachedVideo) {
@@ -57,14 +65,19 @@ export default class VideoRepository {
 
     const tagIds = video.tags.map((tag) => tag.id)
     const relatedVideos = await Video.query()
-      .preload('videoCover')
-      .preload('casts')
-      .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
-      .whereIn('video_tags.tag_id', tagIds)
-      .where('videos.id', '!=', video.id)
+      .whereExists((qs) => {
+        qs.from('video_tags')
+          .whereIn('video_tags.tag_id', tagIds)
+          .whereColumn('video_tags.video_id', 'videos.id')
+      })
       .groupBy('videos.id')
       .orderByRaw('RAND()')
-      .limit(8)
+      .limit(5)
+
+    for (const relatedVideo of relatedVideos) {
+      await relatedVideo.load('videoCover')
+      await relatedVideo.load('casts')
+    }
 
     await Redis.set(`video:${video.uid}:related`, JSON.stringify(relatedVideos))
 

@@ -9,8 +9,10 @@
             <div><a href="{{ route('videos.show', { uid: video.uid }) }}"><strong>{{ video.code }}</strong></a></div>
             @if(video.casts.length === 1)
             <div><a href="{{ route('list.cast', { uid: video.casts[0].uid }) }}">{{ video.casts[0].name }}</a></div>
+            @elseif (video.casts.length > 1)
+                <div>Many casts {{ video.casts.length }}</div>
             @else
-                <div>Many casts</div>
+                <div>---</div>
             @end
             <time class="is-size-7" datetime="{{ video.releaseDate || video.release_date }}">{{ video.releaseDate || video.release_date }}</time>
         </div>
