@@ -234,6 +234,7 @@ export default class ListController {
   public async stars({ request, view }: HttpContextContract) {
     const { page = 1, limit = 60 } = request.qs()
     const stars = await Cast.query()
+      .whereHas('videos')
       .preload('castImage')
       .orderBy('name', 'asc')
       .withCount('videos')
