@@ -1,4 +1,5 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
+import fs from 'fs'
 
 export default class UpdateCastNames extends BaseCommand {
   /**
@@ -29,17 +30,34 @@ export default class UpdateCastNames extends BaseCommand {
 
   public async run() {
     const { default: Cast } = await import('App/Models/Cast')
+    // const { default: Database } = await import('@ioc:Adonis/Lucid/Database')
     this.logger.info('Start scan duplicate casts')
 
-    const casts = await Cast.query()
-      .select('id', 'name')
-      .whereLike('name', '%(%')
-      .orderBy('id', 'asc')
+    const casts = await Cast.query().select('id', 'name').orderBy('id', 'asc')
 
-    for (const cast of casts) {
-      const names = cast.name.split(' ')
-      if (names.length <= 2) continue
-      console.log('Cast: ', cast.id, cast.name)
+    this.logger.info(`Found ${casts.length} casts`)
+    function hasSpecialChars(name) {
+      const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/
+      return regex.test(name.replace(/\s/g, ''))
     }
+
+    const updated: any[] = []
+
+    let count = 0
+    for (const cast of casts) {
+      console.log(`Checking ${cast.name}...`)
+      if (hasSpecialChars(cast.name)) {
+        const newName = cast.name.replace(/[^a-zA-Z0-9 ]/g, '')
+        console.log(`Updating to ${cast.name}...`)
+        updated.push([cast.id, cast.name, newName])
+        cast.name = newName
+        await cast.save()
+        count++
+      }
+    }
+
+    fs.writeFileSync('casts.json', JSON.stringify(updated, null, 2))
+
+    console.log('count: ', count)
   }
 }

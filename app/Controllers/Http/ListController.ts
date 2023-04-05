@@ -236,6 +236,7 @@ export default class ListController {
     const stars = await Cast.query()
       .has('videos')
       .preload('castImage')
+      .orderBy('image_file_id', 'desc')
       .orderBy('name', 'asc')
       .withCount('videos')
       .paginate(page, limit)
