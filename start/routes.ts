@@ -23,7 +23,6 @@ import './routes/public'
 import './routes/admin'
 import './routes/user'
 import './routes/api'
-import './routes/worker'
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')
@@ -40,7 +39,6 @@ Route.group(() => {
   Route.post('crawler/popular', 'UploadsController.updatePopularList').as(
     'crawler:updatePopularList'
   )
-  Route.post('crawler/torrent', 'UploadsController.uploadTorrent').as('crawler:uploadTorrent')
   Route.get('crawler/next-code', 'UploadsController.nextCode').as('crawler:nextCode')
 }).middleware('botAuth')
 

@@ -1,17 +1,14 @@
 import { DateTime } from 'luxon'
+import uniqid from 'uniqid'
 import Hash from '@ioc:Adonis/Core/Hash'
 import {
   column,
   beforeSave,
   BaseModel,
   beforeCreate,
-  hasMany,
-  HasMany,
   manyToMany,
   ManyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
-import { nanoid } from 'nanoid'
-import Activity from './Activity'
 import Permission from './Permission'
 import Role from './Role'
 import Video from './Video'
@@ -90,11 +87,8 @@ export default class User extends BaseModel {
 
   @beforeCreate()
   public static async generateUID(User: User) {
-    User.uid = nanoid()
+    User.uid = uniqid()
   }
-
-  @hasMany(() => Activity)
-  public activities: HasMany<typeof Activity>
 
   @manyToMany(() => Role, {
     pivotTable: 'user_roles',

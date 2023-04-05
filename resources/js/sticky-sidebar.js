@@ -7,6 +7,7 @@ $(function () {
     containerSelector: '#main-content',
     innerWrapperSelector: '.sidebar__inner',
     scrollContainer: 'body',
+    minWidth: 768,
   })
   console.log('Sticky sidebar initialized.', sidebar)
 })

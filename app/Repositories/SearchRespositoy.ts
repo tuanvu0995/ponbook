@@ -2,8 +2,61 @@ import _ from 'lodash'
 import Video from 'App/Models/Video'
 import VideoFilter from 'App/Models/VideoFilter'
 import Cast from 'App/Models/Cast'
+import Tag from 'App/Models/Tag'
 
 export default class SearchRepository {
+  private static isCode(keyword: string): boolean {
+    const codeRegex = /^[A-Z]+\-\d{3,4}$/ // định dạng mã code là chữ in hoa đầu tiên, theo sau là dấu "-", và 3 hoặc 4 chữ số
+    return codeRegex.test(keyword)
+  }
+
+  public static async searchVideos(keyword: string): Promise<Video[]> {
+    const isCode = this.isCode(keyword)
+    if (isCode) {
+      const videos = await this._searchVideosByCode(keyword)
+      if (videos.length > 0) {
+        return videos
+      }
+    }
+
+    return []
+  }
+
+  private static async _searchVideosByCode(keyword: string, limit: number = 5): Promise<Video[]> {
+    const searchValues = this.praseCode(keyword)
+
+    const videos = await Video.query()
+      .whereIn('code', searchValues)
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('release_date', 'desc')
+      .limit(limit)
+
+    return videos
+  }
+
+  public static async searchCasts(keyword: string, limit: number = 5): Promise<Cast[]> {
+    const names = keyword.split(' ')
+    const searchValues: string[] = [keyword]
+    if (names.length > 1) {
+      searchValues.push(...names)
+      searchValues.push(names.reverse().join(' '))
+    }
+    const casts = await Cast.query()
+      .whereIn('name', searchValues)
+      .orderBy('name', 'asc')
+      .limit(limit)
+    return casts
+  }
+
+  public static async searchTags(keyword: string, limit: number = 5): Promise<Tag[]> {
+    const tags = await Tag.query()
+      .where('name', 'like', '%' + keyword + '%')
+      .orderBy('name', 'asc')
+      .limit(limit)
+    return tags
+  }
+
   public static async searchVideosByCode(code: string): Promise<VideoFilter> {
     const searchValues = this.praseCode(code)
     const searchKey = `search:video:${searchValues.join('-')}`

@@ -23,7 +23,6 @@ import Maker from './Maker'
 import User from './User'
 import Tag from './Tag'
 import Comment from './Comment'
-import Torrent from './Torrent'
 import File from './File'
 import FileService from 'App/Services/FileService'
 import slugify from 'App/utils/slugify'
@@ -153,9 +152,6 @@ export default class Video extends BaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
-
-  @hasMany(() => Torrent)
-  public torrents: HasMany<typeof Torrent>
 
   @belongsTo(() => File, {
     foreignKey: 'coverFileId',

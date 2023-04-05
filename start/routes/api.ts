@@ -12,3 +12,10 @@ Route.get('/api/models', async ({ request, response }: HttpContextContract) => {
   })
   return response.json(rsp.data)
 })
+
+Route.group(() => {
+  Route.post('/searches', 'SearchesController.searches').as('searches')
+  Route.get('/searches/:searchId', 'SearchesController.getSearch').as('search:get')
+})
+  .as('api')
+  .prefix('api')
