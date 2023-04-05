@@ -200,8 +200,13 @@ export default class Video extends BaseModel {
   public async saveCasts(video: Video, casts: string[]) {
     const castIds = await Promise.all(
       casts.map(async (cast) => {
-        const castModel = await Cast.firstOrCreate({ name: cast }, { name: cast })
-        return castModel.id
+        const existsCast = await Cast.getCastByName(cast)
+        if (existsCast) {
+          return existsCast.id
+        } else {
+          const castModel = await Cast.create({ name: cast })
+          return castModel.id
+        }
       })
     )
     await video.related('casts').sync(castIds)

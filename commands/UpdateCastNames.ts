@@ -31,7 +31,10 @@ export default class UpdateCastNames extends BaseCommand {
     const { default: Cast } = await import('App/Models/Cast')
     this.logger.info('Start scan duplicate casts')
 
-    const casts = await Cast.query().select('id', 'name').orderBy('id', 'asc')
+    const casts = await Cast.query()
+      .select('id', 'name')
+      .whereLike('name', '%(%')
+      .orderBy('id', 'asc')
 
     for (const cast of casts) {
       const names = cast.name.split(' ')

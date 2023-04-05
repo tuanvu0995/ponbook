@@ -41,6 +41,9 @@ export default class RemoveUnusedFiles extends BaseCommand {
       .whereNotExists((qs) => {
         qs.from('video_files').whereColumn('video_files.file_id', 'files.id')
       })
+      .whereNotExists((qs) => {
+        qs.from('casts').whereColumn('casts.image_file_id', 'files.id')
+      })
 
     for (const file of files) {
       await file.delete()
