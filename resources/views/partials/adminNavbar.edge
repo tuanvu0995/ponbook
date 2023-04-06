@@ -33,9 +33,6 @@
   
       @if(auth.isLoggedIn)
       <div class="navbar-end">
-        <div class="navbar-item">
-          <a class="button is-primary is-small" href="{{ route("videos.create") }}">Add video</a>
-        </div>
         <div id="user-dropdown" class="navbar-item has-dropdown">
           <a id="user-dropdown-link" class="navbar-link">
             <span>@</span>{{ auth.user.username }}
