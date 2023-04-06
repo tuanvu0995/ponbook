@@ -12,6 +12,10 @@ Route.group(() => {
   .namespace('App/Controllers/Http/Account')
 
 Route.group(() => {
+  Route.post('/videos/:uid/comments', 'CommentController.store').as('videos.comments.store')
+}).middleware('auth')
+
+Route.group(() => {
   Route.post('/videos/:uid/favorite', 'VideoController.favorite').as('videos.favorite')
   Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
 })
