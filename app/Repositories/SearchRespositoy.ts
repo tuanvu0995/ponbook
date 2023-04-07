@@ -6,7 +6,7 @@ import Tag from 'App/Models/Tag'
 
 export default class SearchRepository {
   private static isCode(keyword: string): boolean {
-    const codeRegex = /^[A-Z]+\-\d{3,4}$/ // định dạng mã code là chữ in hoa đầu tiên, theo sau là dấu "-", và 3 hoặc 4 chữ số
+    const codeRegex = /^[a-zA-Z]+\-\d{3,4}$/ // định dạng mã code là chữ in hoa đầu tiên, theo sau là dấu "-", và 3 hoặc 4 chữ số
     return codeRegex.test(keyword)
   }
 
