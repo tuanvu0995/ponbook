@@ -364,6 +364,8 @@ body {
 }
 
 .search-modal {
+  justify-content: flex-start;
+  padding-top: 5%;
   .modal-card {
     border-radius: 6;
     min-height: 400px;
