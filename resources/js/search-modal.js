@@ -12,13 +12,13 @@ const ReactSearchModal = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const onChange = (e) => {
-    setKeyword(e.target.value?.trim())
+    setKeyword(e.target.value)
   }
 
   useEffect(() => {
     if (keyword.length >= 2) {
       setIsLoading(true)
-      debounceFetch(keyword)
+      debounceFetch(keyword?.trim())
     } else {
       setVideos([])
       setCasts([])
