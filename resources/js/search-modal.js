@@ -15,6 +15,10 @@ const ReactSearchModal = () => {
     setKeyword(e.target.value)
   }
 
+  const onClose = () => {
+    document.querySelector('.modal').classList.remove('is-active')
+  }
+
   useEffect(() => {
     if (keyword.length >= 2) {
       setIsLoading(true)
@@ -84,7 +88,7 @@ const ReactSearchModal = () => {
   return (
     <>
       <header className="modal-card-head">
-        <div className="field">
+        <div className="field my-0">
           <div className="control has-icons-left has-icons-right">
             <input
               className="input"
@@ -96,9 +100,14 @@ const ReactSearchModal = () => {
             <span className="icon is-small is-left">
               <i className="fa fa-search" aria-hidden="true"></i>
             </span>
-            <span className="icon is-small is-right">ESC</span>
+            <span className="icon is-small is-right is-hidden-touch is-flex-desktop">ESC</span>
           </div>
         </div>
+        <button
+          class="delete is-small is-hidden-desktop mr-2"
+          aria-label="close"
+          onClick={onClose}
+        ></button>
       </header>
       <section className="modal-card-body is-flex">
         {keyword.length && !isLoading ? (

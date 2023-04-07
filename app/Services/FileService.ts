@@ -22,7 +22,7 @@ export default class FileService {
     )
 
     const filename = `tmp/${uniqid()}.jpg`
-    await Drive.use('local').put(filename, fileData)
+    await Drive.use('s3').put(filename, fileData)
     const path = Env.get('LOCAL_UPLOAD_PATH')
 
     return await FileService.processFile(path + '/' + filename, prefix)

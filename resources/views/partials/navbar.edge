@@ -6,11 +6,9 @@
 
 
       <div class="is-flex is-align-items-center">
-        <div class="navbar-item is-hidden-desktop">
-          <a id="search-btn" class="button is-light is-small js-modal-trigger" data-target="search-modal">
-              <i class="fa fa-search" aria-hidden="true"></i>
-          </a>
-        </div>
+        <a class="navbar-item is-hidden-desktop js-modal-trigger" data-target="search-modal">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -55,11 +53,9 @@
       </div>
   
       <div class="navbar-end">
-        <div class="navbar-item is-hidden-touch is-flex-desktop">
-            <a id="search-btn" class="button is-light is-small js-modal-trigger" data-target="search-modal">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </a>
-        </div>
+        <a class="navbar-item is-hidden-touch is-flex-desktop js-modal-trigger" data-target="search-modal">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </a>
         @if(auth.isLoggedIn)
         @include('partials/navbar-notification')
         <div id="user-dropdown" class="navbar-item has-dropdown">
