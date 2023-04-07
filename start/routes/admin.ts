@@ -35,3 +35,10 @@ Route.get('health', async ({ response }) => {
   const report = await HealthCheck.getReport()
   return report.healthy ? response.ok(report) : response.badRequest(report)
 }).middleware(['auth', 'role:admin'])
+
+Route.group(() => {
+  Route.resource('videos', 'VideoController').apiOnly()
+})
+  .as('admin:api')
+  .prefix('admin/api')
+  .namespace('App/Controllers/Http/Admin')

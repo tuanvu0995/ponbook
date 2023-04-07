@@ -1,9 +1,12 @@
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import Video from 'App/Models/Video'
+import BaseRepository from './BaseRepository'
 
-export default class VideoRepository {
-  constructor() {}
+export default class VideoRepository extends BaseRepository {
+  constructor() {
+    super(Video)
+  }
 
   public static async getVideoByUid(uid: string): Promise<Video> {
     const video = await Video.query().where('uid', uid).first()
