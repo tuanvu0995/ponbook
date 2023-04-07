@@ -17,17 +17,12 @@ export default class SearchRepository {
       if (videos.length > 0) {
         return videos
       }
-    } else {
-      const videos = await this._searchVideosByTitle(keyword)
-      if (videos.length > 0) {
-        return videos
-      }
     }
-
-    return []
+    const videos = await this._searchVideosByTitle(keyword)
+    return videos
   }
 
-  private static async _searchVideosByCode(keyword: string, limit: number = 5): Promise<Video[]> {
+  private static async _searchVideosByCode(keyword: string, limit: number = 10): Promise<Video[]> {
     const searchValues = this.praseCode(keyword)
 
     const videos = await Video.query()
@@ -40,7 +35,7 @@ export default class SearchRepository {
     return videos
   }
 
-  private static async _searchVideosByTitle(keyword: string, limit: number = 5): Promise<Video[]> {
+  private static async _searchVideosByTitle(keyword: string, limit: number = 10): Promise<Video[]> {
     const videos = await Video.query()
       .whereRaw('title LIKE ?', [`%${keyword}%`])
       .where('is_published', true)
@@ -62,7 +57,7 @@ export default class SearchRepository {
     return videos
   }
 
-  public static async searchCasts(keyword: string, limit: number = 5): Promise<Cast[]> {
+  public static async searchCasts(keyword: string, limit: number = 10): Promise<Cast[]> {
     const casts = await Cast.query()
       .whereRaw('name LIKE ?', [`%${keyword}%`])
       .orderByRaw(

@@ -19,6 +19,7 @@ export default class SearchesController {
     const videoResults = videos.map((video) => ({
       id: video.id,
       title: video.title,
+      uid: video.uid,
     }))
 
     const castResults = casts.map((cast) => ({
@@ -32,6 +33,22 @@ export default class SearchesController {
       name: tag.name,
       slug: tag.slug,
     }))
+
+    // take total 10 results
+    const total = videoResults.length + castResults.length + tagResults.length
+    if (total > 10) {
+      if (videoResults.length > 5) {
+        videoResults.splice(5, videoResults.length - 5)
+      }
+
+      if (castResults.length > 5) {
+        castResults.splice(5, castResults.length - 5)
+      }
+
+      if (tagResults.length > 5) {
+        tagResults.splice(5, tagResults.length - 5)
+      }
+    }
 
     return response.json({ videos: videoResults, casts: castResults, tags: tagResults })
   }
