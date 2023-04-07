@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
 import axios from 'axios'
 import debounce from 'lodash/debounce'
@@ -10,6 +10,7 @@ const ReactSearchModal = () => {
   const [tags, setTags] = useState([])
   const [hasResults, setHasResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const inputRef = useRef()
 
   const onChange = (e) => {
     setKeyword(e.target.value)
@@ -18,6 +19,12 @@ const ReactSearchModal = () => {
   const onClose = () => {
     document.getElementById('search-modal').classList.remove('is-active')
   }
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [inputRef.current])
 
   useEffect(() => {
     if (keyword.length >= 2) {
@@ -91,6 +98,7 @@ const ReactSearchModal = () => {
         <div className="field my-0">
           <div className="control has-icons-left has-icons-right">
             <input
+              ref={inputRef}
               className="input"
               type="text"
               placeholder="Search videos, idols"
