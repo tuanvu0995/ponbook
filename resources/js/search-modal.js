@@ -70,7 +70,7 @@ const ReactSearchModal = () => {
           <>
             <p className="panel-block is-group px-8">Genre(s)</p>
             {tags.map((tag) => (
-              <a className="panel-block" href={'/tag/' + tag.uid}>
+              <a className="panel-block" href={'/tag/' + tag.slug}>
                 <span className="title with-2-lines">{tag.name}</span>
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
               </a>

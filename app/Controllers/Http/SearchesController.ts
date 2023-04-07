@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import SearchRepository from 'App/Repositories/SearchRespositoy'
+import _ from 'lodash'
 
 export default class SearchesController {
   public async searches({ request, response }: HttpContextContract) {
