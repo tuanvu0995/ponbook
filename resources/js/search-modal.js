@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import ReactDOM from 'react-dom/client'
 import axios from 'axios'
 import debounce from 'lodash/debounce'
@@ -10,7 +10,6 @@ const ReactSearchModal = () => {
   const [tags, setTags] = useState([])
   const [hasResults, setHasResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const inputRef = useRef()
 
   const onChange = (e) => {
     setKeyword(e.target.value)
@@ -19,12 +18,6 @@ const ReactSearchModal = () => {
   const onClose = () => {
     document.getElementById('search-modal').classList.remove('is-active')
   }
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [inputRef.current])
 
   useEffect(() => {
     if (keyword.length >= 2) {
@@ -61,7 +54,7 @@ const ReactSearchModal = () => {
             {videos.map((video) => (
               <a className="panel-block" href={'/v/' + video.uid}>
                 <span className="title with-2-lines">{video.title}</span>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <i className="fa fa-chevron-right" aria-hidden="true"></i>
               </a>
             ))}
           </>
@@ -72,7 +65,7 @@ const ReactSearchModal = () => {
             {casts.map((cast) => (
               <a className="panel-block" href={'/a/' + cast.slug}>
                 <span className="title with-2-lines">{cast.name}</span>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <i className="fa fa-chevron-right" aria-hidden="true"></i>
               </a>
             ))}
           </>
@@ -83,7 +76,7 @@ const ReactSearchModal = () => {
             {tags.map((tag) => (
               <a className="panel-block" href={'/tag/' + tag.slug}>
                 <span className="title with-2-lines">{tag.name}</span>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <i className="fa fa-chevron-right" aria-hidden="true"></i>
               </a>
             ))}
           </>
@@ -98,7 +91,6 @@ const ReactSearchModal = () => {
         <div className="field my-0">
           <div className="control has-icons-left has-icons-right">
             <input
-              ref={inputRef}
               className="input"
               type="text"
               placeholder="Search videos, idols"
@@ -112,7 +104,7 @@ const ReactSearchModal = () => {
           </div>
         </div>
         <button
-          class="delete is-small is-hidden-desktop mr-2"
+          className="delete is-small is-hidden-desktop mr-2"
           aria-label="close"
           onClick={onClose}
         ></button>
