@@ -23,6 +23,11 @@
         "http://localhost:8080/assets/react-upload-form.js"
       ]
     },
+    "search-modal": {
+      "js": [
+        "http://localhost:8080/assets/search-modal.js"
+      ]
+    },
     "player": {
       "js": [
         "http://localhost:8080/assets/player.js"

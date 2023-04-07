@@ -4,8 +4,12 @@ import SearchRepository from 'App/Repositories/SearchRespositoy'
 export default class SearchesController {
   public async searches({ request, response }: HttpContextContract) {
     const keyword = request.input('keyword')
-    if (!keyword) {
-      return response.badRequest({ message: 'Keyword is required' })
+    if (!keyword || keyword.length < 2) {
+      return {
+        videos: [],
+        casts: [],
+        tags: [],
+      }
     }
 
     const videos = await SearchRepository.searchVideos(keyword)

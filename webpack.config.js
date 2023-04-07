@@ -49,6 +49,7 @@ Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('common', './resources/js/common.js')
 Encore.addEntry('post-comment', './resources/js/post-comment.js')
 Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
+Encore.addEntry('search-modal', './resources/js/search-modal.js')
 Encore.addEntry('player', './resources/js/player.js')
 Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
 

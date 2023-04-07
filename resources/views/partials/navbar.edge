@@ -3,19 +3,24 @@
       <a class="navbar-item" href="{{ route("home") }}" title="Home page">
         <img src="{{ asset('assets/images/logo.svg') }}" width="112" height="28" alt="Ponbook Logo">
       </a>
-  
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+
+
+      <div class="is-flex is-align-items-center">
+        <div class="navbar-item is-hidden-desktop">
+          <a id="search-btn" class="button is-light is-small js-modal-trigger" data-target="search-modal">
+              <i class="fa fa-search" aria-hidden="true"></i>
+          </a>
+        </div>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
     </div>
   
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        {{--  <a class="navbar-item" href="{{ route("community.feed") }}">
-          {{ t('navbar.community')}}
-        </a>  --}}
         <a class="navbar-item" href="{{ route("list.popular") }}">
           {{ t('navbar.popular')}}
         </a>
@@ -49,11 +54,13 @@
         </div>
       </div>
   
-      @if(auth.isLoggedIn)
       <div class="navbar-end">
-        <div class="navbar-item">
-          @include('partials/navbar-search')
+        <div class="navbar-item is-hidden-touch is-flex-desktop">
+            <a id="search-btn" class="button is-light is-small js-modal-trigger" data-target="search-modal">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
         </div>
+        @if(auth.isLoggedIn)
         @include('partials/navbar-notification')
         <div id="user-dropdown" class="navbar-item has-dropdown">
           <a id="user-dropdown-link" class="navbar-link">
@@ -84,12 +91,7 @@
             </form>
           </div>
         </div>
-      </div>
-      @else
-      <div class="navbar-end">
-        <div class="navbar-item">
-          @include('partials/navbar-search')
-        </div>
+        @else
         <div class="navbar-item">
           <div class="buttons">
             <a class="button is-primary is-small" href="{{ route("auth.register") }}">
@@ -100,7 +102,7 @@
             </a>
           </div>
         </div>
+        @endif
       </div>  
-      @endif
     </div>
   </nav>

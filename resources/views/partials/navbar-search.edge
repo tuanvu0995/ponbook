@@ -1,35 +1,5 @@
-<form id="search-form" action="{{ route('web.postSearch') }}" method="POST">
-    {{ csrfField() }}
-
-    <div class="field has-addons">
-        <p class="control">
-          <span class="select is-small">
-            <select name="cat">
-              <option value="code"
-                @if(session.get('search_cat') === "code")
-                selected
-                @end
-                >Code</option>
-               <option value="idol"
-                @if(session.get('search_cat') === "idol")
-                selected
-                @end
-                >Idol</option>
-               <option value="title"
-                @if(session.get('search_cat') === "title")
-                selected
-                @end
-                >Title</option>
-            </select>
-          </span>
-        </p>
-        <p class="control">
-          <input class="input is-small" type="text" placeholder="Search video" name="keyword" value="{{ session.get("search_keyword", "") }}">
-        </p>
-        <p class="control">
-            <a class="button is-primary is-small" onclick="document.getElementById('search-form').submit();">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </a>
-        </p>
-    </div>
-</form>
+<p class="control is-hidden-desktop">
+  <a id="search-btn" class="button is-primary is-small js-modal-trigger" data-target="search-modal">
+      <i class="fa fa-search" aria-hidden="true"></i>
+  </a>
+</p>

@@ -17,6 +17,11 @@ export default class SearchRepository {
       if (videos.length > 0) {
         return videos
       }
+    } else {
+      const videos = await this._searchVideosByTitle(keyword)
+      if (videos.length > 0) {
+        return videos
+      }
     }
 
     return []
@@ -35,24 +40,60 @@ export default class SearchRepository {
     return videos
   }
 
+  private static async _searchVideosByTitle(keyword: string, limit: number = 5): Promise<Video[]> {
+    const videos = await Video.query()
+      .whereRaw('title LIKE ?', [`%${keyword}%`])
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('release_date', 'desc')
+      .orderByRaw(
+        `
+        CASE
+          WHEN title LIKE ? THEN 1
+          WHEN title LIKE ? THEN 2
+          WHEN title LIKE ? THEN 4
+          ELSE 3
+        END
+      `,
+        [keyword, `${keyword}%`, `%${keyword}`]
+      )
+      .limit(limit)
+
+    return videos
+  }
+
   public static async searchCasts(keyword: string, limit: number = 5): Promise<Cast[]> {
-    const names = keyword.split(' ')
-    const searchValues: string[] = [keyword]
-    if (names.length > 1) {
-      searchValues.push(...names)
-      searchValues.push(names.reverse().join(' '))
-    }
     const casts = await Cast.query()
-      .whereIn('name', searchValues)
-      .orderBy('name', 'asc')
+      .whereRaw('name LIKE ?', [`%${keyword}%`])
+      .orderByRaw(
+        `
+        CASE
+          WHEN name LIKE ? THEN 1
+          WHEN name LIKE ? THEN 2
+          WHEN name LIKE ? THEN 4
+          ELSE 3
+        END
+      `,
+        [keyword, `${keyword}%`, `%${keyword}`]
+      )
       .limit(limit)
     return casts
   }
 
   public static async searchTags(keyword: string, limit: number = 5): Promise<Tag[]> {
     const tags = await Tag.query()
-      .where('name', 'like', '%' + keyword + '%')
-      .orderBy('name', 'asc')
+      .whereRaw('name LIKE ?', [`%${keyword}%`])
+      .orderByRaw(
+        `
+        CASE
+          WHEN name LIKE ? THEN 1
+          WHEN name LIKE ? THEN 2
+          WHEN name LIKE ? THEN 4
+          ELSE 3
+        END
+      `,
+        [keyword, `${keyword}%`, `%${keyword}`]
+      )
       .limit(limit)
     return tags
   }

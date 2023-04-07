@@ -4,6 +4,7 @@
   "assets/common.js": "http://localhost:8080/assets/common.js",
   "assets/post-comment.js": "http://localhost:8080/assets/post-comment.js",
   "assets/react-upload-form.js": "http://localhost:8080/assets/react-upload-form.js",
+  "assets/search-modal.js": "http://localhost:8080/assets/search-modal.js",
   "assets/player.js": "http://localhost:8080/assets/player.js",
   "assets/sticky-sidebar.js": "http://localhost:8080/assets/sticky-sidebar.js",
   "assets/js/quill.min.js.map": "http://localhost:8080/assets/js/quill.min.js.7774778b.map",

@@ -49,12 +49,14 @@
 
     @!section('body')
      
+    @include('partials/modal')
     @include('partials/footer')
     <script>
       const BASE_URL = '{{ env('APP_DOMAIN') }}';
       const juicy_tags = ['a', 'img'];
     </script>
     <script src="{{ asset('assets/app.js') }}"></script>
+    <script src="{{ asset('assets/search-modal.js') }}"></script>
     @!section('script-links')
     @!section('scripts')
     @if(env('NODE_ENV') === 'production')
