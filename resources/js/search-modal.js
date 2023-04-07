@@ -16,7 +16,7 @@ const ReactSearchModal = () => {
   }
 
   const onClose = () => {
-    document.querySelector('.modal').classList.remove('is-active')
+    document.getElementById('search-modal').classList.remove('is-active')
   }
 
   useEffect(() => {
