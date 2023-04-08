@@ -120,7 +120,7 @@
                     <div class="owl-carousel owl-theme">
                         @each((image, index) in video.images)
                         <div class="owl-carousel-item">
-                            <img src="{{ imageUrl(image, true) }}" alt="{{ video.title }} {{ image.id }}" data-src="{{ imageUrl(image) }}" onclick="onVideoImageClick({{ index }})"/>
+                            <img src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
                         </div>
                         @end
                     </div>

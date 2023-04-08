@@ -5,15 +5,14 @@ function onVideoImageClick(index) {
   if (!elements) return
   const images = []
   elements.forEach((element) => {
-    images.push({
-      mainUrl: element.dataset.src,
-      thumbnailUrl: element.src,
-      description: element.alt,
-    })
+    images.push({ mainUrl: element.src })
   })
   new ImageViewer({
     images,
     currentSelected: index,
+    isZoomable: false,
+    stretchImages: true,
+    showThumbnails: false,
   })
 }
 

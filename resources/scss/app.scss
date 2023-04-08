@@ -430,6 +430,12 @@ body {
 
 .imageViewer .container {
   max-width: 100%;
+
+  .imageContainer {
+    .image {
+      max-height: 50% !important;
+    }
+  }
 }
 
 
