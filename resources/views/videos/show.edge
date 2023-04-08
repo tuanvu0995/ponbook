@@ -118,9 +118,9 @@
                 <div>
                     <h3 class="title is-5">Sample images ({{ video.images.length }})</h3>
                     <div class="owl-carousel owl-theme">
-                        @each(image in video.images)
-                        <div>
-                            <img src="{{ imageUrl(image) }}" alt="{{ video.title }}" />
+                        @each((image, index) in video.images)
+                        <div class="owl-carousel-item">
+                            <img src="{{ imageUrl(image, true) }}" alt="{{ video.title }} {{ image.id }}" data-src="{{ imageUrl(image) }}" onclick="onVideoImageClick({{ index }})"/>
                         </div>
                         @end
                     </div>
@@ -217,7 +217,7 @@ video::fullscreen { display: none;}
         textarea.value =editor.root.innerHTML
     });
 </script>
-
+<script src="{{ asset('assets/image-viewer.js') }}"></script>
 <script src="{{ asset('assets/player.js') }}"></script>
 <script>
     const liveContainer = document.getElementById('live-player')

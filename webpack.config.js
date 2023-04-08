@@ -52,6 +52,7 @@ Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 Encore.addEntry('search-modal', './resources/js/search-modal.js')
 Encore.addEntry('player', './resources/js/player.js')
 Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
+Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
 
 /*
 |--------------------------------------------------------------------------

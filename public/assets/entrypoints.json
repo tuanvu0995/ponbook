@@ -37,6 +37,11 @@
       "js": [
         "http://localhost:8080/assets/sticky-sidebar.js"
       ]
+    },
+    "image-viewer": {
+      "js": [
+        "http://localhost:8080/assets/image-viewer.js"
+      ]
     }
   }
 }
