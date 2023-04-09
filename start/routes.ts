@@ -19,6 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import Logger from '@ioc:Adonis/Core/Logger'
 import './routes/public'
 import './routes/admin'
 import './routes/user'
@@ -42,4 +43,9 @@ Route.group(() => {
   Route.get('crawler/next-code', 'UploadsController.nextCode').as('crawler:nextCode')
 }).middleware('botAuth')
 
+Route.get('ping', async ({ response, request }) => {
+  Logger.info('Ping')
+  console.log(request.headers())
+  return response.ok({ message: 'pong' })
+})
 Route.get(':slug', 'WebController.page').as('web.page')
