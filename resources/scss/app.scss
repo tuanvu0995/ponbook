@@ -453,3 +453,9 @@ body {
     }
   }
 }
+
+@media screen and (max-width: 1023px) {
+  .navbar.is-fixed-top .navbar-menu, .navbar.is-fixed-top-touch .navbar-menu {
+    background-color: rebeccapurple;
+}
+}

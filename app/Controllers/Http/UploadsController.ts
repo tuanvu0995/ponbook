@@ -4,7 +4,6 @@ import Comment from 'App/Models/Comment'
 import Video from 'App/Models/Video'
 import slugify from 'App/utils/slugify'
 import uniqid from 'uniqid'
-import VideoFilter from 'App/Models/VideoFilter'
 import Collection from 'App/Models/Collection'
 import FileService from 'App/Services/FileService'
 
@@ -105,8 +104,6 @@ export default class UploadsController {
     video.slug = slugify(video.title)
 
     await video.save()
-
-    await VideoFilter.newVideoAdded(video).then(() => console.log('Video filter indexed!'))
 
     return response.json({ success: true, videoId: video.id })
   }
