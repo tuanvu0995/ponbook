@@ -44,7 +44,7 @@ export default class VideoController {
 
     const castNames = video.casts.map((cast) => cast.name).join(', ')
 
-    let title = video.code
+    let title = `${video.code}`
     if (castNames) title += ` - ${castNames}`
     const description = video.description
     const metaImage = video.image
