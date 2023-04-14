@@ -126,6 +126,7 @@ export default class ListController {
     const videos = await cast
       .related('videos')
       .query()
+      .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
@@ -155,6 +156,7 @@ export default class ListController {
     const videos = await director
       .related('videos')
       .query()
+      .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
@@ -184,6 +186,7 @@ export default class ListController {
     const videos = await maker
       .related('videos')
       .query()
+      .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
