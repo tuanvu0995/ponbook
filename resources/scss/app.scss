@@ -405,7 +405,7 @@ body {
     .panel-block {
       display: flex;
       justify-content: space-between;
-      
+
       &.is-group {
         font-size: 0.8rem;
       }
@@ -438,6 +438,21 @@ body {
   }
 }
 
+.image-banner {
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+#banner-message {
+  border-radius: 0;
+  margin: 0;
+  display: none;
+
+  .message-body {
+    border-radius: 0;
+    padding: 0.5rem 0.75rem;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .search-modal {
@@ -448,14 +463,16 @@ body {
       max-height: 100%;
     }
 
-    .modal-card-head, .modal-card-foot {
+    .modal-card-head,
+    .modal-card-foot {
       border-radius: 0;
     }
   }
 }
 
-@media screen and (max-width: 1023px) {
-  .navbar.is-fixed-top .navbar-menu, .navbar.is-fixed-top-touch .navbar-menu {
-    background-color: rebeccapurple;
-}
-}
+// @media screen and (max-width: 1023px) {
+//   .navbar.is-fixed-top .navbar-menu,
+//   .navbar.is-fixed-top-touch .navbar-menu {
+//     background-color: rebeccapurple;
+//   }
+// }

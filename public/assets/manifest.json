@@ -8,6 +8,7 @@
   "assets/player.js": "http://localhost:8080/assets/player.js",
   "assets/sticky-sidebar.js": "http://localhost:8080/assets/sticky-sidebar.js",
   "assets/image-viewer.js": "http://localhost:8080/assets/image-viewer.js",
+  "assets/prebid-ads.js": "http://localhost:8080/assets/prebid-ads.js",
   "assets/js/quill.min.js.map": "http://localhost:8080/assets/js/quill.min.js.7774778b.map",
   "assets/js/quill.js": "http://localhost:8080/assets/js/quill.15b75b3c.js",
   "assets/js/quill.core.js": "http://localhost:8080/assets/js/quill.core.f9ad9bba.js",

@@ -42,6 +42,11 @@
       "js": [
         "http://localhost:8080/assets/image-viewer.js"
       ]
+    },
+    "prebid-ads": {
+      "js": [
+        "http://localhost:8080/assets/prebid-ads.js"
+      ]
     }
   }
 }

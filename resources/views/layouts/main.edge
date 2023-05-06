@@ -17,7 +17,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" defer/>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" type="text/css" defer>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script> 
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/prebid-ads.js') }}"></script> 
     <script defer src="{{ asset('assets/common.js') }}"></script> 
     <script defer src="/js/prebid-ads.js"></script> 
     @if(env('NODE_ENV') == 'production')
@@ -41,20 +42,12 @@
   <body class="{{ bodyClass || '' }} has-navbar-fixed-top">
 
     @include('partials/navbar')
-    <div id="adnotificaton" class="px-4 pt-4 pb-0" style="display: none">
-      <div class="notification is-danger" style="font-size: 14px; padding: 8px">
-        Please disable your ad blocker to support us. Relevant and appropriate ads help us to keep the site running. Thank you!
-      </div>
-    </div>
+    @include('ads/adblock-message')
 
     @!section('body')
      
     @include('partials/modal')
     @include('partials/footer')
-    <script>
-      const BASE_URL = '{{ env('APP_DOMAIN') }}';
-      const juicy_tags = ['a', 'img'];
-    </script>
     <script src="{{ asset('assets/app.js') }}"></script>
     <script src="{{ asset('assets/search-modal.js') }}"></script>
     @!section('script-links')

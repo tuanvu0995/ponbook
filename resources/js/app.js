@@ -6,6 +6,7 @@ import 'owl.carousel'
 import '../scss/app.scss'
 import globalVoteButton from './utils/globalVoteButton'
 import globalModalTriggers from './utils/globalModalTrigger'
+import initAds from './utils/initAds'
 
 $(function () {
   globalAjaxButton()
@@ -13,6 +14,7 @@ $(function () {
   globalVoteButton()
   globalModalTriggers()
   initImageLazyLoad()
+  initAds()
   /**
    * Navigation bar
    */
