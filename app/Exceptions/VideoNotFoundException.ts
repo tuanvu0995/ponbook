@@ -22,7 +22,7 @@ export default class VideoNotFoundException extends Exception {
   private isApi: boolean = false
 
   constructor(videoUid: string, isApi: boolean = false) {
-    super(message, 404, 'E_NOT_FOUND')
+    super(message + ':' + videoUid, 404, 'E_NOT_FOUND')
 
     this.videoUid = videoUid
     this.isApi = isApi
