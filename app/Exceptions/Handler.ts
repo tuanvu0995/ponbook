@@ -16,6 +16,7 @@
 import Logger from '@ioc:Adonis/Core/Logger'
 import Sentry from '@ioc:Adonis/Addons/Sentry'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   protected statusPages = {
@@ -23,13 +24,30 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     '404': 'errors/not-found',
     '500..599': 'errors/server-error',
   }
+  protected ignoreCodes = ['E_ROUTE_NOT_FOUND']
+  protected ignoreStatuses = [404, 422, 403, 401]
 
   constructor() {
     super(Logger)
   }
 
+  protected context(ctx: HttpContextContract) {
+    return {
+      userId: ctx.auth.user?.id,
+      url: ctx.request.url(),
+      body: ctx.request.body(),
+    }
+  }
+
   public async handle(error, ctx) {
-    Sentry.captureException(error, ctx.request)
+    Sentry.captureException(error, ctx)
+
+    if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
+      return ctx.response.status(error.status).json({
+        message: error.message,
+      })
+    }
+
     return super.handle(error, ctx)
   }
 }

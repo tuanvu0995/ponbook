@@ -10,7 +10,8 @@ import slugify from 'App/utils/slugify'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import Comment from 'App/Models/Comment'
 import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/contants'
-import VideoNotFoundException from 'App/Exceptions/VideoNotFoundException'
+import PBVideoRepository from 'App/Repositories/Api/PBVideoRepository'
+import NotFoundException from 'App/Exceptions/NotFoundException'
 
 export default class VideoController {
   protected videoRepository: VideoRepository
@@ -24,10 +25,9 @@ export default class VideoController {
   }
 
   public async show({ request, params, view, auth, session }: HttpContextContract) {
-    const { uid } = params
     const { page = 1, limit = 20 } = request.qs()
 
-    const video = await this.videoRepository.getVideoByUid(uid)
+    const video = await PBVideoRepository.getVideoByUid(params.uid)
     const relatedVideos = await this.videoRepository.getRelatedVideos(video)
     const comments = await Comment.getCommentsByVideo(video, page, limit)
 
@@ -171,7 +171,7 @@ export default class VideoController {
   public async addTag({ request, response, params }: HttpContextContract) {
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
-      throw new VideoNotFoundException(params.uid, true)
+      throw new NotFoundException(`Video with uid ${params.uid} not found`)
     }
 
     const tagInput: string = request.input('tag')?.trim()
@@ -225,7 +225,7 @@ export default class VideoController {
     const uid = request.param('uid')
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      throw new VideoNotFoundException(uid, true)
+      throw new NotFoundException(`Video with uid ${uid} not found`)
     }
 
     return response.json({
@@ -250,7 +250,7 @@ export default class VideoController {
 
     const video = await Video.query().where('uid', uid).where('user_id', user.id).first()
     if (!video) {
-      throw new VideoNotFoundException(uid, true)
+      throw new NotFoundException(`Video with uid ${uid} not found`)
     }
     if (imagePath.startsWith('/uploads')) {
       video[toType] = imagePath.replace('/uploads', '')
@@ -269,7 +269,7 @@ export default class VideoController {
     const uid = request.param('uid')
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      throw new VideoNotFoundException(uid, true)
+      throw new NotFoundException(`Video with uid ${uid} not found`)
     }
 
     const user = auth.user!

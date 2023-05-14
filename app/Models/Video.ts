@@ -28,7 +28,7 @@ import FileService from 'App/Services/FileService'
 import slugify from 'App/utils/slugify'
 
 export default class Video extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()

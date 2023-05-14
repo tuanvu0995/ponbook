@@ -16,6 +16,15 @@ Route.get('/api/models', async ({ request, response }: HttpContextContract) => {
 Route.group(() => {
   Route.post('/searches', 'SearchesController.searches').as('searches')
   Route.get('/searches/:searchId', 'SearchesController.getSearch').as('search:get')
+
+  Route.resource('videos', 'VideosController')
 })
   .as('api')
   .prefix('api')
+
+Route.group(() => {
+  Route.get('/videos/:uid', 'VideoController.show').as('videos:show')
+})
+  .as('api/v1')
+  .prefix('api/v1')
+  .namespace('App/Controllers/Api')

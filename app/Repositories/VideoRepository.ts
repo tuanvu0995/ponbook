@@ -1,6 +1,6 @@
+import NotFoundException from 'App/Exceptions/NotFoundException'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import Video from 'App/Models/Video'
-import VideoNotFoundException from 'App/Exceptions/VideoNotFoundException'
 
 export default class VideoRepository {
   constructor() {}
@@ -8,7 +8,7 @@ export default class VideoRepository {
   public static async getVideoByUid(uid: string): Promise<Video> {
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      throw new VideoNotFoundException(uid)
+      throw new NotFoundException('Video not found')
     }
     return video
   }
@@ -16,7 +16,7 @@ export default class VideoRepository {
   public static async getVideoByCode(code: string, skipError?: boolean): Promise<Video | null> {
     const video = await Video.query().where('code', code).first()
     if (!video && !skipError) {
-      throw new VideoNotFoundException(code)
+      throw new NotFoundException('Video not found')
     }
     return video
   }
@@ -41,7 +41,7 @@ export default class VideoRepository {
 
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      throw new VideoNotFoundException(uid)
+      throw new NotFoundException('Video not found')
     }
 
     await video.load('director')
