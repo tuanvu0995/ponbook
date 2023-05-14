@@ -10,6 +10,7 @@ import slugify from 'App/utils/slugify'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import Comment from 'App/Models/Comment'
 import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/contants'
+import VideoNotFoundException from 'App/Exceptions/VideoNotFoundException'
 
 export default class VideoController {
   protected videoRepository: VideoRepository
@@ -170,9 +171,7 @@ export default class VideoController {
   public async addTag({ request, response, params }: HttpContextContract) {
     const video = await Video.query().where('uid', params.uid).first()
     if (!video) {
-      return response.json({
-        error: 'Video not found',
-      })
+      throw new VideoNotFoundException(params.uid, true)
     }
 
     const tagInput: string = request.input('tag')?.trim()
@@ -226,9 +225,7 @@ export default class VideoController {
     const uid = request.param('uid')
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      return response.json({
-        error: 'Video not found',
-      })
+      throw new VideoNotFoundException(uid, true)
     }
 
     return response.json({
@@ -253,9 +250,7 @@ export default class VideoController {
 
     const video = await Video.query().where('uid', uid).where('user_id', user.id).first()
     if (!video) {
-      return response.json({
-        error: 'Video not found',
-      })
+      throw new VideoNotFoundException(uid, true)
     }
     if (imagePath.startsWith('/uploads')) {
       video[toType] = imagePath.replace('/uploads', '')
@@ -274,9 +269,7 @@ export default class VideoController {
     const uid = request.param('uid')
     const video = await Video.query().where('uid', uid).first()
     if (!video) {
-      return response.json({
-        error: 'Video not found',
-      })
+      throw new VideoNotFoundException(uid, true)
     }
 
     const user = auth.user!
