@@ -7,7 +7,11 @@ export default class PBVideoRepository {
     const existsVideo = await Redis.get(`video:${uid}`)
     if (existsVideo) return JSON.parse(existsVideo)
 
-    const video = await Video.query().where('uid', uid).first()
+    const video = await Video.query()
+      .where('uid', uid)
+      .where('is_deleted', false)
+      .where('is_published', true)
+      .first()
     if (!video) {
       throw new NotFoundException(`Video with ID ${uid} not found`)
     }
@@ -23,6 +27,7 @@ export default class PBVideoRepository {
     const serializedVideo = video.serialize({
       fields: {
         pick: [
+          'id',
           'uid',
           'code',
           'title',
@@ -55,7 +60,7 @@ export default class PBVideoRepository {
         },
         tags: {
           fields: {
-            pick: ['name', 'slug'],
+            pick: ['id', 'name', 'slug'],
           },
         },
         videoCover: {

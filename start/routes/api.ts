@@ -24,6 +24,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/videos/:uid', 'VideoController.show').as('videos:show')
+
+  Route.get('/collections/:slug', 'CollectionController.show').as('collections:show')
 })
   .as('api/v1')
   .prefix('api/v1')

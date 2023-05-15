@@ -1,6 +1,8 @@
+import _ from 'lodash'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import Video from 'App/Models/Video'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class VideoRepository {
   constructor() {}
@@ -63,15 +65,20 @@ export default class VideoRepository {
       return JSON.parse(cachedRelatedVideos)
     }
 
-    const tagIds = video.tags.map((tag) => tag.id)
-    const relatedVideos = await Video.query()
-      .whereExists((qs) => {
-        qs.from('video_tags')
-          .whereIn('video_tags.tag_id', tagIds)
-          .whereColumn('video_tags.video_id', 'videos.id')
-      })
-      .groupBy('videos.id')
+    const tagIds = _.chain(video.tags)
+      .map((tag) => tag.id)
+      .filter((id) => !_.isNil(id))
+      .value()
+    const randomVideoIds = await Database.from('video_tags')
+      .whereIn('tag_id', tagIds)
       .orderByRaw('RAND()')
+      .select('video_id')
+
+    const relatedVideos = await Video.query()
+      .whereIn(
+        'id',
+        randomVideoIds.map((video) => video.video_id)
+      )
       .limit(5)
 
     for (const relatedVideo of relatedVideos) {
