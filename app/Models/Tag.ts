@@ -4,7 +4,7 @@ import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Ad
 import Video from './Video'
 
 export default class Tag extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
@@ -13,13 +13,13 @@ export default class Tag extends BaseModel {
   @column()
   public slug: string
 
-  @column()
+  @column({ serializeAs: null })
   public description: string
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @manyToMany(() => Video, {

@@ -1,32 +1,33 @@
 import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
 import Drive from '@ioc:Adonis/Core/Drive'
-import { BaseModel, beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeCreate, beforeDelete, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import retry from 'App/utils/retry'
+import Env from '@ioc:Adonis/Core/Env'
 
 export default class File extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
-  @column()
+  @column({ serializeAs: null })
   public uid: string
 
   @column()
   public name: string
 
-  @column()
+  @column({ serializeAs: null })
   public type: string
 
-  @column()
+  @column({ serializeAs: null })
   public path: string
 
-  @column()
+  @column({ serializeAs: null })
   public thumbnailPath: string
 
-  @column()
+  @column({ serializeAs: null })
   public size: number
 
-  @column()
+  @column({ serializeAs: null })
   public extension: string
 
   @column()
@@ -35,11 +36,23 @@ export default class File extends BaseModel {
   @column()
   public height: number
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
+
+  @computed()
+  public get imageUrl() {
+    if (!this.path) return null
+    return `${Env.get('CDN_URL')}/${this.path}`
+  }
+
+  @computed()
+  public get thumbnailUrl() {
+    if (!this.thumbnailPath) return null
+    return `${Env.get('CDN_URL')}/${this.thumbnailPath}`
+  }
 
   @beforeCreate()
   public static async generateUid(file: File) {

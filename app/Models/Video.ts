@@ -28,13 +28,13 @@ import FileService from 'App/Services/FileService'
 import slugify from 'App/utils/slugify'
 
 export default class Video extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
   public uid: string
 
-  @column()
+  @column({ serializeAs: null })
   public userId: number
 
   @column()
@@ -49,28 +49,19 @@ export default class Video extends BaseModel {
   @column()
   public description: string
 
-  @column()
-  public cover: string
-
-  @column()
+  @column({ serializeAs: null })
   public coverFileId: number
 
-  @column()
-  public image: string
-
-  @column()
+  @column({ serializeAs: null })
   public imageFileId: number
 
-  @column()
-  public imageUrls?: string[]
-
-  @column()
+  @column({ serializeAs: null })
   public video: string
 
-  @column()
+  @column({ serializeAs: null })
   public directorId: number
 
-  @column()
+  @column({ serializeAs: null })
   public makerId: number
 
   @column()
@@ -91,28 +82,28 @@ export default class Video extends BaseModel {
   @column()
   public commentCount: number
 
-  @column()
+  @column({ serializeAs: null })
   public isDraft: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public isPublished: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public isDeleted: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public hasTorrent: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public version: number
 
-  @column()
+  @column({ serializeAs: null })
   public updatedBy: string
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @beforeCreate()
@@ -156,12 +147,12 @@ export default class Video extends BaseModel {
   @belongsTo(() => File, {
     foreignKey: 'coverFileId',
   })
-  public videoCover: BelongsTo<typeof File>
+  public cover: BelongsTo<typeof File>
 
   @belongsTo(() => File, {
     foreignKey: 'imageFileId',
   })
-  public videoImage: BelongsTo<typeof File>
+  public image: BelongsTo<typeof File>
 
   @manyToMany(() => File, {
     pivotTable: 'video_files',

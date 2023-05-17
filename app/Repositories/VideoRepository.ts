@@ -28,10 +28,7 @@ export default class VideoRepository {
   }
 
   public static async getVideoByIds(videoIds: number[]): Promise<Video[]> {
-    const videos = await Video.query()
-      .preload('videoCover')
-      .preload('casts')
-      .whereIn('id', videoIds)
+    const videos = await Video.query().preload('cover').preload('casts').whereIn('id', videoIds)
     return videos.sort((a, b) => videoIds.indexOf(a.id) - videoIds.indexOf(b.id))
   }
 
@@ -50,8 +47,8 @@ export default class VideoRepository {
     await video.load('maker')
     await video.load('casts')
     await video.load('tags')
-    await video.load('videoCover')
-    await video.load('videoImage')
+    await video.load('cover')
+    await video.load('image')
     await video.load('images')
 
     await Redis.set(`video:${uid}`, JSON.stringify(video.toJSON()))
@@ -82,7 +79,7 @@ export default class VideoRepository {
       .limit(5)
 
     for (const relatedVideo of relatedVideos) {
-      await relatedVideo.load('videoCover')
+      await relatedVideo.load('cover')
       await relatedVideo.load('casts')
     }
 
@@ -98,7 +95,7 @@ export default class VideoRepository {
       .orderBy('id', 'desc')
       .limit(16)
     for (const video of recentVideos) {
-      await video.load('videoCover')
+      await video.load('cover')
     }
 
     return recentVideos
@@ -116,7 +113,7 @@ export default class VideoRepository {
       .groupBy('videos.id')
       .limit(16)
     for (const video of newlyUpdatedVideos) {
-      await video.load('videoCover')
+      await video.load('cover')
     }
 
     return newlyUpdatedVideos

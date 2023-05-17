@@ -19,7 +19,7 @@ export default class CollectionRepository {
           .limit(16)
       )
       for (const video of collection.videos) {
-        await video.load('videoCover')
+        await video.load('cover')
       }
     }
 

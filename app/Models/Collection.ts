@@ -3,7 +3,7 @@ import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm
 import Video from './Video'
 
 export default class Collection extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
@@ -15,13 +15,13 @@ export default class Collection extends BaseModel {
   @column()
   public description: string
 
-  @column()
+  @column({ serializeAs: null })
   public isDeleted: boolean
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @manyToMany(() => Video, {

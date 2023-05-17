@@ -16,7 +16,8 @@ import slugify from 'App/utils/slugify'
 import File from './File'
 
 export default class Cast extends BaseModel {
-  @column({ isPrimary: true })
+
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
@@ -73,10 +74,10 @@ export default class Cast extends BaseModel {
   @column()
   public subscribedCount: number
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @belongsTo(() => File, {
