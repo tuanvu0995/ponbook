@@ -67,7 +67,7 @@ Event.on('visitor:visit', async (request: any) => {
 
   const data = {
     ip_address: request.ip(),
-    user_agent: request.header('user-agent'),
+    user_agent: _.truncate(request.header('user-agent'), { length: 255 }),
     method: request.method(),
     headers: JSON.stringify(request.headers()),
     path,

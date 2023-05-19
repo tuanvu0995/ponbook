@@ -48,6 +48,13 @@ Route.group(() => {
   Route.get('/collections/:slug', 'CollectionController.show').as('collections:show')
 
   /**
+   * Comments
+   */
+  Route.get('/videos/:videoUid/comments', 'CommentController.getCommentsByVideo').as(
+    'comments:by-video'
+  )
+
+  /**
    * Searches
    */
   Route.post('/searches', 'SearchesController.searches').as('searches')

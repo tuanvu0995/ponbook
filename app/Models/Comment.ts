@@ -15,10 +15,10 @@ import { nanoid } from 'nanoid'
 import Video from './Video'
 
 export default class Comment extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
-  @column()
+  @column({ serializeAs: null })
   public userId: number
 
   @column()
@@ -27,16 +27,16 @@ export default class Comment extends BaseModel {
   @column()
   public content: string
 
-  @column()
+  @column({ serializeAs: null })
   public videoId: number
 
-  @column()
+  @column({ serializeAs: null })
   public parentId: number
 
   @column()
   public isReply: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public isApproved: boolean
 
   @column()
@@ -51,22 +51,19 @@ export default class Comment extends BaseModel {
   @column()
   public attachmentImages: string
 
-  @column()
+  @column({ serializeAs: null })
   public isDraft: boolean
-
-  @column()
-  public postId: Number
 
   @column()
   public name: string
 
-  @column()
+  @column({ serializeAs: null })
   public email: string
 
-  @column()
+  @column({ serializeAs: null })
   public ipAddress: string
 
-  @column()
+  @column({ serializeAs: null })
   public userAgent: string
 
   @column.dateTime({ autoCreate: true })

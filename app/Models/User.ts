@@ -15,13 +15,13 @@ import Video from './Video'
 import Comment from './Comment'
 
 export default class User extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
   public uid: string
 
-  @column()
+  @column({ serializeAs: null })
   public email: string
 
   @column()
@@ -42,7 +42,7 @@ export default class User extends BaseModel {
   @column()
   public bio?: string
 
-  @column()
+  @column({ serializeAs: null })
   public birthday?: string
 
   @column()
@@ -54,7 +54,7 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   public type: string
 
-  @column()
+  @column({ serializeAs: null })
   public accountStatus: string
 
   @column({ serializeAs: null })
@@ -72,10 +72,10 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   public isSocialActive: boolean
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @beforeSave()
