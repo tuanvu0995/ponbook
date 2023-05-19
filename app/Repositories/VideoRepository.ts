@@ -73,13 +73,12 @@ export default class VideoRepository {
       .whereIn('tag_id', tagIds)
       .orderByRaw('RAND()')
       .select('video_id')
-
-    const relatedVideos = await Video.query()
-      .whereIn(
-        'id',
-        randomVideoIds.map((video) => video.video_id)
-      )
       .limit(5)
+
+    const relatedVideos = await Video.query().whereIn(
+      'id',
+      randomVideoIds.map((video) => video.video_id)
+    )
 
     for (const relatedVideo of relatedVideos) {
       await relatedVideo.load('videoCover')
