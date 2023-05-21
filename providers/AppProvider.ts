@@ -2,7 +2,7 @@ import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import { DateTime } from 'luxon'
 import Env from '@ioc:Adonis/Core/Env'
 import File from 'App/Models/File'
-import DeviceDetector from 'device-detector-js'
+import DeviceDetector = require('device-detector-js')
 
 declare module '@ioc:Adonis/Core/Response' {
   export default interface ResponseContract {
@@ -19,20 +19,6 @@ export default class AppProvider {
   }
 
   public async boot() {
-    const Response = this.app.container.use('Adonis/Core/Response')
-
-    Response.macro('endResponse', function (body?: any, statusCode?: number) {
-      this.flushHeaders(statusCode)
-
-      // if (typeof this.onFinished === 'function') {
-      //   this.onFinished()
-      // }
-
-      // avoid ArgumentsAdaptorTrampoline from V8 (inspired by fastify)
-      const res = this.response as any
-      res.end(body, null, null)
-    })
-
     const View = await this.app.container.use('Adonis/Core/View')
     View.global('dateFromNow', (value: DateTime) => {
       return value.setZone('Asia/Ho_Chi_Minh').toRelative()
