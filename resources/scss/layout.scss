@@ -1,15 +1,12 @@
 .container,
 .hero-body {
   max-width: 1344px;
-}
-
-.container.is-pb-container {
-  padding: 1rem 1.5rem;
+  padding: 0 16px;
 }
 
 .hero-body {
   margin: 0 auto;
-  padding: 3rem 0;
+  padding: 3rem 16px;
 }
 
 .section {
