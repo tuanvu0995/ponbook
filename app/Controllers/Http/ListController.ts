@@ -9,7 +9,7 @@ import Video from 'App/Models/Video'
 
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const popularCollection = await Collection.findByOrFail('slug', 'popular')
     const videos = await popularCollection
       .related('videos')
@@ -34,7 +34,7 @@ export default class ListController {
   }
 
   public async newRelease({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const now = DateTime.now().toFormat('yyyy-MM-dd')
     const videos = await Video.query()
       .where('release_date', '<=', now)
@@ -58,7 +58,7 @@ export default class ListController {
   }
 
   public async recent({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const videos = await Video.query()
       .where('is_published', true)
       .where('is_deleted', false)
@@ -80,7 +80,7 @@ export default class ListController {
   }
 
   public async newComments({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const videos = await Video.query()
       .select('videos.*')
       .where('videos.is_published', true)
@@ -117,7 +117,7 @@ export default class ListController {
 
   public async castsBySlug({ request, view }: HttpContextContract) {
     const slug = request.param('slug')
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const cast = await Cast.query().preload('castImage').where('slug', slug).first()
     if (!cast) {
       return view.render('errors/not-found')
@@ -147,7 +147,7 @@ export default class ListController {
 
   public async director({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const director = await Director.query().where('uid', uid).first()
     if (!director) {
       return view.render('errors/not-found')
@@ -177,7 +177,7 @@ export default class ListController {
 
   public async maker({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const maker = await Maker.query().where('uid', uid).first()
     if (!maker) {
       return view.render('errors/not-found')
@@ -207,7 +207,7 @@ export default class ListController {
 
   public async tags({ request, view }: HttpContextContract) {
     const slug = request.param('slug')
-    const { page = 1, limit = 30 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const tag = await Tag.query().where('slug', slug).first()
     if (!tag) {
       return view.render('errors/not-found')
@@ -235,7 +235,7 @@ export default class ListController {
   }
 
   public async stars({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 60 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
     const stars = await Cast.query()
       .has('videos')
       .preload('castImage')
@@ -253,7 +253,7 @@ export default class ListController {
   }
 
   public async categories({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 60, keyword } = request.qs()
+    const { page = 1, limit = 40, keyword } = request.qs()
     const key = keyword ? keyword.trim() : ''
     const tags = await Tag.query()
       .where((qs) => {

@@ -1,0 +1,44 @@
+.container,
+.hero-body {
+  max-width: 1344px;
+}
+
+.container.is-pb-container {
+  padding: 1rem 1.5rem;
+}
+
+.hero-body {
+  margin: 0 auto;
+  padding: 3rem 0;
+}
+
+.section {
+  padding: 0;
+  padding-bottom: 2rem;
+}
+
+.hero-body {
+  width: 100%;
+}
+
+.card {
+  box-shadow: 0 0em 0.2em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.navbar {
+  @include until($tablet) {
+    .container {
+      padding: 0;
+    }
+  }
+}
+
+
+.hero {
+  @include until($tablet) {
+    .hero-body {
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+  }
+}

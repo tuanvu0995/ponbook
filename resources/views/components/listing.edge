@@ -1,0 +1,28 @@
+<div class="card listing__container"
+    @if(isTransparent)
+    style="background-color: transparent; box-shadow: none;"
+    @end
+    >
+    <div class="card-image">
+        <figure class="image">
+            <div class="inner-image">
+                @!component('components/file-image', { file: video.videoCover, alt: video.title })
+            </div>
+        </figure>
+    </div>
+    <div class="card-content">
+        <div class="content">
+            <a href="{{ route("videos.show", { uid: video.uid }) }}" class="card-code" title="{{ video.code }}">{{ video.code }}</a>
+            <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link is-truncate-2" title="{{ video.title }}">{{ video.title }}</a>
+            @if(video.cast)
+            <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug }) }}">{{ video.cast.name }}</a>
+            @end
+            @if(video.commentCount)
+            <span class="card-time is-hidden-mobile">{{ video.commentCount }} comments</span>
+            @end
+            <time class="card-time" dateTime="{{video.releaseDate || video.release_date}}"">
+                {{ video.releaseDate || video.release_date }}
+            </time>
+        </div>
+    </div>
+</div>

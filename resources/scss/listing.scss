@@ -1,0 +1,47 @@
+.listing__container {
+  display: inline-flex;
+  flex-direction: row;
+
+  .card-code {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .card-image {
+    flex-basis: 40%;
+    padding: 0.5rem;
+  }
+
+  .card-content {
+    flex-basis: 60%;
+    padding: 0.5rem;
+    padding-left: 0;
+  }
+
+  .content-title {
+    font-size: 0.5rem;
+    font-weight: 500;
+  }
+
+  .card-time {
+    font-size: 0.5rem;
+    font-weight: 500;
+  }
+
+  @include from($tablet) {
+    .card-code {
+      font-size: 1rem;
+    }
+    .content-title {
+      font-size: 0.7rem;
+    }
+  }
+}
+
+.listings__container {
+  @include until($tablet) {
+    .column {
+      padding: 0.4rem;
+    }
+  }
+}

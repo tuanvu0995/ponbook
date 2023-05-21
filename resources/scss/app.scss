@@ -279,38 +279,6 @@ body {
   left: -4px;
 }
 
-.is-truncate-2 {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  min-height: 2.5rem;
-
-  @supports (-webkit-line-clamp: 2) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: initial;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-}
-
-.is-truncate-4 {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  min-height: 4.5rem;
-
-  @supports (-webkit-line-clamp: 4) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: initial;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-  }
-}
-
 .is-post-card {
   .level {
     background-color: #f7f8fa;
@@ -476,3 +444,8 @@ body {
 //     background-color: rebeccapurple;
 //   }
 // }
+
+@import './text.scss';
+@import './listing.scss';
+@import './layout.scss';
+@import './utils.scss';

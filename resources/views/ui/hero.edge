@@ -1,0 +1,13 @@
+<section
+    class="hero
+    @if(type)
+        is-{{type}}
+    @end
+    ">
+    <div class="hero-body">
+      <h1 class="title">{{title}}</h1>
+      @if(subtitle)
+      <p class="subtitle">{{subtitle}}</p>
+      @end
+    </div>
+</section>

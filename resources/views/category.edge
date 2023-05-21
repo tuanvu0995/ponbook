@@ -2,15 +2,9 @@
 @set('bodyClass', "categories-show")
 
 @section('body')
-<section class="hero is-warning">
-    <div class="hero-body">
-        <h1 class="title is-3">
-            Categories
-        </h1>
-    </div>
-</section>
+@!component("ui/hero", { title: "Categories", type: "warning" })
 <section>
-    <div class="container is-fluid py-5">
+    <div class="container  py-5">
         <form action="{{ route('list.categories') }}" class="pb-5">
             <div class="field is-flex is-flex-direction-row">
                 <div class="control">
@@ -32,7 +26,7 @@
     </div>
 </section>
 <section>
-    <div class="container is-fluid py-5">
+    <div class="container  py-5">
         @!component('partials/pagination', { paginator: categories })
     </div>
 </section>

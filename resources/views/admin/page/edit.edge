@@ -2,7 +2,7 @@
 @set('title', "Page management")
 
 @section('body')
-<section class="container is-fluid py-5">
+<section class="container  py-5">
     <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="{{ route("admin.dashboard") }}">Dashboard</a></li>
@@ -13,7 +13,7 @@
 </section>
 <section>
 
-    <div class="container is-fluid py-5">
+    <div class="container  py-5">
         <form action="{{ route('admin.pages.update', { id: page.id }) }}?_method=PUT" method="POST">
             <div class="columns">
                 <div class="column is-8">

@@ -1,32 +1,12 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Route from '@ioc:Adonis/Core/Route'
-import axios from 'axios'
-
-Route.get('/api/models', async ({ request, response }: HttpContextContract) => {
-  const url = 'http://go.xlirdr.com' + request.url(true)
-  const rsp = await axios({
-    url,
-    method: 'GET',
-    responseType: 'json',
-    headers: { 'User-Agent': 'Axios 1.2.1' },
-  })
-  return response.json(rsp.data)
-})
 
 Route.group(() => {
   Route.post('/searches', 'SearchesController.searches').as('searches')
   Route.get('/searches/:searchId', 'SearchesController.getSearch').as('search:get')
 
+  Route.get('/models', 'ModelsController.getModel').as('models:get')
+
   Route.resource('videos', 'VideosController')
 })
   .as('api')
   .prefix('api')
-
-Route.group(() => {
-  Route.get('/videos/:uid', 'VideoController.show').as('videos:show')
-
-  Route.get('/collections/:slug', 'CollectionController.show').as('collections:show')
-})
-  .as('api/v1')
-  .prefix('api/v1')
-  .namespace('App/Controllers/Api')
