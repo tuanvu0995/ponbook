@@ -13,6 +13,7 @@
 |
 */
 
+import _ from 'lodash'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Sentry from '@ioc:Adonis/Addons/Sentry'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
@@ -39,9 +40,32 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     }
   }
 
-  public async handle(error, ctx) {
-    Sentry.captureException(error, ctx)
+  protected shouldReport(error: any) {
+    const status = error.status || error.code || 500
 
+    if (this.ignoreStatuses.includes(status)) {
+      return false
+    }
+
+    if (this.ignoreCodes.includes(error.code)) {
+      return false
+    }
+
+    return true
+  }
+
+  public async report(error: any, ctx) {
+    if (!this.shouldReport(error)) return
+
+    if (typeof error.report === 'function') {
+      error.report(error, ctx)
+      return
+    }
+
+    Sentry.captureException(error, ctx)
+  }
+
+  public async handle(error, ctx) {
     if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
       return ctx.response.status(error.status).json({
         message: error.message,
