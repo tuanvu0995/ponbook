@@ -142,9 +142,11 @@
                 </div>
                 @include("ads/girlsxyz-banner")
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
-                <div class="py-5">
+                <div class="columns is-multiline is-mobile is-tablet py-5">
                     @each(video in relatedVideos)
-                    @!component('components/listing', { video, isTransparent: true })
+                    <div class="column is-half-mobile is-full-tablet p-0">
+                        @!component('components/listing', { video, isTransparent: true })
+                    </div>
                     @end
                 </div>
             </div>

@@ -28,20 +28,20 @@
       <div id="sidebar" class="column is-2 p-0">
         <div class="sidebar__inner px-3 pt-5">
           @include("ads/girlsxyz-banner")
-          <h2 class="title is-5 px-1">Radom Genres</h1>
-            <div class="tags">
-              @each(tag in tags)
-              <a class="tag is-primary" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
-              @end
+          <h2 class="is-title is-3 px-0 py-2"><strong>Radom Genres</strong></h2>
+          <div class="tags">
+            @each(tag in tags)
+            <a class="tag is-primary" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+            @end
           </div>
           @if(viewedVideos.length > 0)
-          <div class="pt-4">
-            <h2 class="is-title px-1 is-3"><strong>Viewed videos</strong></h3>
-              <div class="py-4">
-                  @each(video in viewedVideos)
-                    @!component('components/listing', { video, isTransparent: true })
-                  @end
-              </div>
+          <h2 class="is-title is-3 px-0 py-2"><strong>Viewed videos</strong></h3>
+          <div class="columns is-multiline is-mobile is-tablet">
+            @each(video in viewedVideos)
+            <div class="column is-half-mobile is-full-tablet p-1">
+                @!component('components/listing', { video, isTransparent: true })
+            </div>
+            @end
           </div>
           @end
         </div>

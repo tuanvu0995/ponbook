@@ -17,12 +17,12 @@
             @if(video.cast)
             <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug }) }}">{{ video.cast.name }}</a>
             @end
-            @if(video.commentCount)
-            <span class="card-time is-hidden-mobile">{{ video.commentCount }} comments</span>
-            @end
             <time class="card-time" dateTime="{{video.releaseDate || video.release_date}}"">
                 {{ video.releaseDate || video.release_date }}
             </time>
+            @if(video.commentCount)
+            <p class="card-time is-hidden-mobile">{{ video.commentCount }} comments</p>
+            @end
         </div>
     </div>
 </div>
