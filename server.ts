@@ -13,7 +13,7 @@
 import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
-import { loadEnv } from './start/doppler'
+import { loadEnv } from './doppler.js'
 
 async function start() {
   await loadEnv()

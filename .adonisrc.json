@@ -47,7 +47,8 @@
       "pattern": "resources/views/**/*.edge",
       "reloadServer": false
     },
-    "resources/lang/**/*.(json|yaml)"
+    "resources/lang/**/*.(json|yaml)",
+    "doppler.js"
   ],
   "aceProviders": [
     "@adonisjs/repl"

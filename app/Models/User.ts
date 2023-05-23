@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
 import Hash from '@ioc:Adonis/Core/Hash'
@@ -8,6 +9,7 @@ import {
   beforeCreate,
   manyToMany,
   ManyToMany,
+  computed,
 } from '@ioc:Adonis/Lucid/Orm'
 import Permission from './Permission'
 import Role from './Role'
@@ -77,6 +79,11 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @computed()
+  public get fullName() {
+    return _.chain([this.firstName, this.lastName]).filter(_.isString).join(' ').value()
+  }
 
   @beforeSave()
   public static async hashPassword(User: User) {

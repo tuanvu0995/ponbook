@@ -3,16 +3,11 @@
 
 @section('body')
 
-@!component("ui/hero", { title: tag.name, type: "warning" })
-<section>
-    <div class="container py-5">
-      <h2 class="title is-5">All video have tagging with {{ tag.name }}</h1>
-        @!component('partials/videoList', { videos: videos })
-    </div>
-</section>
-<section>
-    <div class="container  py-5">
-      @!component('partials/pagination', { paginator: videos })
-    </div>
-</section>
+@!component("ui/hero", { title: tag.name, type: "warning", subtitle: `All video have tagging with ${ tag.name }` })
+  <div class="container py-5">
+      @!component('partials/videoList', { videos: videos })
+  </div>
+  <div class="container  py-5">
+    @!component('partials/pagination', { paginator: videos })
+  </div>
 @end

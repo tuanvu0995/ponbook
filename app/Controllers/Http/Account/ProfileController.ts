@@ -20,7 +20,7 @@ export default class ProfileController {
 
     session.flash('success', 'Profile updated successfully')
 
-    return response.redirect().toRoute('account.profile')
+    return response.redirect().toRoute('account.account')
   }
 
   public async password({ view }: HttpContextContract) {

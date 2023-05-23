@@ -34,24 +34,21 @@
     <div class="container py-5" style="min-height: 600px">
       <div class="columns">
         <div class="column is-2">
-          <aside class="menu">
-            <p class="menu-label">
-              Account
-            </p>
-            <ul class="menu-list">
-              <li><a class="{{ request.matchesRoute('account.account') ? 'is-active' : '' }}" href="{{ route("account.account") }}">Profile</a></li>
-              <li><a class="{{ request.matchesRoute('account.password') ? 'is-active' : '' }}" href="{{ route("account.password") }}">Password</a></li>
-            </ul>
-            <p class="menu-label">
-              Setting
-            </p>
-            <ul class="menu-list">
-              <li><a>Notification</a></li>
-              <li><a>Security</a></li>
-              <li><a>Privacy and safety</a></li>
-              <li><a>Deactivate account</a></li>
-            </ul>
-          </aside>
+          <div class="box">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                @if(profile.fullname)
+                <p class="title is-4">{{ profile.fullname }}</p>
+                @end
+                <p class="subtitle is-6">{{ `@${profile.username}` }}</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="column is-8">
           @!section('body')

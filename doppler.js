@@ -1,8 +1,7 @@
-import { execSync } from 'child_process'
-import dotenv from 'dotenv'
-dotenv.config()
+const { execSync } = require('child_process')
+require('dotenv').config()
 
-export function loadEnv() {
+function loadEnv() {
   const fetchDopplerCLI = [
     'curl',
     '--connect-timeout 20',
@@ -19,4 +18,4 @@ export function loadEnv() {
   }
 }
 
-export const doppler = { loadEnv }
+module.exports = { loadEnv }
