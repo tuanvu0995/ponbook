@@ -16,5 +16,6 @@
     "login": "Login",
     "register": "Register",
     "help": "Help",
-    "adminPanel": "Admin panel"
+    "adminPanel": "Admin panel",
+    "account": "Account"
 }

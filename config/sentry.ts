@@ -3,5 +3,5 @@ import Env from '@ioc:Adonis/Core/Env'
 
 export default {
   dsn: Env.get('SENTRY_DSN'),
-  enabled: true,
+  enabled: Env.get('NODE_ENV') === 'production',
 } as SentryConfig

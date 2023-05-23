@@ -1,4 +1,5 @@
 import InternalServerErrorException from 'App/Exceptions/InternalServerErrorException'
+import NotFoundException from 'App/Exceptions/NotFoundException'
 import User from 'App/Models/User'
 
 export default class UserRepository {
@@ -8,5 +9,13 @@ export default class UserRepository {
       throw new InternalServerErrorException()
     }
     return commentUser
+  }
+
+  public static async findByUid(uid: string): Promise<User> {
+    const user = await User.query().where('uid', uid).where('is_deleted', false).first()
+    if (!user) {
+      throw new NotFoundException('User not found')
+    }
+    return user
   }
 }

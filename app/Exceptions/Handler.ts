@@ -42,7 +42,6 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
   public async report(error: any, ctx) {
     if (!this.shouldReport(error)) {
-      Logger.info("Don't report", this.context(ctx))
       return
     }
 

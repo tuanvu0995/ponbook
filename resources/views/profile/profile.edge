@@ -1,0 +1,10 @@
+@layout('layouts/profile')
+
+@section('body')
+<div class="box">
+    <h3 class="title is-4">Profile {{ profile.username }}</h2>
+    @if(isMe)
+    <h4>it me</h4>
+    @end
+</div>
+@end
