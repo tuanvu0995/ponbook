@@ -5,6 +5,7 @@
  * file.
  */
 
+import { Request } from '@adonisjs/core/build/standalone'
 import Comment from 'App/Models/Comment'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
@@ -31,7 +32,7 @@ declare module '@ioc:Adonis/Core/Event' {
   */
   interface EventsList {
     'user:created': User
-    'visitor:visit': any
+    'visitor:visit': Request
     'video:created': Video
     'video:updated': Video
     'comment:created': Comment

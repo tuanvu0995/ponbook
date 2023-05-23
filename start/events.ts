@@ -9,71 +9,17 @@
 */
 import _ from 'lodash'
 import Event from '@ioc:Adonis/Core/Event'
-import Database from '@ioc:Adonis/Lucid/Database'
-import Logger from '@ioc:Adonis/Core/Logger'
-import Application from '@ioc:Adonis/Core/Application'
-import Mail from '@ioc:Adonis/Addons/Mail'
-import Visitor from 'App/Models/Visitor'
-import DeviceDetector from 'device-detector-js'
 
-Event.on('comment:created', 'Comment.onCommentCreated')
+Event.on('user:created', 'User.onUserCreated')
+
 Event.on('video:created', 'Video.onVideoCreated')
 Event.on('video:updated', 'Video.onVideoUpdated')
+Event.on('video:updated', 'Video.onVideoUpdated')
 
-Event.on('db:query', (query) => {
-  if (Application.inProduction) {
-    Logger.debug(JSON.stringify(query, null, 2))
-  } else {
-    Database.prettyPrint(query)
-  }
-})
+Event.on('comment:created', 'Comment.onCommentCreated')
 
-Event.on('user:created', async (user) => {
-  await Mail.use('mailgun').send(
-    (message) => {
-      console.log(user.email)
-      message
-        .from('no-reply@ponbook.net')
-        .to(user.email)
-        .subject('Welcome Onboard!')
-        .text('<h1>Welcome Onboard!</h1>')
-    },
-    {
-      oTags: ['signup'],
-    }
-  )
-})
+Event.on('email:sent', 'Email.onEmailSent')
 
-Event.on('visitor:visit', async (request: any) => {
-  const { bot } = new DeviceDetector().parse(request.header('user-agent'))
+Event.on('db:query', 'Db.onDbQuery')
 
-  const excludes = [
-    '/api',
-    '/crawler',
-    '/admin',
-    '/account',
-    '/login',
-    '/logout',
-    '/register',
-    '/pop-link',
-  ]
-  const isExcluded = excludes.some((exclude) => request.url().startsWith(exclude))
-  // check if path has file extension
-  if (request.url().includes('.') || isExcluded) {
-    return
-  }
-
-  const path = request.url(true)
-
-  const data = {
-    ip_address: request.ip(),
-    user_agent: _.truncate(request.header('user-agent'), { length: 255 }),
-    method: request.method(),
-    headers: JSON.stringify(request.headers()),
-    path,
-    count: 1,
-    country: request.header('cf-ipcountry')?.toLocaleLowerCase() || 'unknown',
-    isBot: _.isObject(bot),
-  }
-  await Visitor.create(data)
-})
+Event.on('visitor:visit', 'Visitor.onVisited')
