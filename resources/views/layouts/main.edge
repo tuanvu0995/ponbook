@@ -20,11 +20,10 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/prebid-ads.js') }}"></script> 
     <script defer src="{{ asset('assets/common.js') }}"></script> 
-    <script defer src="/js/prebid-ads.js"></script> 
     @if(env('NODE_ENV') == 'production')
+    <script defer src="/js/prebid-ads.js"></script> 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/blockadblock@3.2.1/blockadblock.min.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
