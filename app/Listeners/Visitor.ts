@@ -5,7 +5,7 @@ import DeviceDetector from 'device-detector-js'
 
 export default class Visitor {
   public async onVisited(request: EventsList['visitor:visit']) {
-    const { bot } = new DeviceDetector().parse(request.header('user-agent', '') as string)
+    const { bot } = new DeviceDetector().parse(request.header('user-agent', ''))
 
     const excludes = [
       '/api',
