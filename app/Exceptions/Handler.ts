@@ -25,7 +25,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     '404': 'errors/not-found',
     '500..599': 'errors/server-error',
   }
-  protected ignoreCodes = ['E_ROUTE_NOT_FOUND']
+  protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_NOT_FOUND', 'E_VALIDATION_FAILURE']
   protected ignoreStatuses = [404, 422, 403, 401]
 
   constructor() {
@@ -40,28 +40,18 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     }
   }
 
-  protected shouldReport(error: any) {
-    const status = error.status || error.code || 500
-
-    if (this.ignoreStatuses.includes(status)) {
-      return false
-    }
-
-    if (this.ignoreCodes.includes(error.code)) {
-      return false
-    }
-
-    return true
-  }
-
   public async report(error: any, ctx) {
-    if (!this.shouldReport(error)) return
+    if (!this.shouldReport(error)) {
+      Logger.info("Don't report", this.context(ctx))
+      return
+    }
 
     if (typeof error.report === 'function') {
       error.report(error, ctx)
       return
     }
 
+    Logger.debug(error.message, this.context(ctx))
     Sentry.captureException(error, ctx)
   }
 

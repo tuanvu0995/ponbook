@@ -14,10 +14,10 @@ import { Exception } from '@adonisjs/core/build/standalone'
 */
 const message = 'Bad request. Please check your request and try again.'
 const status = 400
-const E_RUNTIME_EXCEPTION = 'E_RUNTIME_EXCEPTION'
+const E_BAD_REQUEST = 'E_BAD_REQUEST'
 
 export default class BadRequestException extends Exception {
   constructor(error?: string) {
-    super(error || message, status, E_RUNTIME_EXCEPTION)
+    super(error || message, status, E_BAD_REQUEST)
   }
 }
