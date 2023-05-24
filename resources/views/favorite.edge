@@ -1,0 +1,24 @@
+@layout('layouts/main')
+@set('bodyClass', "favorite-show")
+
+@section('body')
+@!component("ui/hero", { title, subtitle: description, type: "info" })
+<section>
+    <div class="container  py-5">
+      @if(videos.length > 0)
+      @!component('partials/videoList', { videos: videos })
+      @else
+        <article class="message is-info">
+        <div class="message-body">
+          Sorry, you don't have any favorited videos yet.
+        </div>
+      </article>
+      @endif
+    </div>
+  </section>
+  <section>
+    <div class="container  py-5">
+      @!component('partials/pagination', { paginator: videos })
+    </div>
+  </section>
+@end

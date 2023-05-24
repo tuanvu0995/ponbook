@@ -5,10 +5,12 @@ import Video from 'App/Models/Video'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class VideoRepository {
-  constructor() {}
-
   public static async getVideoByUid(uid: string): Promise<Video> {
-    const video = await Video.query().where('uid', uid).first()
+    const video = await Video.query()
+      .where('uid', uid)
+      .where('is_deleted', false)
+      .where('is_published', true)
+      .first()
     if (!video) {
       throw new NotFoundException('Video not found')
     }

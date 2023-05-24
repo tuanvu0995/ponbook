@@ -17,5 +17,6 @@
     "register": "Register",
     "help": "Help",
     "adminPanel": "Admin panel",
-    "account": "Account"
+    "account": "Account",
+    "favorites": "Favorites"
 }

@@ -112,7 +112,7 @@ export default class User extends BaseModel {
   @manyToMany(() => Video, {
     pivotTable: 'favorite_videos',
   })
-  public favorites: ManyToMany<typeof Video>
+  public favoriteVideos: ManyToMany<typeof Video>
 
   @manyToMany(() => Comment, {
     pivotTable: 'votes',

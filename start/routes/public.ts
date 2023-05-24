@@ -22,6 +22,7 @@ Route.group(() => {
   Route.get('/tag/:slug', 'ListController.tags').as('tag')
   Route.get('/stars', 'ListController.stars').as('stars')
   Route.get('/categories', 'ListController.categories').as('categories')
+  Route.get('/favorites', 'ListController.favorites').as('favorites')
 })
   .as('list')
   .middleware('throttle:global')

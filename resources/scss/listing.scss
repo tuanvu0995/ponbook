@@ -60,14 +60,14 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      min-height: 1.7rem;
+      min-height: 1.9rem;
     
-      @supports (-webkit-line-clamp: 4) {
+      @supports (-webkit-line-clamp: 3) {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: initial;
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }
     }

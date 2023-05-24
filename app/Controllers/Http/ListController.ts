@@ -205,6 +205,29 @@ export default class ListController {
     return view.render('maker', { maker, videos, title, description, keyword })
   }
 
+  public async favorites({ request, auth, view }: HttpContextContract) {
+    const { page = 1, limit = 40 } = request.qs()
+    const title = 'My Favorites Videos'
+    const description = 'List of video that have been added to my favorites'
+
+    if (!auth.user) {
+      return view.render('favorite', { videos: [], title, description })
+    }
+
+    const videos = await auth.user
+      .related('favoriteVideos')
+      .query()
+      .preload('videoCover')
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('favorite_videos.id', 'desc')
+      .paginate(page, limit)
+
+    videos.baseUrl(`/favorites`)
+
+    return view.render('favorite', { videos, title, description })
+  }
+
   public async tags({ request, view }: HttpContextContract) {
     const slug = request.param('slug')
     const { page = 1, limit = 40 } = request.qs()

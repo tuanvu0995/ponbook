@@ -29,7 +29,6 @@ export default function globalAjaxButton() {
 
     let icon = element.querySelector('i')
     function toggleIcon(state) {
-      console.log(toggleIconOn, toggleIconOff)
       if (state) {
         icon.classList.remove(...toggleIconOff)
         icon.classList.add(...toggleIconOn)
@@ -47,6 +46,17 @@ export default function globalAjaxButton() {
       .then((response) => {
         canToggleIcon && toggleIcon(response.data.state === 'added')
         element.classList.toggle('is-loading')
+        Toastify({
+          text: response.data.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'center', // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover,
+          style: {
+            color: '#cc0f35',
+            background: '#feecf0',
+          },
+        }).showToast()
       })
       .catch((error) => {
         Toastify({
@@ -54,7 +64,11 @@ export default function globalAjaxButton() {
           duration: 3000,
           gravity: 'top', // `top` or `bottom`
           position: 'center', // `left`, `center` or `right`
-          stopOnFocus: true, // Prevents dismissing of toast on hover
+          stopOnFocus: true, // Prevents dismissing of toast on hover,
+          style: {
+            color: '#cc0f35',
+            background: '#feecf0',
+          },
         }).showToast()
 
         element.classList.toggle('is-loading')
