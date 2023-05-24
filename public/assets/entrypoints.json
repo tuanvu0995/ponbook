@@ -2,15 +2,15 @@
   "entrypoints": {
     "app": {
       "css": [
-        "/assets/app.fe66bd1e.css"
+        "/assets/app.d7df87f6.css"
       ],
       "js": [
-        "/assets/app.f39aa2af.js"
+        "/assets/app.20172ba4.js"
       ]
     },
     "common": {
       "js": [
-        "/assets/common.6c40b51c.js"
+        "/assets/common.f34e56cb.js"
       ]
     },
     "post-comment": {
@@ -25,7 +25,7 @@
     },
     "search-modal": {
       "js": [
-        "/assets/search-modal.47ef2f18.js"
+        "/assets/search-modal.5635b5bf.js"
       ]
     },
     "player": {

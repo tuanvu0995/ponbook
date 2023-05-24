@@ -1,7 +1,7 @@
 <div class="card listing__container"
-    @if(isTransparent)
-    style="background-color: transparent; box-shadow: none;"
-    @end
+    @if(isTransparent)~
+        style="background-color: transparent; box-shadow: none;"
+    @endif
     >
     <div class="card-image">
         <figure class="image">
@@ -12,17 +12,25 @@
     </div>
     <div class="card-content">
         <div class="content">
-            <a href="{{ route("videos.show", { uid: video.uid }) }}" class="card-code" title="{{ video.code }}">{{ video.code }}</a>
-            <a href="{{ route("videos.show", { uid: video.uid }) }}" class="content-title is-small is-link is-truncate-2" title="{{ video.title }}">{{ video.title }}</a>
+            <a href="{{ route("videos.show", { uid: video.uid }) }}" class="card-code" title="{{ video.code }}">{{
+                video.code }}</a>
+            <a href="{{ route("videos.show", { uid: video.uid }) }}"
+                class="content-title is-small is-link is-truncate-2" title="{{ video.title }}">{{ video.title }}</a>
             @if(video.cast)
-            <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug }) }}">{{ video.cast.name }}</a>
-            @end
-            <time class="card-time" dateTime="{{video.releaseDate || video.release_date}}"">
-                {{ video.releaseDate || video.release_date }}
-            </time>
-            @if(video.commentCount)
-            <p class="card-time is-hidden-mobile">{{ video.commentCount }} comments</p>
-            @end
+            <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug })
+                }}">{{ video.cast.name }}</a>
+            @endif
+           
+        </div>
+        <div class="card-action">
+         <time class="card-time" dateTime="{{video.releaseDate || video.release_date}}"">
+            {{ video.releaseDate || video.release_date }}
+        </time>
+            <a class="button is-light is-danger is-small is-action is-ajax is-favorite-button" data-video-uid="{{ video.uid }}" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
+                <span class="icon is-small">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </span>
+            </a>
         </div>
     </div>
 </div>

@@ -5,49 +5,50 @@
 
 @section('body')
 
-  @!component("ui/hero", { title: "Ponbook", subtitle: "The website to store all your favorite porn videos.", type: "warning" })
+@!component("ui/hero", { title: "Ponbook", subtitle: "The website to store all your favorite porn videos.", type:
+"warning" })
 
-  <section id="main-content" class="container">
-    <div class="columns">
-      <div class="column is-10">
-          <div class="py-5">
-            <h2 class="title is-5 px-1">Recently</h1>
-            @!component('partials/homeVideoList', { videos: recentVideos })
-          </div>
-          <div class="py-5">
-            <h2 class="title is-5 px-1">New comments</h1>
-            @!component('partials/homeVideoList', { videos: newlyUpdatedVideos })
-          </div>
-          @each(collection in collections)
-          <div class="py-5">
-            <h2 class="title is-5 px-1">{{ collection.name }} videos</h1>
-            @!component('partials/homeVideoList', { videos: collection.videos })
-          </div>
-          @end
+<section id="main-content" class="container">
+  <div class="columns">
+    <div class="column is-10">
+      <div class="py-5">
+        <h2 class="title is-5 px-1">Recently</h1>
+          @!component('partials/homeVideoList', { videos: recentVideos })
       </div>
-      <div id="sidebar" class="column is-2 p-0">
-        <div class="sidebar__inner px-3 pt-5">
-          <h2 class="is-title is-3 px-0 py-2"><strong>Radom Genres</strong></h2>
-          <div class="tags">
-            @each(tag in tags)
-            <a class="tag is-primary" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
-            @end
-          </div>
-          @include("ads/girlsxyz-banner")
-          @if(viewedVideos.length > 0)
-          <h2 class="is-title is-3 px-0 py-2"><strong>Viewed videos</strong></h3>
+      <div class="py-5">
+        <h2 class="title is-5 px-1">New comments</h1>
+          @!component('partials/homeVideoList', { videos: newlyUpdatedVideos })
+      </div>
+      @each(collection in collections)
+      <div class="py-5">
+        <h2 class="title is-5 px-1">{{ collection.name }} videos</h1>
+          @!component('partials/homeVideoList', { videos: collection.videos })
+      </div>
+      @end
+    </div>
+    <div id="sidebar" class="column is-2 p-0">
+      <div class="sidebar__inner px-3 pt-5">
+        <h2 class="is-title is-3 px-0 py-2"><strong>Radom Genres</strong></h2>
+        <div class="tags">
+          @each(tag in tags)
+          <a class="tag is-primary" href="{{ route('list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+          @end
+        </div>
+        @include("ads/girlsxyz-banner")
+        @if(viewedVideos.length > 0)
+        <h2 class="is-title is-3 px-0 py-2"><strong>Viewed videos</strong></h3>
           <div class="columns is-multiline is-mobile is-tablet">
             @each(video in viewedVideos)
             <div class="column is-half-mobile is-full-tablet p-1">
-                @!component('components/listing', { video, isTransparent: true })
+              @!component('components/listing', { video, isTransparent: true })
             </div>
             @end
           </div>
           @end
-        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 @end
 
 @section('scripts')

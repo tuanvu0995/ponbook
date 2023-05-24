@@ -1,5 +1,5 @@
 import axios from 'axios'
-import createPopover from './popover'
+import Toastify from 'toastify-js'
 
 export default function globalAjaxButton() {
   var buttons = document.querySelectorAll(`.button.is-ajax`)
@@ -45,13 +45,18 @@ export default function globalAjaxButton() {
       data: data,
     })
       .then((response) => {
-        response.data.message && createPopover(element, response.data.message, { timeout: 3000 })
         canToggleIcon && toggleIcon(response.data.state === 'added')
         element.classList.toggle('is-loading')
       })
       .catch((error) => {
-        console.log(error)
-        createPopover(element, error.response.data.message, { timeout: 3000 })
+        Toastify({
+          text: error.message,
+          duration: 3000,
+          gravity: 'top', // `top` or `bottom`
+          position: 'center', // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+        }).showToast()
+
         element.classList.toggle('is-loading')
       })
   }

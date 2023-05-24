@@ -6,6 +6,7 @@ import 'owl.carousel'
 import '../scss/app.scss'
 import globalVoteButton from './utils/globalVoteButton'
 import globalModalTriggers from './utils/globalModalTrigger'
+import initFavoriteButton from './utils/initFavoriteButton'
 import initAds from './utils/initAds'
 
 $(function () {
@@ -14,6 +15,7 @@ $(function () {
   globalVoteButton()
   globalModalTriggers()
   initImageLazyLoad()
+  initFavoriteButton()
   initAds()
   /**
    * Navigation bar

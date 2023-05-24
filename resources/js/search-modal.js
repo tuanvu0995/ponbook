@@ -10,14 +10,21 @@ const ReactSearchModal = () => {
   const [tags, setTags] = useState([])
   const [hasResults, setHasResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const inputRef = React.createRef()
 
   const onChange = (e) => {
     setKeyword(e.target.value)
   }
 
   const onClose = () => {
-    document.getElementById('search-modal').classList.remove('is-active')
+    window.closeSearchModal()
   }
+
+  useEffect(() => {
+    if (inputRef) {
+      inputRef.current.focus()
+    }
+  }, [inputRef.current])
 
   useEffect(() => {
     if (keyword.length >= 2) {
@@ -87,10 +94,11 @@ const ReactSearchModal = () => {
 
   return (
     <>
-      <header className="modal-card-head">
+      <header className="modal-card-head is-active">
         <div className="field my-0">
           <div className="control has-icons-left has-icons-right">
             <input
+              ref={inputRef}
               className="input"
               type="text"
               placeholder="Search videos, idols"
@@ -133,7 +141,13 @@ const ReactSearchModal = () => {
   )
 }
 
-$(function () {
+window.openSearchModal = function () {
   const root = ReactDOM.createRoot(document.getElementById('search-modal-root'))
   root.render(<ReactSearchModal />)
-})
+  document.getElementById('search-modal').classList.add('is-active')
+}
+
+window.closeSearchModal = function () {
+  document.getElementById('search-modal-root').innerHTML = ''
+  document.getElementById('search-modal').classList.remove('is-active')
+}

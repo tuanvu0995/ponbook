@@ -17,6 +17,9 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('/videos/:uid/favorite', 'VideoController.favorite').as('videos.favorite')
+  Route.post('/videos/favorite-status', 'VideoController.getFavoriteStatusByVideos').as(
+    'videos.getFavoriteStatusByVideos'
+  )
   Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
 })
   .as('api')

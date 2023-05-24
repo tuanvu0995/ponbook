@@ -12,6 +12,8 @@ import Comment from 'App/Models/Comment'
 import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/contants'
 import PBVideoRepository from 'App/Repositories/Api/PBVideoRepository'
 import NotFoundException from 'App/Exceptions/NotFoundException'
+import { schema, validator } from '@ioc:Adonis/Core/Validator'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class VideoController {
   protected videoRepository: VideoRepository
@@ -287,5 +289,39 @@ export default class VideoController {
       state,
       message: 'Video ' + state + ' to favorites',
     })
+  }
+
+  public async getFavoriteStatusByVideos({ request, auth, response }) {
+    const videoUids = request.input('videoUids')
+    await validator.validate({
+      schema: schema.create({
+        videoUids: schema.array().members(schema.string()),
+      }),
+      data: {
+        videoUids,
+      },
+    })
+
+    const user = auth.user!
+    const videoIds = await Video.query().whereIn('uid', videoUids).select('id', 'uid')
+    const favoriteIds = await Database.from('favorite_videos')
+      .where('user_id', user.id)
+      .whereIn(
+        'video_id',
+        videoIds.map((item) => item.id)
+      )
+      .select('video_id')
+
+    const favoriteVideoIds = favoriteIds.map((item) => item.video_id)
+
+    const results = _.map(videoUids, (uid) => {
+      const video = _.find(videoIds, (item) => item.uid === uid)
+      return {
+        uid,
+        isFavorite: favoriteVideoIds.includes(video?.id),
+      }
+    })
+
+    return response.json(results)
   }
 }
