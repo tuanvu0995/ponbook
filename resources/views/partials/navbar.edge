@@ -31,6 +31,10 @@
         <a class="navbar-item" href="{{ route("list.recent") }}">
           {{ t('navbar.recently')}}
         </a>
+
+        <a class="navbar-item" href="{{ route("list.favorites") }}">
+          {{ t('navbar.favorites')}}
+        </a>
   
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
@@ -42,15 +46,12 @@
             <a class="navbar-item" href="{{ route("list.newComments") }}">
               {{ t('navbar.newComments')}}
             </a>
+            <hr class="navbar-divider">
             <a class="navbar-item" href="{{ route("list.stars") }}">
               {{ t('navbar.stars')}}
             </a>
-            <hr class="navbar-divider">
             <a class="navbar-item" href="{{ route("list.categories") }}">
               {{ t('navbar.categories')}}
-            </a>
-            <a class="navbar-item" href="{{ route("list.favorites") }}">
-              {{ t('navbar.favorites')}}
             </a>
           </div>
         </div>
