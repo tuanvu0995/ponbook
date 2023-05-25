@@ -93,14 +93,21 @@ export default class VideoRepository {
   }
 
   public async getRecentVideos(): Promise<Video[]> {
+    const cachedRecentVideos = await Redis.get('videos:recent')
+    if (cachedRecentVideos) {
+      return JSON.parse(cachedRecentVideos)
+    }
+
     const recentVideos = await Video.query()
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('id', 'desc')
-      .limit(16)
+      .limit(18)
     for (const video of recentVideos) {
       await video.load('videoCover')
     }
+
+    await Redis.set('videos:recent', JSON.stringify(recentVideos))
 
     return recentVideos
   }
@@ -115,7 +122,7 @@ export default class VideoRepository {
       .where('comments.is_draft', false)
       .orderByRaw('MAX(comments.id) desc')
       .groupBy('videos.id')
-      .limit(16)
+      .limit(18)
     for (const video of newlyUpdatedVideos) {
       await video.load('videoCover')
     }

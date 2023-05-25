@@ -1,6 +1,7 @@
 .listing__container {
   display: inline-flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 0.5rem;
 
   .card-code {
     font-size: 0.8rem;
@@ -9,15 +10,27 @@
 
   .card-image {
     flex-basis: 40%;
-    padding: 0.5rem;
+    padding: 0;
+  }
+
+  .inner-image {
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    width: 100%;
+    min-height: 200px;
+
+    img {
+      max-height: 200px;
+      width: auto;
+    }
   }
 
   .card-content {
     display: inline-flex;
     flex-direction: column;
     flex-basis: 60%;
-    padding: 0.5rem;
-    padding-left: 0;
+    padding: 0;
 
     .content {
       margin: 0;
@@ -39,6 +52,7 @@
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
+    padding: 2px 0;
 
     .is-action {
       box-shadow: none;
@@ -55,29 +69,14 @@
     .content-title {
       font-size: 0.7rem;
     }
-
-    .is-truncate-2 {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      min-height: 1.9rem;
-    
-      @supports (-webkit-line-clamp: 3) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: initial;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-      }
-    }
   }
 }
 
-.listings__container {
+.h-listings__container {
   @include until($tablet) {
     .column {
       padding: 0.4rem;
     }
   }
 }
+
