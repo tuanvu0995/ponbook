@@ -310,7 +310,7 @@ export default class ListController {
 
   public async box({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 10 } = request.qs()
+    const { page = 1, limit = 40 } = request.qs()
 
     const box = await BoxRepository.getBoxByUid(uid)
     await box.load('user')
