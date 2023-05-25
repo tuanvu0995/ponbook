@@ -16,6 +16,7 @@ export default class extends BaseSchema {
 
       table.bigInteger('view_count').defaultTo(0)
 
+      table.boolean('is_draft').defaultTo(true)
       table.boolean('is_public').defaultTo(false)
       table.boolean('is_deleted').defaultTo(false)
 
