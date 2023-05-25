@@ -23,3 +23,5 @@ Event.on('email:sent', 'Email.onEmailSent')
 Event.on('db:query', 'Db.onDbQuery')
 
 Event.on('visitor:visit', 'Visitor.onVisited')
+
+Event.on('contact:created', 'Contact.onContactCreated')

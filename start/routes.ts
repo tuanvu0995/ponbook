@@ -48,4 +48,10 @@ Route.get('ping', async ({ response, request }) => {
   console.log(request.headers())
   return response.ok({ message: 'pong' })
 })
+
+Route.get('/contact', 'WebController.contact').as('web.contact')
+Route.post('/contact', 'SupportsController.sendContact')
+  .as('web.sendContact')
+  .middleware('throttle:sendContact')
+
 Route.get(':slug', 'WebController.page').as('web.page')
