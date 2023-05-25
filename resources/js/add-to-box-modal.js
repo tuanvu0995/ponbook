@@ -18,9 +18,13 @@ const ReactAddToBoxModal = ({ data: { uid, code } }) => {
   }, [])
 
   const fetchMyBoxes = async (value) => {
-    const { data } = await axios.get('/api/boxes/my')
-    if (Array.isArray(data.data) && data.data.length > 0) {
-      setBoxes(data.data)
+    try {
+      const { data } = await axios.get('/api/boxes/my')
+      if (Array.isArray(data.data) && data.data.length > 0) {
+        setBoxes(data.data)
+      }
+    } catch (error) {
+      console.log(error.message)
     }
     setIsLoading(false)
   }
