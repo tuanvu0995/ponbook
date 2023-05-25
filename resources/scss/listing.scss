@@ -1,7 +1,10 @@
+$image-height: 160px;
+
 .listing__container {
   display: inline-flex;
   flex-direction: column;
   padding: 0.5rem;
+  width: 100%;
 
   .card-code {
     font-size: 0.8rem;
@@ -18,10 +21,11 @@
     align-items: center;
     display: inline-flex;
     width: 100%;
-    min-height: 200px;
+    height: $image-height;
+    max-height: $image-height;
 
     img {
-      max-height: 200px;
+      height: 100%;
       width: auto;
     }
   }
