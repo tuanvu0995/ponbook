@@ -2,14 +2,14 @@
 @set('bodyClass', "favorite-show")
 
 @section('body')
-@!component("ui/hero", { title, subtitle: description, type: "info" })
+@!component("ui/hero", { title, subtitleSecondLine: titleSmallText, subtitle: description, type: "info" })
 <div class="container  py-5">
   @if(videos.length > 0)
   @!component('partials/videoList', { videos: videos })
   @else
-    <article class="message is-info">
+  <article class="message is-info">
     <div class="message-body">
-      Sorry, you don't have any favorited videos yet.
+      Sorry, this box currently has no videos.
     </div>
   </article>
   @endif

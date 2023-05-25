@@ -20,6 +20,11 @@ Route.group(() => {
     'videos.getFavoriteStatusByVideos'
   )
   Route.post('uploads/image', 'UploadsController.uploadImage').as('uploads.image')
+
+  Route.get('/boxes/my', 'BoxesController.getMyBoxes').as('boxes.my')
+  Route.post('/boxes/add-video-to-boxes', 'BoxesController.addVideoToBoxes').as(
+    'boxes.addVideoToBoxes'
+  )
 })
   .as('api')
   .prefix('api')

@@ -26,11 +26,6 @@
          <time class="card-time" dateTime="{{video.releaseDate || video.release_date}}"">
             {{ video.releaseDate || video.release_date }}
         </time>
-            <a class="button is-light is-danger is-small is-action is-ajax is-favorite-button" data-video-uid="{{ video.uid }}" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
-                <span class="icon is-small">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                </span>
-            </a>
         </div>
     </div>
 </div>

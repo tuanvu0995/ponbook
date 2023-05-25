@@ -1,0 +1,23 @@
+@layout('layouts/main')
+@set('bodyClass', "boxes-show")
+
+@section('body')
+@!component("ui/hero", { title, subtitle: description, type: "info" })
+<div class="container py-5">
+  @if(boxes.length > 0)
+  @each(box in boxes)
+    @!component('components/box', { box })
+  @endeach
+
+  @else
+  <article class="message is-info">
+    <div class="message-body">
+      Sorry, Currently there are no boxes available.
+    </div>
+  </article>
+  @endif
+</div>
+<div class="container  py-5">
+  @!component('partials/pagination', { paginator: boxes })
+</div>
+@end

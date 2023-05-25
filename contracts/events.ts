@@ -5,6 +5,7 @@
  * file.
  */
 
+import Box from 'App/Models/Box'
 import Comment from 'App/Models/Comment'
 import Contact from 'App/Models/Contact'
 import User from 'App/Models/User'
@@ -37,5 +38,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'video:updated': Video
     'comment:created': Comment
     'contact:created': Contact
+    'box:viewing': Box
   }
 }

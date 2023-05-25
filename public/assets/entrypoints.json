@@ -28,6 +28,11 @@
         "http://localhost:8080/assets/search-modal.js"
       ]
     },
+    "add-to-box-modal": {
+      "js": [
+        "http://localhost:8080/assets/add-to-box-modal.js"
+      ]
+    },
     "player": {
       "js": [
         "http://localhost:8080/assets/player.js"

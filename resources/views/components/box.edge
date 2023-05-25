@@ -1,0 +1,24 @@
+<div class="card my-2">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p>
+                    <a class="title is-4" href="{{ route("list.box", { uid: box.uid }) }}">{{ box.name }}</a>
+                    <span class="is-small">Created by {{ box.user.fullName }} {{ `@${box.user.username}` }}</span>
+                </p>
+                @if(box.description)
+                <p class="subtitle is-6">{{ box.description }}</p>
+                @endif
+            </div>
+
+            <a class="is-small" href="{{ route("list.box", { uid: box.uid }) }}"><small>View more....</small></a>
+        </div>
+        <div class="columns is-multiline is-mobile is-tablet is-desktop listings__container">
+            @each(video in box.videos)
+            <div class="column is-half-mobile is-one-quarter-tablet is-2-desktop">
+                @!component('components/listing', { video })
+            </div>
+            @end
+        </div>
+    </div>
+</div>

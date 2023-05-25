@@ -1,15 +1,17 @@
 import { DateTime } from 'luxon'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Cast from 'App/Models/Cast'
+import Event from '@ioc:Adonis/Core/Event'
 import Collection from 'App/Models/Collection'
 import Director from 'App/Models/Director'
 import Maker from 'App/Models/Maker'
 import Tag from 'App/Models/Tag'
 import Video from 'App/Models/Video'
+import BoxRepository from 'App/Repositories/BoxRepository'
 
 export default class ListController {
   public async popular({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const popularCollection = await Collection.findByOrFail('slug', 'popular')
     const videos = await popularCollection
       .related('videos')
@@ -34,7 +36,7 @@ export default class ListController {
   }
 
   public async newRelease({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const now = DateTime.now().toFormat('yyyy-MM-dd')
     const videos = await Video.query()
       .where('release_date', '<=', now)
@@ -58,7 +60,7 @@ export default class ListController {
   }
 
   public async recent({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const videos = await Video.query()
       .where('is_published', true)
       .where('is_deleted', false)
@@ -80,7 +82,7 @@ export default class ListController {
   }
 
   public async newComments({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const videos = await Video.query()
       .select('videos.*')
       .where('videos.is_published', true)
@@ -117,7 +119,7 @@ export default class ListController {
 
   public async castsBySlug({ request, view }: HttpContextContract) {
     const slug = request.param('slug')
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const cast = await Cast.query().preload('castImage').where('slug', slug).first()
     if (!cast) {
       return view.render('errors/not-found')
@@ -147,7 +149,7 @@ export default class ListController {
 
   public async director({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const director = await Director.query().where('uid', uid).first()
     if (!director) {
       return view.render('errors/not-found')
@@ -177,7 +179,7 @@ export default class ListController {
 
   public async maker({ request, view }: HttpContextContract) {
     const uid = request.param('uid')
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const maker = await Maker.query().where('uid', uid).first()
     if (!maker) {
       return view.render('errors/not-found')
@@ -206,7 +208,7 @@ export default class ListController {
   }
 
   public async favorites({ request, auth, view }: HttpContextContract) {
-    const { page = 1, limit = 40 } = request.qs()
+    const { page = 1, limit = 36 } = request.qs()
     const title = 'My Favorites Videos'
     const description = 'List of video that have been added to my favorites'
 
@@ -294,5 +296,42 @@ export default class ListController {
     tags.baseUrl(`/categories`)
 
     return view.render('category', { categories: tags, title, description, keyword })
+  }
+
+  public async boxes({ request, view }: HttpContextContract) {
+    const { page = 1, limit = 10 } = request.qs()
+
+    const boxes = await BoxRepository.getBoxes(page, limit)
+
+    const title = 'Boxes collection'
+    const description = `List of all boxes collection`
+    return view.render('boxes', { boxes, title, description })
+  }
+
+  public async box({ request, view }: HttpContextContract) {
+    const uid = request.param('uid')
+    const { page = 1, limit = 10 } = request.qs()
+
+    const box = await BoxRepository.getBoxByUid(uid)
+    await box.load('user')
+
+    const titleSmallText = `Created by ${box.user.fullName} @${box.user.username}`
+
+    const videos = await box
+      .related('videos')
+      .query()
+      .preload('videoCover')
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('id', 'desc')
+      .paginate(page, limit)
+
+    videos.baseUrl(`/box/${box.uid}`)
+
+    Event.emit('box:viewing', box)
+
+    const title = `${box.name} videos`
+    const description = `List of all videos of the box ${box.name}`
+    return view.render('box', { videos, title, titleSmallText, description })
   }
 }

@@ -1,10 +1,13 @@
 import _ from 'lodash'
 import type { EventsList } from '@ioc:Adonis/Core/Event'
+import Env from '@ioc:Adonis/Core/Env'
 import VisitorModel from 'App/Models/Visitor'
 import DeviceDetector from 'device-detector-js'
 
 export default class Visitor {
   public async onVisited(request: EventsList['visitor:visit']) {
+    if (Env.get('NODE_ENV') !== 'production') return
+
     const { bot } = new DeviceDetector().parse(request.header('user-agent', ''))
 
     const excludes = [

@@ -14,14 +14,8 @@
             </ul>
         </nav>
         <div class="is-flex is-justify-content-right pb-3">
-            {{--  <a class="button is-success is-light is-small js-modal-trigger" data-target="notify-me-modal">
-                <span class="icon is-small">
-                 <i class="fa fa-bell-o" aria-hidden="true"></i>
-                </span>
-                <span>Notify me when video release</span>
-            </a>  --}}
             @if(auth.user)
-            <a class="button is-primary is-light is-small is-ajax" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
+            <a class="button is-primary is-small is-ajax mr-2" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
                 <span class="icon is-small">
                     @if(isFavorite)
                     <i class="fa fa-heart" aria-hidden="true"></i>
@@ -30,6 +24,12 @@
                     @end
                 </span>
                 <span>Favorite</span>
+            </a>
+            <a class="button is-info is-small" data-uid="{{ video.uid }}" data-code="{{ video.code }}" onclick="openAddToBoxModal(this)">
+                <span class="icon is-small">
+                    <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                </span>
+                <span>Add to boxes</span>
             </a>
             @end
         </div>

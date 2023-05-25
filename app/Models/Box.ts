@@ -3,12 +3,14 @@ import {
   BaseModel,
   BelongsTo,
   ManyToMany,
+  beforeCreate,
   belongsTo,
   column,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Video from './Video'
+import uniqid from 'uniqid'
 
 export default class Box extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +32,9 @@ export default class Box extends BaseModel {
   public viewCount: number
 
   @column()
+  public isDraft: boolean
+
+  @column()
   public isPublic: boolean
 
   @column()
@@ -46,6 +51,12 @@ export default class Box extends BaseModel {
 
   @manyToMany(() => Video, {
     pivotTable: 'box_videos',
+    pivotTimestamps: true,
   })
   public videos: ManyToMany<typeof Video>
+
+  @beforeCreate()
+  public static async generateUid(box: Box) {
+    box.uid = uniqid()
+  }
 }

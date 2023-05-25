@@ -54,7 +54,6 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
-    console.log(error)
     Logger.debug(error.message, this.context(ctx))
     if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
       return ctx.response.status(error.status).json({

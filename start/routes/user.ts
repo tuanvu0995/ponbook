@@ -13,6 +13,10 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('/videos/:uid/comments', 'CommentController.store').as('videos.comments.store')
+
+  Route.get('/boxes/create', 'BoxesController.create').as('boxes.create')
+  Route.get('/boxes/:uid/edit', 'BoxesController.edit').as('boxes.edit')
+  Route.put('/boxes/:uid', 'BoxesController.update').as('boxes.update')
 }).middleware('auth')
 
 Route.group(() => {

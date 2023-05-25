@@ -129,4 +129,12 @@ export default class VideoRepository {
 
     return newlyUpdatedVideos
   }
+
+  public static async getVideoByUids(uids: string[]): Promise<Video[]> {
+    const videos = await Video.query()
+      .whereIn('uid', uids)
+      .where('is_deleted', false)
+      .where('is_published', true)
+    return videos
+  }
 }

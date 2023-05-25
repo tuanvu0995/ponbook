@@ -142,12 +142,22 @@ const ReactSearchModal = () => {
 }
 
 window.openSearchModal = function () {
-  const root = ReactDOM.createRoot(document.getElementById('search-modal-root'))
-  root.render(<ReactSearchModal />)
-  document.getElementById('search-modal').classList.add('is-active')
+  const modalRoot = document.getElementById('modal-root')
+  const modal = document.createElement('div')
+  modal.id = 'search-modal'
+  modalRoot.appendChild(modal)
+
+  const root = ReactDOM.createRoot(modal)
+  root.render(
+    <div id="search-modal" className="modal search-modal is-active">
+      <div className="modal-background"></div>
+      <div className="modal-card">
+        <ReactSearchModal />
+      </div>
+    </div>
+  )
 }
 
 window.closeSearchModal = function () {
-  document.getElementById('search-modal-root').innerHTML = ''
-  document.getElementById('search-modal').classList.remove('is-active')
+  document.getElementById('search-modal').remove()
 }

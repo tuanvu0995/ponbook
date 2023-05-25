@@ -10,11 +10,14 @@ import {
   manyToMany,
   ManyToMany,
   computed,
+  hasMany,
+  HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Permission from './Permission'
 import Role from './Role'
 import Video from './Video'
 import Comment from './Comment'
+import Box from './Box'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -118,6 +121,9 @@ export default class User extends BaseModel {
     pivotTable: 'votes',
   })
   public votedComments: ManyToMany<typeof Comment>
+
+  @hasMany(() => Box)
+  public boxes: HasMany<typeof Box>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

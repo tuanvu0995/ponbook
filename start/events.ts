@@ -7,7 +7,6 @@
 | boot.
 |
 */
-import _ from 'lodash'
 import Event from '@ioc:Adonis/Core/Event'
 
 Event.on('user:created', 'User.onUserCreated')
@@ -25,3 +24,5 @@ Event.on('db:query', 'Db.onDbQuery')
 Event.on('visitor:visit', 'Visitor.onVisited')
 
 Event.on('contact:created', 'Contact.onContactCreated')
+
+Event.on('box:viewing', 'BoxListener.onBoxViewing')
