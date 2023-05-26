@@ -46,7 +46,9 @@ export default class BoxRepository {
   public static async getBoxes(page: number = 1, limit: number = 10) {
     const boxes = await Box.query()
       .preload('user')
-      .preload('videos', (query) => query.preload('videoCover').orderBy('id', 'desc').limit(6))
+      .preload('videos', (query) =>
+        query.preload('videoCover').orderBy('box_videos.id', 'desc').limit(6)
+      )
       .where('is_deleted', false)
       .where('is_public', true)
       .orderBy('view_count', 'desc')
@@ -69,5 +71,9 @@ export default class BoxRepository {
       .where('is_public', true)
       .orderBy('id', 'desc')
       .paginate(page, limit)
+  }
+
+  public static async getTop3Boxes() {
+    return this.getBoxes(1, 3)
   }
 }

@@ -15,7 +15,7 @@
         <a class="navbar-item" href="{{ route("list.recent") }}">
           <i class="fa fa-tags" aria-hidden="true"></i>
         </a>
-        <a class="navbar-item" href="{{ route("list.boxes") }}">
+        <a class="navbar-item is-active" href="{{ route("list.boxes") }}">
           <i class="fa fa-archive" aria-hidden="true"></i>
         </a>
         <a class="navbar-item" href="{{ route("list.favorites") }}">
@@ -46,15 +46,11 @@
           {{ t('navbar.popular')}}
         </a>
 
-        <a class="navbar-item" href="{{ route("list.newRelease") }}">
-          {{ t('navbar.newRelease')}}
-        </a>
-
         <a class="navbar-item" href="{{ route("list.recent") }}">
           {{ t('navbar.recently')}}
         </a>
 
-        <a class="navbar-item" href="{{ route("list.boxes") }}">
+        <a class="navbar-item is-active" href="{{ route("list.boxes") }}">
           {{ t('navbar.boxes')}}
         </a>
 
@@ -68,7 +64,9 @@
           </a>
 
           <div class="navbar-dropdown">
-
+            <a class="navbar-item" href="{{ route("list.newRelease") }}">
+              {{ t('navbar.newRelease')}}
+            </a>
             <a class="navbar-item" href="{{ route("list.newComments") }}">
               {{ t('navbar.newComments')}}
             </a>

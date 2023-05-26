@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Tag from 'App/Models/Tag'
+import BoxRepository from 'App/Repositories/BoxRepository'
 import CollectionRepository from 'App/Repositories/CollectionRepository'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import { VIEWED_LIST } from 'Config/contants'
@@ -22,6 +23,8 @@ export default class HomeController {
     const viewedIds = JSON.parse(session.get(VIEWED_LIST, '[]'))
     const viewedVideos = await VideoRepository.getVideoByIds(viewedIds)
 
+    const boxes = await BoxRepository.getTop3Boxes()
+
     return view.render('index', {
       collections,
       newlyUpdatedVideos,
@@ -29,6 +32,7 @@ export default class HomeController {
       recentVideos,
       tags,
       viewedVideos,
+      boxes,
     })
   }
 }

@@ -8,19 +8,17 @@ export default class CollectionRepository {
       return JSON.parse(cachedCollections)
     }
 
-    const collections = await Collection.query().where('is_deleted', false)
+    const collections = await Collection.query().where('slug', 'popular').where('is_deleted', false)
 
     for (const collection of collections) {
       await collection.load('videos', (query) =>
         query
+          .preload('videoCover')
           .where('is_published', true)
           .where('is_deleted', false)
           .orderBy('video_collections.order', 'asc')
           .limit(20)
       )
-      for (const video of collection.videos) {
-        await video.load('videoCover')
-      }
     }
 
     await Redis.set('collections:home', JSON.stringify(collections))
