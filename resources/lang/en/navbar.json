@@ -19,5 +19,6 @@
     "adminPanel": "Admin panel",
     "account": "Account",
     "favorites": "Favorites",
-    "boxes": "Boxes"
+    "boxes": "Boxes",
+    "box": "Box"
 }
