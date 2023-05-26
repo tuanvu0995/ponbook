@@ -14,7 +14,6 @@
             </ul>
         </nav>
         <div class="is-flex is-justify-content-right pb-3">
-            @if(auth.user)
             <a class="button is-primary is-small is-ajax mr-2" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
                 <span class="icon is-small">
                     @if(isFavorite)
@@ -31,7 +30,6 @@
                 </span>
                 <span>Add to boxes</span>
             </a>
-            @end
         </div>
     </div>
 </section>
