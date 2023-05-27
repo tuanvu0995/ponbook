@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: write # to create release (changesets/action)
       pull-requests: write # to create pull request (changesets/action)
-    
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -27,13 +27,13 @@ jobs:
         with:
           key: ponbook-node-modules-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
-        
+
       - name: Install Dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
-      
+
       - name: Deploy application
         uses: easingthemes/ssh-deploy@main
         env:
@@ -41,9 +41,9 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: 'app/'
-          ARGS: "-r"
-          SOURCE: "build/"
-          EXCLUDE: "/dist/, /node_modules/"
+          ARGS: '-r'
+          SOURCE: 'build/'
+          EXCLUDE: '/dist/, /node_modules/'
           SCRIPT_AFTER: |
             whoami
             npm install --production

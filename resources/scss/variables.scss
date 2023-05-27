@@ -1,12 +1,12 @@
 // Set your brand colors
-$brinkPink: #FF597B;
-$pink: #7D4068;
+$brinkPink: #ff597b;
+$pink: #7d4068;
 $brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
+$beige-light: #d0d1cd;
+$beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
-$family-sans-serif: "Nunito", sans-serif;
+$family-sans-serif: 'Nunito', sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $brinkPink;
@@ -20,10 +20,12 @@ $control-border-width: 2px;
 $input-border-color: #e1e1e1;
 $input-shadow: none;
 
-
-.ql-editor, .ql-container {
-    font-family: inherit !important;
-    ul, ol, li {
-        padding: 0 !important;
-    }
+.ql-editor,
+.ql-container {
+  font-family: inherit !important;
+  ul,
+  ol,
+  li {
+    padding: 0 !important;
+  }
 }

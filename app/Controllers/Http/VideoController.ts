@@ -4,28 +4,22 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Video from 'App/Models/Video'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import Comment from 'App/Models/Comment'
-import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/contants'
-import PBVideoRepository from 'App/Repositories/Api/PBVideoRepository'
-import NotFoundException from 'App/Exceptions/NotFoundException'
+import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/constants'
 import { schema, validator } from '@ioc:Adonis/Core/Validator'
 import Database from '@ioc:Adonis/Lucid/Database'
+import Cache from '@ioc:Adonis/Addons/Cache'
 
 export default class VideoController {
-  protected videoRepository: VideoRepository
-
-  constructor() {
-    this.videoRepository = new VideoRepository()
-  }
-
-  public async index({ view }: HttpContextContract) {
-    return view.render('videos/index')
-  }
-
   public async show({ request, params, view, auth, session }: HttpContextContract) {
     const { page = 1, limit = 20 } = request.qs()
 
-    const video = await PBVideoRepository.getVideoByUid(params.uid)
-    const relatedVideos = await this.videoRepository.getRelatedVideos(video)
+    const video = (await Cache.remember<Video>(
+      `video:${params.uid}`,
+      null,
+      async () => await VideoRepository.getVideoByUid(params.uid, true)
+    ))!
+
+    const relatedVideos = await VideoRepository.getRelatedVideos(video)
     const comments = await Comment.getCommentsByVideo(video, page, limit)
 
     const keyword = [
@@ -72,10 +66,7 @@ export default class VideoController {
 
   public async favorite({ request, response, auth }: HttpContextContract) {
     const uid = request.param('uid')
-    const video = await Video.query().where('uid', uid).first()
-    if (!video) {
-      throw new NotFoundException(`Video with uid ${uid} not found`)
-    }
+    const video = await VideoRepository.getVideoByUid(uid)
 
     const user = auth.user!
     let state = 'added'

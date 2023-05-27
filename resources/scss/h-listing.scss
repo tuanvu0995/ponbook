@@ -1,83 +1,83 @@
 .h-listing__container {
+  display: inline-flex;
+  flex-direction: row;
+
+  .card-code {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .card-image {
+    flex-basis: 40%;
+    padding: 0.5rem;
+  }
+
+  .card-content {
     display: inline-flex;
-    flex-direction: row;
-  
+    flex-direction: column;
+    flex-basis: 60%;
+    padding: 0.5rem;
+    padding-left: 0;
+
+    .content {
+      margin: 0;
+      flex-grow: 1;
+    }
+  }
+
+  .content-title {
+    font-size: 0.6rem;
+    font-weight: 500;
+  }
+
+  .card-time {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .card-action {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .is-action {
+      box-shadow: none;
+      border-width: 1px;
+      padding: 8px;
+      height: 1.3rem;
+    }
+  }
+
+  @include from($tablet) {
     .card-code {
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 1rem;
     }
-  
-    .card-image {
-      flex-basis: 40%;
-      padding: 0.5rem;
-    }
-  
-    .card-content {
-      display: inline-flex;
-      flex-direction: column;
-      flex-basis: 60%;
-      padding: 0.5rem;
-      padding-left: 0;
-  
-      .content {
-        margin: 0;
-        flex-grow: 1;
-      }
-    }
-  
     .content-title {
-      font-size: 0.6rem;
-      font-weight: 500;
-    }
-  
-    .card-time {
       font-size: 0.7rem;
-      font-weight: 500;
     }
-  
-    .card-action {
-      display: inline-flex;
-      justify-content: space-between;
-      align-items: center;
-  
-      .is-action {
-        box-shadow: none;
-        border-width: 1px;
-        padding: 8px;
-        height: 1.3rem;
-      }
-    }
-  
-    @include from($tablet) {
-      .card-code {
-        font-size: 1rem;
-      }
-      .content-title {
-        font-size: 0.7rem;
-      }
-  
-      .is-truncate-2 {
-        white-space: nowrap;
-        text-overflow: ellipsis;
+
+    .is-truncate-2 {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      min-height: 1.9rem;
+
+      @supports (-webkit-line-clamp: 3) {
         overflow: hidden;
-        min-height: 1.9rem;
-      
-        @supports (-webkit-line-clamp: 3) {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: initial;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-        }
+        text-overflow: ellipsis;
+        white-space: initial;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
       }
     }
   }
-  
-  .listings__container {
-    @include until($tablet) {
-      .column {
-        padding: 0.4rem;
-      }
+}
+
+.listings__container {
+  @include until($tablet) {
+    .column {
+      padding: 0.4rem;
     }
   }
+}

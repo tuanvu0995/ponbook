@@ -1,29 +1,43 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Tag from 'App/Models/Tag'
+import Cache from '@ioc:Adonis/Addons/Cache'
 import BoxRepository from 'App/Repositories/BoxRepository'
 import CollectionRepository from 'App/Repositories/CollectionRepository'
 import VideoRepository from 'App/Repositories/VideoRepository'
-import { VIEWED_LIST } from 'Config/contants'
+import { CacheTimes, VIEWED_LIST } from 'Config/constants'
 
 export default class HomeController {
-  protected videoRepository: VideoRepository
-  protected collectionRepository: CollectionRepository
-
-  constructor() {
-    this.videoRepository = new VideoRepository()
-    this.collectionRepository = new CollectionRepository()
-  }
-
   public async index({ view, session }: HttpContextContract) {
-    const collections = await this.collectionRepository.getHomeCollections()
-    const newlyUpdatedVideos = await this.videoRepository.getNewlyUpdatedVideos()
-    const recentVideos = await this.videoRepository.getRecentVideos()
-    const tags = await Tag.getRandomTags()
+    const collections = await Cache.remember(
+      'home_collections',
+      CacheTimes.A_DAY,
+      async () => await CollectionRepository.getHomeCollections()
+    )
+    const newlyUpdatedVideos = await Cache.remember(
+      'newly_updated_videos',
+      CacheTimes.A_DAY,
+      async () => await VideoRepository.getNewlyUpdatedVideos()
+    )
+    const recentVideos = await Cache.remember(
+      'recent_videos',
+      CacheTimes.A_DAY,
+      async () => await VideoRepository.getRecentVideos()
+    )
+
+    const tags = await Cache.remember(
+      'home_tags',
+      CacheTimes.A_DAY,
+      async () => await Tag.getRandomTags()
+    )
 
     const viewedIds = JSON.parse(session.get(VIEWED_LIST, '[]'))
     const viewedVideos = await VideoRepository.getVideoByIds(viewedIds)
 
-    const boxes = await BoxRepository.getTop3Boxes()
+    const boxes = await Cache.remember(
+      'top_3_boxes',
+      CacheTimes.A_DAY,
+      async () => await BoxRepository.getTop3Boxes()
+    )
 
     return view.render('index', {
       collections,

@@ -5,15 +5,24 @@ import Video from 'App/Models/Video'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class VideoRepository {
-  public static async getVideoByUid(uid: string): Promise<Video> {
+  public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
     const video = await Video.query()
       .where('uid', uid)
       .where('is_deleted', false)
       .where('is_published', true)
       .first()
-    if (!video) {
-      throw new NotFoundException('Video not found')
+    if (!video) throw new NotFoundException('Video not found')
+
+    if (loadRelation) {
+      await video.load('director')
+      await video.load('maker')
+      await video.load('casts')
+      await video.load('tags')
+      await video.load('videoCover')
+      await video.load('videoImage')
+      await video.load('images')
     }
+
     return video
   }
 
@@ -37,31 +46,7 @@ export default class VideoRepository {
     return videos.sort((a, b) => videoIds.indexOf(a.id) - videoIds.indexOf(b.id))
   }
 
-  public async getVideoByUid(uid: string): Promise<Video> {
-    const cachedVideo = await Redis.get(`video:${uid}`)
-    if (cachedVideo) {
-      return JSON.parse(cachedVideo)
-    }
-
-    const video = await Video.query().where('uid', uid).first()
-    if (!video) {
-      throw new NotFoundException('Video not found')
-    }
-
-    await video.load('director')
-    await video.load('maker')
-    await video.load('casts')
-    await video.load('tags')
-    await video.load('videoCover')
-    await video.load('videoImage')
-    await video.load('images')
-
-    await Redis.set(`video:${uid}`, JSON.stringify(video.toJSON()))
-
-    return video
-  }
-
-  public async getRelatedVideos(video: Video): Promise<Video[]> {
+  public static async getRelatedVideos(video: Video): Promise<Video[]> {
     const cachedRelatedVideos = await Redis.get(`video:${video.uid}:related`)
     if (cachedRelatedVideos) {
       return JSON.parse(cachedRelatedVideos)
@@ -92,7 +77,7 @@ export default class VideoRepository {
     return relatedVideos
   }
 
-  public async getRecentVideos(): Promise<Video[]> {
+  public static async getRecentVideos(): Promise<Video[]> {
     const cachedRecentVideos = await Redis.get('videos:recent')
     if (cachedRecentVideos) {
       return JSON.parse(cachedRecentVideos)
@@ -112,7 +97,7 @@ export default class VideoRepository {
     return recentVideos
   }
 
-  public async getNewlyUpdatedVideos(): Promise<Video[]> {
+  public static async getNewlyUpdatedVideos(): Promise<Video[]> {
     const newlyUpdatedVideos = await Video.query()
       .select('videos.*')
       .where('videos.is_published', true)
