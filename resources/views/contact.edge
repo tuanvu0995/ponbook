@@ -44,7 +44,7 @@
                 <div class="field">
                     <label class="label">Subject</label>
                     <div class="control">
-                    <input class="input" type="text" placeholder="Enter subject" name="subject" value="{{ contact?.subject || "" }}">
+                    <input class="input" type="text" placeholder="Enter subject" name="subject" value="{{ contact?.subject || subject || "" }}">
                     </div>
                     @if(flashMessages.has('errors.subject'))
                     <p class="help is-danger">{{ flashMessages.get('errors.subject') }}</p>

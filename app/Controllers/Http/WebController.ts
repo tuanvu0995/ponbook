@@ -27,9 +27,11 @@ export default class WebController {
     return view.render('layouts/' + layout, { page })
   }
 
-  public async contact({ view }: HttpContextContract) {
+  public async contact({ request, view }: HttpContextContract) {
     const page = await Page.query().where('slug', 'contact').where('is_published', true).first()
     if (!page) return view.render('errors/not-found')
-    return view.render('contact', { page })
+
+    const { subject } = request.qs()
+    return view.render('contact', { page, subject })
   }
 }
