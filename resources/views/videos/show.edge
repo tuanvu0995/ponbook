@@ -133,11 +133,6 @@
                 @end
             </div>
             <div class="column is-2">
-                <div
-                    id="live-player"
-                    class="mb-4"
-                    style="border-radius: 6px">
-                </div>
                 @include("ads/girlsxyz-banner")
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
                 <div class="columns is-multiline is-mobile is-tablet py-5">
@@ -219,14 +214,4 @@ video::fullscreen { display: none;}
     });
 </script>
 <script src="{{ asset('assets/image-viewer.js') }}"></script>
-<script src="{{ asset('assets/player.js') }}"></script>
-<script>
-    const liveContainer = document.getElementById('live-player')
-    const livePlayerOptions = {
-        refId: "81bf055de32f51a4ed8de64280fdd8e4a5170fd0f6150df2c7ce2da1660a0693",
-        lang: "{{ i18n.locale }}",
-        country: "{{ userLocale.country }}",
-    }
-    initLivePlayer(liveContainer, livePlayerOptions)
-</script>
 @end
