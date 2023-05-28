@@ -11,7 +11,7 @@ export default class CollectionRepository {
           .where('is_published', true)
           .where('is_deleted', false)
           .orderBy('video_collections.order', 'asc')
-          .limit(20)
+          .limit(15)
       )
     }
 
