@@ -24,6 +24,7 @@ Server.middleware.register([
   () => import('@ioc:Adonis/Core/BodyParser'),
   () => import('@ioc:Adonis/Addons/Shield'),
   () => import('App/Middleware/SilentAuth'),
+  () => import('App/Middleware/Request'),
   () => import('App/Middleware/Visitor'),
   () => import('App/Middleware/DetectUserLocale'),
   () => import('App/Middleware/DetectUserLocale'),

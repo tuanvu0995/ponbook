@@ -26,3 +26,6 @@ Event.on('visitor:visit', 'Visitor.onVisited')
 Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('box:viewing', 'BoxListener.onBoxViewing')
+
+// Event.on('request:received', 'RequestListener.onReceived')
+// Event.on('request:responded', 'RequestListener.onResponded')
