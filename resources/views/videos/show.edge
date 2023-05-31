@@ -106,6 +106,7 @@
                         </div>
                     </div>
                 </div>
+                @!component('components/adzone', { zoneID: 'top' })
                 <div>
                     <h3 class="title is-5">Description</h3>
                     <p class="mb-5">
@@ -124,6 +125,7 @@
                     </div>
                 </div>
                 @end
+
                 @include('videos/comment')
                 @if(viewedVideos.length > 0)
                 <div class="mt-6 pb-6">
@@ -132,6 +134,7 @@
                 </div>
                 @end
             </div>
+            @!component('components/adzone', { zoneID: 'middle' })
             <div class="column is-2">
                 @include("ads/girlsxyz-banner")
                 <h2 class="is-title is-3"><strong>Related videos</strong></h3>
@@ -142,6 +145,9 @@
                     </div>
                     @end
                 </div>
+            </div>
+            <div class="pb-5">
+            @!component('components/adzone', { zoneID: 're-middle' })
             </div>
         </div>
     </div>
