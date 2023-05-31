@@ -6,6 +6,7 @@
   <div class="container  py-5">
       @!component('partials/videoList', { videos: videos })
   </div>
+  @!component('components/adzone', { zoneID: 'top' })
   <div class="container  py-5">
     @!component('partials/pagination', { paginator: videos })
   </div>

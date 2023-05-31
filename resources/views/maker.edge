@@ -3,14 +3,12 @@
 
 @section('body')
 @!component("ui/hero", { title: maker.name, subtitle: `Products make by ${ maker.name }`, type: "warning" })
-<section>
-    <div class="container  py-5">
-      @!component('partials/videoList', { videos: videos })
-    </div>
-  </section>
-  <section>
-    <div class="container  py-5">
-      @!component('partials/pagination', { paginator: videos })
-    </div>
-  </section>
+
+  <div class="container  py-5">
+    @!component('partials/videoList', { videos: videos })
+  </div>
+  @!component('components/adzone', { zoneID: 'top' })
+  <div class="container  py-5">
+    @!component('partials/pagination', { paginator: videos })
+  </div>
 @end

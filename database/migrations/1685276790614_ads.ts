@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
 
       table.string('uid').notNullable()
-      table.string('area').notNullable()
+      table.string('zone').notNullable()
       table.string('name').notNullable()
       table.string('site').notNullable()
       table.string('link').notNullable()

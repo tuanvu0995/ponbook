@@ -9,7 +9,7 @@ export default class Ad extends BaseModel {
   public uid: string
 
   @column()
-  public area: string
+  public zone: string
 
   @column()
   public name: string
