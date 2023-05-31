@@ -49,6 +49,7 @@ export default class BoxRepository {
       .preload('videos', (query) =>
         query.preload('videoCover').orderBy('box_videos.id', 'desc').limit(6)
       )
+      .has('videos')
       .where('is_deleted', false)
       .where('is_public', true)
       .orderBy('view_count', 'desc')
