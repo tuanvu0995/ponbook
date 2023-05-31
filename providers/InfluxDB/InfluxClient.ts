@@ -21,7 +21,7 @@ export default class InfluxClient {
       writeApi.writePoint(points)
     }
 
-    writeApi.close().then(() => console.log('WRITE FINISHED'))
+    writeApi.close().then(() => console.log('Influx write done'))
   }
 
   private getWriteApi(org: string, bucket: string) {
