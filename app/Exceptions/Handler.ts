@@ -46,6 +46,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     }
 
     if (typeof error.report === 'function') {
+      Sentry.captureException(error, ctx)
       error.report(error, ctx)
       return
     }
