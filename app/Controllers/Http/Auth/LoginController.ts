@@ -5,7 +5,11 @@ import User from 'App/Models/User'
 import { isEmail } from 'App/utils/isEmail'
 
 export default class LoginController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ request, view, session }: HttpContextContract) {
+    const { redirect } = request.qs()
+    if (redirect) {
+      session.put('backUrl', redirect)
+    }
     return view.render('login')
   }
 
@@ -50,6 +54,12 @@ export default class LoginController {
     }
 
     await auth.use('web').login(user, rememberMe === 'on')
+
+    if (session.has('backUrl')) {
+      const backUrl = session.get('backUrl')
+      session.forget('backUrl')
+      return response.redirect().toPath(backUrl)
+    }
 
     return response.redirect().toRoute('home')
   }

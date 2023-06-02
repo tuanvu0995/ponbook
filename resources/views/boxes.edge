@@ -4,6 +4,13 @@
 @section('body')
 @!component("ui/hero", { title, subtitle: description, type: "info" })
 <div class="container py-5">
+  <article class="message is-link">
+    <div class="message-body">
+      Want to share your favorite videos? <a href="/boxes/create">Create a box</a> and add any video you like.
+    </div>
+  </article>
+</div>
+<div class="container py-5">
   @if(boxes.length > 0)
   @each(box in boxes)
     @!component('components/box', { box })

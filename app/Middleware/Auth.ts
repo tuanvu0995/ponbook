@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 import type { GuardsList } from '@ioc:Adonis/Addons/Auth'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
@@ -23,7 +24,11 @@ export default class AuthMiddleware {
    * of the mentioned guards and that guard will be used by the rest of the code
    * during the current request.
    */
-  protected async authenticate(auth: HttpContextContract['auth'], guards: (keyof GuardsList)[]) {
+  protected async authenticate(
+    auth: HttpContextContract['auth'],
+    guards: (keyof GuardsList)[],
+    request: HttpContextContract['request']
+  ) {
     /**
      * Hold reference to the guard last attempted within the for loop. We pass
      * the reference of the guard to the "AuthenticationException", so that
@@ -46,6 +51,8 @@ export default class AuthMiddleware {
       }
     }
 
+    const redirectUrl = this.getRedirectUrl(request)
+
     /**
      * Unable to authenticate using any guard
      */
@@ -53,15 +60,24 @@ export default class AuthMiddleware {
       'Unauthorized access',
       'E_UNAUTHORIZED_ACCESS',
       guardLastAttempted,
-      this.redirectTo
+      redirectUrl
     )
+  }
+
+  private getRedirectUrl(request: HttpContextContract['request']): string {
+    const exceptRoutes = ['/login', '/register', '/forgot-password', '/reset-password', '/logout']
+    if (_.includes(exceptRoutes, request.url())) return this.redirectTo
+
+    const fullUrl = request.url(true)
+
+    return `${this.redirectTo}?redirect=${encodeURIComponent(fullUrl)}`
   }
 
   /**
    * Handle request
    */
   public async handle(
-    { auth }: HttpContextContract,
+    { auth, request }: HttpContextContract,
     next: () => Promise<void>,
     customGuards: (keyof GuardsList)[]
   ) {
@@ -70,7 +86,7 @@ export default class AuthMiddleware {
      * the config file
      */
     const guards = customGuards.length ? customGuards : [auth.name]
-    await this.authenticate(auth, guards)
+    await this.authenticate(auth, guards, request)
     await next()
   }
 }
