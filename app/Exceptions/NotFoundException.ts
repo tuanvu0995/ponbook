@@ -17,13 +17,13 @@ export default class NotFoundException extends Exception {
   private isApi: boolean = false
 
   constructor(message: string, isApi: boolean = false) {
-    super(message, 404, 'E_NOT_FOUND')
+    super(message, 404, 'E_RESOURCE_NOT_FOUND')
     this.isApi = isApi
   }
 
   public async handle(error: this, ctx: HttpContextContract) {
     if (!this.isApi) {
-      return ctx.view.render('errors/not-found')
+      return ctx.view.render('errors/not-found 3333')
     }
     ctx.response.status(error.status).send(error.message)
   }

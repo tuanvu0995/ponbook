@@ -25,7 +25,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     '404': 'errors/not-found',
     '500..599': 'errors/server-error',
   }
-  protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_NOT_FOUND', 'E_VALIDATION_FAILURE']
+  protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_RESOURCE_NOT_FOUND', 'E_VALIDATION_FAILURE']
   protected ignoreStatuses = [404, 422, 403, 401]
 
   constructor() {
@@ -54,8 +54,6 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
-    console.log(error)
-    Logger.debug(error.message, this.context(ctx))
     if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
       return ctx.response.status(error.status).json({
         message: error.message,
