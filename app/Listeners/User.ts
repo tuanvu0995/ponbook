@@ -2,8 +2,13 @@ import _ from 'lodash'
 import type { EventsList } from '@ioc:Adonis/Core/Event'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import Env from '@ioc:Adonis/Core/Env'
+import { DateTime } from 'luxon'
 
 export default class User {
+  public async onUserLoggedIn(user: EventsList['user:logged-in']) {
+    await this.sendLoginAlertToAdmin(user)
+  }
+
   public async onUserCreated(user: EventsList['user:created']) {
     await this.sendWelcomeEmail(user)
     await this.sendNewUserAlertToAdmin(user)
@@ -25,6 +30,29 @@ export default class User {
         oTags: ['signup'],
       }
     )
+  }
+
+  private async sendLoginAlertToAdmin(user: EventsList['user:logged-in']) {
+    const adminEmail = Env.get('ADMIN_EMAIL')
+    if (_.isNil(adminEmail)) return
+
+    const template = _.template(`
+        New user logged in to Ponbook Website.
+        Email: ${user.email}
+        Username: ${user.username}
+        Login At: ${DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')}
+    `)
+
+    await Mail.use('mailgun').send((message) => {
+      message
+        .from(
+          Env.get('EMAIL_SENDER_EMAIL', 'no-reply@ponbook.net'),
+          Env.get('EMAIL_SENDER_NAME', 'Ponbook Website')
+        )
+        .to(adminEmail)
+        .subject('Hi Admin, New user logged in')
+        .text(template(user))
+    })
   }
 
   private async sendNewUserAlertToAdmin(user: EventsList['user:created']) {
