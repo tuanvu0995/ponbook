@@ -3,7 +3,7 @@
         <div class="media">
             <div class="media-content">
                 <p>
-                    <a class="title is-4" href="{{ route("list.box", { uid: box.uid }) }}">{{ box.name }}</a>
+                    <a class="is-size-4 is-link" href="{{ route("list.box", { uid: box.uid }) }}">{{ box.name }}</a>
                     <span class="is-small">Created by {{ box.user.fullName }} {{ `@${box.user.username}` }}</span>
                 </p>
                 @if(box.description)
@@ -11,7 +11,12 @@
                 @endif
             </div>
 
-            <a class="is-small" href="{{ route("list.box", { uid: box.uid }) }}"><small>View more....</small></a>
+            <a class="is-small" href="{{ route("list.box", { uid: box.uid }) }}">
+            <span class="icon">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </span>
+            <small>{{ box.viewCount }} views</small>
+            </a>
         </div>
         <div class="columns is-multiline is-mobile is-tablet is-desktop listings__container">
             @each(video in box.videos)
