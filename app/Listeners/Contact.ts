@@ -51,7 +51,7 @@ export default class Contact {
           Env.get('EMAIL_SENDER_NAME', 'Ponbook Website')
         )
         .to(adminEmail)
-        .subject('Hi Admin, New User Just Registered')
+        .subject('Hi Admin, New Contact Message Just Received')
         .text(template(contact))
     })
   }
