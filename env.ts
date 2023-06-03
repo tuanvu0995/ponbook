@@ -27,6 +27,6 @@ export default Env.rules({
   REDIS_HOST: Env.schema.string({ format: 'host' }),
   REDIS_PORT: Env.schema.number(),
   REDIS_PASSWORD: Env.schema.string.optional(),
-  CF_TURNSTILE_KEY: Env.schema.string(),
-  CF_TURNSTILE_SECRET: Env.schema.string(),
+  TURNSTILE_SITE_KEY: Env.schema.string(),
+  TURNSTILE_SECRET_KEY: Env.schema.string(),
 })
