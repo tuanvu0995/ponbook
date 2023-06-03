@@ -44,7 +44,12 @@ export default class CommentController {
     return response.redirect().back()
   }
 
-  public async createGuestComment({ request, response, session }: HttpContextContract) {
+  public async createGuestComment({ request, response, session, turnstile }: HttpContextContract) {
+    if (!turnstile.success) {
+      session.flash('error', 'Invalid captcha')
+      return response.redirect().back()
+    }
+
     const uid = request.param('uid')
 
     const video = await VideoRepository.getVideoByUid(uid)

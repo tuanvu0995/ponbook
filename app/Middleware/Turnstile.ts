@@ -1,22 +1,20 @@
-import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import BadRequestException from 'App/Exceptions/BadRequestException'
-import TurnstileService from 'App/Services/TurnstileService'
+import { Exception } from '@adonisjs/core/build/standalone'
+import Turnstile from '@ioc:Turnstile'
 
-export default class Turnstile {
-  public async handle(context: HttpContextContract, next: () => Promise<void>, type?: string) {
-    console.log('Turnstile middleware', type)
-    // code for middleware goes here. ABOVE THE NEXT CALL
-    const turnstile = new TurnstileService(context)
-    if (await turnstile.check()) {
-      return await next()
+/**
+ * Please register this middleware inside `start/kernel.ts` file under the list
+ * of named middleware
+ */
+
+export default class TurnstileMiddleware {
+  public async handle(ctx: HttpContextContract, next: () => Promise<void>) {
+    try {
+      ctx.turnstile = await Turnstile.check(ctx)
+    } catch (error) {
+      throw new Exception('invalid-input-response', 400, 'E_TURNSTILE')
     }
 
-    if (_.includes(type, 'web')) {
-      context.session.flash('error', 'Your request has been flagged as suspicious.')
-      return context.response.redirect().back()
-    } else {
-      throw new BadRequestException('Your request has been flagged as suspicious.')
-    }
+    await next()
   }
 }
