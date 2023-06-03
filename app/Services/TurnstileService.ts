@@ -14,17 +14,13 @@ export default class TurnstileService {
     const ip = this.ctx.request.header('cf-connecting-ip')
 
     const { data } = await axios.post('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      secret: Env.get('CF_TURNSTILE_KEY'),
+      secret: Env.get('CF_TURNSTILE_SECRET'),
       response: token,
       remoteip: ip,
     })
 
     this.ctx.logger.info('Turnstile response', data.success)
     this.ctx.session.put('TURNSTILE_STATUS', data.success)
-
-    if (!data.success) {
-      this.ctx.session.flash('error', 'Your request has been flagged as suspicious.')
-    }
 
     return data.success
   }

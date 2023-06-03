@@ -8,7 +8,7 @@ Route.get('/search/:searchId', 'WebController.search').as('web.search')
 
 Route.post('/videos/:uid/guest-comments', 'CommentController.createGuestComment')
   .as('videos.createGuestComment')
-  .middleware('throttle:guestComment')
+  .middleware('turnstile:web')
 
 Route.group(() => {
   Route.get('/popular', 'ListController.popular').as('popular')

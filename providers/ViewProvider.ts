@@ -39,6 +39,12 @@ export default class ViewProvider {
     View.global('dateFromNow', (value: DateTime) => {
       return value.setZone('Asia/Ho_Chi_Minh').toRelative()
     })
+    View.global('turnstileField', () => {
+      const turnstileKey = Env.get('CF_TURNSTILE_KEY')
+      return View.GLOBALS.safe(
+        `<div class="cf-turnstile" data-sitekey="${turnstileKey}" data-callback="javascriptCallback"></div>`
+      )
+    })
     View.global('humanReadableDate', (value: DateTime) => {
       return value.setZone('Asia/Ho_Chi_Minh').toLocaleString(DateTime.DATETIME_SHORT)
     })

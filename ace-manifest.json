@@ -12,18 +12,6 @@
       "aliases": [],
       "flags": []
     },
-    "migration:image": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/MigrationImage",
-      "commandName": "migration:image",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
     "remove:unused_files": {
       "settings": {
         "loadApp": true,
@@ -31,30 +19,6 @@
       },
       "commandPath": "./commands/RemoveUnusedFiles",
       "commandName": "remove:unused_files",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
-    "update:cast_names": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/UpdateCastNames",
-      "commandName": "update:cast_names",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
-    "update:duplicate_casts": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/UpdateDuplicateCasts",
-      "commandName": "update:duplicate_casts",
       "description": "",
       "args": [],
       "aliases": [],

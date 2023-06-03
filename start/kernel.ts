@@ -53,4 +53,5 @@ Server.middleware.registerNamed({
   throttle: () => import('@adonisjs/limiter/build/throttle'),
   botAuth: () => import('App/Middleware/BotAuth'),
   workerAuth: () => import('App/Middleware/WorkerAuth'),
+  turnstile: () => import('App/Middleware/Turnstile'),
 })
