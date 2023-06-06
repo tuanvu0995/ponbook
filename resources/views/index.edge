@@ -15,19 +15,16 @@
         <h2 class="title is-5 px-1">Recently</h1>
           @!component('partials/homeVideoList', { videos: recentVideos })
       </div>
-      @!component('components/adzone', { zoneID: 'top' })
       <div class="py-5">
         <h2 class="title is-5 px-1">New comments</h1>
           @!component('partials/homeVideoList', { videos: newlyUpdatedVideos })
       </div>
-      @!component('components/adzone', { zoneID: 'middle' })
       @each(collection in collections)
       <div class="py-5">
         <h2 class="title is-5 px-1">{{ collection.name }} videos</h1>
           @!component('partials/homeVideoList', { videos: collection.videos })
       </div>
       @end
-      @!component('components/adzone', { zoneID: 're-middle' })
       <div class="py-5">
         <h2 class="title is-5 px-1">Top viewed 3 boxes</h1>
         @each(box in boxes.data)
@@ -57,7 +54,6 @@
       </div>
     </div>
   </div>
-  @!component('components/adzone', { zoneID: 'bottom' })
 </section>
 @end
 
