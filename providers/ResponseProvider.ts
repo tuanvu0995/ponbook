@@ -28,16 +28,6 @@ export default class ResponseProvider {
 
   public async boot() {
     // All bindings are ready, feel free to use them
-    const Response = this.app.container.use('Adonis/Core/Response')
-    const Event = this.app.container.use('Adonis/Core/Event')
-    Response.macro('endResponse', function (body?: any, statusCode?: number) {
-      this.flushHeaders(statusCode)
-
-      // avoid ArgumentsAdaptorTrampoline from V8 (inspired by fastify)
-      const res = this.response as any
-      res.end(body, null, null)
-      Event.emit('request:responded', this.ctx!)
-    })
   }
 
   public async ready() {
