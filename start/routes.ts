@@ -54,4 +54,5 @@ Route.post('/contact', 'SupportsController.sendContact')
   .as('web.sendContact')
   .middleware('throttle:sendContact')
 
+Route.get('/live', 'WebController.live').as('web.live')
 Route.get(':slug', 'WebController.page').as('web.page')

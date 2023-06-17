@@ -45,6 +45,14 @@
 
   @include('partials/navbar')
 
+  @if(!request.matchesRoute('web.live'))
+  <article class="message is-info m-0 is-hidden-tablet">
+    <div class="message-body">
+      Random Girls Live Cam Feature <a href="{{ route('web.live') }}">Here</a>
+    </div>
+  </article>
+  @endif
+
   @!section('body')
 
   @include('partials/modal')
@@ -52,6 +60,7 @@
   <script src="{{ asset('assets/app.js') }}"></script>
   <script src="{{ asset('assets/search-modal.js') }}"></script>
   <script src="{{ asset('assets/add-to-box-modal.js') }}"></script>
+
   @!section('script-links')
   @!section('scripts')
   <script type="text/javascript">
@@ -67,7 +76,7 @@
   </script>
   <script type="text/javascript"
     src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net"></script>
-  @end
+  @endif
 </body>
 
 </html>

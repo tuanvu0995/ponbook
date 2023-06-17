@@ -1,0 +1,73 @@
+@layout('layouts/main')
+
+@section('body')
+@!component('ui/hero', { title: title, type: "danger" })
+<article id="banner-message" class="message is-danger">
+  <div class="message-body">
+    <div class="container">
+      <p>Please turn off your adblocker to use this feature</p>
+    </div>
+  </div>
+</article>
+<div class="container py-4">
+  <div class="columns is-multiline is-mobile is-tablet is-desktop">
+    <div id="player-container" class="column is-full-mobile is-three-fifths-tablet"></div>
+    <div id="chat-container" class="column is-full-mobile is-two-three-fifthst"></div>
+  </div>
+</div>
+
+@end
+
+@section('script-links')
+<script id="SCChatScript" type="text/javascript" src="https://creative.xlirdr.com/widgets/Chat/lib.js"></script>
+<script id="SCPlayerScript" type="text/javascript" src="https://creative.xlirdr.com/widgets/Player/lib.js">
+</script>
+<script id="ChatHeadScript" type="text/javascript" src="https://creative.xlirdr.com/widgets/ChatHead/lib.js"></script>
+@end
+
+@section('scripts')
+<script type="text/javascript">
+  const chat = new StripchatChat({
+    //   modelName: 'bejeni-sweet',
+    });
+
+    chat.mount(document.getElementById('chat-container')).then((app) => {
+      /*
+      app
+        .setParams({ modelName: 'ANOTHER_MODEL_NAME' })
+        .then(() => {
+          // OK
+        })
+        .catch(() => {
+          // Model must be perform private show right now, try later
+        });
+      */
+      // app.destroy();
+    })
+
+</script>
+<script type="text/javascript">
+  const player = new StripchatPlayer({
+    //   modelName: 'bejeni-sweet',
+      userId: '81bf055de32f51a4ed8de64280fdd8e4a5170fd0f6150df2c7ce2da1660a0693',
+      strict: 1,
+      showModal: 'signup',
+      autoplay: 'all',
+    });
+
+    player.mount(document.getElementById('player-container')).then((app) => {
+      /*
+      app
+        .setParams({ modelName: 'ANOTHER_MODEL_NAME' })
+        .then(() => {
+          // OK
+        })
+        .catch(() => {
+          // Model must be perform private show right now, try later
+        });
+      */
+      // app.destroy();
+    })
+
+</script>
+@end

@@ -9,17 +9,20 @@
       </a>
 
       <div class="is-flex is-flex-direction-row is-flex-grow-1 is-hidden-desktop">
-        <a class="navbar-item" href="{{ route("list.popular") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.popular')) ? 'is-active' : '' }}" href="{{ route("list.popular") }}">
           <i class="fa fa-fire" aria-hidden="true"></i>
         </a>
-        <a class="navbar-item" href="{{ route("list.recent") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.recent')) ? 'is-active' : '' }}" href="{{ route("list.recent") }}">
           <i class="fa fa-clock-o" aria-hidden="true"></i>
         </a>
-        <a class="navbar-item is-active" href="{{ route("list.boxes") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.boxes')) ? 'is-active' : '' }}" href="{{ route("list.boxes") }}">
           <i class="fa fa-archive" aria-hidden="true"></i>
         </a>
-        <a class="navbar-item" href="{{ route("list.favorites") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.favorites')) ? 'is-active' : '' }}" href="{{ route("list.favorites") }}">
           <i class="fa fa-heart" aria-hidden="true"></i>
+        </a>
+        <a class="navbar-item {{ (request.matchesRoute('web.live')) ? 'is-active' : '' }}" href="{{ route("web.live") }}">
+          <i class="fa fa-podcast" aria-hidden="true"></i>
         </a>
       </div>
 
@@ -42,19 +45,19 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="{{ route("list.popular") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.popular')) ? 'is-active' : '' }}" href="{{ route("list.popular") }}">
           {{ t('navbar.popular')}}
         </a>
 
-        <a class="navbar-item" href="{{ route("list.recent") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.recent')) ? 'is-active' : '' }}" href="{{ route("list.recent") }}">
           {{ t('navbar.recently')}}
         </a>
 
-        <a class="navbar-item is-active" href="{{ route("list.boxes") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.boxes')) ? 'is-active' : '' }}" href="{{ route("list.boxes") }}">
           {{ t('navbar.box')}}
         </a>
 
-        <a class="navbar-item" href="{{ route("list.favorites") }}">
+        <a class="navbar-item {{ (request.matchesRoute('list.favorites')) ? 'is-active' : '' }}" href="{{ route("list.favorites") }}">
           {{ t('navbar.favorites')}}
         </a>
 

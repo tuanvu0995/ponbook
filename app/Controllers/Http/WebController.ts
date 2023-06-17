@@ -4,6 +4,10 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import Page from 'App/Models/Page'
 
 export default class WebController {
+  public async live({ view }: HttpContextContract) {
+    return view.render('live', { title: 'Random Live' })
+  }
+
   public async image({ request, response }: HttpContextContract) {
     const location = `/images/${request.param('path')}`
 
