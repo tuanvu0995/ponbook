@@ -15,6 +15,13 @@ Route.group(() => {
   .prefix('api')
 
 Route.group(() => {
+  Route.get('/tags/random', 'TagController.getRandomTags').as('tags.random')
+})
+  .namespace('App/Controllers/Http/Api')
+  .as('api.public')
+  .prefix('api')
+
+Route.group(() => {
   Route.post('/videos/:uid/favorite', 'VideoController.favorite').as('videos.favorite')
   Route.post('/videos/favorite-status', 'VideoController.getFavoriteStatusByVideos').as(
     'videos.getFavoriteStatusByVideos'

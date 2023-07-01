@@ -1,10 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Tag from 'App/Models/Tag'
 import Cache from '@ioc:Adonis/Addons/Cache'
 import BoxRepository from 'App/Repositories/BoxRepository'
 import CollectionRepository from 'App/Repositories/CollectionRepository'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import { CacheTimes, VIEWED_LIST } from 'Config/constants'
+import TagRepository from 'App/Repositories/TagRepository'
 
 export default class HomeController {
   public async index({ view, session }: HttpContextContract) {
@@ -27,7 +27,7 @@ export default class HomeController {
     const tags = await Cache.remember(
       'home_tags',
       CacheTimes.A_DAY,
-      async () => await Tag.getRandomTags()
+      async () => await TagRepository.getRandomTags()
     )
 
     const viewedIds = JSON.parse(session.get(VIEWED_LIST, '[]'))
