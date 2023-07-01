@@ -4,7 +4,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Video from 'App/Models/Video'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import Comment from 'App/Models/Comment'
-import { MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/constants'
+import { CacheTimes, MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/constants'
 import { schema, validator } from '@ioc:Adonis/Core/Validator'
 import Database from '@ioc:Adonis/Lucid/Database'
 import Cache from '@ioc:Adonis/Addons/Cache'
@@ -15,7 +15,7 @@ export default class VideoController {
 
     const video = (await Cache.remember<Video>(
       `video:${params.uid}`,
-      null,
+      CacheTimes.THREE_HOURS,
       async () => await VideoRepository.getVideoByUid(params.uid, true)
     ))!
 

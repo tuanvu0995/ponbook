@@ -8,6 +8,8 @@ export enum CacheTimes {
   TEN_MINUTES = 600,
   THIRTY_MINUTES = 1800,
   ONE_HOUR = 3600,
+  THREE_HOURS = 10800,
+  SIX_HOURS = 21600,
   A_DAY = 86400,
   A_WEEK = 604800,
 }
