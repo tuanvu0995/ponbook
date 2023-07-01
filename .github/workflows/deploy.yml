@@ -46,5 +46,5 @@ jobs:
           EXCLUDE: '/dist/, /node_modules/'
           SCRIPT_AFTER: |
             whoami
-            npm install --production
+            npm ci --omit=dev
             pm2 reload ponbook --update-env
