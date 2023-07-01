@@ -43,7 +43,6 @@
     "./providers/RequestProvider",
     "./providers/ResponseProvider",
     "./providers/ViewProvider",
-    "./providers/InfluxDB/InfluxdbProvider",
     "adonis-turnstile"
   ],
   "metaFiles": [

@@ -5,7 +5,6 @@ import TagRepository from 'App/Repositories/TagRepository'
 
 export default class TagController {
   public async getRandomTags({ response }: HttpContextContract) {
-    console.log('TagController.getRandomTags')
     const tags = await Cache.remember(
       'home_tags',
       CacheTimes.A_DAY,

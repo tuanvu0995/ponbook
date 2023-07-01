@@ -60,7 +60,7 @@ export default class VideoRepository {
       .whereIn('tag_id', tagIds)
       .orderByRaw('RAND()')
       .select('video_id')
-      .limit(5)
+      .limit(10)
 
     const relatedVideos = await Video.query().whereIn(
       'id',
