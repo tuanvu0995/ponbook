@@ -122,4 +122,50 @@ export default class VideoRepository {
       .where('is_published', true)
     return videos
   }
+
+  public static async getVideos(filters: any, sort: any, pagination: any) {
+    const query = Video.query()
+      .where('is_deleted', false)
+      .where('is_published', true)
+      .preload('videoCover')
+      .preload('casts')
+
+    if (_.isString(filters.code)) {
+      query.where('code', filters.code)
+    }
+
+    if (_.isString(filters.title)) {
+      query.whereRaw('title like %?%', [filters.title])
+    }
+
+    if (_.isArray(filters.director) && !_.isEmpty(filters.director)) {
+      query.whereIn('director_id', filters.director)
+    }
+
+    if (_.isArray(filters.maker) && !_.isEmpty(filters.maker)) {
+      query.whereIn('maker_id', filters.maker)
+    }
+
+    if (_.isArray(filters.cast) && !_.isEmpty(filters.cast)) {
+      query.whereHas('casts', (builder) => {
+        builder.where('is_deleted', false).whereIn('casts.id', filters.cast)
+      })
+    }
+
+    if (_.isArray(filters.tags) && !_.isEmpty(filters.tags)) {
+      query.whereHas('tags', (builder) => {
+        builder.where('is_deleted', false).whereIn('slug', filters.tags)
+      })
+    }
+
+    if (!_.isNil(sort) && sort.length === 2) {
+      query.orderBy(sort[0], sort[1])
+    } else {
+      query.orderBy('release_date', 'desc')
+    }
+
+    const videos = await query.paginate(pagination.page, pagination.perPage)
+
+    return videos
+  }
 }

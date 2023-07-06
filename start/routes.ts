@@ -24,6 +24,7 @@ import './routes/public'
 import './routes/admin'
 import './routes/user'
 import './routes/api'
+import './api/routes'
 
 Route.group(() => {
   Route.get('/login', 'Auth/LoginController.index').as('login')

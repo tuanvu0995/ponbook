@@ -102,7 +102,8 @@ export const csrf: ShieldConfig['csrf'] = {
         '/crawler/popular',
         '/crawler/torrent',
         '/api/worker',
-      ].findIndex((route) => request.url().includes(route)) !== -1
+      ].findIndex((route) => request.url().includes(route)) !== -1,
+      request.url().startsWith('/api/v1')
     )
   },
 

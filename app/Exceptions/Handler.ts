@@ -35,8 +35,11 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   protected context(ctx: HttpContextContract) {
     return {
       userId: ctx.auth.user?.id,
+      userEmail: ctx.auth.user?.email,
+      requestId: ctx.request.id(),
       url: ctx.request.url(),
-      body: ctx.request.body(),
+      method: ctx.request.method(),
+      headers: ctx.request.headers(),
     }
   }
 
@@ -55,8 +58,21 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
+    /**
+     * Self handle the validation exception
+     */
+    if (error.code === 'E_VALIDATION_FAILURE') {
+      return ctx.response.status(422).json(error.messages)
+    }
+
+    if (ctx.request.headers['content-type'] === 'application/json') {
+      return ctx.response.status(error.status || 500).json({
+        message: error.message,
+      })
+    }
+
     if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
-      return ctx.response.status(error.status).json({
+      return ctx.response.status(error.status || 500).json({
         message: error.message,
       })
     }
