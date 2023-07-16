@@ -1,121 +1,71 @@
 import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
+import Cache from '@ioc:Adonis/Addons/Cache'
+import { CacheTimes } from 'Config/constants'
 import Video from 'App/Models/Video'
 import VideoRepository from 'App/Repositories/VideoRepository'
-import Comment from 'App/Models/Comment'
-import { CacheTimes, MAX_VIEWED_LIST, VIEWED_LIST } from 'Config/constants'
-import { schema, validator } from '@ioc:Adonis/Core/Validator'
-import Database from '@ioc:Adonis/Lucid/Database'
-import Cache from '@ioc:Adonis/Addons/Cache'
+import NotFoundException from 'App/Exceptions/NotFoundException'
+import VideoRepo from 'App/Repos/VideoRepo'
 
 export default class VideoController {
-  public async show({ request, params, view, auth, session }: HttpContextContract) {
-    const { page = 1, limit = 20 } = request.qs()
+  public async show({ params, response }: HttpContextContract) {
+    const { uid } = params
+    const video = (await Cache.remember<Video>(
+      `video:${uid}`,
+      CacheTimes.THREE_HOURS,
+      async () => await VideoRepository.getVideoByUid(uid, true)
+    ))!
 
+    if (_.isNil(video)) throw new NotFoundException('Video not found')
+
+    return response.json(video)
+  }
+
+  public async index({ request, response }: HttpContextContract) {
+    const { sort, ...filter } = request.qs()
+    const videos = await VideoRepository.getVideos(filter, sort, request.pagination!)
+    return response.json(
+      videos.serialize({
+        fields: {
+          pick: [
+            'uid',
+            'title',
+            'release_date',
+            'duration',
+            'rate',
+            'rate_count',
+            'view_count',
+            'comment_count',
+          ],
+        },
+        relations: {
+          casts: {
+            fields: {
+              pick: ['id', 'name', 'slug'],
+            },
+          },
+          videoCover: {
+            fields: {
+              pick: ['path', 'thumbnail_path', 'height', 'width'],
+            },
+          },
+        },
+      })
+    )
+  }
+
+  public async getRelatedVideos({ params, response }: HttpContextContract) {
     const video = (await Cache.remember<Video>(
       `video:${params.uid}`,
       CacheTimes.THREE_HOURS,
-      async () => await VideoRepository.getVideoByUid(params.uid, true)
+      async () => await VideoRepo.getVideoByUid(params.uid, true)
     ))!
-
     const relatedVideos = await VideoRepository.getRelatedVideos(video)
-    const comments = await Comment.getCommentsByVideo(video, page, limit)
-
-    const keyword = [
-      video.code,
-      ...video.casts.map((cast) => cast.name),
-      ...video.tags.map((tag) => tag.name),
-    ].join(', ')
-
-    let isFavorite = false
-    if (auth.user) {
-      const favorite = await auth.user.related('favoriteVideos').query().where('video_id', video.id)
-      isFavorite = favorite.length > 0
-    }
-
-    const castNames = video.casts.map((cast) => cast.name).join(', ')
-
-    let title = `${video.code}`
-    if (castNames) title += ` - ${castNames}`
-    const description = video.description
-    const metaImage = video.image
-
-    const viewedIds = JSON.parse(session.get(VIEWED_LIST, '[]'))
-    if (!_.includes(viewedIds, video.id)) {
-      if (viewedIds.length > MAX_VIEWED_LIST) {
-        viewedIds.shift()
-      }
-      viewedIds.unshift(video.id)
-      session.put(VIEWED_LIST, JSON.stringify(viewedIds))
-    }
-    const viewedVideos = await VideoRepository.getVideoByIds(viewedIds)
-
-    return view.render('videos/show', {
-      title,
-      description,
-      metaImage,
-      video,
-      comments,
-      relatedVideos,
-      keyword,
-      isFavorite,
-      viewedVideos,
-    })
+    return response.json(relatedVideos)
   }
 
-  public async favorite({ request, response, auth }: HttpContextContract) {
-    const uid = request.param('uid')
-    const video = await VideoRepository.getVideoByUid(uid)
-
-    const user = auth.user!
-    let state = 'added'
-
-    if (await user.related('favoriteVideos').query().where('video_id', video.id).first()) {
-      await user.related('favoriteVideos').detach([video.id])
-      state = 'removed'
-    } else {
-      await user.related('favoriteVideos').attach([video.id])
-    }
-
-    return response.json({
-      success: true,
-      state,
-      message: 'Video ' + state + ' to favorites',
-    })
-  }
-
-  public async getFavoriteStatusByVideos({ request, auth, response }) {
-    const videoUids = request.input('videoUids')
-    await validator.validate({
-      schema: schema.create({
-        videoUids: schema.array().members(schema.string()),
-      }),
-      data: {
-        videoUids,
-      },
-    })
-
-    const user = auth.user!
-    const videoIds = await Video.query().whereIn('uid', videoUids).select('id', 'uid')
-    const favoriteIds = await Database.from('favorite_videos')
-      .where('user_id', user.id)
-      .whereIn(
-        'video_id',
-        videoIds.map((item) => item.id)
-      )
-      .select('video_id')
-
-    const favoriteVideoIds = favoriteIds.map((item) => item.video_id)
-
-    const results = _.map(videoUids, (uid) => {
-      const video = _.find(videoIds, (item) => item.uid === uid)
-      return {
-        uid,
-        isFavorite: favoriteVideoIds.includes(video?.id),
-      }
-    })
-
-    return response.json(results)
+  public async getNewCommentAddedVideos({ response }: HttpContextContract) {
+    const newUpdatedVideos = await VideoRepository.getNewlyUpdatedVideos()
+    return response.json(newUpdatedVideos)
   }
 }

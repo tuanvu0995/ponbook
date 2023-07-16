@@ -12,7 +12,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import { nanoid } from 'nanoid'
 import Video from './Video'
-import slugify from 'App/utils/slugify'
+import slugify from 'App/Utils/slugify'
 import File from './File'
 
 export default class Cast extends BaseModel {

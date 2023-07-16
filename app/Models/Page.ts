@@ -8,7 +8,7 @@ import {
   column,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import slugify from 'App/utils/slugify'
+import slugify from 'App/Utils/slugify'
 import { nanoid } from 'nanoid'
 
 export default class Page extends BaseModel {

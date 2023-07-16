@@ -6,7 +6,7 @@ import uniqid from 'uniqid'
 import File from 'App/Models/File'
 import Env from '@ioc:Adonis/Core/Env'
 import Drive from '@ioc:Adonis/Core/Drive'
-import retry from 'App/utils/retry'
+import retry from 'App/Utils/retry'
 import DownloadFile from './DownloadFile'
 
 export default class FileService {

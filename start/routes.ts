@@ -19,41 +19,50 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import Logger from '@ioc:Adonis/Core/Logger'
-import './routes/public'
-import './routes/admin'
-import './routes/user'
-import './routes/api'
-import './api/routes'
 
+/*
+|--------------------------------------------------------------------------
+| Auth  Routes
+|--------------------------------------------------------------------------
+*/
 Route.group(() => {
-  Route.get('/login', 'Auth/LoginController.index').as('login')
-  Route.post('/login', 'Auth/LoginController.login').as('post:login')
-  Route.get('/register', 'Auth/RegisterController.index').as('register')
-  Route.post('/register', 'Auth/RegisterController.register').as('post:register')
-  Route.post('/logout', 'Auth/LoginController.logout').as('logout')
-}).as('auth')
-
-Route.group(() => {
-  Route.post('crawler', 'UploadsController.videoFromBot').as('crawler')
-  Route.post('crawler/image', 'UploadsController.imageFromBot').as('crawler:image')
-  Route.post('crawler/code-exists', 'UploadsController.codeExists').as('crawler:codeExists')
-  Route.post('crawler/popular', 'UploadsController.updatePopularList').as(
-    'crawler:updatePopularList'
-  )
-  Route.get('crawler/next-code', 'UploadsController.nextCode').as('crawler:nextCode')
-}).middleware('botAuth')
-
-Route.get('ping', async ({ response, request }) => {
-  Logger.info('Ping')
-  console.log(request.headers())
-  return response.ok({ message: 'pong' })
+  Route.group(() => {
+    Route.post('/sign-in', 'AuthController.signIn').as('signIn')
+    Route.post('/sign-up', 'AuthController.signUp').as('signUp')
+    Route.post('/logout', 'AuthController.logout').as('logout').middleware('auth:api')
+  })
+    .as('auth')
+    .prefix('auth')
 })
+  .prefix('v1/auth')
+  .as('v1.auth')
 
-Route.get('/contact', 'WebController.contact').as('web.contact')
-Route.post('/contact', 'SupportsController.sendContact')
-  .as('web.sendContact')
-  .middleware('throttle:sendContact')
+/*
+|--------------------------------------------------------------------------
+| Video Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'VideoController.index').as('videos.index').middleware('paginate')
 
-Route.get('/live', 'WebController.live').as('web.live')
-Route.get(':slug', 'WebController.page').as('web.page')
+  Route.get('/:uid', 'VideoController.show').as('videos.show')
+
+  Route.get('/:uid/related', 'VideoController.getRelatedVideos').as('videos.related')
+
+  Route.get('/:uid/comments', 'CommentController.getCommentsByVideoUid')
+    .as('videos.comments')
+    .middleware('paginate')
+})
+  .as('v1.videos')
+  .prefix('v1/videos')
+
+/*
+|--------------------------------------------------------------------------
+| Lists Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('recents', 'ListsController.recentVideos').as('recents').middleware('paginate')
+})
+  .as('v1.lists')
+  .prefix('v1/lists')

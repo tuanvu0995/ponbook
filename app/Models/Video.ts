@@ -25,7 +25,7 @@ import Tag from './Tag'
 import Comment from './Comment'
 import File from './File'
 import FileService from 'App/Services/FileService'
-import slugify from 'App/utils/slugify'
+import slugify from 'App/Utils/slugify'
 
 export default class Video extends BaseModel {
   @column({ isPrimary: true })

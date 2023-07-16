@@ -40,9 +40,6 @@
     "adonis5-sentry",
     "@melchyore/adonis-cache",
     "@adonisjs/route-model-binding/build/providers/RmbProvider",
-    "./providers/RequestProvider",
-    "./providers/ResponseProvider",
-    "./providers/ViewProvider",
     "adonis-turnstile"
   ],
   "metaFiles": [
@@ -57,21 +54,15 @@
     "resources/lang/**/*.(json|yaml)",
     "doppler.js"
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ],
+  "aceProviders": ["@adonisjs/repl"],
   "tests": {
     "suites": [
       {
         "name": "functional",
-        "files": [
-          "tests/functional/**/*.spec(.ts|.js)"
-        ],
+        "files": ["tests/functional/**/*.spec(.ts|.js)"],
         "timeout": 60000
       }
     ]
   },
-  "testProviders": [
-    "@japa/preset-adonis/TestsProvider"
-  ]
+  "testProviders": ["@japa/preset-adonis/TestsProvider"]
 }

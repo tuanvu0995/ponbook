@@ -45,15 +45,7 @@ Encore.setPublicPath('/assets')
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/js/app.js')
-Encore.addEntry('common', './resources/js/common.js')
-Encore.addEntry('post-comment', './resources/js/post-comment.js')
-Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
-Encore.addEntry('search-modal', './resources/js/search-modal.js')
-Encore.addEntry('add-to-box-modal', './resources/js/add-to-box-modal.js')
-Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
-Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
-Encore.addEntry('prebid-ads', './resources/js/prebid-ads.js')
+// Encore.addEntry('app', './resources/js/app.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -65,30 +57,10 @@ Encore.addEntry('prebid-ads', './resources/js/prebid-ads.js')
 | we must copy them manually.
 |
 */
-Encore.copyFiles({
-  from: './resources/images',
-  to: 'images/[path][name].[hash:8].[ext]',
-})
-
-Encore.copyFiles({
-  from: 'node_modules/quill/assets/icons',
-  to: 'images/[path][name].[hash:8].[ext]',
-})
-
-Encore.copyFiles({
-  from: 'node_modules/jquery/dist',
-  to: 'js/[path][name].[hash:8].[ext]',
-})
-
-Encore.copyFiles({
-  from: 'node_modules/quill/dist',
-  to: 'js/[path][name].[hash:8].[ext]',
-})
-
-Encore.copyFiles({
-  from: './resources/js/lib',
-  to: 'js/lib/[path][name].[hash:8].[ext]',
-})
+// Encore.copyFiles({
+//   from: './resources/images',
+//   to: 'images/[path][name].[hash:8].[ext]',
+// })
 
 /*
 |--------------------------------------------------------------------------
@@ -184,7 +156,7 @@ Encore.configureDevServerOptions((options) => {
 | favorite CSS precompiler
 |
 */
-Encore.enableSassLoader()
+// Encore.enableSassLoader()
 // Encore.enableLessLoader()
 // Encore.enableStylusLoader()
 
@@ -197,13 +169,13 @@ Encore.enableSassLoader()
 | PostCSS or CSS.
 |
 */
-Encore.enablePostCssLoader()
+// Encore.enablePostCssLoader()
 // Encore.configureCssLoader(() => {})
 
 /**
  * React loader
  */
-Encore.enableReactPreset()
+// Encore.enableReactPreset()
 
 /*
 |--------------------------------------------------------------------------

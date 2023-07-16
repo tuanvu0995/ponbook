@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
 import Drive from '@ioc:Adonis/Core/Drive'
 import { BaseModel, beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
-import retry from 'App/utils/retry'
+import retry from 'App/Utils/retry'
 
 export default class File extends BaseModel {
   @column({ isPrimary: true })

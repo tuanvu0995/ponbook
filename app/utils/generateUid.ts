@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid'
+import uniqid from 'uniqid'
 
-export default function generateUid() {
-  return nanoid()
+export default function generateUid(prefix?: string) {
+  return uniqid(prefix)
 }
