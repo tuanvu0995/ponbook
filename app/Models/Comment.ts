@@ -11,8 +11,8 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import { nanoid } from 'nanoid'
 import Video from './Video'
+import generateUid from 'App/Utils/generateUid'
 
 export default class Comment extends BaseModel {
   @column({ isPrimary: true })
@@ -86,7 +86,7 @@ export default class Comment extends BaseModel {
 
   @beforeCreate()
   public static async generateUid(comment: Comment) {
-    comment.uid = nanoid()
+    comment.uid = generateUid()
   }
 
   @hasMany(() => Comment, {

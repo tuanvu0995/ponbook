@@ -6,6 +6,7 @@ import Video from 'App/Models/Video'
 import VideoRepository from 'App/Repositories/VideoRepository'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import VideoRepo from 'App/Repos/VideoRepo'
+import { HttpRequestPagination } from '@ioc:Contracts'
 
 export default class VideoController {
   public async show({ params, response }: HttpContextContract) {
@@ -21,9 +22,13 @@ export default class VideoController {
     return response.json(video)
   }
 
-  public async index({ request, response }: HttpContextContract) {
+  public async index({
+    request,
+    response,
+    pagination,
+  }: HttpContextContract & HttpRequestPagination) {
     const { sort, ...filter } = request.qs()
-    const videos = await VideoRepository.getVideos(filter, sort, request.pagination!)
+    const videos = await VideoRepository.getVideos(filter, sort, pagination)
     return response.json(
       videos.serialize({
         fields: {
@@ -62,10 +67,5 @@ export default class VideoController {
     ))!
     const relatedVideos = await VideoRepository.getRelatedVideos(video)
     return response.json(relatedVideos)
-  }
-
-  public async getNewCommentAddedVideos({ response }: HttpContextContract) {
-    const newUpdatedVideos = await VideoRepository.getNewlyUpdatedVideos()
-    return response.json(newUpdatedVideos)
   }
 }

@@ -35,7 +35,6 @@ declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
     'user:created': User
     'user:logged-in': User
-    'visitor:visit': any
     'video:created': Video
     'video:updated': Video
     'comment:created': Comment

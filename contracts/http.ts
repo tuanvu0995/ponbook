@@ -1,8 +1,9 @@
-declare module '@ioc:Adonis/Core/Request' {
-  interface RequestContract {
-    pagination?: {
-      page: number
-      limit: number
-    }
+declare module '@ioc:Contracts' {
+  export interface PaginationQuery {
+    page: number
+    limit: number
+  }
+  export interface HttpRequestPagination {
+    pagination: PaginationQuery
   }
 }

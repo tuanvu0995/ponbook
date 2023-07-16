@@ -24,10 +24,6 @@ Server.middleware.register([
   () => import('@ioc:Adonis/Core/BodyParser'),
   () => import('@ioc:Adonis/Addons/Shield'),
   () => import('App/Middleware/SilentAuth'),
-  () => import('App/Middleware/Request'),
-  () => import('App/Middleware/Visitor'),
-  () => import('App/Middleware/DetectUserLocale'),
-  () => import('App/Middleware/DetectUserLocale'),
 ])
 
 /*
@@ -51,7 +47,6 @@ Server.middleware.registerNamed({
   guestOnly: () => import('App/Middleware/GuestOnly'),
   role: () => import('App/Middleware/Role'),
   throttle: () => import('@adonisjs/limiter/build/throttle'),
-  workerAuth: () => import('App/Middleware/WorkerAuth'),
   turnstile: () => import('App/Middleware/Turnstile'),
   paginate: () => import('App/Middleware/PaginationQuery'),
 })

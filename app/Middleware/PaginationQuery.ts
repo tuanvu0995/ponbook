@@ -1,16 +1,19 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Env from '@ioc:Adonis/Core/Env'
+import { HttpRequestPagination } from '@ioc:Contracts'
 
 export default class PaginationQuery {
-  public async handle({ request }: HttpContextContract, next: () => Promise<void>) {
+  public async handle(ctx: HttpContextContract & HttpRequestPagination, next: () => Promise<void>) {
     // code for middleware goes here. ABOVE THE NEXT CALL
 
-    const { page, limit } = request.qs()
+    const { page, limit } = ctx.request.qs()
 
-    request.pagination = {
+    ctx.pagination = {
       page: page ? parseInt(page) : 1,
       limit: limit ? parseInt(limit) : Env.get('PAGINATION_ITEM_PER_PAGE', 10),
     }
+
+    ctx.request.updateQs({ page: undefined, limit: undefined })
 
     await next()
   }

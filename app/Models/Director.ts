@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import { nanoid } from 'nanoid'
 import Video from './Video'
+import generateUid from 'App/Utils/generateUid'
 
 export default class Director extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +30,6 @@ export default class Director extends BaseModel {
 
   @beforeCreate()
   public static async generateUID(director: Director) {
-    director.uid = nanoid()
+    director.uid = generateUid()
   }
 }

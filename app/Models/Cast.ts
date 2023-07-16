@@ -10,10 +10,10 @@ import {
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
-import { nanoid } from 'nanoid'
 import Video from './Video'
 import slugify from 'App/Utils/slugify'
 import File from './File'
+import generateUid from 'App/Utils/generateUid'
 
 export default class Cast extends BaseModel {
   @column({ isPrimary: true })
@@ -91,7 +91,7 @@ export default class Cast extends BaseModel {
 
   @beforeCreate()
   public static async generateUID(cast: Cast) {
-    cast.uid = nanoid()
+    cast.uid = generateUid()
   }
 
   @beforeSave()

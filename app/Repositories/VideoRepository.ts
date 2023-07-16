@@ -3,6 +3,7 @@ import NotFoundException from 'App/Exceptions/NotFoundException'
 import Redis from '@ioc:Adonis/Addons/Redis'
 import Video from 'App/Models/Video'
 import Database from '@ioc:Adonis/Lucid/Database'
+import { PaginationQuery } from '@ioc:Contracts'
 
 export default class VideoRepository {
   public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
@@ -123,7 +124,7 @@ export default class VideoRepository {
     return videos
   }
 
-  public static async getVideos(filters: any, sort: any, pagination: any) {
+  public static async getVideos(filters: any, sort: any, pagination: PaginationQuery) {
     const query = Video.query()
       .where('is_deleted', false)
       .where('is_published', true)

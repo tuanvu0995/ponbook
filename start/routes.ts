@@ -26,13 +26,9 @@ import Route from '@ioc:Adonis/Core/Route'
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.group(() => {
-    Route.post('/sign-in', 'AuthController.signIn').as('signIn')
-    Route.post('/sign-up', 'AuthController.signUp').as('signUp')
-    Route.post('/logout', 'AuthController.logout').as('logout').middleware('auth:api')
-  })
-    .as('auth')
-    .prefix('auth')
+  Route.post('/sign-in', 'AuthController.signIn').as('signIn')
+  Route.post('/sign-up', 'AuthController.signUp').as('signUp')
+  Route.post('/logout', 'AuthController.logout').as('logout').middleware('auth:api')
 })
   .prefix('v1/auth')
   .as('v1.auth')
@@ -62,7 +58,10 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.get('recents', 'ListsController.recentVideos').as('recents').middleware('paginate')
+  Route.get('recent', 'ListsController.recentVideos').as('recents').middleware('paginate')
+  Route.get('new-comments', 'ListsController.newCommentAddedVideos')
+    .as('new-comment-added')
+    .middleware('paginate')
 })
   .as('v1.lists')
   .prefix('v1/lists')

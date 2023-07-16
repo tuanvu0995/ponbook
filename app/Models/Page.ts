@@ -9,7 +9,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import slugify from 'App/Utils/slugify'
-import { nanoid } from 'nanoid'
+import generateUid from 'App/Utils/generateUid'
 
 export default class Page extends BaseModel {
   @column({ isPrimary: true })
@@ -46,7 +46,7 @@ export default class Page extends BaseModel {
 
   @beforeCreate()
   public static async generateUid(page: Page) {
-    page.uid = nanoid()
+    page.uid = generateUid()
   }
 
   @beforeSave()
