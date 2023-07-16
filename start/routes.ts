@@ -59,7 +59,7 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.get('recent', 'ListsController.recentVideos').as('recents').middleware('paginate')
-  Route.get('new-comments', 'ListsController.newCommentAddedVideos')
+  Route.get('new-comment', 'ListsController.newCommentAddedVideos')
     .as('new-comment-added')
     .middleware('paginate')
 })
