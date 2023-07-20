@@ -2,15 +2,15 @@
   "name": "ponbook",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "16.x.x"
+  },
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write .",
-    "dockerAttach": "docker exec -it ponbook /bin/sh",
-    "dockerAttachRedis": "docker exec -it redis /bin/sh",
-    "dockerAttachPostgres": "docker exec -it postgres /bin/sh"
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -41,9 +41,6 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.5",
-    "@babel/core": "^7.17.0",
-    "@babel/preset-env": "^7.16.0",
-    "@babel/preset-react": "^7.18.6",
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.2.2",
     "@types/lodash": "^4.14.192",
@@ -54,13 +51,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-adonis": "^2.1.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "file-loader": "^6.0.0",
-    "openapi-types": ">=7",
     "pino-pretty": "^9.1.1",
     "prettier": "^2.8.1",
-    "typescript": "~4.6",
-    "webpack": "^5.72",
-    "webpack-cli": "^4.9.1"
+    "typescript": "~4.6"
   },
   "dependencies": {
     "@adonisjs/auth": "^8.2.3",

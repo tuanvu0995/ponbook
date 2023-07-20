@@ -20,6 +20,8 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.get('/', async () => ({ hello: 'world' })).as('home')
+
 /*
 |--------------------------------------------------------------------------
 | Auth  Routes

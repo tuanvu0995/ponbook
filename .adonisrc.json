@@ -52,6 +52,7 @@
       "reloadServer": false
     },
     "resources/lang/**/*.(json|yaml)",
+    "app.yaml",
     "doppler.js"
   ],
   "aceProviders": ["@adonisjs/repl"],

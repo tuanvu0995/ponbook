@@ -165,7 +165,7 @@ export default class VideoRepository {
       query.orderBy('release_date', 'desc')
     }
 
-    const videos = await query.paginate(pagination.page, pagination.perPage)
+    const videos = await query.paginate(pagination.page, pagination.limit)
 
     return videos
   }
