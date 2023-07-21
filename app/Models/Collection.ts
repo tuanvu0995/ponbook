@@ -1,5 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeFind,
+  column,
+  ManyToMany,
+  manyToMany,
+  ModelQueryBuilderContract,
+} from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
 
 export default class Collection extends BaseModel {
@@ -28,4 +35,9 @@ export default class Collection extends BaseModel {
     pivotTable: 'video_collections',
   })
   public videos: ManyToMany<typeof Video>
+
+  @beforeFind()
+  public static whereExceptDeleted(query: ModelQueryBuilderContract<typeof Collection>) {
+    query.where('is_deleted', false)
+  }
 }
