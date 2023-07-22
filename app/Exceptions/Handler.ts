@@ -20,11 +20,6 @@ import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
-  protected statusPages = {
-    '403': 'errors/unauthorized',
-    '404': 'errors/not-found',
-    '500..599': 'errors/server-error',
-  }
   protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_RESOURCE_NOT_FOUND', 'E_VALIDATION_FAILURE']
   protected ignoreStatuses = [404, 422, 403, 401]
 
@@ -65,18 +60,14 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       return ctx.response.status(422).json(error.messages)
     }
 
-    if (ctx.request.headers['content-type'] === 'application/json') {
-      return ctx.response.status(error.status || 500).json({
-        message: error.message,
-      })
-    }
+    const statusCode = error.status || 500
+    const message = error.message || 'Something went wrong. Please try again later.'
 
-    if (ctx.request.accepts(['html', 'application/json']) === 'application/json') {
-      return ctx.response.status(error.status || 500).json({
-        message: error.message,
-      })
-    }
-
-    return super.handle(error, ctx)
+    return ctx.response.status(statusCode).json({
+      error: {
+        code: error.code,
+        message,
+      },
+    })
   }
 }
