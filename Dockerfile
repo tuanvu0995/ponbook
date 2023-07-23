@@ -1,5 +1,5 @@
 # First stage - Base
-ARG NODE_IMAGE=node:18-alpine
+ARG NODE_IMAGE=node:16-alpine
 
 FROM $NODE_IMAGE AS base
 RUN apk add dumb-init curl
