@@ -1,6 +1,4 @@
-import { DateTime } from 'luxon'
 import {
-  BaseModel,
   beforeCreate,
   BelongsTo,
   belongsTo,
@@ -13,12 +11,12 @@ import {
 import User from './User'
 import Video from './Video'
 import generateUid from 'App/Utils/generateUid'
+import AppBaseModel from './AppBaseModel'
 
-export default class Comment extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
-  @column()
+export default class Comment extends AppBaseModel {
+  @column({
+    serializeAs: null,
+  })
   public userId: number
 
   @column()
@@ -27,16 +25,22 @@ export default class Comment extends BaseModel {
   @column()
   public content: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public videoId: number
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public parentId: number
 
   @column()
   public isReply: boolean
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public isApproved: boolean
 
   @column()
@@ -48,32 +52,38 @@ export default class Comment extends BaseModel {
   @column()
   public voteDownCount: number
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public attachmentImages: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public isDraft: boolean
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public postId: Number
 
   @column()
   public name: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public email: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public ipAddress: string
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public userAgent: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>
@@ -98,15 +108,4 @@ export default class Comment extends BaseModel {
     pivotTable: 'votes',
   })
   public voters: ManyToMany<typeof User>
-
-  public static async getCommentsByVideo(video: Video, page, limit) {
-    const comments = await Comment.query()
-      .where('video_id', video.id)
-      .where('is_draft', false)
-      .preload('owner')
-      .paginate(page, limit)
-
-    comments.baseUrl('/v/' + video.uid).queryString({ page: page, limit })
-    return comments
-  }
 }

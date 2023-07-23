@@ -22,7 +22,7 @@ export default class User extends AppBaseModel {
   @column()
   public uid: string
 
-  @column()
+  @column({ serializeAs: null })
   public email: string
 
   @column()
@@ -40,10 +40,10 @@ export default class User extends AppBaseModel {
   @column()
   public lastName?: string
 
-  @column()
+  @column({ serializeAs: null })
   public bio?: string
 
-  @column()
+  @column({ serializeAs: null })
   public birthday?: string
 
   @column()
@@ -55,7 +55,7 @@ export default class User extends AppBaseModel {
   @column({ serializeAs: null })
   public type: string
 
-  @column()
+  @column({ serializeAs: null })
   public accountStatus: string
 
   @column({ serializeAs: null })
