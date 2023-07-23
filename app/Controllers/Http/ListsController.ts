@@ -30,4 +30,11 @@ export default class ListsController {
     if (_.isNil(popularVideos)) throw new InternalServerErrorException()
     return response.json(popularVideos)
   }
+
+  public async newRelease({ pagination, response }: HttpContextContract & HttpRequestPagination) {
+    const { page, limit } = pagination
+    const newReleaseVideos = await VideoRepo.getNewReleaseVideos(page, limit)
+    if (_.isNil(newReleaseVideos)) throw new InternalServerErrorException()
+    return response.json(newReleaseVideos)
+  }
 }

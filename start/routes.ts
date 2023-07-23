@@ -68,6 +68,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('recent', 'ListsController.recentVideos').as('recents').middleware('paginate')
   Route.get('popular', 'ListsController.popularVideos').as('populars').middleware('paginate')
+  Route.get('new-release', 'ListsController.newRelease').as('new-release').middleware('paginate')
   Route.get('new-comment', 'ListsController.newCommentAddedVideos')
     .as('new-comment-added')
     .middleware('paginate')

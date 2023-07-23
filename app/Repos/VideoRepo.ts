@@ -3,6 +3,7 @@ import Video from 'App/Models/Video'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
+import { DateTime } from 'luxon'
 
 export default class VideoRepo {
   public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
@@ -98,5 +99,22 @@ export default class VideoRepo {
     }
 
     return newlyUpdatedVideos
+  }
+
+  public static async getNewReleaseVideos(
+    page: number = 1,
+    limit: number = 15
+  ): Promise<ModelPaginatorContract<Video>> {
+    const now = DateTime.now().toFormat('yyyy-MM-dd')
+
+    const videos = await Video.query()
+      .preload('cover')
+      .where('release_date', '<=', now)
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderBy('release_date', 'desc')
+      .paginate(page, limit)
+
+    return videos
   }
 }
