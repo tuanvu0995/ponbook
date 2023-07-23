@@ -1,29 +1,5 @@
 {
   "commands": {
-    "create:comment_user": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/CreateCommentUser",
-      "commandName": "create:comment_user",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
-    "remove:unused_files": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "./commands/RemoveUnusedFiles",
-      "commandName": "remove:unused_files",
-      "description": "",
-      "args": [],
-      "aliases": [],
-      "flags": []
-    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",

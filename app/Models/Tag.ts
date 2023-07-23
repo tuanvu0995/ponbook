@@ -1,12 +1,9 @@
-import { DateTime } from 'luxon'
 import slugify from 'limax'
-import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
+import AppBaseModel from './AppBaseModel'
 
-export default class Tag extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Tag extends AppBaseModel {
   @column()
   public name: string
 
@@ -15,12 +12,6 @@ export default class Tag extends BaseModel {
 
   @column()
   public description: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @manyToMany(() => Video, {
     pivotTable: 'video_tags',

@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
 import _ from 'lodash'
 import {
-  BaseModel,
   beforeCreate,
   beforeSave,
   BelongsTo,
@@ -14,11 +13,9 @@ import Video from './Video'
 import slugify from 'App/Utils/slugify'
 import File from './File'
 import generateUid from 'App/Utils/generateUid'
+import AppBaseModel from './AppBaseModel'
 
-export default class Cast extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Cast extends AppBaseModel {
   @column()
   public uid: string
 
@@ -34,7 +31,7 @@ export default class Cast extends BaseModel {
   @column()
   public image: string
 
-  @column()
+  @column({ serializeAs: null })
   public imageFileId: number
 
   @column()
@@ -43,28 +40,28 @@ export default class Cast extends BaseModel {
   @column()
   public productCount: number
 
-  @column()
+  @column({ serializeAs: null })
   public cup?: string
 
-  @column()
+  @column({ serializeAs: null })
   public jpName?: string
 
-  @column()
+  @column({ serializeAs: null })
   public cityOfBorn?: DateTime
 
-  @column()
+  @column({ serializeAs: null })
   public height?: string
 
-  @column()
+  @column({ serializeAs: null })
   public hobby?: string
 
-  @column()
+  @column({ serializeAs: null })
   public bloodType?: string
 
-  @column()
+  @column({ serializeAs: null })
   public skill?: string
 
-  @column()
+  @column({ serializeAs: null })
   public other?: string
 
   @column()
@@ -72,12 +69,6 @@ export default class Cast extends BaseModel {
 
   @column()
   public subscribedCount: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => File, {
     foreignKey: 'imageFileId',

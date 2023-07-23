@@ -1,9 +1,6 @@
-import { DateTime } from 'luxon'
-import uniqid from 'uniqid'
 import {
   afterCreate,
   afterSave,
-  BaseModel,
   beforeCreate,
   beforeFind,
   beforeSave,
@@ -26,15 +23,10 @@ import Comment from './Comment'
 import File from './File'
 import FileService from 'App/Services/FileService'
 import slugify from 'App/Utils/slugify'
+import AppBaseModel from './AppBaseModel'
 
-export default class Video extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
-  @column()
-  public uid: string
-
-  @column()
+export default class Video extends AppBaseModel {
+  @column({ serializeAs: null })
   public userId: number
 
   @column()
@@ -49,28 +41,19 @@ export default class Video extends BaseModel {
   @column()
   public description: string
 
-  @column()
-  public cover: string
-
-  @column()
+  @column({ serializeAs: null })
   public coverFileId: number
 
-  @column()
-  public image: string
-
-  @column()
+  @column({ serializeAs: null })
   public imageFileId: number
 
-  @column()
-  public imageUrls?: string[]
-
-  @column()
+  @column({ serializeAs: null })
   public video: string
 
-  @column()
+  @column({ serializeAs: null })
   public directorId: number
 
-  @column()
+  @column({ serializeAs: null })
   public makerId: number
 
   @column()
@@ -91,34 +74,23 @@ export default class Video extends BaseModel {
   @column()
   public commentCount: number
 
-  @column()
+  @column({ serializeAs: null })
   public isDraft: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public isPublished: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public isDeleted: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public hasTorrent: boolean
 
-  @column()
+  @column({ serializeAs: null })
   public version: number
 
-  @column()
+  @column({ serializeAs: null })
   public updatedBy: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
-  @beforeCreate()
-  public static async generateUID(video: Video) {
-    video.uid = uniqid()
-  }
 
   @beforeCreate()
   public static async version2(video: Video) {
@@ -156,12 +128,12 @@ export default class Video extends BaseModel {
   @belongsTo(() => File, {
     foreignKey: 'coverFileId',
   })
-  public videoCover: BelongsTo<typeof File>
+  public cover: BelongsTo<typeof File>
 
   @belongsTo(() => File, {
     foreignKey: 'imageFileId',
   })
-  public videoImage: BelongsTo<typeof File>
+  public image: BelongsTo<typeof File>
 
   @manyToMany(() => File, {
     pivotTable: 'video_files',

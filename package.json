@@ -73,6 +73,7 @@
     "@aws-sdk/abort-controller": "^3.0.0",
     "@melchyore/adonis-cache": "^1.0.6",
     "@popperjs/core": "^2.11.6",
+    "adonis-lucid-soft-deletes": "^1.4.4",
     "adonis-turnstile": "^1.0.4",
     "adonis5-sentry": "^3.1.0",
     "axios": "^1.2.1",

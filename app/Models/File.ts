@@ -1,20 +1,18 @@
-import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
 import Drive from '@ioc:Adonis/Core/Drive'
-import { BaseModel, beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
 import retry from 'App/Utils/retry'
+import AppBaseModel from './AppBaseModel'
+import Logger from '@ioc:Adonis/Core/Logger'
 
-export default class File extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class File extends AppBaseModel {
   @column()
   public uid: string
 
   @column()
   public name: string
 
-  @column()
+  @column({ serializeAs: null })
   public type: string
 
   @column()
@@ -23,10 +21,10 @@ export default class File extends BaseModel {
   @column()
   public thumbnailPath: string
 
-  @column()
+  @column({ serializeAs: null })
   public size: number
 
-  @column()
+  @column({ serializeAs: null })
   public extension: string
 
   @column()
@@ -34,12 +32,6 @@ export default class File extends BaseModel {
 
   @column()
   public height: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @beforeCreate()
   public static async generateUid(file: File) {
@@ -56,7 +48,13 @@ export default class File extends BaseModel {
     await retry(
       async () => {
         await Drive.use('s3').delete(file.path)
-        console.log('Successfully deleted file', file.path)
+        Logger.info(
+          'Successfully deleted file',
+          JSON.stringify({
+            uid: file.uid,
+            filePath: file.path,
+          })
+        )
       },
       {
         retriesCount: 3,

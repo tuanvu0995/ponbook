@@ -2,6 +2,7 @@ import _ from 'lodash'
 import Video from 'App/Models/Video'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Database from '@ioc:Adonis/Lucid/Database'
+import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 
 export default class VideoRepo {
   public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
@@ -20,8 +21,8 @@ export default class VideoRepo {
       await video.load('maker')
       await video.load('casts')
       await video.load('tags')
-      await video.load('videoCover')
-      await video.load('videoImage')
+      await video.load('cover')
+      await video.load('image')
       await video.load('images')
     }
 
@@ -58,15 +59,18 @@ export default class VideoRepo {
         'id',
         randomVideoIds.map((video) => video.video_id)
       )
-      .preload('videoCover')
+      .preload('cover')
       .preload('casts')
 
     return relatedVideos
   }
 
-  public static async getRecentVideos(page: number = 1, limit: number = 15): Promise<Video[]> {
+  public static async getRecentVideos(
+    page: number = 1,
+    limit: number = 15
+  ): Promise<ModelPaginatorContract<Video>> {
     const recentVideos = await Video.query()
-      .preload('videoCover')
+      .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('id', 'desc')
@@ -78,7 +82,7 @@ export default class VideoRepo {
   public static async getNewCommentAddedVideos(
     page: number = 1,
     limit: number = 15
-  ): Promise<Video[]> {
+  ): Promise<ModelPaginatorContract<Video>> {
     const newlyUpdatedVideos = await Video.query()
       .select('videos.*')
       .where('videos.is_published', true)
@@ -90,7 +94,7 @@ export default class VideoRepo {
       .groupBy('videos.id')
       .paginate(page, limit)
     for (const video of newlyUpdatedVideos) {
-      await video.load('videoCover')
+      await video.load('cover')
     }
 
     return newlyUpdatedVideos
