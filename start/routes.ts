@@ -68,3 +68,16 @@ Route.group(() => {
 })
   .as('v1.lists')
   .prefix('v1/lists')
+
+/*
+|--------------------------------------------------------------------------
+| Tags Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'TagsController.index').as('list').middleware('paginate')
+  Route.get('/:slug', 'TagsController.show').as('show')
+  Route.get('/:slug/videos', 'TagsController.getVideosByTag').as('videos').middleware('paginate')
+})
+  .as('v1.tags')
+  .prefix('v1/tags')
