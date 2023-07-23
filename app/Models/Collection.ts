@@ -1,6 +1,4 @@
-import { DateTime } from 'luxon'
 import {
-  BaseModel,
   beforeFind,
   column,
   ManyToMany,
@@ -8,11 +6,9 @@ import {
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
+import AppBaseModel from './AppBaseModel'
 
-export default class Collection extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Collection extends AppBaseModel {
   @column()
   public name: string
 
@@ -24,12 +20,6 @@ export default class Collection extends BaseModel {
 
   @column()
   public isDeleted: boolean
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @manyToMany(() => Video, {
     pivotTable: 'video_collections',

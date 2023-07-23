@@ -1,13 +1,10 @@
-import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import generateUid from 'App/Utils/generateUid'
 import User from './User'
 import Permission from './Permission'
+import AppBaseModel from './AppBaseModel'
 
-export default class Role extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Role extends AppBaseModel {
   @column()
   public uid: string
 
@@ -22,12 +19,6 @@ export default class Role extends BaseModel {
 
   @column()
   public isDeleted: boolean
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @beforeCreate()
   public static async generateUID(role: Role) {

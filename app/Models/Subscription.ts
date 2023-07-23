@@ -1,6 +1,6 @@
-import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
+import AppBaseModel from './AppBaseModel'
 
 export enum SubscriptionPlans {
   FREE = 'FREE',
@@ -17,10 +17,7 @@ export enum SubscriptionEvents {
   NEW_COMMENT = 'NEW_COMMENT',
 }
 
-export default class Subscription extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Subscription extends AppBaseModel {
   @column()
   public uid: string
 
@@ -47,12 +44,6 @@ export default class Subscription extends BaseModel {
 
   @column()
   public isActive: boolean
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @beforeCreate()
   public static async generateUid(subscription: Subscription) {

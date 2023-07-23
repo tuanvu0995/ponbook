@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { column } from '@ioc:Adonis/Lucid/Orm'
+import AppBaseModel from './AppBaseModel'
 
 export enum ContactStatus {
   Pending = 'pending',
@@ -8,10 +8,7 @@ export enum ContactStatus {
   Blocked = 'blocked',
 }
 
-export default class Contact extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Contact extends AppBaseModel {
   @column()
   public name: string
 
@@ -32,10 +29,4 @@ export default class Contact extends BaseModel {
 
   @column()
   public userAgent: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 }

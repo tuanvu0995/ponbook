@@ -1,10 +1,7 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { column } from '@ioc:Adonis/Lucid/Orm'
+import AppBaseModel from './AppBaseModel'
 
-export default class Setting extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Setting extends AppBaseModel {
   @column()
   public key: string
 
@@ -13,10 +10,4 @@ export default class Setting extends BaseModel {
 
   @column()
   public value: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 }

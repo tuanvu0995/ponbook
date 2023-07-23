@@ -1,20 +1,10 @@
-import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  beforeCreate,
-  beforeSave,
-  BelongsTo,
-  belongsTo,
-  column,
-} from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, beforeSave, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import slugify from 'App/Utils/slugify'
 import generateUid from 'App/Utils/generateUid'
+import AppBaseModel from './AppBaseModel'
 
-export default class Page extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Page extends AppBaseModel {
   @column()
   public uid: string
 
@@ -32,12 +22,6 @@ export default class Page extends BaseModel {
 
   @column()
   public layout: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @belongsTo(() => User, {
     foreignKey: 'created_by',

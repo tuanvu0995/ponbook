@@ -1,11 +1,7 @@
 import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Cache from '@ioc:Adonis/Addons/Cache'
-import { CacheTimes } from 'Config/constants'
-import Video from 'App/Models/Video'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import VideoRepo from 'App/Repos/VideoRepo'
-import VideoTransform from 'App/Transforms/VideoTransform'
 
 export default class VideoController {
   public async show({ params, response }: HttpContextContract) {
@@ -20,7 +16,6 @@ export default class VideoController {
   public async getRelatedVideos({ params, response }: HttpContextContract) {
     const video = await VideoRepo.getVideoByUid(params.uid)
     const relatedVideos = await VideoRepo.getRelatedVideos(video)
-    VideoTransform.transform(relatedVideos)
     return response.json(relatedVideos)
   }
 }

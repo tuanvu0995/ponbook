@@ -1,11 +1,9 @@
 import _ from 'lodash'
-import { DateTime } from 'luxon'
 import uniqid from 'uniqid'
 import Hash from '@ioc:Adonis/Core/Hash'
 import {
   column,
   beforeSave,
-  BaseModel,
   beforeCreate,
   manyToMany,
   ManyToMany,
@@ -18,11 +16,9 @@ import Role from './Role'
 import Video from './Video'
 import Comment from './Comment'
 import Box from './Box'
+import AppBaseModel from './AppBaseModel'
 
-export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class User extends AppBaseModel {
   @column()
   public uid: string
 
@@ -76,12 +72,6 @@ export default class User extends BaseModel {
 
   @column({ serializeAs: null })
   public isSocialActive: boolean
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @computed()
   public get fullName() {
