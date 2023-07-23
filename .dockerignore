@@ -1,0 +1,11 @@
+.build
+.build.*
+.npm
+.git
+.husky
+.github
+
+.build.log
+Dockerfile
+docs
+**/node_modules
