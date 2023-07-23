@@ -21,7 +21,6 @@ import User from './User'
 import Tag from './Tag'
 import Comment from './Comment'
 import File from './File'
-import FileService from 'App/Services/FileService'
 import slugify from 'App/Utils/slugify'
 import AppBaseModel from './AppBaseModel'
 
@@ -198,29 +197,6 @@ export default class Video extends AppBaseModel {
       await m.save()
     }
     video.makerId = m.id
-  }
-
-  public async saveImages(video: Video, images: string[]) {
-    const imageIds = await Promise.all([
-      ...images.map(async (image) => {
-        const file = await FileService.processImageFromUrl(image, 'image')
-        return file.id
-      }),
-    ])
-
-    await video.related('images').sync(imageIds)
-  }
-
-  public async saveCover(video: Video, cover: string) {
-    const file = await FileService.processImageFromUrl(cover, 'cover')
-    video.coverFileId = file.id
-    await video.save()
-  }
-
-  public async saveImage(video: Video, image: string) {
-    const file = await FileService.processImageFromUrl(image, 'image')
-    video.imageFileId = file.id
-    await video.save()
   }
 
   public async publish(video: Video) {
