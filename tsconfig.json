@@ -39,7 +39,6 @@
       "@adonisjs/limiter",
       "@adonisjs/redis",
       "@adonisjs/mail",
-      "@adonisjs/i18n",
       "adonis5-sentry",
       "@melchyore/adonis-cache",
       "@adonisjs/route-model-binding/build/adonis-typings",
