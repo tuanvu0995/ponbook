@@ -81,3 +81,17 @@ Route.group(() => {
 })
   .as('v1.tags')
   .prefix('v1/tags')
+
+/*
+|--------------------------------------------------------------------------
+| Casts Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'CastsController.index').as('list').middleware('paginate')
+  Route.get('/:slug', 'CastsController.show').as('show')
+  Route.get('/:slug/videos', 'CastsController.getVideosByCast').as('videos').middleware('paginate')
+})
+  .as('v1.casts')
+  .prefix('v1/casts')
+
