@@ -101,3 +101,18 @@ Route.group(() => {
 })
   .as('v1.casts')
   .prefix('v1/casts')
+
+/*
+|--------------------------------------------------------------------------
+| Director Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'DirectorsController.index').as('list').middleware('paginate')
+  Route.get('/:uid', 'DirectorsController.show').as('show')
+  Route.get('/:uid/videos', 'DirectorsController.getVideosByDirector')
+    .as('videos')
+    .middleware('paginate')
+})
+  .as('v1.directors')
+  .prefix('v1/directors')
