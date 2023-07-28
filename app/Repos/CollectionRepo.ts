@@ -17,7 +17,7 @@ export default class CollectionRepo {
       .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('video_collections.order', 'asc')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
 }
