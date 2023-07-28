@@ -28,12 +28,22 @@ export default class CastsController {
     params,
     pagination,
     response,
+    request,
   }: HttpContextContract & HttpRequestPagination) {
+    const { individual } = request.qs()
     const { slug } = params
     const cast = await CastRepo.findBySlug(slug)
+
     if (_.isNil(cast)) {
       throw new NotFoundException('Cast not found')
     }
+
+    if (individual === 'true') {
+      return response.json(
+        await CastRepo.getVideosForCastOnly(cast, pagination.page, pagination.limit)
+      )
+    }
+
     const videos = await CastRepo.getVideosByCast(cast, pagination.page, pagination.limit)
     return response.json(videos)
   }

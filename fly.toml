@@ -13,6 +13,10 @@ primary_region = "sin"
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 50
+    hard_limit = 75
 
 [env]
   PORT = "3333"

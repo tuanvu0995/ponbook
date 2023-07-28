@@ -25,6 +25,6 @@ ENV PORT=$PORT
 ENV DOPPER_TOKEN=$DOPPER_TOKEN
 ENV HOST=0.0.0.0
 COPY --chown=node:node --from=build /home/node/app/build .
-RUN npm ci --production
+RUN npm ci --omit=dev
 EXPOSE $PORT
 CMD [ "dumb-init", "node", "server.js" ]

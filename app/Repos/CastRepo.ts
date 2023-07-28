@@ -1,6 +1,10 @@
 import Cast from 'App/Models/Cast'
 
 export class CastRepo {
+  public static async findByUid(uid: string) {
+    return await Cast.query().where('uid', uid).first()
+  }
+
   public static async findBySlug(slug: string) {
     return await Cast.query().where('slug', slug).first()
   }
@@ -18,6 +22,17 @@ export class CastRepo {
       .related('videos')
       .query()
       .preload('cover')
+      .orderBy('release_date', 'desc')
+      .paginate(page, limit)
+  }
+
+  public static async getVideosForCastOnly(cast: Cast, page = 1, limit = 10) {
+    return await cast
+      .related('videos')
+      .query()
+      .preload('cover')
+      .has('casts', '=', 1)
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
 }
