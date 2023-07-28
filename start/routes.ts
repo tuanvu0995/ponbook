@@ -116,3 +116,16 @@ Route.group(() => {
 })
   .as('v1.directors')
   .prefix('v1/directors')
+
+/*
+|--------------------------------------------------------------------------
+| Maker Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'MakersController.index').as('list').middleware('paginate')
+  Route.get('/:uid', 'MakersController.show').as('show')
+  Route.get('/:uid/videos', 'MakersController.getVideosByMaker').as('videos').middleware('paginate')
+})
+  .as('v1.makers')
+  .prefix('v1/makers')
