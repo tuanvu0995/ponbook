@@ -19,6 +19,7 @@ export class TagRepo {
       .query()
       .preload('casts')
       .preload('cover')
+      .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
 }
