@@ -141,7 +141,7 @@ export default class Video extends AppBaseModel {
 
   @beforeFind()
   public static where(query: ModelQueryBuilderContract<typeof Video>) {
-    query.where('is_deleted', false)
+    query.where('is_deleted', false).where('is_published', true)
   }
 
   @afterCreate()
