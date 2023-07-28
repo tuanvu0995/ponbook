@@ -15,9 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: yutailang0119/action-github-pr-release@v3
+      - name: create-release-pr
+        uses: grassedge/git-pr-release-action@v1.0
         with:
-          token: ${{ github.token }}
-          production-branch: main
-          staging-branch: stage
-          label: Release
+          base: main
+          head: dev
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: release
+          assign: true
