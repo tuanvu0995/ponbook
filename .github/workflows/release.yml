@@ -1,8 +1,5 @@
-name: Deploy
+name: Release
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions: {}
@@ -10,13 +7,17 @@ permissions: {}
 jobs:
   build:
     runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/dev'
     permissions:
       contents: write # to create release (changesets/action)
       pull-requests: write # to create pull request (changesets/action)
 
     steps:
       - uses: actions/checkout@v3
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - uses: yutailang0119/action-github-pr-release@v3
+        with:
+          token: ${{ github.token }}
+          production-branch: main
+          staging-branch: stage
+          label: Release
