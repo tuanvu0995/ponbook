@@ -58,7 +58,6 @@ export default class VideoRepo {
       .orderByRaw('RAND()')
       .select('video_id')
       .limit(Math.min(limit, 15))
-    console.log(randomVideoIds)
 
     const relatedVideos = await Video.query()
       .whereIn(
