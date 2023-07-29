@@ -1,8 +1,8 @@
 # First stage - Base
-ARG NODE_IMAGE=node:16.13.1-alpine
+ARG NODE_IMAGE=node:16.20.1-alpine
 
 FROM $NODE_IMAGE AS base
-RUN apk add tini curl
+RUN apk add dumb-init curl
 WORKDIR /home/node/app
 RUN chown node:node /home/node/app
 USER node
@@ -28,4 +28,4 @@ COPY --chown=node:node ./package*.json ./
 RUN npm install --omit=dev
 COPY --chown=node:node --from=build /home/node/app/build .
 EXPOSE $PORT
-CMD [ "tini", "--", "npm", "start" ]
+CMD [ "dumb-init", "node", "server.js" ]

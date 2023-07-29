@@ -1,7 +1,6 @@
 import { CreateCommentInput } from 'App/Domain/CommentDto'
 import Comment from 'App/Models/Comment'
 import Video from 'App/Models/Video'
-import VideoRepo from './VideoRepo'
 
 export default class CommentRepo {
   public static async getCommentsByVideo(video: Video, page = 1, limit = 10): Promise<any> {
