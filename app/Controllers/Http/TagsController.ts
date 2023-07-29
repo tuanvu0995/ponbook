@@ -37,4 +37,9 @@ export default class TagsController {
     const videos = await TagRepo.getVideosByTag(tag, pagination.page, pagination.limit)
     return response.json(videos)
   }
+
+  public async getRandomTags({ response }: HttpContextContract) {
+    const tags = await TagRepo.getRandomTags()
+    return response.json(tags)
+  }
 }

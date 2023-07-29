@@ -82,6 +82,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
+  Route.get('random', 'TagsController.getRandomTags').as('random')
   Route.get('/', 'TagsController.index').as('list').middleware('paginate')
   Route.get('/:slug', 'TagsController.show').as('show')
   Route.get('/:slug/videos', 'TagsController.getVideosByTag').as('videos').middleware('paginate')

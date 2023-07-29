@@ -22,4 +22,8 @@ export class TagRepo {
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
+
+  public static async getRandomTags() {
+    return await Tag.query().orderByRaw('RAND()').limit(10)
+  }
 }
