@@ -44,7 +44,11 @@ export default class VideoRepo {
     return video
   }
 
-  public static async getRelatedVideos(video: Video, limit: number = 10): Promise<Video[]> {
+  public static async getRelatedVideos(video: Video, limit: number = 12): Promise<Video[]> {
+    if (!video.tags?.length) {
+      await video.load('tags')
+    }
+
     const tagIds = _.chain(video.tags)
       .map((tag) => tag.id)
       .filter((id) => !_.isNil(id))
@@ -54,6 +58,7 @@ export default class VideoRepo {
       .orderByRaw('RAND()')
       .select('video_id')
       .limit(Math.min(limit, 15))
+    console.log(randomVideoIds)
 
     const relatedVideos = await Video.query()
       .whereIn(
