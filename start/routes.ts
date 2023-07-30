@@ -50,6 +50,10 @@ Route.group(() => {
   Route.get('/:uid/comments', 'CommentController.getCommentsByVideoUid')
     .as('videos.comments')
     .middleware('paginate')
+
+  Route.post('/:uid/favorite', 'VideoController.favorite')
+    .as('videos.favorite')
+    .middleware('auth:api')
 })
   .as('v1.videos')
   .prefix('v1/videos')
