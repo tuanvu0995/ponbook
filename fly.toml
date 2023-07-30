@@ -1,10 +1,14 @@
-# fly.toml app configuration file generated for ponbook-api on 2023-07-23T14:30:01+07:00
+# fly.toml app configuration file generated for ponbook-api on 2023-07-30T16:16:32+07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "ponbook-api"
 primary_region = "sin"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3333"
 
 [http_service]
   internal_port = 3333
@@ -15,9 +19,5 @@ primary_region = "sin"
   processes = ["app"]
   [http_service.concurrency]
     type = "requests"
-    soft_limit = 50
     hard_limit = 75
-
-[env]
-  PORT = "3333"
-  NODE_ENV = "production"
+    soft_limit = 50
