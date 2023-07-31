@@ -22,4 +22,10 @@ export default class CommentRepo {
   public static async deleteComment(comment: Comment) {
     await comment.delete()
   }
+
+  public static async updateComment(comment: Comment, input: { content: string }) {
+    comment.content = input.content
+    await comment.save()
+    return comment
+  }
 }

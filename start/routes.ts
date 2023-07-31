@@ -138,6 +138,7 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.post('/', 'CommentController.store').as('store').middleware('auth:api')
+  Route.put('/:uid', 'CommentController.update').as('update').middleware('auth:api')
   Route.delete('/:uid', 'CommentController.destroy').as('destroy').middleware('auth:api')
 })
   .as('v1.comments')

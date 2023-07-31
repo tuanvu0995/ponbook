@@ -5,6 +5,7 @@ import { HttpRequestPagination } from '@ioc:Contracts'
 import VideoRepo from 'App/Repos/VideoRepo'
 import CommentRepo from 'App/Repos/CommentRepo'
 import CreateCommentValidator from 'App/Validators/CreateCommentValidator'
+import BadRequestException from 'App/Exceptions/BadRequestException'
 
 export default class CommentController {
   public async store({ request, response, auth }: HttpContextContract) {
@@ -30,6 +31,7 @@ export default class CommentController {
     }
 
     const comment = await CommentRepo.createComment(createBody)
+    await comment.load('owner')
     return response.json(comment)
   }
 
@@ -47,6 +49,25 @@ export default class CommentController {
     return response.json(comments)
   }
 
+  public async update({ params, request, response, auth }: HttpContextContract) {
+    const { uid } = params
+    const comment = await CommentRepo.getCommentByUid(uid)
+    if (_.isNil(comment)) throw new NotFoundException('Comment not found')
+
+    if (comment.userId !== auth.user!.id) throw new NotFoundException('Comment not found')
+
+    const updateContent = request.input('content')
+    if (_.isNil(updateContent)) throw new BadRequestException('Content is required')
+
+    const updateBody = {
+      content: updateContent,
+    }
+
+    const updatedComment = await CommentRepo.updateComment(comment, updateBody)
+    await updatedComment.load('owner')
+    return response.json(updatedComment)
+  }
+
   public async destroy({ params, response, auth }: HttpContextContract) {
     const { uid } = params
     const comment = await CommentRepo.getCommentByUid(uid)
@@ -55,7 +76,6 @@ export default class CommentController {
     if (comment.userId !== auth.user!.id) throw new NotFoundException('Comment not found')
 
     await CommentRepo.deleteComment(comment)
-
     return response.json({ message: 'Comment deleted successfully' })
   }
 }
