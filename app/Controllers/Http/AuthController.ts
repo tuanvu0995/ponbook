@@ -1,13 +1,12 @@
-import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { Limiter } from '@adonisjs/limiter/build/services'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Event from '@ioc:Adonis/Core/Event'
 import User from 'App/Models/User'
-import { isEmail } from 'App/Utils/isEmail'
 import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
+import { isEmail } from 'App/utils/isEmail'
 
 export default class AuthController {
   private getThrottleKey(uid: string, ip: string) {

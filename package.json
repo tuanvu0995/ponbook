@@ -10,7 +10,8 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -41,18 +42,24 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.5",
+    "@adonisjs/eslint-plugin": "^1.1.8",
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.2.2",
     "@types/lodash": "^4.14.192",
     "@types/proxy-addr": "^2.0.0",
     "@types/source-map-support": "^0.5.6",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
     "adonis-preset-ts": "^2.1.0",
     "eslint": "^8.30.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-adonis": "^2.1.1",
+    "eslint-config-prettier": "8.9.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.3",
     "pino-pretty": "^9.1.1",
-    "prettier": "^2.8.1",
+    "prettier": "2.8.8",
     "typescript": "~4.6"
   },
   "dependencies": {
@@ -93,5 +100,11 @@
   "main": "index.js",
   "repository": "git@github.com:tuanvu0995/ponbook.git",
   "author": "tuanvu0995 <tuanvu0995@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ]
+  }
 }
