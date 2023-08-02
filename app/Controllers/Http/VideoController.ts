@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import VideoRepo from 'App/Repos/VideoRepo'
+import { FavoriteStatus } from 'App/Domain/Video/VideoDomain'
 
 export default class VideoController {
   public async show({ params, response }: HttpContextContract) {
@@ -20,7 +21,7 @@ export default class VideoController {
     const video = await VideoRepo.getVideoByUid(uid)
 
     const user = auth.user!
-    let state = 'added'
+    let state: FavoriteStatus = 'added'
 
     if (await user.related('favoriteVideos').query().where('video_id', video.id).first()) {
       await user.related('favoriteVideos').detach([video.id])
