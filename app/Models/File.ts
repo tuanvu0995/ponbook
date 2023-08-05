@@ -1,6 +1,6 @@
 import uniqid from 'uniqid'
 import Drive from '@ioc:Adonis/Core/Drive'
-import { beforeCreate, beforeDelete, column } from '@ioc:Adonis/Lucid/Orm'
+import { beforeCreate, beforeDelete, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import retry from 'App/Utils/retry'
 import AppBaseModel from './AppBaseModel'
 import Logger from '@ioc:Adonis/Core/Logger'
@@ -32,6 +32,14 @@ export default class File extends AppBaseModel {
 
   @column()
   public height: number
+
+  @column()
+  public data: string
+
+  @computed()
+  public get dataUrl(): string {
+    return `data:${this.type};base64,${this.data}`
+  }
 
   @beforeCreate()
   public static async generateUid(file: File) {
