@@ -33,7 +33,7 @@ export default class File extends AppBaseModel {
   @column()
   public height: number
 
-  @column()
+  @column({ serializeAs: null })
   public data: string
 
   @computed()
