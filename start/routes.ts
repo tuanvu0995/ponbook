@@ -147,3 +147,14 @@ Route.group(() => {
 })
   .as('v1.comments')
   .prefix('v1/comments')
+
+/*
+|--------------------------------------------------------------------------
+| Pages Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/:slug', 'PagesController.getPageFromSlug').as('page')
+})
+  .as('v1.page')
+  .prefix('v1/page')

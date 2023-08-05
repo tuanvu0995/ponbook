@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import VideoRepo from 'App/Repos/VideoRepo'
 import { FavoriteStatus } from 'App/Domain/Video/VideoDomain'

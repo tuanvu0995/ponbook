@@ -6,7 +6,7 @@ import User from 'App/Models/User'
 import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
-import { isEmail } from 'App/Utils/isEmail'
+import { isEmail } from 'App/utils/isEmail'
 
 export default class AuthController {
   private getThrottleKey(uid: string, ip: string) {
