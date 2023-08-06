@@ -13,7 +13,6 @@
 |
 */
 
-import _ from 'lodash'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Sentry from '@ioc:Adonis/Addons/Sentry'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
