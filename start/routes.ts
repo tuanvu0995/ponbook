@@ -154,7 +154,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.get('/:slug', 'PagesController.getPageFromSlug').as('page')
+  Route.get('/:slug', 'PagesController.getPageFromSlug').as('getPageFromSlug')
 })
-  .as('v1.page')
-  .prefix('v1/page')
+  .as('v1.pages')
+  .prefix('v1/pages')
