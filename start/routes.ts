@@ -58,12 +58,6 @@ Route.group(() => {
   .as('v1.videos')
   .prefix('v1/videos')
 
-Route.group(() => {
-  Route.post('/', 'SearchesController.search').as('search')
-})
-  .as('v1.searches')
-  .prefix('v1/searches')
-
 /*
 |--------------------------------------------------------------------------
 | Lists Routes
@@ -158,3 +152,14 @@ Route.group(() => {
 })
   .as('v1.pages')
   .prefix('v1/pages')
+
+/*
+|--------------------------------------------------------------------------
+| Search Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('', 'SearchesController.search').as('search')
+})
+  .as('v1.searches')
+  .prefix('v1/searches')
