@@ -15,10 +15,6 @@ import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 import { loadEnv } from './doppler.js'
 
-async function start() {
-  await loadEnv()
-  sourceMapSupport.install({ handleUncaughtExceptions: false })
-  new Ignitor(__dirname).httpServer().start()
-}
-
-start()
+loadEnv()
+sourceMapSupport.install({ handleUncaughtExceptions: false })
+new Ignitor(__dirname).httpServer().start()

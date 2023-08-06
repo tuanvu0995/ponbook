@@ -5,9 +5,7 @@
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/bouncer/build/commands",
-    "@adonisjs/mail/build/commands",
-    "@melchyore/adonis-cache/build/commands"
+    "@adonisjs/mail/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -19,27 +17,19 @@
   "preloads": [
     "./start/routes",
     "./start/kernel",
-    "./start/bouncer",
     "./start/limiter",
     "./start/events"
   ],
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
-    "@adonisjs/session",
     "@adonisjs/view",
     "@adonisjs/shield",
     "@adonisjs/lucid",
     "@adonisjs/auth",
-    "@adonisjs/drive-s3",
-    "@adonisjs/bouncer",
     "@adonisjs/limiter",
-    "@adonisjs/redis",
     "@adonisjs/mail",
     "adonis5-sentry",
-    "@melchyore/adonis-cache",
-    "@adonisjs/route-model-binding/build/providers/RmbProvider",
-    "adonis-turnstile",
     "adonis-lucid-soft-deletes"
   ],
   "metaFiles": [
@@ -53,15 +43,21 @@
     },
     "doppler.js"
   ],
-  "aceProviders": ["@adonisjs/repl"],
+  "aceProviders": [
+    "@adonisjs/repl"
+  ],
   "tests": {
     "suites": [
       {
         "name": "functional",
-        "files": ["tests/functional/**/*.spec(.ts|.js)"],
+        "files": [
+          "tests/functional/**/*.spec(.ts|.js)"
+        ],
         "timeout": 60000
       }
     ]
   },
-  "testProviders": ["@japa/preset-adonis/TestsProvider"]
+  "testProviders": [
+    "@japa/preset-adonis/TestsProvider"
+  ]
 }

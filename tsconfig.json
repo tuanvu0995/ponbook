@@ -28,21 +28,14 @@
     "types": [
       "@adonisjs/core",
       "@adonisjs/repl",
-      "@adonisjs/session",
       "@adonisjs/view",
       "@adonisjs/shield",
       "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/lucid",
       "@adonisjs/auth",
-      "@adonisjs/drive-s3",
-      "@adonisjs/bouncer",
       "@adonisjs/limiter",
-      "@adonisjs/redis",
       "@adonisjs/mail",
       "adonis5-sentry",
-      "@melchyore/adonis-cache",
-      "@adonisjs/route-model-binding/build/adonis-typings",
-      "adonis-turnstile",
       "adonis-lucid-soft-deletes"
     ]
   }

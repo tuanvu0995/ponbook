@@ -47,6 +47,5 @@ Server.middleware.registerNamed({
   guestOnly: () => import('App/Middleware/GuestOnly'),
   role: () => import('App/Middleware/Role'),
   throttle: () => import('@adonisjs/limiter/build/throttle'),
-  turnstile: () => import('App/Middleware/Turnstile'),
   paginate: () => import('App/Middleware/PaginationQuery'),
 })

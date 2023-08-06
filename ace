@@ -13,9 +13,5 @@ require('source-map-support').install({ handleUncaughtExceptions: false })
 const { Ignitor } = require('@adonisjs/core/build/standalone')
 const { loadEnv } = require('./doppler.js')
 
-async function start() {
-  await loadEnv()
-  new Ignitor(__dirname).ace().handle(process.argv.slice(2))
-}
-
-start()
+loadEnv()
+new Ignitor(__dirname).ace().handle(process.argv.slice(2))

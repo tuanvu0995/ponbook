@@ -1,9 +1,6 @@
 import uniqid from 'uniqid'
-import Drive from '@ioc:Adonis/Core/Drive'
-import { beforeCreate, beforeDelete, column, computed } from '@ioc:Adonis/Lucid/Orm'
-import retry from 'App/Helpers/retry'
+import { beforeCreate, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import AppBaseModel from './AppBaseModel'
-import Logger from '@ioc:Adonis/Core/Logger'
 
 export default class File extends AppBaseModel {
   @column()
@@ -49,25 +46,5 @@ export default class File extends AppBaseModel {
   @beforeCreate()
   public static initTypeMimeType(file: File) {
     file.type = 'image/webp'
-  }
-
-  @beforeDelete()
-  public static async deleteFile(file: File) {
-    await retry(
-      async () => {
-        await Drive.use('s3').delete(file.path)
-        Logger.info(
-          'Successfully deleted file',
-          JSON.stringify({
-            uid: file.uid,
-            filePath: file.path,
-          })
-        )
-      },
-      {
-        retriesCount: 3,
-        delay: 1000,
-      }
-    )
   }
 }
