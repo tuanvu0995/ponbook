@@ -1,5 +1,6 @@
-import { column } from '@ioc:Adonis/Lucid/Orm'
-import AppBaseModel from './AppBaseModel'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
+import { DateTime } from 'luxon'
 
 export enum ContactStatus {
   Pending = 'pending',
@@ -8,7 +9,12 @@ export enum ContactStatus {
   Blocked = 'blocked',
 }
 
-export default class Contact extends AppBaseModel {
+export default class Contact extends BaseModel {
+  public static namingStrategy = new CamelCaseNamingStrategy()
+
+  @column({ isPrimary: true, serializeAs: null })
+  public id: number
+
   @column()
   public name: string
 
@@ -29,4 +35,13 @@ export default class Contact extends AppBaseModel {
 
   @column()
   public userAgent: string
+
+  @column.dateTime({ autoCreate: true, serializeAs: null })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
+  public updatedAt: DateTime
+
+  @column.dateTime({ serializeAs: null })
+  public deletedAt: DateTime | null
 }

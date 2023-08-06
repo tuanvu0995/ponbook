@@ -163,3 +163,14 @@ Route.group(() => {
 })
   .as('v1.searches')
   .prefix('v1/searches')
+
+/*
+|--------------------------------------------------------------------------
+| Contacts Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('/', 'ContactsController.store').as('store').middleware('throttle:sendContact')
+})
+  .as('v1.contacts')
+  .prefix('v1/contacts')
