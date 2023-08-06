@@ -1,7 +1,7 @@
 import uniqid from 'uniqid'
 import Drive from '@ioc:Adonis/Core/Drive'
 import { beforeCreate, beforeDelete, column, computed } from '@ioc:Adonis/Lucid/Orm'
-import retry from 'App/Utils/retry'
+import retry from 'App/Helpers/retry'
 import AppBaseModel from './AppBaseModel'
 import Logger from '@ioc:Adonis/Core/Logger'
 

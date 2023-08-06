@@ -21,7 +21,7 @@ import User from './User'
 import Tag from './Tag'
 import Comment from './Comment'
 import File from './File'
-import slugify from 'App/Utils/slugify'
+import slugify from 'App/Helpers/slugify'
 import AppBaseModel from './AppBaseModel'
 
 export default class Video extends AppBaseModel {

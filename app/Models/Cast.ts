@@ -10,9 +10,9 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
-import slugify from 'App/Utils/slugify'
+import slugify from 'App/Helpers/slugify'
 import File from './File'
-import generateUid from 'App/Utils/generateUid'
+import generateUid from 'App/Helpers/generateUid'
 import AppBaseModel from './AppBaseModel'
 
 export default class Cast extends AppBaseModel {

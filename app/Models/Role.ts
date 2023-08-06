@@ -1,5 +1,5 @@
 import { beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import generateUid from 'App/Utils/generateUid'
+import generateUid from 'App/Helpers/generateUid'
 import User from './User'
 import Permission from './Permission'
 import AppBaseModel from './AppBaseModel'

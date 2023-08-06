@@ -1,6 +1,6 @@
 import { beforeCreate, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
-import generateUid from 'App/Utils/generateUid'
+import generateUid from 'App/Helpers/generateUid'
 import AppBaseModel from './AppBaseModel'
 
 export default class Maker extends AppBaseModel {

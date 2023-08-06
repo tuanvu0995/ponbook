@@ -1,7 +1,7 @@
 import { beforeCreate, beforeSave, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import slugify from 'App/Utils/slugify'
-import generateUid from 'App/Utils/generateUid'
+import slugify from 'App/Helpers/slugify'
+import generateUid from 'App/Helpers/generateUid'
 import AppBaseModel from './AppBaseModel'
 
 export default class Page extends AppBaseModel {

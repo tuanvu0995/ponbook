@@ -10,7 +10,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Video from './Video'
-import generateUid from 'App/Utils/generateUid'
+import generateUid from 'App/Helpers/generateUid'
 import AppBaseModel from './AppBaseModel'
 
 export default class Comment extends AppBaseModel {
