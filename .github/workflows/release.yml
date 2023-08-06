@@ -31,5 +31,3 @@ jobs:
         uses: superfly/flyctl-actions@v1
         with:
           api_key: ${{ secrets.FLY_API_KEY }}
-          app_name: pornbook-api
-          config_file: fly.toml
