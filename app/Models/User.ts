@@ -47,7 +47,7 @@ export default class User extends AppBaseModel {
   public birthday?: string
 
   @column()
-  public gender?: String
+  public gender?: string
 
   @column({ serializeAs: null })
   public superUser: boolean

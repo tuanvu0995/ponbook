@@ -5,6 +5,7 @@ import Tag from 'App/Models/Tag'
 
 export default class SearchRepo {
   private static isCode(keyword: string): boolean {
+    // eslint-disable-next-line no-useless-escape
     const codeRegex = /^[a-zA-Z]+\-\d{3,4}$/ // định dạng mã code là chữ in hoa đầu tiên, theo sau là dấu "-", và 3 hoặc 4 chữ số
     return codeRegex.test(keyword)
   }

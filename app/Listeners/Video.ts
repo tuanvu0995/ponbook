@@ -2,7 +2,8 @@ import type { EventsList } from '@ioc:Adonis/Core/Event'
 import Redis from '@ioc:Adonis/Addons/Redis'
 
 export default class Video {
-  public async onVideoCreated(_video: EventsList['video:created']) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async onVideoCreated(_: EventsList['video:created']) {
     await Redis.del([
       'videos:recent',
       'video:newly-updated',

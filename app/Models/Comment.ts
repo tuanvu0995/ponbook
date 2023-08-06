@@ -65,7 +65,7 @@ export default class Comment extends AppBaseModel {
   @column({
     serializeAs: null,
   })
-  public postId: Number
+  public postId: number
 
   @column()
   public name: string
