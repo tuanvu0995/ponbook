@@ -66,6 +66,8 @@ export default class VideoRepo {
       )
       .preload('cover')
       .preload('casts')
+      .where('is_deleted', false)
+      .where('is_published', true)
 
     return relatedVideos
   }

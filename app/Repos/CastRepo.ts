@@ -22,6 +22,8 @@ export class CastRepo {
       .related('videos')
       .query()
       .preload('cover')
+      .where('is_deleted', false)
+      .where('is_published', true)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
@@ -31,6 +33,8 @@ export class CastRepo {
       .related('videos')
       .query()
       .preload('cover')
+      .where('is_deleted', false)
+      .where('is_published', true)
       .has('casts', '=', 1)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)

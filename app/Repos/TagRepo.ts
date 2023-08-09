@@ -19,6 +19,8 @@ export class TagRepo {
       .query()
       .preload('casts')
       .preload('cover')
+      .where('is_deleted', false)
+      .where('is_published', true)
       .orderBy('release_date', 'desc')
       .paginate(page, limit)
   }
