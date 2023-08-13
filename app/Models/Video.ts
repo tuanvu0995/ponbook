@@ -1,6 +1,4 @@
 import {
-  afterCreate,
-  afterSave,
   beforeCreate,
   beforeFind,
   beforeSave,
@@ -13,7 +11,6 @@ import {
   manyToMany,
   ModelQueryBuilderContract,
 } from '@ioc:Adonis/Lucid/Orm'
-import Event from '@ioc:Adonis/Core/Event'
 import Cast from './Cast'
 import Director from './Director'
 import Maker from './Maker'
@@ -142,61 +139,6 @@ export default class Video extends AppBaseModel {
   @beforeFind()
   public static where(query: ModelQueryBuilderContract<typeof Video>) {
     query.where('is_deleted', false).where('is_published', true)
-  }
-
-  @afterCreate()
-  public static async emitCreatedEvent(video: Video) {
-    Event.emit('video:created', video)
-  }
-
-  @afterSave()
-  public static async emitUpdatedEvent(video: Video) {
-    Event.emit('video:updated', video)
-  }
-
-  public async saveTags(video: Video, tags: string[]) {
-    const tagIds = await Promise.all(
-      tags.map(async (tag) => {
-        const tagModel = await Tag.firstOrCreate({ name: tag }, { name: tag })
-        return tagModel.id
-      })
-    )
-    await video.related('tags').sync(tagIds)
-  }
-
-  public async saveCasts(video: Video, casts: string[]) {
-    const castIds = await Promise.all(
-      casts.map(async (cast) => {
-        const existsCast = await Cast.getCastByName(cast)
-        if (existsCast) {
-          return existsCast.id
-        } else {
-          const castModel = await Cast.create({ name: cast })
-          return castModel.id
-        }
-      })
-    )
-    await video.related('casts').sync(castIds)
-  }
-
-  public async saveDirector(video: Video, director: string) {
-    let d = await Director.query().where('name', director).first()
-    if (!d) {
-      d = new Director()
-      d.name = director
-      await d.save()
-    }
-    video.directorId = d.id
-  }
-
-  public async saveMaker(video: Video, maker: string) {
-    let m = await Maker.query().where('name', maker).first()
-    if (!m) {
-      m = new Maker()
-      m.name = maker
-      await m.save()
-    }
-    video.makerId = m.id
   }
 
   public async publish(video: Video) {

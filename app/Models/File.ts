@@ -1,11 +1,7 @@
-import uniqid from 'uniqid'
 import { beforeCreate, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import AppBaseModel from './AppBaseModel'
 
 export default class File extends AppBaseModel {
-  @column()
-  public uid: string
-
   @column()
   public name: string
 
@@ -14,9 +10,6 @@ export default class File extends AppBaseModel {
 
   @column()
   public path: string
-
-  @column()
-  public thumbnailPath: string
 
   @column({ serializeAs: null })
   public size: number
@@ -39,12 +32,15 @@ export default class File extends AppBaseModel {
   }
 
   @beforeCreate()
-  public static async generateUid(file: File) {
-    file.uid = uniqid()
-  }
-
-  @beforeCreate()
   public static initTypeMimeType(file: File) {
     file.type = 'image/webp'
   }
+
+  @beforeCreate()
+  public static upsetFileName(file: File) {
+    if (!file.name) {
+      file.name = file.path.split('/').pop() || 'noname'
+    }
+  }
+
 }

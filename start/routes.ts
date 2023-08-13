@@ -174,3 +174,15 @@ Route.group(() => {
 })
   .as('v1.contacts')
   .prefix('v1/contacts')
+
+/*
+|--------------------------------------------------------------------------
+| Data Sources Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('/upset', 'DataSourcesController.upset').as('upset')
+})
+  .as('v1.data-sources')
+  .prefix('v1/data-sources')
+  .middleware('appAuth')

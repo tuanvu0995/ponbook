@@ -1,9 +1,15 @@
 import slugify from 'limax'
-import { beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { DateTime } from 'luxon'
+import { BaseModel, beforeCreate, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
-import AppBaseModel from './AppBaseModel'
+import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
 
-export default class Tag extends AppBaseModel {
+export default class Tag extends BaseModel {
+  public static namingStrategy = new CamelCaseNamingStrategy()
+
+  @column({ isPrimary: true, serializeAs: null })
+  public id: number
+
   @column()
   public name: string
 
@@ -12,6 +18,15 @@ export default class Tag extends AppBaseModel {
 
   @column()
   public description: string
+
+  @column.dateTime({ autoCreate: true, serializeAs: null })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
+  public updatedAt: DateTime
+
+  @column.dateTime({ serializeAs: null })
+  public deletedAt: DateTime | null
 
   @manyToMany(() => Video, {
     pivotTable: 'video_tags',

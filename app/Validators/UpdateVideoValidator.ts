@@ -25,7 +25,7 @@ export default class UpdateVideoValidator {
    */
   public schema = schema.create({
     code: schema.string(),
-    title: schema.string.optional(),
+    title: schema.string(),
     description: schema.string.optional(),
     director: schema.string.optional(),
     casts: schema.array.optional().members(schema.string()),
@@ -33,10 +33,32 @@ export default class UpdateVideoValidator {
     maker: schema.string.optional(),
     releaseDate: schema.string.optional(),
     duration: schema.number.optional(),
-    published: schema.enum.optional(['on', 'off'] as const),
-    cover: schema.string.optional(),
-    image: schema.string.optional(),
-    images: schema.array.optional().members(schema.string()),
+    cover: schema.object().members({
+      path: schema.string(),
+      data: schema.string(),
+      size: schema.number(),
+      width: schema.number(),
+      height: schema.number(),
+      type: schema.string(),
+    }),
+    image: schema.object().members({
+      path: schema.string(),
+      data: schema.string(),
+      size: schema.number(),
+      width: schema.number(),
+      height: schema.number(),
+      type: schema.string(),
+    }),
+    images: schema.array().members(
+      schema.object().members({
+        path: schema.string(),
+        data: schema.string(),
+        size: schema.number(),
+        width: schema.number(),
+        height: schema.number(),
+        type: schema.string(),
+      })
+    ),
   })
 
   /**
