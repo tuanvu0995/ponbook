@@ -53,11 +53,13 @@ export default class VideoRepo {
       .map((tag) => tag.id)
       .filter((id) => !_.isNil(id))
       .value()
+
+    const randomNumber = Date.now() * 1000 + Math.floor(Math.random() * 1000)
     const randomVideoIds = await Database.from('video_tags')
       .whereIn('tag_id', tagIds)
-      .orderByRaw('RAND()')
+      .orderByRaw(`RAND(${randomNumber})`)
       .select('video_id')
-      .limit(Math.min(limit, 15))
+      .limit(limit)
 
     const relatedVideos = await Video.query()
       .whereIn(
