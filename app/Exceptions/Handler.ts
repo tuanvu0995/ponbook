@@ -15,6 +15,7 @@
 
 import Logger from '@ioc:Adonis/Core/Logger'
 import Sentry from '@ioc:Adonis/Addons/Sentry'
+import { CaptureContext, Severity } from '@sentry/types'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
@@ -28,21 +29,39 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
   protected context(ctx: HttpContextContract) {
     return {
-      userId: ctx.auth.user?.id,
-      userEmail: ctx.auth.user?.email,
       requestId: ctx.request.id(),
       url: ctx.request.url(),
       method: ctx.request.method(),
       headers: ctx.request.headers(),
+      body: ctx.request.body(),
+      query: ctx.request.qs(),
     }
   }
 
-  public async handle(error, ctx) {
-    Sentry.captureException(error, ctx)
+  public report(error: this, ctx: HttpContextContract) {
+    if (!this.shouldReport(error)) {
+      return
+    }
 
-    /**
-     * Self handle the validation exception
-     */
+    const captureContext: CaptureContext = {
+      user: {
+        name: 'guest',
+      },
+      level: Severity.Error,
+      contexts: {
+        'http-context': this.context(ctx),
+      },
+      tags: {
+        requestId: ctx.request.id(),
+      },
+      requestSession: {
+        status: 'errored',
+      },
+    }
+    Sentry.captureException(error, captureContext)
+  }
+
+  public async handle(error, ctx) {
     if (error.code === 'E_VALIDATION_FAILURE') {
       return ctx.response.status(422).json(error.messages)
     }

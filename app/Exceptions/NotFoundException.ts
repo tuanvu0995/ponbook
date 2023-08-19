@@ -1,5 +1,4 @@
 import { Exception } from '@adonisjs/core/build/standalone'
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 /*
 |--------------------------------------------------------------------------
@@ -13,18 +12,12 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 | new NotFoundException('message', 500, 'E_RUNTIME_EXCEPTION')
 |
 */
+
+const message = 'Resource not found.'
+const status = 404
+const E_RESOURCE_NOT_FOUND = 'E_RESOURCE_NOT_FOUND'
 export default class NotFoundException extends Exception {
-  private isApi: boolean = false
-
-  constructor(message: string, isApi: boolean = false) {
-    super(message, 404, 'E_RESOURCE_NOT_FOUND')
-    this.isApi = isApi
-  }
-
-  public async handle(error: this, ctx: HttpContextContract) {
-    if (!this.isApi) {
-      return ctx.view.render('errors/not-found 3333')
-    }
-    ctx.response.status(error.status).send(error.message)
+  constructor(errorMessage?: string) {
+    super(errorMessage || message, status, E_RESOURCE_NOT_FOUND)
   }
 }
