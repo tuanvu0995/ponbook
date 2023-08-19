@@ -42,3 +42,4 @@ jobs:
           status: ${{ job.status }}
           content: 'Ponbook API is deployed to Fly.io!'
           title: 'Ponbook API Deploy'
+          username: 'GitHub Actions'
