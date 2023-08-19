@@ -22,6 +22,7 @@ type VideoImage = {
 export default class DataSourcesController {
   public async upset({ request, response }: HttpContextContract) {
     const code = request.input('code')
+    const override = request.input('override')
     if (!code) throw new BadRequestException('code is required')
 
     Logger.info(`---------> Upset video: ${code}`)
@@ -31,7 +32,7 @@ export default class DataSourcesController {
     payload.title = payload.title.replace(code, '').trim()
 
     const existsVideo = await Video.query().where('code', code).first()
-    if (existsVideo) {
+    if (existsVideo && Boolean(override)) {
       Logger.info(`---------> Video exists => update video: ${code}`)
       await this.updateVideo(existsVideo, payload)
 

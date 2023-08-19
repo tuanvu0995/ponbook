@@ -51,6 +51,8 @@ Route.group(() => {
     .as('videos.comments')
     .middleware('paginate')
 
+  Route.post('/by-code', 'VideoController.getVideoByCode').as('videos.byCode')
+
   Route.post('/:uid/favorite', 'VideoController.favorite')
     .as('videos.favorite')
     .middleware('auth:api')
