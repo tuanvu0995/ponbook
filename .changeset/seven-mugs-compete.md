@@ -1,0 +1,5 @@
+---
+'ponbook': minor
+---
+
+feat: categories
