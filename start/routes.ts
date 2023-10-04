@@ -31,6 +31,7 @@ Route.group(() => {
   Route.post('/sign-in', 'AuthController.signIn').as('signIn')
   Route.post('/sign-up', 'AuthController.signUp').as('signUp')
   Route.post('/logout', 'AuthController.logout').as('logout').middleware('auth:api')
+  Route.get('/me', 'AuthController.me').as('me').middleware('auth:api')
 })
   .prefix('v1/auth')
   .as('v1.auth')
