@@ -1,12 +1,26 @@
 name: Deploy
 on:
   workflow_dispatch:
+    inputs:
+        Environment:
+          description: 'Target environment'
+          type: choice
+          required: true
+          default: 'production'
+          options:
+            - 'production'
+            - 'staging'
+        Tag:
+          description: 'Tag to deploy'
+          type: string
+          required: false
+          default: 'latest'
 
 permissions: {}
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write # to create release (changesets/action)
       pull-requests: write # to create pull request (changesets/action)
@@ -42,6 +56,5 @@ jobs:
           SOURCE: 'build/'
           EXCLUDE: '/dist/, /node_modules/'
           SCRIPT_AFTER: |
-            whoami
-            npm ci --omit=dev --ignore-scripts
+            npm ci --omit=dev
             pm2 reload ecosystem.config.js --update-env
