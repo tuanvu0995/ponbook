@@ -41,6 +41,7 @@
       "pattern": "resources/views/**/*.edge",
       "reloadServer": false
     },
+    "ecosystem.config.js",
     "doppler.js"
   ],
   "aceProviders": [

@@ -1,8 +1,5 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions: {}
@@ -46,5 +43,5 @@ jobs:
           EXCLUDE: '/dist/, /node_modules/'
           SCRIPT_AFTER: |
             whoami
-            npm ci --omit=dev
+            npm ci --omit=dev --ignore-scripts
             pm2 reload ecosystem.config.js --update-env

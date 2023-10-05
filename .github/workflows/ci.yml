@@ -9,8 +9,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache node_modules
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Cache node modules
+        id: cache-npm
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
@@ -21,11 +24,6 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3.7.0
-        with:
-          node-version: '16.x'
 
       - name: Install dependencies
         run: npm ci
