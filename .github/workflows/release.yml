@@ -11,19 +11,86 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && github.base_ref == 'main' && github.head_ref == 'changeset-release/trunk'
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - name: Set git user
+        run: |
+          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+
+      - uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: Install Dependencies
         run: npm ci
 
-      - name: Create Release Pull Request
+      - name: Get tag version
+        id: get-tag-version
+        run: |
+          VERSION=$(cat ./package.json | grep -m 1 version | sed 's/[^0-9.]//g')
+          PONBOOK_NEW_TAG=v$VERSION
+          echo "PONBOOK_NEW_TAG=$PONBOOK_NEW_TAG" >> $GITHUB_ENV
+          echo '::set-output name=newTag::'$PONBOOK_NEW_TAG
+          echo '::set-output name=version::'$VERSION
+          echo "New release tag is $PONBOOK_NEW_TAG"
+
+      - name: Check should create release
+        id: should-create-tag
+        run: |
+          if [ $(git tag -l "$PONBOOK_NEW_TAG") ]; then
+            echo '::set-output name=PONBOOK_TAG_EXISTS::true'
+          else
+            echo '::set-output name=PONBOOK_TAG_EXISTS::false'
+          fi
+
+      - name: Release apps and packages
+        if: steps.should-create-tag.outputs.PONBOOK_TAG_EXISTS == 'false'
         uses: changesets/action@v1
+        with:
+          publish: npx changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract release notes
+        if: steps.should-create-tag.outputs.PONBOOK_TAG_EXISTS == 'false'
+        id: extract-release-notes
+        uses: cardinalby/git-get-release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: "reaction@${{ steps.get-tag-version.outputs.version }}"
+          doNotFailIfNotFound: true
+
+      - name: Create tag
+        if: steps.extract-release-notes.outputs.body != ''
+        run: |
+          git tag -a $PONBOOK_NEW_TAG -m "chore(release): $PONBOOK_NEW_TAG [skip ci]"
+          git push origin $PONBOOK_NEW_TAG
+          echo "Create tag success: $PONBOOK_NEW_TAG"
+
+      - name: Create Release
+        if: steps.extract-release-notes.outputs.body != ''
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: ${{ steps.extract-release-notes.outputs.body }}
+          tag_name: ${{ steps.get-tag-version.outputs.newTag }}
+          draft: false
+          prerelease: false
