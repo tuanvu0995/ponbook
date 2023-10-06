@@ -27,16 +27,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Checkout Latest Release
-        if: ${{ github.event.inputs.Tag == 'latest' }}
-        run: |
-          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-          git checkout $LATEST_TAG
-      - name: Checkout Release
-        if: ${{ github.event.inputs.Tag != 'latest' }}
-        run: |
-          git checkout ${{ github.event.inputs.Tag }}
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18
