@@ -17,7 +17,7 @@ export default class CategoryRepo {
       slug: input.slug,
       name: input.name,
     })
-    input.breadcrumbs = breadcrumbs
+    input.breadcrumbs = JSON.stringify(breadcrumbs)
     return await Category.create(input)
   }
 

@@ -45,13 +45,13 @@ export default class Category extends AppBaseModel {
 
   @column({
     prepare: (value) => {
-      return value ? JSON.stringify(value) : "[]"
+      return value ? JSON.stringify(value) : '[]'
     },
     serialize: (value) => {
       try {
         return value ? JSON.parse(value) : []
       } catch (err) {
-        return []
+        return value
       }
     },
   })

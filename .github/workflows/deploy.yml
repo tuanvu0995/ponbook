@@ -61,6 +61,6 @@ jobs:
           SOURCE: 'build/'
           EXCLUDE: '/dist/, /node_modules/'
           SCRIPT_AFTER: |
-            whoami
-            npm ci --omit=dev
+            cd /var/www/app/
+            npm install --omit=dev
             pm2 reload ecosystem.config.js --update-env
