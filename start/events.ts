@@ -24,8 +24,3 @@ Event.on('db:query', 'Db.onDbQuery')
 Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('category:calculate', 'Category.calculate')
-
-// Event.on('box:viewing', 'BoxListener.onBoxViewing')
-
-// Event.on('request:received', 'RequestListener.onReceived')
-// Event.on('request:responded', 'RequestListener.onResponded')
