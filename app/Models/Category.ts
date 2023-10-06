@@ -45,11 +45,15 @@ export default class Category extends AppBaseModel {
 
   @column({
     prepare: (value) => {
-      return value ? JSON.stringify(value) : []
+      return value ? JSON.stringify(value) : "[]"
     },
     serialize: (value) => {
-      return value ? JSON.parse(value) : []
-    }
+      try {
+        return value ? JSON.parse(value) : []
+      } catch (err) {
+        return []
+      }
+    },
   })
   public breadcrumbs: Breadcrumb[]
 
@@ -76,5 +80,4 @@ export default class Category extends AppBaseModel {
 
     Event.emit('category:calculate', category)
   }
-
 }
