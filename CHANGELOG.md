@@ -1,5 +1,11 @@
 # ponbook
 
+## 2.1.4
+
+### Patch Changes
+
+- 5a5bae4: fix: serialize category breadcrumbs
+
 ## 2.1.3
 
 ### Patch Changes
