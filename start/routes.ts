@@ -180,6 +180,22 @@ Route.group(() => {
 
 /*
 |--------------------------------------------------------------------------
+| Categories Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/:slug/videos', 'CategoryController.getVideosBySlug')
+    .as('getVideosBySlug')
+    .middleware('paginate')
+  Route.get('/:slug', 'CategoryController.getBySlug').as('getBySlug')
+  Route.post('/', 'CategoryController.store').as('store')
+  Route.get('/', 'CategoryController.index').as('index').middleware('paginate')
+})
+  .as('v1.categories')
+  .prefix('v1/categories')
+
+/*
+|--------------------------------------------------------------------------
 | Data Sources Routes
 |--------------------------------------------------------------------------
 */
@@ -188,4 +204,3 @@ Route.group(() => {
 })
   .as('v1.data-sources')
   .prefix('v1/data-sources')
-  .middleware('appAuth')
