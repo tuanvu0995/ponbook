@@ -25,22 +25,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Get tag version
         id: get-tag-version
         run: |
@@ -67,30 +51,3 @@ jobs:
           publish: npx changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract release notes
-        if: steps.should-create-tag.outputs.PONBOOK_TAG_EXISTS == 'false'
-        id: extract-release-notes
-        uses: cardinalby/git-get-release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag: "reaction@${{ steps.get-tag-version.outputs.version }}"
-          doNotFailIfNotFound: true
-
-      - name: Create tag
-        if: steps.extract-release-notes.outputs.body != ''
-        run: |
-          git tag -a $PONBOOK_NEW_TAG -m "chore(release): $PONBOOK_NEW_TAG [skip ci]"
-          git push origin $PONBOOK_NEW_TAG
-          echo "Create tag success: $PONBOOK_NEW_TAG"
-
-      - name: Create Release
-        if: steps.extract-release-notes.outputs.body != ''
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: ${{ steps.extract-release-notes.outputs.body }}
-          tag_name: ${{ steps.get-tag-version.outputs.newTag }}
-          draft: false
-          prerelease: false
