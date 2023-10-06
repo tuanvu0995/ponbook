@@ -10,6 +10,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   Version:
     name: Version
+    if: github.base_ref == 'main' && github.head_ref != 'changeset-release/trunk'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

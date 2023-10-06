@@ -11,7 +11,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && github.base_ref == 'main' && github.head_ref == 'changeset-release/trunk'
+    if: github.event.pull_request.merged == true && github.base_ref == 'main' && github.head_ref == 'changeset-release/main'
     steps:
       - name: Set git user
         run: |
