@@ -33,7 +33,7 @@ export default class CategoryController {
     if (!category) {
       throw new NotFoundException('Category not found')
     }
-    return response.status(200).json(category)
+    return response.status(200).json(category.serialize())
   }
 
   public async getVideosBySlug({
@@ -48,6 +48,8 @@ export default class CategoryController {
     const videos = await category
       .related('videos')
       .query()
+      .preload('cover')
+      .preload('casts')
       .where('is_published', true)
       .paginate(pagination.page, pagination.limit)
     return response.json(videos)

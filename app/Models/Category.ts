@@ -37,17 +37,19 @@ export default class Category extends AppBaseModel {
   @column()
   public description: string
 
-  @column()
+  @column({ serializeAs: null })
   public calculationMethod: CalculationMethod
 
-  @column()
+  @column({ serializeAs: null })
   public filters: FilterData
 
   @column({
     prepare: (value) => {
-      console.log(value)
       return value ? JSON.stringify(value) : []
     },
+    serialize: (value) => {
+      return value ? JSON.parse(value) : []
+    }
   })
   public breadcrumbs: Breadcrumb[]
 
