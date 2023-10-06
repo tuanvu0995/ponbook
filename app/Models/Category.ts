@@ -43,6 +43,9 @@ export default class Category extends AppBaseModel {
   @column({ serializeAs: null })
   public filters: FilterData
 
+  @column()
+  public isPublished: boolean
+
   @column({
     prepare: (value) => {
       return value ? JSON.stringify(value) : '[]'

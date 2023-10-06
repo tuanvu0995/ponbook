@@ -18,6 +18,7 @@ export default class CategoryRepo {
       name: input.name,
     })
     input.breadcrumbs = JSON.stringify(breadcrumbs)
+    input.isPublished = true
     return await Category.create(input)
   }
 
