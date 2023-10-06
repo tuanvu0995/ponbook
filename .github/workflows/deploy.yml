@@ -26,6 +26,7 @@ jobs:
       pull-requests: write # to create pull request (changesets/action)
 
     steps:
+      - uses: actions/checkout@v4
       - name: Checkout Latest Release
         if: ${{ github.event.inputs.Tag == 'latest' }}
         run: |
