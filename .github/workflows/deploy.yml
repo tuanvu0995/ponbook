@@ -26,18 +26,32 @@ jobs:
       pull-requests: write # to create pull request (changesets/action)
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Latest Release
+        if: ${{ github.event.inputs.Tag == 'latest' }}
+        run: |
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          git checkout $LATEST_TAG
+      - name: Checkout Release
+        if: ${{ github.event.inputs.Tag != 'latest' }}
+        run: |
+          git checkout ${{ github.event.inputs.Tag }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
-          key: ponbook-node-modules-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       - name: Install Dependencies
         run: npm ci
