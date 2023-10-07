@@ -1,5 +1,11 @@
 # ponbook
 
+## 2.1.5
+
+### Patch Changes
+
+- b85681f: fix: category video order
+
 ## 2.1.4
 
 ### Patch Changes
