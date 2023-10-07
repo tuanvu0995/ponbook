@@ -50,6 +50,7 @@ export default class CategoryController {
       .query()
       .preload('cover')
       .preload('casts')
+      .orderBy('release_date', 'desc')
       .where('is_published', true)
       .paginate(pagination.page, pagination.limit)
     return response.json(videos)
