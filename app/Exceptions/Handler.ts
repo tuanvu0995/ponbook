@@ -62,13 +62,12 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
-    console.log(error)
     if (error.code === 'E_VALIDATION_FAILURE') {
       return ctx.response.status(422).json(error.messages)
     }
 
     const statusCode = error.status || 500
-    const message = error.message || 'Something went wrong. Please try again later.'
+    const message = this.getPlaneMessage(error)
 
     // send html if request is text html
     if (ctx.request.accepts(['html'])) {
@@ -76,12 +75,18 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       return ctx.view.render('error', { title, error })
     }
 
-    const mesageArr = message.split(': ')
     return ctx.response.status(statusCode).json({
       error: {
         code: error.code,
-        message: mesageArr[mesageArr.length - 1],
+        message,
       },
     })
+  }
+
+  private getPlaneMessage(error) {
+    const mesageArr = error.message.split(': ')
+    const message =
+      mesageArr[mesageArr.length - 1] || 'Something went wrong. Please try again later.'
+    return message
   }
 }
