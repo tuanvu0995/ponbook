@@ -115,6 +115,9 @@ export default class User extends AppBaseModel {
   @hasMany(() => Box)
   public boxes: HasMany<typeof Box>
 
+  @hasMany(() => Comment)
+  public comments: HasMany<typeof Comment>
+
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()
       .innerJoin('user_permissions', 'permissions.id', 'user_permissions.permission_id')

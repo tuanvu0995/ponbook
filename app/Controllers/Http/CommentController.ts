@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import { marked } from 'marked'
+import sanitizeHtml from 'sanitize-html'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import { HttpRequestPagination } from '@ioc:Contracts'
@@ -6,32 +8,41 @@ import VideoRepo from 'App/Repos/VideoRepo'
 import CommentRepo from 'App/Repos/CommentRepo'
 import CreateCommentValidator from 'App/Validators/CreateCommentValidator'
 import BadRequestException from 'App/Exceptions/BadRequestException'
+import { DateTime } from 'luxon'
 
 export default class CommentController {
   public async store({ request, response, auth }: HttpContextContract) {
     const body = await request.validate(CreateCommentValidator)
 
-    const video = await VideoRepo.getVideoByUid(body.videoUid)
-    if (_.isNil(video)) throw new NotFoundException('Video not found')
+    const user = auth.user!
+
+    let video
+    if (body.videoUid) {
+      video = await VideoRepo.getVideoByUid(body.videoUid)
+      if (_.isNil(video)) throw new NotFoundException('Video not found')
+    }
 
     let parent
-    if (body.commentUid) {
-      parent = await CommentRepo.getCommentByUid(body.commentUid)
+    if (body.parentUid) {
+      parent = await CommentRepo.getCommentByUid(body.parentUid)
       if (_.isNil(parent)) throw new NotFoundException('Comment not found')
     }
 
+    const trimBody = body.content.trim()
+    const cleanText = sanitizeHtml(marked.parse(trimBody))
+
     const createBody = {
-      videoId: video.id,
-      userId: auth.user!.id,
-      content: body.content,
+      videoId: video?.id,
       parentId: parent?.id,
-      isApproved: true,
-      isDraft: false,
-      attachmentImages: '[]',
+      content: trimBody,
+      htmlContent: cleanText,
+      isPublished: true,
+      publishedAt: DateTime.now(),
     }
 
-    const comment = await CommentRepo.createComment(createBody)
-    await comment.load('owner')
+    const comment = await user.related('comments').create(createBody)
+
+    await comment.load('user')
     return response.json(comment)
   }
 
@@ -43,8 +54,25 @@ export default class CommentController {
     const { uid } = params
     const video = await VideoRepo.getVideoByUid(uid)
     if (_.isNil(video)) throw new NotFoundException('Video not found')
-
     const comments = await CommentRepo.getCommentsByVideo(video, pagination.page, pagination.limit)
+    return response.json(comments)
+  }
+
+  public async getCommentsByParentUid({
+    params,
+    response,
+    pagination,
+  }: HttpContextContract & HttpRequestPagination) {
+    const { uid } = params
+
+    const comment = await CommentRepo.getCommentByUid(uid)
+    if (_.isNil(comment)) throw new NotFoundException('Comment not found')
+
+    const comments = await CommentRepo.getCommentsByParent(
+      comment,
+      pagination.page,
+      pagination.limit
+    )
 
     return response.json(comments)
   }
@@ -56,15 +84,11 @@ export default class CommentController {
 
     if (comment.userId !== auth.user!.id) throw new NotFoundException('Comment not found')
 
-    const updateContent = request.input('content')
-    if (_.isNil(updateContent)) throw new BadRequestException('Content is required')
+    const content = request.input('content')
+    if (_.isNil(content)) throw new BadRequestException('Content is required')
 
-    const updateBody = {
-      content: updateContent,
-    }
-
-    const updatedComment = await CommentRepo.updateComment(comment, updateBody)
-    await updatedComment.load('owner')
+    const updatedComment = await CommentRepo.updateComment(comment, { content })
+    await updatedComment.load('user')
     return response.json(updatedComment)
   }
 
