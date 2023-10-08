@@ -1,5 +1,11 @@
 # ponbook
 
+## 2.2.0
+
+### Minor Changes
+
+- bfe8cb7: feat: add comment
+
 ## 2.1.5
 
 ### Patch Changes
