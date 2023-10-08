@@ -62,6 +62,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
+    console.log(error)
     if (error.code === 'E_VALIDATION_FAILURE') {
       return ctx.response.status(422).json(error.messages)
     }
@@ -69,10 +70,17 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     const statusCode = error.status || 500
     const message = error.message || 'Something went wrong. Please try again later.'
 
+    // send html if request is text html
+    if (ctx.request.accepts(['html'])) {
+      const title = statusCode === 500 ? 'Internal Server Error' : error.message
+      return ctx.view.render('error', { title, error })
+    }
+
+    const mesageArr = message.split(': ')
     return ctx.response.status(statusCode).json({
       error: {
         code: error.code,
-        message,
+        message: mesageArr[mesageArr.length - 1],
       },
     })
   }

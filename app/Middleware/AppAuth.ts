@@ -8,7 +8,7 @@ export default class AppAuth {
 
     const appAuthKey = request.header('x-ponbook-app-key')?.trim()
     if (appAuthKey !== Env.get('PB_APP_KEY')) {
-      throw new BadRequestException('Invalid app key')
+      throw new BadRequestException('You do not have permission to access this resource.')
     }
 
     await next()
