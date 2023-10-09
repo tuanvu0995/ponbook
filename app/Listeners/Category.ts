@@ -34,7 +34,7 @@ export default class CategoryListender {
       .whereExists((qs) => qs.from('category_videos').whereIn('category_id', parentIds))
       .where((query) => {
         keywords.map((key) =>
-          query.orWhereRaw(`title LIKE '%${key}%'`).orWhereRaw(`description LIKE '%${key}%'`)
+          query.whereRaw(`title LIKE '%${key}%'`).orWhereRaw(`description LIKE '%${key}%'`)
         )
       })
   }
@@ -42,7 +42,7 @@ export default class CategoryListender {
   private async searchVideos(keywords: string[]): Promise<Video[]> {
     return await Video.query().where((query) => {
       keywords.map((key) =>
-        query.orWhereRaw(`title LIKE '%${key}%'`).orWhereRaw(`description LIKE '%${key}%'`)
+        query.whereRaw(`title LIKE '%${key}%'`).orWhereRaw(`description LIKE '%${key}%'`)
       )
     })
   }

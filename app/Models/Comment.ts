@@ -26,13 +26,13 @@ export default class Comment extends BaseModel {
   @column()
   public uid: string
 
-  @column()
+  @column({ serializeAs: null })
   public userId: number
 
-  @column()
+  @column({ serializeAs: null })
   public videoId: number
 
-  @column()
+  @column({ serializeAs: null })
   public parentId?: number
 
   @column()
@@ -44,7 +44,7 @@ export default class Comment extends BaseModel {
   @column()
   public htmlContent: string
 
-  @column()
+  @column({ serializeAs: null })
   public isPublished: boolean
 
   @column()
@@ -62,7 +62,7 @@ export default class Comment extends BaseModel {
   @column()
   public commentCounts: number
 
-  @column.dateTime()
+  @column.dateTime({ serializeAs: null })
   public publishedAt?: DateTime | null
 
   @belongsTo(() => User)
