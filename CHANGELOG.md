@@ -1,5 +1,11 @@
 # ponbook
 
+## 2.2.1
+
+### Patch Changes
+
+- 44cb7ce: feat: rate limit for send comment api
+
 ## 2.2.0
 
 ### Minor Changes
