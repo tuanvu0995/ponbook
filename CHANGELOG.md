@@ -1,5 +1,11 @@
 # ponbook
 
+## 2.3.0
+
+### Minor Changes
+
+- a6d19ab: feat: meili search
+
 ## 2.2.1
 
 ### Patch Changes
