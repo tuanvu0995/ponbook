@@ -14,6 +14,7 @@ Event.on('user:created', 'User.onUserCreated')
 Event.on('video:created', 'Video.onVideoCreated')
 Event.on('video:updated', 'Video.onVideoUpdated')
 Event.on('video:updated', 'Video.onVideoUpdated')
+Event.on('video:viewed', 'Video.onViewed')
 
 Event.on('comment:created', 'Comment.onCommentCreated')
 
@@ -25,5 +26,6 @@ Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('category:calculate', 'Category.calculate')
 
-
 Event.on('search:indexing', 'Search.indexing')
+
+Event.on('job:summaryViews', 'Job.summaryViews')

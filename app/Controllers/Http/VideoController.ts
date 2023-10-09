@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Event from '@ioc:Adonis/Core/Event'
 import VideoRepo from 'App/Repos/VideoRepo'
 import { FavoriteStatus } from 'App/Domain/Video/VideoDomain'
 
@@ -6,6 +7,9 @@ export default class VideoController {
   public async show({ params, response }: HttpContextContract) {
     const { uid } = params
     const video = await VideoRepo.getVideoByUid(uid, true)
+
+    Event.emit('video:viewed', video)
+
     return response.json(video)
   }
 

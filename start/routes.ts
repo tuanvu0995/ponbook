@@ -210,3 +210,15 @@ Route.group(() => {
 })
   .as('v1.data-sources')
   .prefix('v1/data-sources')
+
+
+/*
+|--------------------------------------------------------------------------
+| Jobs Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('/summary-views', 'JobsController.summaryViews').as('summaryViews')
+})
+  .as('v1.jobs')
+  .prefix('v1/jobs')

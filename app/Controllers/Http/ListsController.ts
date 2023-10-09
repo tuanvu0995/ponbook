@@ -26,7 +26,7 @@ export default class ListsController {
     response,
   }: HttpContextContract & HttpRequestPagination) {
     const { page, limit } = pagination
-    const popularVideos = await CollectionRepo.getVideosByCollectionSlug('popular', page, limit)
+    const popularVideos = await VideoRepo.getPopularVideos(page, limit)
     if (_.isNil(popularVideos)) throw new InternalServerErrorException()
     return response.json(popularVideos)
   }

@@ -124,4 +124,23 @@ export default class VideoRepo {
 
     return videos
   }
+
+  public static async getPopularVideos(
+    page: number = 1,
+    limit: number = 15
+  ): Promise<ModelPaginatorContract<Video>> {
+    const sevenDaysAgo = DateTime.now().minus({ days: 7 }).toSQL()
+    const popularVideos = await Video.query()
+      .preload('cover')
+      .preload('casts')
+      .innerJoin('views', 'videos.id', 'views.referer_id')
+      .where('views.range', 'day')
+      .where('views.created_at', '>=', sevenDaysAgo)
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderByRaw('SUM(views.count) desc')
+      .paginate(page, limit)
+
+    return popularVideos
+  }
 }

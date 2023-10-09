@@ -5,7 +5,8 @@
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/mail/build/commands"
+    "@adonisjs/mail/build/commands",
+    "@rlanz/bull-queue/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -31,7 +32,8 @@
     "@adonisjs/mail",
     "adonis5-sentry",
     "adonis-lucid-soft-deletes",
-    "./providers/MeiliSearch/Provider"
+    "./providers/MeiliSearch/Provider",
+    "@rlanz/bull-queue"
   ],
   "metaFiles": [
     {
