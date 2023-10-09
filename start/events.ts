@@ -24,3 +24,6 @@ Event.on('db:query', 'Db.onDbQuery')
 Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('category:calculate', 'Category.calculate')
+
+
+Event.on('search:indexing', 'Search.indexing')
