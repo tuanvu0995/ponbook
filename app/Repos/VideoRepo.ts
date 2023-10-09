@@ -138,7 +138,7 @@ export default class VideoRepo {
       .where('views.created_at', '>=', sevenDaysAgo)
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderByRaw('SUM(views.count) desc')
+      .orderBy('views.count', 'desc')
       .paginate(page, limit)
 
     return popularVideos
