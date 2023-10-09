@@ -4,17 +4,30 @@ import sanitizeHtml from 'sanitize-html'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import { HttpRequestPagination } from '@ioc:Contracts'
+import { Limiter } from '@adonisjs/limiter/build/services'
 import VideoRepo from 'App/Repos/VideoRepo'
 import CommentRepo from 'App/Repos/CommentRepo'
 import CreateCommentValidator from 'App/Validators/CreateCommentValidator'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import { DateTime } from 'luxon'
+import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 
 export default class CommentController {
   public async store({ request, response, auth }: HttpContextContract) {
-    const body = await request.validate(CreateCommentValidator)
-
     const user = auth.user!
+    const throttleKey = `send_comment_${user.uid}_${request.ip}`
+    const limiter = Limiter.use({
+      requests: 10,
+      duration: '2 mins',
+      blockDuration: '10 mins',
+    })
+    if (await limiter.isBlocked(throttleKey)) {
+      throw new TooManyRequestException(
+        'Send comment attempts exhausted. Please try after some time'
+      )
+    }
+
+    const body = await request.validate(CreateCommentValidator)
 
     let video
     if (body.videoUid) {
