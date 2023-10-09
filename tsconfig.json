@@ -36,8 +36,7 @@
       "@adonisjs/limiter",
       "@adonisjs/mail",
       "adonis5-sentry",
-      "adonis-lucid-soft-deletes",
-      "@rlanz/bull-queue"
+      "adonis-lucid-soft-deletes"
     ]
   }
 }

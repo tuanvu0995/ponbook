@@ -28,4 +28,4 @@ Event.on('category:calculate', 'Category.calculate')
 
 Event.on('search:indexing', 'Search.indexing')
 
-Event.on('job:summaryViews', 'Job.summaryViews')
+Event.on('task:summaryViews', 'Task.summaryViews')

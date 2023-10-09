@@ -1,25 +1,12 @@
 import _ from 'lodash'
-import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
-import Logger from '@ioc:Adonis/Core/Logger'
-import View from 'App/Models/View'
 import { DateTime } from 'luxon'
+import Logger from '@ioc:Adonis/Core/Logger'
 import Video from 'App/Models/Video'
+import View from 'App/Models/View'
 
-export type SummaryViewPayload = {
-  startTime: DateTime
-}
-
-export default class implements JobHandlerContract {
-  constructor(public job: Job) {
-    this.job = job
-  }
-
-  /**
-   * Base Entry point
-   */
-  public async handle() {
-
-    Logger.info('Job summaryViews is running')
+export default class Task {
+  public async summaryViews() {
+    Logger.info('Tasks summaryViews is running')
     const time = DateTime.now()
 
     const startOfDay = time.startOf('day')
@@ -50,9 +37,4 @@ export default class implements JobHandlerContract {
 
     Logger.info('Job summaryViews is finished')
   }
-
-  /**
-   * This is an optional method that gets called if it exists when the retries has exceeded and is marked failed.
-   */
-  public async failed() {}
 }

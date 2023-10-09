@@ -1,14 +1,13 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Event from '@ioc:Adonis/Core/Event'
-import { DateTime } from 'luxon'
 
-export default class JobsController {
+export default class TasksController {
   public async summaryViews({ response }: HttpContextContract) {
-    Event.emit('job:summaryViews', { startTime: DateTime.now() })
+    Event.emit('task:summaryViews', undefined)
 
     return response.json({
       success: true,
-      message: 'Job summaryViews is running',
+      message: 'Task summaryViews is running',
     })
   }
 }

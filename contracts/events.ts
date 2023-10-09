@@ -10,7 +10,6 @@ import Contact from 'App/Models/Contact'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import Category from 'App/Models/Category'
-import { SummaryViewPayload } from 'App/Jobs/SummaryView'
 
 declare module '@ioc:Adonis/Core/Event' {
   /*
@@ -42,7 +41,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'contact:created': Contact
     'category:calculate': Category
     'category:recalculate': undefined
-
-    'job:summaryViews': SummaryViewPayload
+    'tasks:summaryViews': undefined
   }
 }
