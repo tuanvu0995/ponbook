@@ -2,7 +2,6 @@ import _ from 'lodash'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { HttpRequestPagination } from '@ioc:Contracts'
 import InternalServerErrorException from 'App/Exceptions/InternalServerErrorException'
-import CollectionRepo from 'App/Repos/CollectionRepo'
 import VideoRepo from 'App/Repos/VideoRepo'
 
 export default class ListsController {
