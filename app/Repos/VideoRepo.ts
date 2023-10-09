@@ -82,7 +82,7 @@ export default class VideoRepo {
       .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('release_date', 'desc')
+      .orderBy('id', 'desc')
       .paginate(page, limit)
 
     return recentVideos
