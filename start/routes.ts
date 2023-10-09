@@ -166,6 +166,8 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.post('', 'SearchesController.search').as('search')
+  Route.post('/search/at', 'SearchesController.atSearch').as('atSearch')
+  Route.post('/indexing', 'SearchesController.indexing').as('indexing')
 })
   .as('v1.searches')
   .prefix('v1/searches')
