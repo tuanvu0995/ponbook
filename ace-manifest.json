@@ -12,6 +12,18 @@
       "aliases": [],
       "flags": []
     },
+    "video:clean_duplicate": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/VideoCleanDuplicate",
+      "commandName": "video:clean_duplicate",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
@@ -564,46 +576,6 @@
           "name": "name",
           "required": true,
           "description": "Name of the mailer class"
-        }
-      ],
-      "aliases": [],
-      "flags": []
-    },
-    "queue:listen": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": true
-      },
-      "commandPath": "@rlanz/bull-queue/build/commands/QueueListener",
-      "commandName": "queue:listen",
-      "description": "Listen to one or multiple queues",
-      "args": [],
-      "aliases": [],
-      "flags": [
-        {
-          "name": "queue",
-          "propertyName": "queue",
-          "type": "array",
-          "alias": "q",
-          "description": "The queue(s) to listen on"
-        }
-      ]
-    },
-    "make:job": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "@rlanz/bull-queue/build/commands/MakeJob",
-      "commandName": "make:job",
-      "description": "Make a new dispatch-able job",
-      "args": [
-        {
-          "type": "string",
-          "propertyName": "name",
-          "name": "name",
-          "required": true,
-          "description": "Name of the job class"
         }
       ],
       "aliases": [],

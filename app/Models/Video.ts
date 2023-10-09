@@ -20,6 +20,7 @@ import Comment from './Comment'
 import File from './File'
 import slugify from 'App/Helpers/slugify'
 import AppBaseModel from './AppBaseModel'
+import Category from './Category'
 
 export default class Video extends AppBaseModel {
   @column({ serializeAs: null })
@@ -135,6 +136,11 @@ export default class Video extends AppBaseModel {
     pivotTable: 'video_files',
   })
   public images: ManyToMany<typeof File>
+
+  @manyToMany(() => Category, {
+    pivotTable: 'category_videos',
+  })
+  public categories: ManyToMany<typeof Category>
 
   @beforeFind()
   public static where(query: ModelQueryBuilderContract<typeof Video>) {
