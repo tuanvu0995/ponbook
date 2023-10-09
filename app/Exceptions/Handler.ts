@@ -21,7 +21,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_RESOURCE_NOT_FOUND', 'E_VALIDATION_FAILURE']
-  protected ignoreStatuses = [404, 422, 403, 401]
+  protected ignoreStatuses = [404, 422, 403, 401, 400]
 
   constructor() {
     super(Logger)
