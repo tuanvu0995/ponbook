@@ -39,7 +39,6 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public report(error: this, ctx: HttpContextContract) {
-    Logger.error(error)
     if (!this.shouldReport(error)) {
       return
     }
