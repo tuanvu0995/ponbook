@@ -1,11 +1,23 @@
 import type { EventsList } from '@ioc:Adonis/Core/Event'
+import Event from '@ioc:Adonis/Core/Event'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Category from 'App/Models/Category'
 import Video from 'App/Models/Video'
 import CategoryRepo from 'App/Repos/CategoryRepo'
 
 export default class CategoryListender {
+  public async recalculate() {
+    Logger.info('Recalculate categories')
+
+    const categories = await Category.query()
+    categories.map((category) => Event.emit('category:calculate', category))
+  }
+
   public async calculate(category: EventsList['category:calculate']) {
+    if (category.filters && typeof category.filters === 'string') {
+      category.filters = JSON.parse(category.filters)
+    }
+
     Logger.info('Calculate category', {
       id: category.id,
       name: category.name,

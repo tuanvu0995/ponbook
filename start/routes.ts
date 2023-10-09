@@ -187,6 +187,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
+  Route.post('/recalculate', 'CategoryController.recalculate').as('recalculate')
   Route.get('/', 'CategoryController.index').as('index').middleware('paginate')
   Route.post('/', 'CategoryController.store').as('store')
   Route.get('/:slug/videos', 'CategoryController.getVideosBySlug')

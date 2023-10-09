@@ -1,3 +1,4 @@
+import Event from '@ioc:Adonis/Core/Event'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { HttpRequestPagination } from '@ioc:Contracts'
 import NotFoundException from 'App/Exceptions/NotFoundException'
@@ -11,6 +12,13 @@ export default class CategoryController {
     const category = await CategoryRepo.create(body)
 
     return response.status(200).json(category)
+  }
+
+  public async recalculate({ response }) {
+    Event.emit('category:recalculate', undefined)
+    return response.status(200).json({
+      message: 'Calculate category',
+    })
   }
 
   public async index({

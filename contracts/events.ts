@@ -39,5 +39,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'comment:created': Comment
     'contact:created': Contact
     'category:calculate': Category
+    'category:recalculate': undefined
   }
 }
