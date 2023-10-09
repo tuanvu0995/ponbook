@@ -32,19 +32,21 @@ export default class DataSourcesController {
     payload.title = payload.title.replace(code, '').trim()
 
     const existsVideo = await Video.query().where('code', code).first()
-    if (existsVideo && Boolean(override)) {
-      Logger.info(`---------> Video exists => update video: ${code}`)
-      await this.updateVideo(existsVideo, payload)
-
-      return response.status(201).send({ message: 'Updated' })
+    if (!existsVideo) {
+      Logger.info(`---------> Video not exists => create video: ${code}`)
+      const video = new Video()
+      video.code = code
+      video.userId = 1
+      await this.updateVideo(video, payload)
+      return response.status(201).send({ message: 'Created' })
     }
 
-    Logger.info(`---------> Video not exists => create video: ${code}`)
-    const video = new Video()
-    video.code = code
-    video.userId = 1
-    await this.updateVideo(video, payload)
-    return response.status(201).send({ message: 'Created' })
+    if (override) {
+      Logger.info(`---------> Video exists => update video: ${code}`)
+      await this.updateVideo(existsVideo, payload)
+    }
+
+    return response.status(201).send({ message: 'Updated' })
   }
 
   private async updateVideo(video: Video, payload: any) {
