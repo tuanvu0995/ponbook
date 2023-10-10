@@ -18,7 +18,16 @@ export default class AuthController {
     const password = request.input('password')
     const rememberMe = request.input('rememberMe')
 
-    const isUIDAsEmail = isEmail(uid)
+    console.log(uid, password, rememberMe)
+    if (!uid) {
+      throw new BadRequestException('Please provide a valid email or username')
+    }
+
+    if (!password) {
+      throw new BadRequestException('Please provide a valid password')
+    }
+
+    const uidIsEmail = isEmail(uid)
 
     const throttleKey = this.getThrottleKey(uid, request.ip())
     const limiter = Limiter.use({
@@ -32,23 +41,23 @@ export default class AuthController {
 
     const user = await User.query()
       .where((query) => {
-        isUIDAsEmail ? query.where('email', uid) : query.where('username', uid)
+        uidIsEmail ? query.where('email', uid) : query.where('username', uid)
       })
       .where('is_deleted', false)
       .first()
 
     if (!user) {
       await limiter.increment(throttleKey)
-      throw new BadRequestException(`Invalid ${isUIDAsEmail ? 'email' : 'username'} or password`)
+      throw new BadRequestException(`Invalid ${uidIsEmail ? 'email' : 'username'} or password`)
     }
 
     if (!(await Hash.verify(user.password, password))) {
       await limiter.increment(throttleKey)
-      throw new BadRequestException(`Invalid ${isUIDAsEmail ? 'email' : 'username'} or password`)
+      throw new BadRequestException(`Invalid ${uidIsEmail ? 'email' : 'username'} or password`)
     }
 
     const token = await auth.use('api').generate(user, {
-      expiresIn: rememberMe ? '30 days' : '1 day',
+      expiresIn: rememberMe ? '90 days' : '30 day',
     })
 
     return response.json(token)
