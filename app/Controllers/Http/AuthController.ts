@@ -56,7 +56,11 @@ export default class AuthController {
 
   public async signUp({ request, response, auth }: HttpContextContract) {
     const payload: any = await request.validate(UserRegisterValidator)
-    const user = await User.create(payload)
+    const user = await User.create({
+      username: payload.username?.toLowerCase(),
+      email: payload.email,
+      password: payload.password,
+    })
 
     Event.emit('user:created', user)
 
