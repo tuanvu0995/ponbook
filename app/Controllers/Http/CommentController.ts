@@ -11,6 +11,7 @@ import CreateCommentValidator from 'App/Validators/CreateCommentValidator'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import { DateTime } from 'luxon'
 import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
+import Comment from 'App/Models/Comment'
 
 export default class CommentController {
   public async store({ request, response, auth }: HttpContextContract) {
@@ -45,6 +46,7 @@ export default class CommentController {
     const cleanText = sanitizeHtml(marked.parse(trimBody))
 
     const createBody = {
+      userId: user.id,
       videoId: video?.id,
       parentId: parent?.id,
       content: trimBody,
@@ -53,8 +55,7 @@ export default class CommentController {
       publishedAt: DateTime.now(),
     }
 
-    const comment = await user.related('comments').create(createBody)
-
+    const comment = await Comment.create(createBody)
     await comment.load('user')
     return response.json(comment)
   }

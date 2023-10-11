@@ -73,7 +73,7 @@ export default class Comment extends BaseModel {
   @belongsTo(() => Comment, {
     foreignKey: 'parentId',
   })
-  public comment: BelongsTo<typeof Comment>
+  public parent: BelongsTo<typeof Comment>
 
   @manyToMany(() => User, {
     pivotTable: 'post_votes',
