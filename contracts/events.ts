@@ -10,27 +10,9 @@ import Contact from 'App/Models/Contact'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import Category from 'App/Models/Category'
+import Notification from 'App/Models/Notification'
 
 declare module '@ioc:Adonis/Core/Event' {
-  /*
-  |--------------------------------------------------------------------------
-  | Define typed events
-  |--------------------------------------------------------------------------
-  |
-  | You can define types for events inside the following interface and
-  | AdonisJS will make sure that all listeners and emit calls adheres
-  | to the defined types.
-  |
-  | For example:
-  |
-  | interface EventsList {
-  |   'new:user': UserModel
-  | }
-  |
-  | Now calling `Event.emit('new:user')` will statically ensure that passed value is
-  | an instance of the the UserModel only.
-  |
-  */
   interface EventsList {
     'user:created': User
     'user:logged-in': User
@@ -42,5 +24,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'category:calculate': Category
     'category:recalculate': undefined
     'tasks:summaryViews': undefined
+    'notification:created': Notification
   }
 }

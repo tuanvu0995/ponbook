@@ -9,6 +9,7 @@ export default class CommentRepo {
     return Comment.query()
       .preload('user')
       .where('video_id', video.id)
+      .whereNull('parent_id')
       .where('isPublished', true)
       .paginate(page, limit)
   }

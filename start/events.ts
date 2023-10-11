@@ -29,3 +29,5 @@ Event.on('category:calculate', 'Category.calculate')
 Event.on('search:indexing', 'Search.indexing')
 
 Event.on('task:summaryViews', 'Task.summaryViews')
+
+Event.on('notification:created', 'Notification.onNotificationCreated')

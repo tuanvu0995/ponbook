@@ -5,6 +5,7 @@ import {
   BelongsTo,
   HasMany,
   ManyToMany,
+  afterCreate,
   beforeCreate,
   belongsTo,
   column,
@@ -12,6 +13,7 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Database from '@ioc:Adonis/Lucid/Database'
+import Event from '@ioc:Adonis/Core/Event'
 import User from './User'
 import CamelCaseNamingStrategy from 'App/Strategies/CamelCaseNamingStrategy'
 
@@ -68,7 +70,9 @@ export default class Comment extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Comment)
+  @belongsTo(() => Comment, {
+    foreignKey: 'parentId',
+  })
   public comment: BelongsTo<typeof Comment>
 
   @manyToMany(() => User, {
@@ -95,6 +99,11 @@ export default class Comment extends BaseModel {
   @beforeCreate()
   public static async generateUid(comment: Comment) {
     comment.uid = uniqid()
+  }
+
+  @afterCreate()
+  public static async sendCommentCreatedEvent(comment: Comment) {
+    Event.emit('comment:created', comment)
   }
 
   public async increaseVote(vote: CommentVote) {
