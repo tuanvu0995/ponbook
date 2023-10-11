@@ -21,8 +21,7 @@ export default class CommentListener {
         await this.createParentCommentNotification(parent, comment)
       }
     } catch (err) {
-      console.log(err)
-      Logger.error('Error when create comment notification', err.message)
+      Logger.error(err, "Error when create comment's notification")
     }
   }
 

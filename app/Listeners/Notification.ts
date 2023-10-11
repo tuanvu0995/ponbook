@@ -39,8 +39,7 @@ export default class NotificationListener {
         }
       )
     } catch (err) {
-      console.log(err)
-      Logger.error('Error when send email notification', err.message)
+      Logger.error(err, 'Error when send email notification')
     }
   }
 }
