@@ -11,6 +11,7 @@ import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import Category from 'App/Models/Category'
 import Notification from 'App/Models/Notification'
+import { PointType } from 'App/Models/Point'
 
 declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
@@ -25,5 +26,11 @@ declare module '@ioc:Adonis/Core/Event' {
     'category:recalculate': undefined
     'tasks:summaryViews': undefined
     'notification:created': Notification
+    'point:reward': {
+      userId: number
+      amount: number
+      type: PointType
+      description?: string
+    }
   }
 }

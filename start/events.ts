@@ -31,3 +31,9 @@ Event.on('search:indexing', 'Search.indexing')
 Event.on('task:run', 'Task.run')
 
 Event.on('notification:created', 'Notification.onNotificationCreated')
+
+
+/**
+ * Points
+ */
+Event.on('point:reward', 'Point.onPointReward')

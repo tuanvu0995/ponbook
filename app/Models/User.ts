@@ -18,6 +18,9 @@ import Comment from './Comment'
 import Box from './Box'
 import AppBaseModel from './AppBaseModel'
 import Notification from './Notification'
+import Point from './Point'
+
+export type UserRank = 'egg' | 'bird' | 'chicken' | 'rooster' | 'rabbit' | 'phoenix' | 'dragon'
 
 export default class User extends AppBaseModel {
   @column()
@@ -69,6 +72,9 @@ export default class User extends AppBaseModel {
   public socialId?: string
 
   @column({ serializeAs: null })
+  public totalPoints: number
+
+  @column({ serializeAs: null })
   public socialToken?: string
 
   @column({ serializeAs: null })
@@ -77,6 +83,24 @@ export default class User extends AppBaseModel {
   @computed()
   public get fullName() {
     return _.chain([this.firstName, this.lastName]).filter(_.isString).join(' ').value()
+  }
+
+  @computed()
+  public get rank(): UserRank {
+    if (this.totalPoints < 100) {
+      return 'egg'
+    } else if (this.totalPoints < 450) {
+      return 'bird'
+    } else if (this.totalPoints < 900) {
+      return 'chicken'
+    } else if (this.totalPoints < 2500) {
+      return 'rooster'
+    } else if (this.totalPoints < 4500) {
+      return 'rabbit'
+    } else if (this.totalPoints < 7000) {
+      return 'phoenix'
+    }
+    return 'dragon'
   }
 
   @beforeSave()
@@ -121,6 +145,9 @@ export default class User extends AppBaseModel {
 
   @hasMany(() => Notification)
   public notifications: HasMany<typeof Notification>
+
+  @hasMany(() => Point)
+  public points: HasMany<typeof Point>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

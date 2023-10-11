@@ -3,6 +3,7 @@ import type { EventsList } from '@ioc:Adonis/Core/Event'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Comment from 'App/Models/Comment'
 import Env from '@ioc:Adonis/Core/Env'
+import Event from '@ioc:Adonis/Core/Event'
 import Notification from 'App/Models/Notification'
 import Video from 'App/Models/Video'
 
@@ -17,6 +18,12 @@ export default class CommentListener {
         'Comment created'
       )
       await this.createParentCommentNotification(comment)
+      Event.emit('point:reward', {
+        type: 'comment',
+        userId: comment.userId,
+        amount: 2,
+        description: 'Commented on a video',
+      })
     } catch (err) {
       Logger.error(err, "Error when create comment's notification")
     }
