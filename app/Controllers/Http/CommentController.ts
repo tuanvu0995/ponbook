@@ -36,7 +36,7 @@ export default class CommentController {
       if (_.isNil(video)) throw new NotFoundException('Video not found')
     }
 
-    let parent
+    let parent: Comment | null = null
     if (body.parentUid) {
       parent = await CommentRepo.getCommentByUid(body.parentUid)
       if (_.isNil(parent)) throw new NotFoundException('Comment not found')
@@ -57,6 +57,12 @@ export default class CommentController {
 
     const comment = await Comment.create(createBody)
     await comment.load('user')
+
+    if (parent) {
+      parent.commentCounts += 1
+      await parent.save()
+    }
+
     return response.json(comment)
   }
 
