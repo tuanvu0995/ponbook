@@ -23,6 +23,7 @@ export default class NotificationListener {
         return
       }
 
+      const subject = `Ponbook - ${notification.title}`
       await Mail.use('mailgun').send(
         (message) => {
           message
@@ -31,8 +32,8 @@ export default class NotificationListener {
               Env.get('EMAIL_SENDER_NAME', 'Ponbook Website')
             )
             .to(notification.user.email)
-            .subject(`Ponbook - ${notification.title}`)
-            .htmlView('emails/notification', { ...notification.serialize() })
+            .subject(subject)
+            .htmlView('emails/notification', { ...notification.serialize(), subject })
         },
         {
           oTags: ['comment:notification'],
