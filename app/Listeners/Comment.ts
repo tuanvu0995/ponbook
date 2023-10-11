@@ -9,16 +9,15 @@ import Video from 'App/Models/Video'
 export default class CommentListener {
   public async onCommentCreated(comment: EventsList['comment:created']) {
     try {
-      let parent
       if (comment.parentId) {
-        parent = await Comment.query().where('id', comment.parentId).first()
+        await comment.load('comment')
       }
       Logger.info('Comment created', {
         uid: comment.uid,
         userId: comment.userId,
       })
-      if (parent && parent.userId !== comment.userId) {
-        await this.createParentCommentNotification(parent, comment)
+      if (comment.comment && comment.comment.userId !== comment.userId) {
+        await this.createParentCommentNotification(comment.comment, comment)
       }
     } catch (err) {
       Logger.error(err, "Error when create comment's notification")
@@ -26,8 +25,9 @@ export default class CommentListener {
   }
 
   private async createParentCommentNotification(parent: Comment, comment: Comment) {
-    const commentUser = await comment.related('user').query().first()
-    if (!commentUser) {
+    await comment.load('user')
+
+    if (!comment.user) {
       Logger.error('Error when create parent comment notification. Comment user not found')
       return
     }
@@ -35,7 +35,7 @@ export default class CommentListener {
     const notifcation = new Notification()
     notifcation.userId = parent.userId
     notifcation.type = 'comment'
-    notifcation.title = `${commentUser.username} replied to your comment`
+    notifcation.title = `${comment.user.username} replied to your comment`
     notifcation.content = _.truncate(comment.content, { length: 100 })
     notifcation.data = {
       postId: comment.videoId,
