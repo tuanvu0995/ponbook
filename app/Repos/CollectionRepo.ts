@@ -79,6 +79,7 @@ export default class CollectionRepo {
     const popularCollection = await this.getCollectionBySlug('popular')
     const sevenDaysAgo = DateTime.now().minus({ days: 7 }).toSQL()
     const popularVideos = await Video.query()
+      .select('videos.id')
       .innerJoin('views', 'videos.id', 'views.referer_id')
       .where('views.range', 'day')
       .where('views.created_at', '>=', sevenDaysAgo)
@@ -88,7 +89,6 @@ export default class CollectionRepo {
       .limit(450)
 
     const videoIds = popularVideos.map((video) => video.id)
-    console.log(videoIds)
     await popularCollection.related('videos').sync(videoIds)
     Logger.info(
       {
