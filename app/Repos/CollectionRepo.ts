@@ -88,6 +88,7 @@ export default class CollectionRepo {
       .limit(450)
 
     const videoIds = popularVideos.map((video) => video.id)
+    console.log(videoIds)
     await popularCollection.related('videos').sync(videoIds)
     Logger.info(
       {
