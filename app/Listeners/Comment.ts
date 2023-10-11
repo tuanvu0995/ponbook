@@ -9,23 +9,22 @@ import Video from 'App/Models/Video'
 export default class CommentListener {
   public async onCommentCreated(comment: EventsList['comment:created']) {
     try {
-      if (comment.parentId) {
-        await comment.load('comment')
-      }
       Logger.info('Comment created', {
         uid: comment.uid,
         userId: comment.userId,
       })
-      if (comment.comment && comment.comment.userId !== comment.userId) {
-        await this.createParentCommentNotification(comment.comment, comment)
-      }
+      await this.createParentCommentNotification(comment)
     } catch (err) {
       Logger.error(err, "Error when create comment's notification")
     }
   }
 
-  private async createParentCommentNotification(parent: Comment, comment: Comment) {
+  private async createParentCommentNotification(comment: Comment) {
+    if (!comment.parentId) return
+
+    await comment.load('comment')
     await comment.load('user')
+    const parent = comment.comment
 
     if (!comment.user) {
       Logger.error('Error when create parent comment notification. Comment user not found')
