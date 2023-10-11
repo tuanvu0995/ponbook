@@ -99,6 +99,20 @@ Route.group(() => {
 
 /*
 |--------------------------------------------------------------------------
+| Collection Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('/', 'CollectionsController.store').as('store')
+  Route.get('/:slug/videos', 'CollectionsController.getVideosBySlug')
+    .as('getVideosBySlug')
+    .middleware('paginate')
+})
+  .as('v1.collections')
+  .prefix('v1/collections')
+
+/*
+|--------------------------------------------------------------------------
 | Tags Routes
 |--------------------------------------------------------------------------
 */
@@ -237,7 +251,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.post('/summary-views', 'TasksController.summaryViews').as('summaryViews')
+  Route.post('/run', 'TasksController.run').as('run')
 })
   .as('v1.tasks')
   .prefix('v1/tasks')

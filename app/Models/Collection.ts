@@ -1,14 +1,11 @@
-import {
-  beforeFind,
-  column,
-  ManyToMany,
-  manyToMany,
-  ModelQueryBuilderContract,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
-import AppBaseModel from './AppBaseModel'
+import { DateTime } from 'luxon'
 
-export default class Collection extends AppBaseModel {
+export default class Collection extends BaseModel {
+  @column({ isPrimary: true, serializeAs: null })
+  public id: number
+
   @column()
   public name: string
 
@@ -18,16 +15,14 @@ export default class Collection extends AppBaseModel {
   @column()
   public description: string
 
-  @column()
-  public isDeleted: boolean
+  @column.dateTime({ autoCreate: true, serializeAs: null })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
+  public updatedAt: DateTime
 
   @manyToMany(() => Video, {
-    pivotTable: 'video_collections',
+    pivotTable: 'collection_videos',
   })
   public videos: ManyToMany<typeof Video>
-
-  @beforeFind()
-  public static whereExceptDeleted(query: ModelQueryBuilderContract<typeof Collection>) {
-    query.where('is_deleted', false)
-  }
 }

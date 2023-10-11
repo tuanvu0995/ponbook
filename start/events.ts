@@ -28,6 +28,6 @@ Event.on('category:calculate', 'Category.calculate')
 
 Event.on('search:indexing', 'Search.indexing')
 
-Event.on('task:summaryViews', 'Task.summaryViews')
+Event.on('task:run', 'Task.run')
 
 Event.on('notification:created', 'Notification.onNotificationCreated')
