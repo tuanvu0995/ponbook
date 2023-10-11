@@ -38,6 +38,26 @@ Route.group(() => {
 
 /*
 |--------------------------------------------------------------------------
+| Me  Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/notifications', 'NotificationsController.myNotifications')
+    .as('myNotifications')
+    .middleware('paginate')
+  Route.post('/notifications/:uid/mark-as-read', 'NotificationsController.markAsRead').as(
+    'markAsRead'
+  )
+  Route.post('/notifications/mark-all-as-read', 'NotificationsController.markAllAsRead').as(
+    'markAllAsRead'
+  )
+})
+  .prefix('v1/me')
+  .as('v1.me')
+  .middleware('auth:api')
+
+/*
+|--------------------------------------------------------------------------
 | Video Routes
 |--------------------------------------------------------------------------
 */

@@ -17,6 +17,7 @@ import Video from './Video'
 import Comment from './Comment'
 import Box from './Box'
 import AppBaseModel from './AppBaseModel'
+import Notification from './Notification'
 
 export default class User extends AppBaseModel {
   @column()
@@ -117,6 +118,9 @@ export default class User extends AppBaseModel {
 
   @hasMany(() => Comment)
   public comments: HasMany<typeof Comment>
+
+  @hasMany(() => Notification)
+  public notifications: HasMany<typeof Notification>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

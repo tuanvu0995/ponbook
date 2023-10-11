@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import uniqid from 'uniqid'
 import {
   BaseModel,
   BelongsTo,
@@ -15,6 +16,9 @@ type NotificationType = 'comment' | 'like' | 'follow' | 'mention' | 'message'
 export default class Notification extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
+  @column()
+  public uid: string
 
   @column()
   public userId: number
@@ -53,6 +57,11 @@ export default class Notification extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
+
+  @beforeCreate()
+  public static async generateUid(notifcation: Notification) {
+    notifcation.uid = uniqid()
+  }
 
   @beforeCreate()
   public static async setDefaultRead(notification: Notification) {
