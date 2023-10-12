@@ -1,9 +1,10 @@
+import _ from 'lodash'
+import { DateTime } from 'luxon'
+import Logger from '@ioc:Adonis/Core/Logger'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Collection from 'App/Models/Collection'
 import Video from 'App/Models/Video'
-import Logger from '@ioc:Adonis/Core/Logger'
-import { DateTime } from 'luxon'
 
 export default class CollectionRepo {
   public static async getCollectionBySlug(slug: string): Promise<Collection> {
@@ -44,7 +45,12 @@ export default class CollectionRepo {
       .limit(450)
 
     const videoIds = newReleaseVideos.map((video) => video.id)
-    await newReleaseCollection.related('videos').sync(videoIds)
+
+    const chunks = _.chunk(videoIds, 100)
+    await newReleaseCollection.related('videos').detach()
+    for (const chunk of chunks) {
+      await newReleaseCollection.related('videos').sync(chunk)
+    }
     Logger.info(
       {
         totalVideo: videoIds.length,
@@ -65,7 +71,11 @@ export default class CollectionRepo {
       .limit(450)
 
     const videoIds = newReleaseVideos.map((video) => video.id)
-    await newAddedCollection.related('videos').sync(videoIds)
+    const chunks = _.chunk(videoIds, 100)
+    await newAddedCollection.related('videos').detach()
+    for (const chunk of chunks) {
+      await newAddedCollection.related('videos').sync(chunk)
+    }
     Logger.info(
       {
         totalVideo: videoIds.length,
@@ -89,7 +99,11 @@ export default class CollectionRepo {
       .limit(450)
 
     const videoIds = popularVideos.map((video) => video.id)
-    await popularCollection.related('videos').sync(videoIds)
+    const chunks = _.chunk(videoIds, 100)
+    await popularCollection.related('videos').detach()
+    for (const chunk of chunks) {
+      await popularCollection.related('videos').sync(chunk)
+    }
     Logger.info(
       {
         totalVideo: videoIds.length,
