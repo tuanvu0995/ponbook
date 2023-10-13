@@ -26,7 +26,7 @@ export default class CreateCommentValidator {
   public schema = schema.create({
     videoUid: schema.string.optional({ trim: true }, [rules.requiredIfNotExists('parentUid')]),
     parentUid: schema.string.optional({ trim: true }, [rules.requiredIfNotExists('videoUid')]),
-    content: schema.string({}, [rules.minLength(2), rules.maxLength(1000)]),
+    content: schema.string({ trim: true }),
   })
 
   /**

@@ -30,6 +30,10 @@ export default class CommentController {
 
     const body = await request.validate(CreateCommentValidator)
 
+    if (body.content.length < 2) throw new BadRequestException('Content is too short')
+    if (body.content.length > 3000)
+      throw new BadRequestException('Content is too long. Max 3000 characters')
+
     let video
     if (body.videoUid) {
       video = await VideoRepo.getVideoByUid(body.videoUid)
