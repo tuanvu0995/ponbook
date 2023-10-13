@@ -49,7 +49,7 @@ export default class CollectionRepo {
     const chunks = _.chunk(videoIds, 100)
     await newReleaseCollection.related('videos').detach()
     for (const chunk of chunks) {
-      await newReleaseCollection.related('videos').sync(chunk)
+      await newReleaseCollection.related('videos').attach(chunk)
     }
     Logger.info(
       {
@@ -74,7 +74,7 @@ export default class CollectionRepo {
     const chunks = _.chunk(videoIds, 100)
     await newAddedCollection.related('videos').detach()
     for (const chunk of chunks) {
-      await newAddedCollection.related('videos').sync(chunk)
+      await newAddedCollection.related('videos').attach(chunk)
     }
     Logger.info(
       {
@@ -102,7 +102,7 @@ export default class CollectionRepo {
     const chunks = _.chunk(videoIds, 100)
     await popularCollection.related('videos').detach()
     for (const chunk of chunks) {
-      await popularCollection.related('videos').sync(chunk)
+      await popularCollection.related('videos').attach(chunk)
     }
     Logger.info(
       {
