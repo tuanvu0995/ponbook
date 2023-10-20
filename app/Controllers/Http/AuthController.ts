@@ -18,7 +18,6 @@ export default class AuthController {
     const password = request.input('password')
     const rememberMe = request.input('rememberMe')
 
-    console.log(uid, password, rememberMe)
     if (!uid) {
       throw new BadRequestException('Please provide a valid email or username')
     }
@@ -69,6 +68,7 @@ export default class AuthController {
       username: payload.username?.toLowerCase(),
       email: payload.email,
       password: payload.password,
+      totalPoints: 0,
     })
 
     Event.emit('user:created', user)
