@@ -143,4 +143,14 @@ export default class VideoRepo {
 
     return popularVideos
   }
+
+  public static async getVideoByUids(uids: string[]): Promise<Video[]> {
+    return await Video.query()
+      .preload('cover')
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .whereIn('uid', uids)
+      .orderBy('id', 'desc')
+      .limit(18)
+  }
 }

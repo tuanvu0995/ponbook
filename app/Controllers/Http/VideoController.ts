@@ -54,4 +54,12 @@ export default class VideoController {
 
     return response.json(video)
   }
+
+  public async getVideoByUids({ request, response }: HttpContextContract) {
+    const uids = request.input('uids') as string[]
+
+    const videos = await VideoRepo.getVideoByUids(uids)
+
+    return response.json(videos)
+  }
 }

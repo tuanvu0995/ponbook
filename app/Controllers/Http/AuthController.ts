@@ -7,6 +7,7 @@ import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 import BadRequestException from 'App/Exceptions/BadRequestException'
 import UserRegisterValidator from 'App/Validators/UserRegisterValidator'
 import { isEmail } from 'App/Helpers/isEmail'
+import { HttpRequestPagination } from '@ioc:Contracts'
 
 export default class AuthController {
   private getThrottleKey(uid: string, ip: string) {
@@ -88,5 +89,43 @@ export default class AuthController {
   public async me({ auth, response }: HttpContextContract) {
     const user = auth.use('api').user!
     return response.json(user)
+  }
+
+  public async myFavorites({
+    auth,
+    response,
+    pagination,
+  }: HttpContextContract & HttpRequestPagination) {
+    const user = auth.use('api').user!
+
+    const videos = await user
+      .related('favoriteVideos')
+      .query()
+      .preload('cover')
+      .preload('casts')
+      .where('is_deleted', false)
+      .where('is_published', true)
+      .paginate(pagination.page, pagination.limit)
+
+    return response.json(videos)
+  }
+
+  public async batchAddFavorite({ auth, response, request }: HttpContextContract) {
+    const user = auth.use('api').user!
+
+    const uids = request.input('uids', [])
+
+    const notExistVideos = await user
+      .related('favoriteVideos')
+      .query()
+      .whereNotIn('uid', uids)
+      .where('is_deleted', false)
+      .where('is_published', true)
+
+    await user.related('favoriteVideos').attach(notExistVideos.map((video) => video.id))
+
+    return response.json({
+      message: 'Add to favorite successfully',
+    })
   }
 }

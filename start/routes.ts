@@ -51,6 +51,10 @@ Route.group(() => {
   Route.post('/notifications/mark-all-as-read', 'NotificationsController.markAllAsRead').as(
     'markAllAsRead'
   )
+
+  Route.get('/favorites', 'AuthController.myFavorites')
+    .as('myFavorites')
+    .middleware('paginate')
 })
   .prefix('v1/me')
   .as('v1.me')
@@ -73,6 +77,8 @@ Route.group(() => {
     .middleware('paginate')
 
   Route.post('/by-code', 'VideoController.getVideoByCode').as('videos.byCode')
+
+  Route.post('/by-uids', 'VideoController.getVideoByUids').as('videos.byUids')
 
   Route.post('/:uid/favorite', 'VideoController.favorite')
     .as('videos.favorite')
