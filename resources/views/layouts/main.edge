@@ -20,6 +20,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
 
+  <script defer src="{{ asset('assets/icon/feather.min.js') }}"></script>
+
   @if(env('NODE_ENV') == 'production')
   <script defer src="/js/prebid-ads.js"></script>
   <!-- Google tag (gtag.js) -->
@@ -62,6 +64,10 @@
     @else
       const IS_LOGGED_IN = false;
     @endif
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+      feather.replace();
+    });
   </script>
 
   @if(env('NODE_ENV') === 'production')

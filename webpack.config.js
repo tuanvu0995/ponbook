@@ -75,10 +75,10 @@ Encore.copyFiles({
 //   to: 'images/[path][name].[hash:8].[ext]',
 // })
 
-// Encore.copyFiles({
-//   from: 'node_modules/jquery/dist',
-//   to: 'js/[path][name].[hash:8].[ext]',
-// })
+Encore.copyFiles({
+  from: 'node_modules/feather-icons/dist',
+  to: 'icon/[path][name].[hash:8].[ext]',
+})
 
 // Encore.copyFiles({
 //   from: 'node_modules/quill/dist',

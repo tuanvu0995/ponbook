@@ -1,14 +1,41 @@
 // Navbar
-
 .navbar {
   border-bottom: 1px solid $grey-light;
 
-  .navbar-brand, .navbar-menu {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+  .navbar-item {
+    font-weight: bold;
+    font-size: 0.9rem;
   }
 }
 
 .navbar-burger {
   height: inherit;
+}
+
+// Layout
+.section {
+  @include from($tablet) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.container {
+  @include from($tablet) {
+    max-width: 1216px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.hero {
+  .hero-body {
+    padding-left: $padding;
+    padding-right: $padding;
+
+    @include from($tablet) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
 }

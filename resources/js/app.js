@@ -1,4 +1,4 @@
-import { dropdowns } from './functions'
+import { dropdowns, initImageLazyLoad } from './functions'
 import '../scss/app.scss'
 
 $(function () {
@@ -11,4 +11,6 @@ $(function () {
   })
 
   dropdowns('.navbar-item.has-dropdown')
+
+  initImageLazyLoad()
 })

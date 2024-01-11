@@ -1,0 +1,12 @@
+.is-mobile-padding-1 {
+  padding: 1rem;
+
+  @include from($tablet) {
+    padding: 0;
+  }
+}
+
+.is-horizontal-spacing {
+  display: flex;
+  flex-grow: 1;
+}

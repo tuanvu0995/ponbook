@@ -11,5 +11,22 @@
   type: "warning"
 })
 
+@!component("components/collection", {
+  title: "New Released",
+  videos: newReleasedVideos,
+  hideLastChild: true
+})
+
+@!component("components/collection", {
+  title: "Most Viewed",
+  videos: popularVideos,
+  hideLastChild: true
+})
+
+@!component("components/collection", {
+  title: "Recently Added",
+  videos: recentVideos,
+  hideLastChild: true
+})
 
 @endsection

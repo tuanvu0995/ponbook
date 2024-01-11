@@ -10,6 +10,9 @@ Route.group(() => {
   Route.post('/contact', 'SupportController.sendContact')
     .as('sendContact')
     .middleware('throttle:sendContact')
+
+  Route.get('/v/:uid', 'VideoController.show').as('video.show')
+
   Route.get(':slug', 'WebController.page').as('web.page')
 })
   .as('web')

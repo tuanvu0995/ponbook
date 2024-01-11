@@ -1,0 +1,21 @@
+@layout('layouts/main')
+@set('title', 'Unauthorized Error')
+
+@section('body')
+
+<section class="section is-medium">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column has-text-centered">
+                <h1 class="title">Unauthorized Error</h1>
+                <p class="subtitle">Sorry. Sorry. You need to be logged in to view this page.</p>
+                <a class="button" href="{{ route("web.home") }}">Go back to Home</a>
+            </div>
+            <div class="column has-text-centered">
+                @include('partials/errorImage')
+            </div>
+        </div>
+    </div>
+</section>
+
+@end
