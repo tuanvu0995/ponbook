@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+@import 'variables';
+@import 'bulma';
+@import 'overrides';
+
+// SideMenu
+.menu.sidemenu__container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100dvh;
+  width: 100vw;
+  background-color: white;
+  z-index: 20;
+  padding: 0.5rem;
+  padding-top: 4rem;
+  right: -100vw;
+  -webkit-transition: right 0.3s ease-in-out;
+  -moz-transition: right 0.3s ease-in-out;
+  -ms-transition: right 0.3s ease-in-out;
+  -o-transition: right 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out;
+
+  @include from(769px) {
+    display: none;
+  }
+
+  &.is-active {
+    right: 0px;
+  }
+
+  .menu-label {
+    font-weight: bold;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  .menu-list li a {
+    color: $navi;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $grey-light;
+      color: $navi;
+    }
+  }
+
+  .sidemenu__footer {
+    color: $navi;
+    padding: 4rem 0.8rem;
+  }
+}

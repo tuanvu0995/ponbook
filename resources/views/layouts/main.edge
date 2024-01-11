@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ i18n.locale }}">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0">
+
+  <title>{{ title || "Ponbook" }} - Ponbook.net</title>
+  <meta name="title" content="{{ title || " Ponbook" }} - Ponbook.net">
+  <meta name="description" content="{{ excerpt(description, 120) }}">
+
+  @!include('partials/meta/keyword')
+  @!include('partials/meta/og')
+  @!include('partials/meta/twitter')
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
+
+  @if(env('NODE_ENV') == 'production')
+  <script defer src="/js/prebid-ads.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X8M78633QL');
+  </script>
+  @endif
+
+  <style>
+    body { font-family: 'Quicksand', sans-serif; }
+  </style>
+
+  @!section('head')
+</head>
+
+<body class="{{ bodyClass || '' }} has-navbar-fixed-top">
+
+  @include('partials/navbar')
+
+  @!section('body')
+
+  @include('partials/sidemenu')
+
+  @include('partials/footer')
+
+  <script src="{{ asset('assets/vendor.js') }}"></script>
+  <script src="{{ asset('assets/app.js') }}"></script>
+
+  @!section('script-links')
+
+  @!section('scripts')
+
+  <script type="text/javascript">
+    @if(auth.isLoggedIn)
+      const IS_LOGGED_IN = true;
+    @else
+      const IS_LOGGED_IN = false;
+    @endif
+  </script>
+
+  @if(env('NODE_ENV') === 'production')
+  <script type="text/javascript">
+    var juicy_tags = ['a', 'img'];
+  </script>
+  <script type="text/javascript"
+    src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net"></script>
+  @endif
+</body>
+
+</html>

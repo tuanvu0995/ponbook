@@ -1,0 +1,14 @@
+// Navbar
+
+.navbar {
+  border-bottom: 1px solid $grey-light;
+
+  .navbar-brand, .navbar-menu {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+.navbar-burger {
+  height: inherit;
+}

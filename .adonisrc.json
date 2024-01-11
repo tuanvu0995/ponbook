@@ -31,7 +31,10 @@
     "@adonisjs/mail",
     "adonis5-sentry",
     "adonis-lucid-soft-deletes",
-    "./providers/MeiliSearch/Provider"
+    "./providers/MeiliSearch/Provider",
+    "./providers/ViewProvider",
+    "@adonisjs/session",
+    "@adonisjs/i18n"
   ],
   "metaFiles": [
     {
@@ -43,7 +46,8 @@
       "reloadServer": false
     },
     "ecosystem.config.js",
-    "doppler.js"
+    "doppler.js",
+    "resources/lang/**/*.(json|yaml)"
   ],
   "aceProviders": [
     "@adonisjs/repl"

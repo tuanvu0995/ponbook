@@ -1,0 +1,36 @@
+$navi: #1D2B53;
+$purple: #7E2553;
+$red: #FF004D;
+$yellow: #FAEF5D;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
+
+// Update Bulma's global variables
+$family-sans-serif: "Space Mono'", monospace;
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$primary: $navi;
+$link: $purple;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+// Update some of Bulma's component variables
+$body-background-color: $beige-lighter;
+
+// Input
+$input-border-color: $beige-light;
+$input-shadow: none;
+$input-radius: 0.5rem;
+
+// Button
+$control-border-width: 2px;
+$control-radius: 0.5rem;
+
+// Navbar
+$navbar-height: 2.5rem;
+$navbar-breakpoint: 768px;
+
+
+// Message
+$message-body-padding: 0.8rem;

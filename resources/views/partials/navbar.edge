@@ -1,0 +1,29 @@
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item is-hidden-mobile" href="{{ route("web.home") }}" title="Home page">
+        <img src="{{ asset('assets/images/logo.svg') }}" width="100" height="28" alt="Ponbook Logo Full">
+      </a>
+      <a class="navbar-item is-flex-mobile is-hidden-tablet" style="max-width: 60px" href="{{ route("web.home") }}"
+        title="Home page">
+        <img src="{{ asset('assets/images/Icon.svg') }}" width="100%" height="28" alt="Ponbook Logo Short">
+      </a>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+          <a class="navbar-item" href="/popular">Popular</a>
+          <a class="navbar-item" href="/new-release">New Release</a>
+          <a class="navbar-item" href="/recent">Recent</a>
+          <a class="navbar-item" href="/idols">Idols</a>
+          <a class="navbar-item" href="/categories">Categories</a>
+          <a class="navbar-item" href="/generes">Generes</a>
+      </div>
+    </div>
+</nav>
