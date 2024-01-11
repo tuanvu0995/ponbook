@@ -1,0 +1,21 @@
+@layout('layouts/main')
+
+@section('body')
+
+@!component("uikit/layout/hero", {
+  title: title,
+  type: "danger"
+})
+
+@!component("components/collection", {
+  title: listTitle,
+  subtitle: listSubtitle,
+  videos: videos,
+  hideLastChild: true
+})
+
+@!component('components/pagination', {
+  paginator: videos,
+})
+
+@endsection

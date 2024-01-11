@@ -52,7 +52,7 @@ Encore.addEntry('vendor', './resources/js/vendor.js')
 // Encore.addEntry('search-modal', './resources/js/search-modal.js')
 // Encore.addEntry('add-to-box-modal', './resources/js/add-to-box-modal.js')
 // Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
-// Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
+Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
 // Encore.addEntry('prebid-ads', './resources/js/prebid-ads.js')
 
 /*
@@ -70,10 +70,10 @@ Encore.copyFiles({
   to: 'images/[path][name].[hash:8].[ext]',
 })
 
-// Encore.copyFiles({
-//   from: 'node_modules/quill/assets/icons',
-//   to: 'images/[path][name].[hash:8].[ext]',
-// })
+Encore.copyFiles({
+  from: 'node_modules/owl.carousel/dist',
+  to: 'lib/[path][name].[hash:8].[ext]',
+})
 
 Encore.copyFiles({
   from: 'node_modules/feather-icons/dist',
