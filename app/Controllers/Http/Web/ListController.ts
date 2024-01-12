@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { HttpRequestPagination } from '@ioc:Contracts'
 import { CastRepo } from 'App/Repos/CastRepo'
 import { DirectorRepo } from 'App/Repos/DirectorRepo'
 import { MakerRepo } from 'App/Repos/MakerRepo'
@@ -6,7 +7,6 @@ import { TagRepo } from 'App/Repos/TagRepo'
 import VideoRepo from 'App/Repos/VideoRepo'
 
 export default class ListController {
-
   public async popular({ request, view }: HttpContextContract) {
     const { page = 1, limit = 36 } = request.qs()
     const videos = await VideoRepo.getPopularVideos(page, limit)
@@ -14,7 +14,7 @@ export default class ListController {
 
     const title = 'Popular Videos'
     const description = 'List of all the popular videos'
-    const keywords = ['popular', "most viewed"]
+    const keywords = ['popular', 'most viewed']
 
     return view.render('list', {
       videos,
@@ -26,10 +26,10 @@ export default class ListController {
     })
   }
 
-  public async recent({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 36 } = request.qs()
-    const videos = await VideoRepo.getRecentVideos(page, limit)
-    videos.baseUrl(`/recent`)
+  public async recent({ request, view, pagination }: HttpContextContract & HttpRequestPagination) {
+    const { page = 1, limit = 36, sorts, filters } = pagination
+    const videos = await VideoRepo.getRecentVideos(page, limit, sorts, filters)
+    videos.baseUrl(`/recent`).queryString(request.qs())
 
     const title = 'Recently Added Videos'
     const description = 'List of all the recently added videos'
@@ -63,7 +63,6 @@ export default class ListController {
       listSubtitle: description,
     })
   }
-
 
   public async castsBySlug({ request, view }: HttpContextContract) {
     const slug = request.param('slug')

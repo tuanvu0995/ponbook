@@ -1,8 +1,8 @@
 import { marked } from 'marked'
 import sanitizeHtml from 'sanitize-html'
-import { CreateCommentInput } from 'App/Domain/CommentDto'
 import Comment from 'App/Models/Comment'
 import Video from 'App/Models/Video'
+import { CreateCommentInput } from 'App/common/types'
 
 export default class CommentRepo {
   public static async getCommentsByVideo(video: Video, page = 1, limit = 30): Promise<any> {

@@ -36,4 +36,5 @@ export default Env.rules({
   REDIS_PORT: Env.schema.number(),
   REDIS_PASSWORD: Env.schema.string.optional(),
   DOPPLER_TOKEN: Env.schema.string(),
+  PAGINATION_LIMIT: Env.schema.number.optional(),
 })

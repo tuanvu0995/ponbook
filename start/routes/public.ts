@@ -5,6 +5,9 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
+  /**
+   * Home page
+   */
   Route.get('/', 'HomeController.index').as('home')
 
   /**
@@ -15,14 +18,20 @@ Route.group(() => {
   /**
    * Lists
    */
-  Route.get('/popular', 'ListController.popular').as('list.popular')
-  Route.get('/recent', 'ListController.recent').as('list.recent')
-  Route.get('/new-release', 'ListController.newReleases').as('list.newRelease')
+  Route.get('/popular', 'ListController.popular').as('list.popular').middleware('paginate')
+  Route.get('/recent', 'ListController.recent').as('list.recent').middleware('paginate')
+  Route.get('/new-release', 'ListController.newReleases')
+    .as('list.newRelease')
+    .middleware('paginate')
 
-  Route.get('/a/:slug', 'ListController.castsBySlug').as('list.castBySlug')
-  Route.get('/director/:uid', 'ListController.director').as('list.director')
-  Route.get('/maker/:uid', 'ListController.maker').as('list.maker')
-  Route.get('/tag/:slug', 'ListController.tag').as('list.tag')
+  Route.get('/a/:slug', 'ListController.castsBySlug')
+    .as('list.castBySlug')
+    .middleware('paginate')
+  Route.get('/director/:uid', 'ListController.director')
+    .as('list.director')
+    .middleware('paginate')
+  Route.get('/maker/:uid', 'ListController.maker').as('list.maker').middleware('paginate')
+  Route.get('/tag/:slug', 'ListController.tag').as('list.tag').middleware('paginate')
 
   /**
    * Contact
@@ -32,6 +41,9 @@ Route.group(() => {
     .as('sendContact')
     .middleware('throttle:sendContact')
 
+  /**
+   * Pages
+   */
   Route.get(':slug', 'WebController.page').as('web.page')
 })
   .as('web')

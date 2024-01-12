@@ -23,15 +23,13 @@
         </div>  --}}
     </div>
     <div class="listing__content">
-        <a href="{{ route("web.video.show", { uid: video.uid }) }}" class="listing__code" title="{{ video.code }}">{{
-            video.code }}</a>
-        <a href="{{ route("web.video.show", { uid: video.uid }) }}"
-            class="listing__title" title="{{ video.title }}">{{ video.title }}</a>
-        {{--  @if(video.cast)
-        <a class="is-size-7 has-text-weight-bold" href="{{ route("list.castBySlug", { slug: video.cast.slug })
-            }}">{{ video.cast.name }}</a>
-        @endif  --}}
-        <time class="listing__released-date" dateTime="{{video.releaseDate || video.release_date}}"">
+        <a href="{{ route("web.video.show", { uid: video.uid }) }}" class="listing__code" title="{{ video.code }}">
+          {{ video.code }}
+        </a>
+        <a href="{{ route("web.video.show", { uid: video.uid }) }}" class="listing__title" title="{{ video.title }}">
+          {{ video.title }}
+        </a>
+        <time class="listing__released-date">
         {{ video.releaseDate || video.release_date }}
         </time>
     </div>

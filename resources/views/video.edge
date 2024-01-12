@@ -16,93 +16,113 @@
 
     <h1 class="title is-5">{{ video.code }} - {{ video.title }}</h1>
 
-    <div class="columns">
-      <div class="column is-7">
-        @!component('components/image', { file: video.image, alt: video.title })
-      </div>
-      <div class="column is-5">
-        <table class="table">
-          <tr>
-              <th>Code</th>
-              <td><span class="tag is-primary">{{ video.code }}</span></td>
-          </tr>
-          <tr>
-              <th>Release Date</th>
-              <td>{{ video.releaseDate || video.release_date }}</td>
-          </tr>
-          <tr>
-              <th>Duration</th>
-              <td>{{ video.duration }} minutes</td>
-          </tr>
-          <tr>
-              <th>Cast</th>
-              <td>
-                  <div class="tags">
-                    @if(video.casts.length > 0)
-                    @each(cast in video.casts)
-                    <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>&nbsp;&nbsp;
-                    @end
+    <div class="boxes">
+      <div class="columns">
+        <div class="column is-7">
+          <div class="video__cover">
+            @!component('components/image', { file: video.image, alt: video.title })
+          </div>
+          <div class="pt-4">
+            <h3 class="title is-5 mb-2">Description</h3>
+            <p class="mb-5">{{ video.description || video.title }}</p>
+          </div>
+        </div>
+        <div class="column is-5">
+          <table class="table">
+            <tr>
+                <th>Code</th>
+                <td class="pl-5">
+                  <div class="control">
+                    <div class="tags has-addons">
+                      <span class="tag is-primary">{{ video.code }}</span>
+                      <a class="tag is-primary">
+                        <span class="icon is-small"><i data-feather="copy"></i></span>
+                      </a>
+                    </div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Release Date</th>
+                <td class="pl-5">{{ video.releaseDate || video.release_date }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td class="pl-5">{{ video.duration }} minutes</td>
+            </tr>
+            <tr>
+                <th>Cast</th>
+                <td class="pl-5">
+                    <div class="field is-grouped is-grouped-multiline">
+                      @if(video.casts.length > 0)
+                        @each(cast in video.casts)
+                        <div class="control">
+                          <div class="tags has-addons">
+                            <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
+                            <a class="tag is-action">
+                              <span class="icon is-small"><i data-feather="heart"></i></span>
+                            </a>
+                          </div>
+                        </div>
+                        @end
+                      @else
+                      ---
+                      @endif
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Director</th>
+                <td class="pl-5">
+                    @if(video.director)
+                    <a class="tag" href="{{ route("web.list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
                     @else
                     ---
                     @end
+                </td>
+            </tr>
+            <tr>
+                <th>Maker</th>
+                <td class="pl-5">
+                    @if(video.maker)
+                    <a class="tag" href="{{ route("web.list.maker", { uid: video.maker.uid }) }}">{{
+                        video.maker.name }}</a>
+                    @else
+                    ---
+                    @end
+                </td>
+            </tr>
+            <tr>
+              <th>Genre(s)</th>
+              <td class="pl-5">
+                  <div class="tags">
+                      @each(tag in video.tags)
+                      <a class="tag is-info is-light" href="{{ route('web.list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+                      @end
                   </div>
               </td>
           </tr>
-          <tr>
-              <th>Director</th>
-              <td>
-                  @if(video.director)
-                  <a class="tag" href="{{ route("web.list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
-                  @else
-                  ---
-                  @end
-              </td>
-          </tr>
-          <tr>
-              <th>Maker</th>
-              <td>
-                  @if(video.maker)
-                  <a class="tag" href="{{ route("web.list.maker", { uid: video.maker.uid }) }}">{{
-                      video.maker.name }}</a>
-                  @else
-                  ---
-                  @end
-              </td>
-          </tr>
-          <tr>
-            <th>Genre(s)</th>
-            <td>
-                <div class="tags">
-                    @each(tag in video.tags)
-                    <a class="tag is-info is-light" href="{{ route('web.list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
-                    @end
-                </div>
-            </td>
-        </tr>
-      </table>
+        </table>
+        </div>
       </div>
     </div>
 
     <div class="columns">
       <div class="column is-12">
-        <div>
-          <h3 class="title is-5">Description</h3>
-          <p class="mb-5">
-              {{ video.description || video.title }}
-          </p>
-      </div>
-      @if(video.images?.length)
-      <div>
-          <h3 class="title is-5">Sample images ({{ video.images.length }})</h3>
-          <div class="image-preview__container">
-              @each((image, index) in video.images)
-                <a class="image-preview__item">
-                  <img class="image-lazy" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
-                </a>
-              @end
+        <div class="boxes">
+          @if(video.images?.length)
+          <div class="mb-2">
+              <h3 class="title is-5">Sample images ({{ video.images.length }})</h3>
+              <div class="image-preview__container">
+                  @each((image, index) in video.images)
+                    <a class="image-preview__item">
+                      <img class="image-lazy" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
+                    </a>
+                  @end
+              </div>
           </div>
-      </div>
-      @end
+          @end
+        </div>
       </div>
     </div>
 

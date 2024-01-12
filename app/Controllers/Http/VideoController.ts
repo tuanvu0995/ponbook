@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Event from '@ioc:Adonis/Core/Event'
 import VideoRepo from 'App/Repos/VideoRepo'
-import { FavoriteStatus } from 'App/Domain/Video/VideoDomain'
+import { FavoriteStatus } from 'App/common/types'
 
 export default class VideoController {
   public async show({ params, response }: HttpContextContract) {

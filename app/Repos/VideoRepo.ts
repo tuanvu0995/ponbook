@@ -4,6 +4,7 @@ import NotFoundException from 'App/Exceptions/NotFoundException'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
 
 export default class VideoRepo {
   public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
@@ -76,14 +77,15 @@ export default class VideoRepo {
 
   public static async getRecentVideos(
     page: number = 1,
-    limit: number = 15
+    limit: number = 15,
+    sorts: PaginatedSorts,
+    filters: PaginatedFilters
   ): Promise<ModelPaginatorContract<Video>> {
     const recentVideos = await Video.query()
       .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('id', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(filters, sorts, page, limit)
 
     return recentVideos
   }

@@ -40,15 +40,29 @@
   }
 }
 
-
 .breadcrumb {
   li a {
     font-weight: bold;
   }
 }
 
-
 .tag {
   font-weight: bold;
-  font-size: 1rem;
+
+  &.is-action {
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.video-show {
+  .table {
+    background-color: transparent;
+    th,
+    td {
+      border: none;
+    }
+  }
 }
