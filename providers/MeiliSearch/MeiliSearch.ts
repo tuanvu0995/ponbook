@@ -16,6 +16,11 @@ export default class MeiliSearchService {
     await index.updateFilterableAttributes(fields)
   }
 
+  public async updateSortableAttributes(name: string, fields: string[]) {
+    const index = await this.client.getIndex(name)
+    await index.updateSortableAttributes(fields)
+  }
+
   public async index(name: string, documents: any[]) {
     const index = await this.client.getIndex(name)
     const response = await index.addDocuments(documents)

@@ -14,6 +14,7 @@ export default class SearchController {
     const results = await MeiliSearch.search('videos', term, {
       offset: (page - 1) * limit,
       limit,
+      sort: ['releaseDate:desc'],
     })
 
     const videoIds = results.hits.map((hit) => hit.id)
