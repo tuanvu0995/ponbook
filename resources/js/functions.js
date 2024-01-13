@@ -47,3 +47,13 @@ export function initImageLazyLoad() {
     // Possibly fall back to event handlers here
   }
 }
+
+export function copyToClipboard(text) {
+  const el = document.createElement('input')
+  document.body.appendChild(el)
+  el.value = text
+  el.select()
+  el.setSelectionRange(0, 99999) // For mobile devices
+  navigator.clipboard.writeText(el.value)
+  document.body.removeChild(el)
+}

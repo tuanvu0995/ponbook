@@ -5,7 +5,7 @@
         <div class="control">
           <div class="tags has-addons">
             <span class="tag is-medium is-primary">{{ video.code }}</span>
-            <a class="tag is-medium is-primary">
+            <a class="tag is-medium is-primary" onclick="copyToClipboard('{{ video.code }}')">
               <span class="icon is-small"><i data-feather="copy"></i></span>
             </a>
           </div>
