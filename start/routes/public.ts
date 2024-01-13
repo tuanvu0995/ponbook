@@ -9,6 +9,7 @@ Route.group(() => {
    * Home page
    */
   Route.get('/', 'HomeController.index').as('home')
+  Route.get('/search', 'SearchController.search').as('search').middleware('paginate')
 
   /**
    * Video detail page
@@ -32,6 +33,9 @@ Route.group(() => {
     .middleware('paginate')
   Route.get('/maker/:uid', 'ListController.maker').as('list.maker').middleware('paginate')
   Route.get('/tag/:slug', 'ListController.tag').as('list.tag').middleware('paginate')
+
+  Route.get('/generes', 'ListController.generes').as('list.generes').middleware('paginate')
+  Route.get('/actresses', 'ListController.actresses').as('list.actresses').middleware('paginate')
 
   /**
    * Contact

@@ -38,7 +38,8 @@
       "adonis5-sentry",
       "adonis-lucid-soft-deletes",
       "@adonisjs/session",
-      "@adonisjs/i18n"
+      "@adonisjs/i18n",
+      "@rlanz/bull-queue"
     ]
   }
 }

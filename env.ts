@@ -37,4 +37,9 @@ export default Env.rules({
   REDIS_PASSWORD: Env.schema.string.optional(),
   DOPPLER_TOKEN: Env.schema.string(),
   PAGINATION_LIMIT: Env.schema.number.optional(),
+  QUEUE_REDIS_HOST: Env.schema.string({ format: 'host' }),
+  QUEUE_REDIS_PORT: Env.schema.number(),
+  QUEUE_REDIS_PASSWORD: Env.schema.string.optional(),
+  MEILI_HOST: Env.schema.string(),
+  MEILI_API_KEY: Env.schema.string(),
 })

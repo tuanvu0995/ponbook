@@ -32,5 +32,9 @@ declare module '@ioc:Adonis/Core/Event' {
       type: PointType
       description?: string
     }
+    'search:searched': {
+      term: string
+      totalResults: number
+    }
   }
 }

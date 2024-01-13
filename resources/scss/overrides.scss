@@ -66,3 +66,13 @@
     }
   }
 }
+
+.imageViewer {
+  .container {
+    max-width: none !important;
+  }
+
+  .footer {
+    background-color: transparent;
+  }
+}

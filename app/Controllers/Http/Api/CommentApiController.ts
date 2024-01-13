@@ -13,7 +13,7 @@ import { DateTime } from 'luxon'
 import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 import Comment from 'App/Models/Comment'
 
-export default class CommentController {
+export default class CommentApiController {
   public async store({ request, response, auth }: HttpContextContract) {
     const user = auth.user!
     const throttleKey = `send_comment_${user.uid}_${request.ip}`

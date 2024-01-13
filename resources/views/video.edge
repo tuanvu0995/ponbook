@@ -4,6 +4,7 @@
 
 <section class="section py-2">
   <div class="container">
+
     <nav class="breadcrumb has-succeeds-separator py-4 is-flex-grow-1 mb-0" aria-label="breadcrumbs">
       <ul>
           <li><a href="{{ route("web.home") }}">Home</a></li>
@@ -28,103 +29,14 @@
           </div>
         </div>
         <div class="column is-5">
-          <table class="table">
-            <tr>
-                <th>Code</th>
-                <td class="pl-5">
-                  <div class="control">
-                    <div class="tags has-addons">
-                      <span class="tag is-primary">{{ video.code }}</span>
-                      <a class="tag is-primary">
-                        <span class="icon is-small"><i data-feather="copy"></i></span>
-                      </a>
-                    </div>
-                  </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Release Date</th>
-                <td class="pl-5">{{ video.releaseDate || video.release_date }}</td>
-            </tr>
-            <tr>
-                <th>Duration</th>
-                <td class="pl-5">{{ video.duration }} minutes</td>
-            </tr>
-            <tr>
-                <th>Cast</th>
-                <td class="pl-5">
-                    <div class="field is-grouped is-grouped-multiline">
-                      @if(video.casts.length > 0)
-                        @each(cast in video.casts)
-                        <div class="control">
-                          <div class="tags has-addons">
-                            <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
-                            <a class="tag is-action">
-                              <span class="icon is-small"><i data-feather="heart"></i></span>
-                            </a>
-                          </div>
-                        </div>
-                        @end
-                      @else
-                      ---
-                      @endif
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Director</th>
-                <td class="pl-5">
-                    @if(video.director)
-                    <a class="tag" href="{{ route("web.list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
-                    @else
-                    ---
-                    @end
-                </td>
-            </tr>
-            <tr>
-                <th>Maker</th>
-                <td class="pl-5">
-                    @if(video.maker)
-                    <a class="tag" href="{{ route("web.list.maker", { uid: video.maker.uid }) }}">{{
-                        video.maker.name }}</a>
-                    @else
-                    ---
-                    @end
-                </td>
-            </tr>
-            <tr>
-              <th>Genre(s)</th>
-              <td class="pl-5">
-                  <div class="tags">
-                      @each(tag in video.tags)
-                      <a class="tag is-info is-light" href="{{ route('web.list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
-                      @end
-                  </div>
-              </td>
-          </tr>
-        </table>
+          @include('partials/video/infoTable')
         </div>
       </div>
     </div>
 
-    <div class="columns">
-      <div class="column is-12">
-        <div class="boxes">
-          @if(video.images?.length)
-          <div class="mb-2">
-              <h3 class="title is-5">Sample images ({{ video.images.length }})</h3>
-              <div class="image-preview__container">
-                  @each((image, index) in video.images)
-                    <a class="image-preview__item">
-                      <img class="image-lazy" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
-                    </a>
-                  @end
-              </div>
-          </div>
-          @end
-        </div>
-      </div>
-    </div>
+    @if(video.images?.length)
+      @include('partials/video/sampleImages')
+    @endif
 
   </div>
 </section>
@@ -140,7 +52,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/lib/assets/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/lib/assets/owl.theme.default.min.css') }}">
-@end
+@endsection
 
 @section('scripts')
 <script src="{{ asset('assets/lib/owl.carousel.min.js') }}"></script>

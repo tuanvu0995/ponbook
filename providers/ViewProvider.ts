@@ -27,9 +27,18 @@ export default class ViewProvider {
     )
 
     View.global('imageUrl', (file: File, getThumbnail: boolean) => {
-      if (!file) return '/img/no-image.png'
+      if (!file) return '/img/no-image.jpg'
       if (getThumbnail && file.dataUrl) return file.dataUrl
       return `${Env.get('CDN_URL')}/${file.path}`
+    })
+
+    View.global('inlinePrint', (shouldPrint: boolean, print: string) => {
+      return shouldPrint ? print : ''
+    })
+
+    View.global('qsValue', (request, name: string) => {
+      const [root, key] = name.split('.')
+      return request.ctx.pagination?.[root]?.[key]
     })
   }
 

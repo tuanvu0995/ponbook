@@ -26,12 +26,11 @@ Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('category:calculate', 'Category.calculate')
 
-Event.on('search:indexing', 'Search.indexing')
+Event.on('search:searched', 'Search.onSearched')
 
 Event.on('task:run', 'Task.run')
 
 Event.on('notification:created', 'Notification.onNotificationCreated')
-
 
 /**
  * Points

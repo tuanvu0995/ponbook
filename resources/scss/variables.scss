@@ -36,6 +36,7 @@ $control-radius: 0.5rem;
 // Navbar
 $navbar-height: 2.5rem;
 $navbar-breakpoint: 769px;
+$navbar-item-color: $primary;
 
 // Message
 $message-body-padding: 0.8rem;
@@ -46,6 +47,9 @@ $footer-padding: $padding;
 
 // Section
 $section-padding: $padding;
+$section-padding-desktop: $padding;
+$section-padding-medium: $padding;
+$section-padding-large: $padding;
 
 
 // Table

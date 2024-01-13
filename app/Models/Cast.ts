@@ -73,7 +73,7 @@ export default class Cast extends AppBaseModel {
   @belongsTo(() => File, {
     foreignKey: 'imageFileId',
   })
-  public castImage: BelongsTo<typeof File>
+  public photo: BelongsTo<typeof File>
 
   @manyToMany(() => Video, {
     pivotTable: 'video_casts',

@@ -6,6 +6,8 @@
 @import './overrides';
 @import './utils';
 
+@import './modules/search-dialog.scss';
+
 .boxes {
   padding: 1rem $padding;
   border-radius: $input-radius;
@@ -22,6 +24,24 @@
   img {
     border: 3px solid $primary;
     border-radius: $input-radius;
+  }
+}
+
+.list-from__container {
+  display: flex;
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .field-label {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .label {
+    margin: 0;
   }
 }
 

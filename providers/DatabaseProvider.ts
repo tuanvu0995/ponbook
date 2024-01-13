@@ -1,15 +1,9 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
-import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
+import { PaginatedFilters, PaginatedSorts, SortType } from 'App/common/types'
+import { DateTime } from 'luxon'
 
-const sortMapping: { [key: string]: string } = {
-  code: 'code',
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
-  releaseDate: 'release_date',
-  views: 'views',
-  viewsInDay: 'views_in_day',
-  viewsInWeek: 'views_in_week',
-  viewsInMonth: 'views_in_month',
+const defaultSorts = (sort: string): SortType => {
+  return sort === 'asc' ? 'asc' : 'desc'
 }
 
 export default class DatabaseProvider {
@@ -37,12 +31,44 @@ export default class DatabaseProvider {
         }
 
         if (sorts) {
-          Object.keys(sorts).forEach((key) => {
-            const sortKey = sortMapping[key]
-            if (sortKey) {
-              this.orderBy(sortKey, sorts[key])
-            }
-          })
+          if (sorts.releaseDate) {
+            this.orderBy('release_date', defaultSorts(sorts.releaseDate))
+          }
+          if (sorts.updatedAt) {
+            this.orderBy('updated_at', defaultSorts(sorts.updatedAt))
+          }
+          if (sorts.createdAt) {
+            this.orderBy('created_at', defaultSorts(sorts.createdAt))
+          }
+          if (sorts.code) {
+            this.orderBy('code', defaultSorts(sorts.code))
+          }
+          if (sorts.views) {
+            this.leftJoin('views', 'videos.id', 'views.referer_id')
+              .where('views.range', 'day')
+              .orderBy('views.count', defaultSorts(sorts.views))
+          }
+          if (sorts.viewsInDay) {
+            const lastDay = DateTime.now().minus({ days: 1 }).toSQL()
+            this.leftJoin('views', 'videos.id', 'views.referer_id')
+              .where('views.range', 'day')
+              .where('views.created_at', '>=', lastDay)
+              .orderBy('views.count', defaultSorts(sorts.viewsInDay))
+          }
+          if (sorts.viewsInWeek) {
+            const lastWeek = DateTime.now().minus({ weeks: 1 }).toSQL()
+            this.leftJoin('views', 'videos.id', 'views.referer_id')
+              .where('views.range', 'week')
+              .where('views.created_at', '>=', lastWeek)
+              .orderBy('views.count', defaultSorts(sorts.viewsInWeek))
+          }
+          if (sorts.viewsInMonth) {
+            const lastMonth = DateTime.now().minus({ months: 1 }).toSQL()
+            this.leftJoin('views', 'videos.id', 'views.referer_id')
+              .where('views.range', 'month')
+              .where('views.created_at', '>=', lastMonth)
+              .orderBy('views.count', defaultSorts(sorts.viewsInMonth))
+          }
         } else {
           this.orderBy('release_date', 'desc')
         }

@@ -10,7 +10,7 @@ export class TagRepo {
     if (name) {
       query.whereRaw('name LIKE ?', [`%${name}%`])
     }
-    return await query.orderBy('name', 'asc').paginate(page, limit)
+    return await query.withCount('videos').orderBy('name', 'asc').paginate(page, limit)
   }
 
   public static async getVideosByTag(tag: Tag, page = 1, limit = 10) {

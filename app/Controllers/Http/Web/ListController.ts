@@ -7,10 +7,10 @@ import { TagRepo } from 'App/Repos/TagRepo'
 import VideoRepo from 'App/Repos/VideoRepo'
 
 export default class ListController {
-  public async popular({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 36 } = request.qs()
-    const videos = await VideoRepo.getPopularVideos(page, limit)
-    videos.baseUrl(`/popular`)
+  public async popular({ request, pagination, view }: HttpContextContract & HttpRequestPagination) {
+    const { page = 1, limit = 36, sorts, filters } = pagination
+    const videos = await VideoRepo.getPopularVideos(page, limit, sorts, filters)
+    videos.baseUrl(`/popular`).queryString(request.qs())
 
     const title = 'Popular Videos'
     const description = 'List of all the popular videos'
@@ -23,6 +23,7 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.popular',
     })
   }
 
@@ -42,13 +43,18 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.recent',
     })
   }
 
-  public async newReleases({ request, view }: HttpContextContract) {
-    const { page = 1, limit = 36 } = request.qs()
-    const videos = await VideoRepo.getNewReleaseVideos(page, limit)
-    videos.baseUrl(`/new-releases`)
+  public async newReleases({
+    request,
+    pagination,
+    view,
+  }: HttpContextContract & HttpRequestPagination) {
+    const { page = 1, limit = 36, sorts, filters } = pagination
+    const videos = await VideoRepo.getNewReleaseVideos(page, limit, sorts, filters)
+    videos.baseUrl(`/new-release`).queryString(request.qs())
 
     const title = 'New Release Videos'
     const description = 'List of all the new release videos'
@@ -61,6 +67,7 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.newRelease',
     })
   }
 
@@ -87,6 +94,8 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.castBySlug',
+      routerParams: { slug: cast.slug },
     })
   }
 
@@ -114,6 +123,8 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.director',
+      routerParams: { uid: director.uid },
     })
   }
 
@@ -140,6 +151,8 @@ export default class ListController {
       keywords,
       listTitle: title,
       listSubtitle: description,
+      routerName: 'web.list.maker',
+      routerParams: { uid: maker.uid },
     })
   }
 
@@ -161,6 +174,54 @@ export default class ListController {
     return view.render('list', {
       tag,
       videos,
+      title,
+      description,
+      keywords,
+      listTitle: title,
+      listSubtitle: description,
+      routerName: 'web.list.tag',
+      routerParams: { slug: tag.slug },
+    })
+  }
+
+  public async generes({ request, view, pagination }: HttpContextContract & HttpRequestPagination) {
+    const { page = 1, limit = 36 } = pagination
+    const filterName = request.qs().search
+
+    const tags = await TagRepo.getTags(filterName, page, limit)
+    tags.baseUrl(`/generes`).queryString(request.qs())
+
+    const title = 'Generes'
+    const description = 'List of all the generes'
+    const keywords = ['generes']
+
+    return view.render('generes', {
+      genenes: tags,
+      title,
+      description,
+      keywords,
+      listTitle: title,
+      listSubtitle: description,
+    })
+  }
+
+  public async actresses({
+    request,
+    view,
+    pagination,
+  }: HttpContextContract & HttpRequestPagination) {
+    const { page = 1, limit = 36 } = pagination
+    const filterName = request.qs().search
+
+    const casts = await CastRepo.getCasts(filterName, page, limit)
+    casts.baseUrl(`/actresses`).queryString(request.qs())
+
+    const title = 'Actresses'
+    const description = 'List of all the actresses'
+    const keywords = ['actresses']
+
+    return view.render('actresses', {
+      actresses: casts,
       title,
       description,
       keywords,

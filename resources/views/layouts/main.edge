@@ -54,6 +54,7 @@
 
   <script src="{{ asset('assets/vendor.js') }}"></script>
   <script src="{{ asset('assets/app.js') }}"></script>
+  @entryPointScripts('search-dialog')
 
   @!section('script-links')
 
@@ -78,6 +79,8 @@
   <script type="text/javascript"
     src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net"></script>
   @endif
+
+  <div id="modal-root"></div>
 </body>
 
 </html>

@@ -18,7 +18,7 @@ export type PaginatedSorts = {
   viewsInMonth?: SortType
 }
 
-export type PaginatedOptList = {
+export type PaginatedOptionList = {
   page: number
   limit: number
   filters: PaginatedFilters
