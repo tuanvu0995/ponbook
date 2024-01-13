@@ -17,7 +17,16 @@ const ReactSearchDialog = () => {
     window.closeSearchDialog()
   }
 
-  useEffect(() => feather.replace(), [])
+  useEffect(() => {
+    feather.replace()
+
+    const handleEsc = (e) => {
+      if (e.keyCode === 27) onClose()
+    }
+
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [])
 
   useEffect(() => {
     if (inputRef) {
@@ -88,7 +97,12 @@ const ReactSearchDialog = () => {
             <span className="icon is-small is-left">
               <i data-feather="search"></i>
             </span>
-            <span className="icon is-small is-right is-hidden-touch is-flex-desktop">ESC</span>
+            <span
+              className="icon is-small is-right is-hidden-touch is-flex-desktop"
+              onClick={onClose}
+            >
+              ESC
+            </span>
           </div>
         </div>
         <a
@@ -145,5 +159,5 @@ window.openSearchDialog = function () {
 }
 
 window.closeSearchDialog = function () {
-  document.getElementById('search-modal').remove()
+  document.getElementById('search-modal')?.remove()
 }
