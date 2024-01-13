@@ -40,7 +40,7 @@ const ReactSearchDialog = () => {
   )
 
   const fetchSearchResults = async (value) => {
-    const { data } = await customFetch('/api/search/suggestions', {
+    const data = await customFetch('/api/search/suggestions', {
       method: 'POST',
       body: JSON.stringify({ keyword: value }),
     })
