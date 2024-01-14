@@ -44,7 +44,7 @@ const ReactSearchDialog = () => {
   }, [keyword])
 
   const debounceFetch = useCallback(
-    debounce((value) => fetchSearchResults(value), 1000),
+    debounce((value) => fetchSearchResults(value), 200),
     []
   )
 
