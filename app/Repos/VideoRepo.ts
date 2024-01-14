@@ -79,13 +79,13 @@ export default class VideoRepo {
     page: number = 1,
     limit: number = 15,
     filters?: PaginatedFilters,
-    sorts?: PaginatedSorts
   ): Promise<ModelPaginatorContract<Video>> {
     const recentVideos = await Video.query()
       .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
-      .filterWithPaginate(page, limit, filters, sorts)
+      .orderBy('id', 'desc')
+      .filterWithPaginate(page, limit, filters)
 
     return recentVideos
   }
@@ -115,7 +115,6 @@ export default class VideoRepo {
     page: number = 1,
     limit: number = 15,
     filters?: PaginatedFilters,
-    sorts?: PaginatedSorts,
   ): Promise<ModelPaginatorContract<Video>> {
     const now = DateTime.now().toFormat('yyyy-MM-dd')
 
@@ -124,7 +123,8 @@ export default class VideoRepo {
       .where('release_date', '<=', now)
       .where('is_published', true)
       .where('is_deleted', false)
-      .filterWithPaginate(page, limit, filters, sorts)
+      .orderBy('release_date', 'desc')
+      .filterWithPaginate(page, limit, filters)
 
     return videos
   }
@@ -133,7 +133,6 @@ export default class VideoRepo {
     page: number = 1,
     limit: number = 15,
     filters?: PaginatedFilters,
-    sorts?: PaginatedSorts
   ): Promise<ModelPaginatorContract<Video>> {
     const sevenDaysAgo = DateTime.now().minus({ year: 1 }).toSQL()
     const popularVideos = await Video.query()
@@ -145,7 +144,7 @@ export default class VideoRepo {
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('views.count', 'desc')
-      .filterWithPaginate(page, limit, filters, sorts)
+      .filterWithPaginate(page, limit, filters)
 
     return popularVideos
   }

@@ -8,8 +8,8 @@ import VideoRepo from 'App/Repos/VideoRepo'
 
 export default class ListController {
   public async popular({ request, pagination, view }: HttpContextContract & HttpRequestPagination) {
-    const { page = 1, limit = 36, sorts, filters } = pagination
-    const videos = await VideoRepo.getPopularVideos(page, limit, filters, sorts)
+    const { page = 1, limit = 36, filters } = pagination
+    const videos = await VideoRepo.getPopularVideos(page, limit, filters)
     videos.baseUrl(`/popular`).queryString(request.qs())
 
     const title = 'Popular Videos'
@@ -24,12 +24,13 @@ export default class ListController {
       listTitle: title,
       listSubtitle: description,
       routerName: 'web.list.popular',
+      hideSort: true,
     })
   }
 
   public async recent({ request, view, pagination }: HttpContextContract & HttpRequestPagination) {
-    const { page = 1, limit = 36, sorts, filters } = pagination
-    const videos = await VideoRepo.getRecentVideos(page, limit, filters, sorts)
+    const { page = 1, limit = 36, filters } = pagination
+    const videos = await VideoRepo.getRecentVideos(page, limit, filters)
     videos.baseUrl(`/recent`).queryString(request.qs())
 
     const title = 'Recently Added Videos'
@@ -44,6 +45,7 @@ export default class ListController {
       listTitle: title,
       listSubtitle: description,
       routerName: 'web.list.recent',
+      hideSort: true,
     })
   }
 
@@ -52,8 +54,8 @@ export default class ListController {
     pagination,
     view,
   }: HttpContextContract & HttpRequestPagination) {
-    const { page = 1, limit = 36, sorts, filters } = pagination
-    const videos = await VideoRepo.getNewReleaseVideos(page, limit, filters, sorts)
+    const { page = 1, limit = 36, filters } = pagination
+    const videos = await VideoRepo.getNewReleaseVideos(page, limit, filters)
     videos.baseUrl(`/new-release`).queryString(request.qs())
 
     const title = 'New Release Videos'
@@ -68,18 +70,19 @@ export default class ListController {
       listTitle: title,
       listSubtitle: description,
       routerName: 'web.list.newRelease',
+      hideSort: true,
     })
   }
 
-  public async castsBySlug({ request, view }: HttpContextContract) {
+  public async castsBySlug({ request, view, pagination }: HttpContextContract & HttpRequestPagination) {
     const slug = request.param('slug')
-    const { page = 1, limit = 36 } = request.qs()
+    const { page = 1, limit = 36, filters, sorts } = pagination
     const cast = await CastRepo.findBySlug(slug)
     if (!cast) {
       return view.render('errors/not-found')
     }
 
-    const videos = await CastRepo.getVideosByCast(cast, page, limit)
+    const videos = await CastRepo.getVideosByCast(cast, page, limit, filters, sorts)
     videos.baseUrl(`/a/${cast.slug}`)
 
     const title = cast.name

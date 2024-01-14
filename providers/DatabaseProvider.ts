@@ -46,9 +46,10 @@ export default class DatabaseProvider {
             this.orderBy('code', defaultSorts(sorts.code))
           }
           if (sorts.views) {
-            this.leftJoin('views', 'videos.id', 'views.referer_id')
-              .where('views.range', 'day')
-              .orderBy('views.count', defaultSorts(sorts.views))
+            this.leftJoin('views', 'videos.id', 'views.referer_id').orderBy(
+              'views.count',
+              defaultSorts(sorts.views)
+            )
           }
           if (sorts.viewsInDay) {
             const lastDay = DateTime.now().minus({ days: 1 }).toSQL()
@@ -61,6 +62,7 @@ export default class DatabaseProvider {
             const lastWeek = DateTime.now().minus({ weeks: 1 }).toSQL()
             this.leftJoin('views', 'videos.id', 'views.referer_id')
               .where('views.range', 'week')
+              .orWhere('views.range', 'day')
               .where('views.created_at', '>=', lastWeek)
               .orderBy('views.count', defaultSorts(sorts.viewsInWeek))
           }
@@ -68,6 +70,7 @@ export default class DatabaseProvider {
             const lastMonth = DateTime.now().minus({ months: 1 }).toSQL()
             this.leftJoin('views', 'videos.id', 'views.referer_id')
               .where('views.range', 'month')
+              .orWhere('views.range', 'day')
               .where('views.created_at', '>=', lastMonth)
               .orderBy('views.count', defaultSorts(sorts.viewsInMonth))
           }

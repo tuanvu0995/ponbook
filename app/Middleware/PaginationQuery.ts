@@ -10,7 +10,9 @@ export default class PaginationQuery {
     ctx.pagination = {
       page: page ? parseInt(page) : 1,
       limit: limit ? parseInt(limit) : parseInt(Env.get('PAGINATION_LIMIT', '36')),
-      sorts: {},
+      sorts: {
+        releaseDate: 'desc',
+      },
       filters: {},
     }
 

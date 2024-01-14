@@ -1,4 +1,5 @@
 import Cast from 'App/Models/Cast'
+import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
 
 export class CastRepo {
   public static async findByUid(uid: string) {
@@ -17,18 +18,29 @@ export class CastRepo {
     return await query.orderBy('name', 'asc').paginate(page, limit)
   }
 
-  public static async getVideosByCast(cast: Cast, page = 1, limit = 10) {
+  public static async getVideosByCast(
+    cast: Cast,
+    page = 1,
+    limit = 10,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts
+  ) {
     return await cast
       .related('videos')
       .query()
       .preload('cover')
       .where('is_deleted', false)
       .where('is_published', true)
-      .orderBy('release_date', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
   }
 
-  public static async getVideosForCastOnly(cast: Cast, page = 1, limit = 10) {
+  public static async getVideosForCastOnly(
+    cast: Cast,
+    page = 1,
+    limit = 10,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts
+  ) {
     return await cast
       .related('videos')
       .query()
@@ -36,7 +48,6 @@ export class CastRepo {
       .where('is_deleted', false)
       .where('is_published', true)
       .has('casts', '=', 1)
-      .orderBy('release_date', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
   }
 }
