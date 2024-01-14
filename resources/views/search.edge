@@ -7,6 +7,21 @@
   subtitle: listSubtitle,
 })
 
+<section class="section">
+    <div class="container">
+      <form method='GET' action="{{ request.url(true) }}">
+        <div class="field">
+          <div class="control has-icons-left">
+            <input class="input" type="text" placeholder="Search" name="term" value="{{ term || ""}}"/>
+            <span class="icon is-small is-left">
+              <i data-feather="search"></i>
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+</section>
+
 @!component("components/collection", {
   videos: videos,
 })

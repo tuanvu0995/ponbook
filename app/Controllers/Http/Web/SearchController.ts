@@ -33,7 +33,7 @@ export default class SearchController {
     const description = `Search results for "${term} - ${results.estimatedTotalHits} videos"`
     const keywords = ['popular', 'most viewed']
 
-    return view.render('list', {
+    return view.render('search', {
       videos: paginated,
       title,
       description,

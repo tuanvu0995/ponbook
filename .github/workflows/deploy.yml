@@ -1,23 +1,20 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
-        Environment:
-          description: 'Target environment'
-          type: choice
-          required: true
-          default: 'production'
-          options:
-            - 'production'
-            - 'staging'
-        Tag:
-          description: 'Tag to deploy'
-          type: string
-          required: false
-          default: 'latest'
+      Environment:
+        description: 'Target environment'
+        type: choice
+        required: true
+        default: 'production'
+        options:
+          - 'production'
+          - 'staging'
+      Tag:
+        description: 'Tag to deploy'
+        type: string
+        required: false
+        default: 'latest'
 
 permissions: {}
 
