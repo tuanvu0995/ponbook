@@ -2,6 +2,10 @@
 .navbar {
   border-bottom: 1px solid $grey-light;
 
+  &.is-fixed-top {
+    z-index: 1000;
+  }
+
   .navbar-item {
     font-weight: bold;
     font-size: 0.9rem;
