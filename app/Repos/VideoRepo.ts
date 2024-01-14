@@ -78,7 +78,7 @@ export default class VideoRepo {
   public static async getRecentVideos(
     page: number = 1,
     limit: number = 15,
-    filters?: PaginatedFilters,
+    filters?: PaginatedFilters
   ): Promise<ModelPaginatorContract<Video>> {
     const recentVideos = await Video.query()
       .preload('cover')
@@ -114,7 +114,7 @@ export default class VideoRepo {
   public static async getNewReleaseVideos(
     page: number = 1,
     limit: number = 15,
-    filters?: PaginatedFilters,
+    filters?: PaginatedFilters
   ): Promise<ModelPaginatorContract<Video>> {
     const now = DateTime.now().toFormat('yyyy-MM-dd')
 
@@ -132,7 +132,7 @@ export default class VideoRepo {
   public static async getPopularVideos(
     page: number = 1,
     limit: number = 15,
-    filters?: PaginatedFilters,
+    filters?: PaginatedFilters
   ): Promise<ModelPaginatorContract<Video>> {
     const sevenDaysAgo = DateTime.now().minus({ year: 1 }).toSQL()
     const popularVideos = await Video.query()
@@ -150,6 +150,9 @@ export default class VideoRepo {
   }
 
   public static async getVideosByIds(ids: number[]): Promise<Video[]> {
+    if (!ids.length) {
+      return []
+    }
     return await Video.query()
       .preload('cover')
       .whereIn('id', ids)
