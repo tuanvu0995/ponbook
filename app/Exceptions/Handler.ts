@@ -23,6 +23,12 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_RESOURCE_NOT_FOUND', 'E_VALIDATION_FAILURE']
   protected ignoreStatuses = [404, 422, 403, 401, 400]
 
+  protected codeMappings = {
+    404: 'not-found',
+    401: 'unauthorized',
+    500: 'server-error',
+  }
+
   constructor() {
     super(Logger)
   }
@@ -62,31 +68,25 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error, ctx) {
-    if (error.code === 'E_VALIDATION_FAILURE') {
-      return ctx.response.status(422).json(error.messages)
-    }
-
     const statusCode = error.status || 500
-    const message = this.getPlaneMessage(error)
+    const message = statusCode === 500 ? 'Internal server error' : error.message
 
     // send html if request is text html
-    if (ctx.request.accepts(['html'])) {
-      const title = statusCode === 500 ? 'Internal Server Error' : error.message
-      return ctx.view.render('error', { title, error })
+    if (ctx.request.accepts(['json', 'application/json'])) {
+      return ctx.response.status(statusCode).json({
+        errors: [
+          {
+            status: statusCode,
+            code: error.code,
+            message: message,
+          },
+        ],
+      })
     }
 
-    return ctx.response.status(statusCode).json({
-      error: {
-        code: error.code,
-        message,
-      },
-    })
+    const viewPath = this.codeMappings[statusCode] || 'errors/server-error'
+    return ctx.view.render(viewPath)
   }
 
-  private getPlaneMessage(error) {
-    const mesageArr = error.message.split(': ')
-    const message =
-      mesageArr[mesageArr.length - 1] || 'Something went wrong. Please try again later.'
-    return message
-  }
+  private
 }
