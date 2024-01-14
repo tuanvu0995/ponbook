@@ -31,6 +31,19 @@ export default class File extends AppBaseModel {
     return `data:${this.type};base64,${this.data}`
   }
 
+  @computed()
+  public get thumbnailStyle(): string {
+    if (this.width > this.height) {
+      return `width: 100%; height: auto;`
+    }
+    return `height: 100%; width: auto;`
+  }
+
+  @computed()
+  public get aspectRatioY(): number {
+    return this.height / this.width
+  }
+
   @beforeCreate()
   public static initTypeMimeType(file: File) {
     file.type = 'image/webp'
@@ -42,5 +55,4 @@ export default class File extends AppBaseModel {
       file.name = file.path.split('/').pop() || 'noname'
     }
   }
-
 }

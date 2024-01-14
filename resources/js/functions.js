@@ -24,17 +24,20 @@ export function dropdowns(selector) {
 }
 
 export function initImageLazyLoad() {
-  var lazyImages = [].slice.call(document.querySelectorAll('img.image-lazy'))
+  var lazyImages = [].slice.call(document.querySelectorAll('.image.lazy'))
 
   if ('IntersectionObserver' in window) {
     let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.src = lazyImage.dataset.src
-          lazyImageObserver.unobserve(lazyImage)
-          lazyImage.onload = function () {
-            lazyImage.classList.remove('image-lazy')
+          // get child image element
+          const img = entry.target.querySelector('img')
+          if (img) {
+            img.src = img.dataset.src
+            lazyImageObserver.unobserve(img)
+            img.onload = function () {
+              entry.target.classList.add('loaded')
+            }
           }
         }
       })

@@ -1,8 +1,11 @@
-<img class="image-lazy" src="{{ imageUrl(file, true) }}" data-src="{{ imageUrl(file) }}" alt="{{ alt || '' }}"
+<div class="image lazy">
+  <img src="{{ imageUrl(file, true) }}" data-src="{{ imageUrl(file) }}" alt="{{ alt || '' }}"
     @if(file?.width)
     width="{{ file.width }}px"
     @end
     @if(file?.height)
     height="{{ file.height }}px"
     @end
+    style="{{ file.thumbnailStyle || '' }}"
     />
+</div>
