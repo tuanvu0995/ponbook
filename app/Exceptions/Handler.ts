@@ -71,22 +71,18 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     const statusCode = error.status || 500
     const message = statusCode === 500 ? 'Internal server error' : error.message
 
-    // send html if request is text html
-    if (ctx.request.accepts(['json', 'application/json'])) {
+    if (ctx.request.url().startsWith('/api')) {
       return ctx.response.status(statusCode).json({
         errors: [
           {
-            status: statusCode,
-            code: error.code,
             message: message,
           },
         ],
       })
     }
 
-    const viewPath = this.codeMappings[statusCode] || 'errors/server-error'
-    return ctx.view.render(viewPath)
+    const viewPath = this.codeMappings[statusCode] || 'server-error'
+    return ctx.view.render(`errors/${viewPath}`)
   }
 
-  private
 }
