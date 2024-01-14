@@ -1,0 +1,75 @@
+<table class="table">
+  <tr>
+      <th>Code</th>
+      <td class="pl-5">
+        <div class="control">
+          <div class="tags has-addons">
+            <span class="tag is-medium is-primary">{{ video.code }}</span>
+            <a class="tag is-medium is-primary" onclick="copyToClipboard('{{ video.code }}')">
+              <span class="icon is-small"><i data-feather="copy"></i></span>
+            </a>
+          </div>
+        </div>
+      </td>
+  </tr>
+  <tr>
+      <th>Release Date</th>
+      <td class="pl-5">{{ video.releaseDate || video.release_date }}</td>
+  </tr>
+  <tr>
+      <th>Duration</th>
+      <td class="pl-5">{{ video.duration }} minutes</td>
+  </tr>
+  <tr>
+      <th>Cast</th>
+      <td class="pl-5">
+          <div class="field is-grouped is-grouped-multiline">
+            @if(video.casts.length > 0)
+              @each(cast in video.casts)
+              <div class="control">
+                <div class="tags has-addons">
+                  <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
+                  <a class="tag is-action">
+                    <span class="icon is-small"><i data-feather="heart"></i></span>
+                  </a>
+                </div>
+              </div>
+              @end
+            @else
+            ---
+            @endif
+          </div>
+      </td>
+  </tr>
+  <tr>
+      <th>Director</th>
+      <td class="pl-5">
+          @if(video.director)
+          <a class="tag" href="{{ route("web.list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
+          @else
+          ---
+          @end
+      </td>
+  </tr>
+  <tr>
+      <th>Maker</th>
+      <td class="pl-5">
+          @if(video.maker)
+          <a class="tag" href="{{ route("web.list.maker", { uid: video.maker.uid }) }}">{{
+              video.maker.name }}</a>
+          @else
+          ---
+          @end
+      </td>
+  </tr>
+  <tr>
+    <th>Genre(s)</th>
+    <td class="pl-5">
+        <div class="tags">
+            @each(tag in video.tags)
+            <a class="tag is-info is-light" href="{{ route('web.list.tag', { slug: tag.slug }) }}">{{ tag.name }}</a>
+            @end
+        </div>
+    </td>
+</tr>
+</table>

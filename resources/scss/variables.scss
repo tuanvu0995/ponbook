@@ -1,0 +1,57 @@
+$navi: #1d2b53;
+$purple: #7e2553;
+$red: #ff004d;
+$yellow: #faef5d;
+$brown: #757763;
+$beige-light: #d0d1cd;
+$beige-lighter: #eff0eb;
+
+// Update Bulma's global variables
+$family-sans-serif: "Space Mono'", monospace;
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$primary: $navi;
+$link: $purple;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+// Breakpoints
+$mobile-md: 480px !default;
+
+// Default spacing
+$padding: 1rem;
+
+// Update some of Bulma's component variables
+$body-background-color: white;
+
+// Input
+$input-border-color: $beige-light;
+$input-shadow: none;
+$input-radius: 0.5rem;
+
+// Button
+$control-border-width: 2px;
+$control-radius: 0.5rem;
+
+// Navbar
+$navbar-height: 2.5rem;
+$navbar-breakpoint: 769px;
+$navbar-item-color: $primary;
+
+// Message
+$message-body-padding: 0.8rem;
+
+
+// Footer
+$footer-padding: $padding;
+
+// Section
+$section-padding: $padding;
+$section-padding-desktop: $padding;
+$section-padding-medium: $padding;
+$section-padding-large: $padding;
+
+
+// Table
+$table-cell-border: none;
+$table-cell-padding: 0.4rem 0;

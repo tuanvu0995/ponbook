@@ -73,7 +73,7 @@ export const csrf: ShieldConfig['csrf'] = {
   | Enable/Disable CSRF
   |--------------------------------------------------------------------------
   */
-  enabled: false,
+  enabled: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -92,7 +92,7 @@ export const csrf: ShieldConfig['csrf'] = {
 	| ```
   |
   */
-  exceptRoutes: [],
+  exceptRoutes: ({ request }) => request.url().includes('/api'),
 
   /*
   |--------------------------------------------------------------------------

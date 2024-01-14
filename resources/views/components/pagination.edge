@@ -1,0 +1,32 @@
+@if(paginator.length > 0)
+
+<section class="section">
+  <div class="container">
+    <nav class="pagination is-small" role="navigation" aria-label="pagination">
+      <ul class="pagination-list">
+          @if(paginator.getPreviousPageUrl())
+          <li><a class="pagination-previous" href="{{ paginator.getPreviousPageUrl() }}"><< Previous</a></li>
+          @else
+          <li><a class="pagination-previous is-disabled"><< Previous</a></li>
+          @end
+          @each(anchor in paginator.getUrlsForRange(1, paginator.lastPage))
+              @if(paginator.currentPage === anchor.page)
+              <li><a class="pagination-link is-current">{{ anchor.page }}</a></li>
+              @elseif(anchor.page <= paginator.currentPage + 4 && anchor.page >= paginator.currentPage - 4 || anchor.page === 1 || anchor.page === paginator.lastPage)
+              <li><a class="pagination-link" aria-label="Goto page {{ anchor.page }}" href="{{ anchor.url }}">{{ anchor.page }}</a></li>
+              @elseif(anchor.page <= paginator.currentPage + 5 && anchor.page >= paginator.currentPage - 5)
+              <li><a class="pagination-link is-disabled">...</a></li>
+              @end
+          </li>
+          @endeach
+          @if(paginator.getNextPageUrl())
+          <li><a class="pagination-next" href="{{ paginator.getNextPageUrl() }}">Next page >></a></li>
+          @else
+          <li><a class="pagination-next is-disabled"">Next page >></a></li>
+          @end
+      </ul>
+  </nav>
+  </div>
+</section>
+
+@endif

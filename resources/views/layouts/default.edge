@@ -1,0 +1,14 @@
+@layout('layouts/main')
+@set('title', page.title)
+
+@section('body')
+@!component('uikit/layout/hero', { title: page.title, type: "warning" })
+<div class="container">
+    <div class="p-4">
+        <div class="content">
+            {{ safe(page.content) }}
+        </div>
+      <p class="mb-4">Last updated: {{ dateFormat(page.updatedAt) }}</p>
+    </div>
+</div>
+@end

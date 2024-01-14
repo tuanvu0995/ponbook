@@ -2,6 +2,8 @@ import _ from 'lodash'
 import Video from 'App/Models/Video'
 import Cast from 'App/Models/Cast'
 import Tag from 'App/Models/Tag'
+import SearchTerm from 'App/Models/SearchTerm'
+import { PaginatedOptionList } from 'App/common/types'
 
 export default class SearchRepo {
   private static isCode(keyword: string): boolean {
@@ -10,46 +12,48 @@ export default class SearchRepo {
     return codeRegex.test(keyword)
   }
 
-  public static async search(keyword: string) {
-    const isCode = this.isCode(keyword)
-    if (isCode) {
-      const seachByCodeQuery = this.getSearchByCodeQuery(keyword)
-      const videos = await seachByCodeQuery.limit(7)
-      if (videos.length > 0) return videos
-    }
-
-    const searchByTitleQuery = this.getSearchByTitleQuery(keyword)
-
-    return await searchByTitleQuery.limit(7)
+  public static async getSuggestions(keyword: string) {
+    return await SearchTerm.query()
+      .where('term', 'like', `${keyword}%`)
+      .where('is_hidden', false)
+      .limit(10)
   }
 
-  private static getSearchByCodeQuery(keyword: string) {
+  public static async search(keyword: string, options: PaginatedOptionList) {
+    const isCode = this.isCode(keyword)
+    if (isCode) {
+      return await this.searchByCode(keyword, options)
+    }
+
+    return await this.searchFulltext(keyword, options)
+  }
+
+  private static searchByCode(keyword: string, options: PaginatedOptionList) {
     const searchValues = this.praseCode(keyword)
 
     return Video.query()
+      .preload('cover')
       .whereIn('code', searchValues)
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('release_date', 'desc')
+      .filterWithPaginate(options.page, options.limit, options.filters, options.sorts)
   }
 
-  private static getSearchByTitleQuery(keyword: string) {
+  private static searchFulltext(keyword: string, options: PaginatedOptionList) {
     return Video.query()
-      .whereRaw('title LIKE ?', [`%${keyword}%`])
+      .preload('cover')
+      .innerJoin('video_casts', 'videos.id', 'video_casts.video_id')
+      .innerJoin('casts', 'casts.id', 'video_casts.cast_id')
+      .innerJoin('video_tags', 'videos.id', 'video_tags.video_id')
+      .innerJoin('tags', 'tags.id', 'video_tags.tag_id')
+      .whereRaw('code LIKE ?', [`%${keyword}%`])
+      .orWhereRaw('title LIKE ?', [`%${keyword}%`])
+      .orWhereRaw('casts.name LIKE ?', [`%${keyword}%`])
+      .orWhereRaw('tags.name LIKE ?', [`%${keyword}%`])
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('release_date', 'desc')
-      .orderByRaw(
-        `
-        CASE
-          WHEN title LIKE ? THEN 1
-          WHEN title LIKE ? THEN 2
-          WHEN title LIKE ? THEN 4
-          ELSE 3
-        END
-      `,
-        [keyword, `${keyword}%`, `%${keyword}`]
-      )
+      .groupBy('videos.id')
+      .filterWithPaginate(options.page, options.limit, options.filters, options.sorts)
   }
 
   public static async searchCasts(keyword: string, limit: number = 10): Promise<Cast[]> {

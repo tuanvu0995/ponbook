@@ -1,0 +1,47 @@
+@if(!hideFilter || !hideSort)
+<section class="section pb-0">
+  <div class="container">
+    <div class="list-from__container">
+      <form id="list-form" class="list-from__container" method="GET" action="{{ request.url(true) }}">
+        @if(!hideFilter)
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Filter</label>
+          </div>
+          <div class="control">
+            <div class="select is-small" filter>
+              <select name="filter" onchange="this.form.submit()">
+                <option value="singleActress:no" {{ inlinePrint(!qsValue(request, 'filters.singleActress'), "selected") }}>Default</option>
+                <option value="singleActress:yes" {{ inlinePrint(qsValue(request, 'filters.singleActress'), "selected") }}>Single actress</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        @endif
+        @if(!hideSort)
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">Sort</label>
+          </div>
+          <div class="control">
+            <div class="select is-small">
+              <select name="sort" onchange="this.form.submit()">
+                <option value="code:desc" {{ inlinePrint(qsValue(request, 'sorts.code'), "selected") }}>Code</option>
+                <option value="createdAt:desc" {{ inlinePrint(qsValue(request, 'sorts.createdAt'), "selected") }}>Last added</option>
+                <option value="updatedAt:desc" {{ inlinePrint(qsValue(request, 'sorts.updatedAt'), "selected") }}>Last updated</option>
+                <option value="releaseDate:desc" {{ inlinePrint(qsValue(request, 'sorts.releaseDate'), "selected") }}>Release date</option>
+                <option value="view:desc" {{ inlinePrint(qsValue(request, 'sorts.view'), "selected") }}>Most views</option>
+                <option value="viewsInDay:desc" {{ inlinePrint(qsValue(request, 'sorts.viewsInDay'), "selected") }}>Most today views</option>
+                <option value="viewsInWeek:desc" {{ inlinePrint(qsValue(request, 'sorts.viewsInWeek'), "selected") }}>Most weeks views</option>
+                <option value="viewsInMonth:desc" {{ inlinePrint(qsValue(request, 'sorts.viewsInMonth'), "selected") }}>Most month views</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        @endif
+      </form>
+    </div>
+
+  </div>
+  </section>
+@endif

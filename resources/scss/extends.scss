@@ -1,0 +1,234 @@
+@use 'sass:math';
+
+@mixin mobile-xs {
+  @media screen and (max-width: $mobile-md - 1), print {
+    @content;
+  }
+}
+
+// Responsive breakpoints
+@mixin mobile-md {
+  @media screen and (min-width: $mobile-md) {
+    @content;
+  }
+}
+
+.column {
+  @include mobile-xs {
+    &.is-narrow-mobile-md {
+      flex: none;
+    }
+
+    &.is-full-mobile-md {
+      flex: none;
+      width: 100%;
+    }
+
+    &.is-three-quarters-mobile-md {
+      flex: none;
+      width: 75%;
+    }
+
+    &.is-two-thirds-mobile-md {
+      flex: none;
+      width: 66.6666%;
+    }
+
+    &.is-half-mobile-md {
+      flex: none;
+      width: 50%;
+    }
+
+    &.is-one-third-mobile-md {
+      flex: none;
+      width: 33.3333%;
+    }
+
+    &.is-one-quarter-mobile-md {
+      flex: none;
+      width: 25%;
+    }
+
+    &.is-one-fifth-mobile-md {
+      flex: none;
+      width: 20%;
+    }
+
+    &.is-two-fifths-mobile-md {
+      flex: none;
+      width: 40%;
+    }
+
+    &.is-three-fifths-mobile-md {
+      flex: none;
+      width: 60%;
+    }
+
+    &.is-four-fifths-mobile-md {
+      flex: none;
+      width: 80%;
+    }
+
+    &.is-offset-three-quarters-mobile-md {
+      margin-left: 75%;
+    }
+
+    &.is-offset-two-thirds-mobile-md {
+      margin-left: 66.6666%;
+    }
+
+    &.is-offset-half-mobile-md {
+      margin-left: 50%;
+    }
+
+    &.is-offset-one-third-mobile-md {
+      margin-left: 33.3333%;
+    }
+
+    &.is-offset-one-quarter-mobile-md {
+      margin-left: 25%;
+    }
+
+    &.is-offset-one-fifth-mobile-md {
+      margin-left: 20%;
+    }
+
+    &.is-offset-two-fifths-mobile-md {
+      margin-left: 40%;
+    }
+
+    &.is-offset-three-fifths-mobile-md {
+      margin-left: 60%;
+    }
+
+    &.is-offset-four-fifths-mobile-md {
+      margin-left: 80%;
+    }
+
+    @for $i from 1 through 12 {
+      &.is-#{$i}-mobile-xs {
+        flex: none;
+        width: math.percentage(calc($i / 12));
+      }
+
+      &.is-offset-#{$i}-mobile-xs {
+        margin-left: math.percentage(calc($i / 12));
+      }
+    }
+  }
+  @include mobile-md {
+    &.is-narrow-mobile-md {
+      flex: none;
+    }
+
+    &.is-full-mobile-md {
+      flex: none;
+      width: 100%;
+    }
+
+    &.is-three-quarters-mobile-md {
+      flex: none;
+      width: 75%;
+    }
+
+    &.is-two-thirds-mobile-md {
+      flex: none;
+      width: 66.6666%;
+    }
+
+    &.is-half-mobile-md {
+      flex: none;
+      width: 50%;
+    }
+
+    &.is-one-third-mobile-md {
+      flex: none;
+      width: 33.3333%;
+    }
+
+    &.is-one-quarter-mobile-md {
+      flex: none;
+      width: 25%;
+    }
+
+    &.is-one-fifth-mobile-md {
+      flex: none;
+      width: 20%;
+    }
+
+    &.is-two-fifths-mobile-md {
+      flex: none;
+      width: 40%;
+    }
+
+    &.is-three-fifths-mobile-md {
+      flex: none;
+      width: 60%;
+    }
+
+    &.is-four-fifths-mobile-md {
+      flex: none;
+      width: 80%;
+    }
+
+    &.is-offset-three-quarters-mobile-md {
+      margin-left: 75%;
+    }
+
+    &.is-offset-two-thirds-mobile-md {
+      margin-left: 66.6666%;
+    }
+
+    &.is-offset-half-mobile-md {
+      margin-left: 50%;
+    }
+
+    &.is-offset-one-third-mobile-md {
+      margin-left: 33.3333%;
+    }
+
+    &.is-offset-one-quarter-mobile-md {
+      margin-left: 25%;
+    }
+
+    &.is-offset-one-fifth-mobile-md {
+      margin-left: 20%;
+    }
+
+    &.is-offset-two-fifths-mobile-md {
+      margin-left: 40%;
+    }
+
+    &.is-offset-three-fifths-mobile-md {
+      margin-left: 60%;
+    }
+
+    &.is-offset-four-fifths-mobile-md {
+      margin-left: 80%;
+    }
+
+    @for $i from 1 through 12 {
+      &.is-#{$i}-mobile-md {
+        flex: none;
+        width: math.percentage(calc($i / 12));
+      }
+
+      &.is-offset-#{$i}-mobile-md {
+        margin-left: math.percentage(calc($i / 12));
+      }
+    }
+  }
+}
+
+/**
+ * Visibility
+ */
+$displays: 'block' 'flex' 'inline' 'inline-block' 'inline-flex';
+
+@each $display in $displays {
+  @include mobile-md {
+    .is-#{$display}-mobile-md {
+      display: #{$display} !important;
+    }
+  }
+}

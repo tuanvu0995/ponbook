@@ -1,0 +1,78 @@
+@layout('layouts/main')
+
+@section('body')
+
+<section class="section py-2">
+  <div class="container">
+
+    <nav class="breadcrumb has-succeeds-separator py-4 is-flex-grow-1 mb-0" aria-label="breadcrumbs">
+      <ul>
+          <li><a href="{{ route("web.home") }}">Home</a></li>
+          @if(video.casts.length === 1)
+          <li><a href="{{ route("web.list.castBySlug", { slug: video.casts[0].slug }) }}">{{ video.casts[0].name }}</a></li>
+          @end
+          <li class="is-active"><a href="{{ route("web.video.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
+      </ul>
+    </nav>
+
+    <h1 class="title is-5">{{ video.code }} - {{ video.title }}</h1>
+
+    <div class="boxes">
+      <div class="columns">
+        <div class="column is-7">
+          <div class="video__cover">
+            @!component('components/image', { file: video.image, alt: video.title })
+          </div>
+          <div class="pt-4">
+            <h3 class="title is-5 mb-2">Description</h3>
+            <p class="mb-5">{{ video.description || video.title }}</p>
+          </div>
+        </div>
+        <div class="column is-5">
+          @include('partials/video/infoTable')
+        </div>
+      </div>
+    </div>
+
+    @if(video.images?.length)
+      @include('partials/video/sampleImages')
+    @endif
+
+  </div>
+</section>
+
+@!component("components/collection", {
+  title: "Related Videos",
+  videos: relatedVideos,
+  hideLastChild: true
+})
+
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('assets/lib/assets/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/lib/assets/owl.theme.default.min.css') }}">
+@endsection
+
+@section('scripts')
+<script src="{{ asset('assets/lib/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('assets/image-viewer.js') }}"></script>
+<script>
+  $(document).ready(function(){
+    $('.owl-carousel').owlCarousel({
+      loop: false,
+      margin: 5,
+      nav: true,
+      responsive:{
+          0:{ items:3 },
+          600:{ items:3 },
+          1000:{ items:5 }
+      },
+      navText: [
+          "<span class='slide-nav-button'><i class='fa fa-chevron-left'></i></span>",
+          "<span class='slide-nav-button'><i class='fa fa-chevron-right'></i></span>"
+      ]
+    })
+  });
+</script>
+@endsection

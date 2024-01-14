@@ -1,0 +1,78 @@
+// Navbar
+.navbar {
+  border-bottom: 1px solid $grey-light;
+
+  .navbar-item {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+}
+
+.navbar-burger {
+  height: inherit;
+}
+
+// Layout
+.section {
+  @include from($tablet) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.container {
+  @include from($tablet) {
+    max-width: 1216px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.hero {
+  .hero-body {
+    padding-left: $padding;
+    padding-right: $padding;
+
+    @include from($tablet) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+}
+
+.breadcrumb {
+  li a {
+    font-weight: bold;
+  }
+}
+
+.tag {
+  font-weight: bold;
+
+  &.is-action {
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.video-show {
+  .table {
+    background-color: transparent;
+    th,
+    td {
+      border: none;
+    }
+  }
+}
+
+.imageViewer {
+  .container {
+    max-width: none !important;
+  }
+
+  .footer {
+    background-color: transparent;
+  }
+}

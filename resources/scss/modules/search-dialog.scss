@@ -1,0 +1,67 @@
+.search-modal {
+  justify-content: flex-start;
+
+  .modal-card {
+    border-radius: 0;
+    min-height: 100dvh;
+
+    .modal-card-head, .modal-card-foot{
+      border-radius: 0;
+    }
+  }
+
+  .modal-card-body {
+    padding: 0;
+  }
+
+  .modal-card-head,
+  .modal-card-foot {
+    background-color: white;
+    border-top: none;
+    padding: 4px;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .input {
+    border-color: white;
+
+    &:focus,
+    &:hover {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .panel {
+    border: none;
+    box-shadow: none;
+    width: 100%;
+
+    .panel-block {
+      display: flex;
+      justify-content: space-between;
+
+      &.is-group {
+        font-size: 0.8rem;
+      }
+    }
+
+    .title {
+      margin: 0;
+    }
+    .title.with-2-lines {
+      min-height: 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* number of lines to show */
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+  }
+}

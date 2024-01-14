@@ -1,0 +1,28 @@
+@layout('layouts/main')
+
+@section('body')
+@!component("uikit/layout/hero", {
+  title: listTitle,
+  subtitle: listSubtitle,
+  type: "danger"
+})
+<section class="section">
+    <div class="container  py-5">
+        <div class="columns is-multiline is-mobile is-tablet is-desktop">
+           @each(tag in genenes)
+           <div class="column is-half-mobile is-one-third-tablet is-2-desktop">
+                <a class="box" href="{{ route("web.list.tag", { slug: tag.slug }) }}" title="Collection of {{ tag.name }}">
+                    <h2 class="title is-6">{{ tag.name }}</h2>
+                    <p class="subtitle is-6">{{ tag.$extras.videos_count }} videos</p>
+                </a>
+            </div>
+           @end
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container  py-5">
+        @!component('components/pagination', { paginator: genenes })
+    </div>
+</section>
+@end

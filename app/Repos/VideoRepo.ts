@@ -4,6 +4,7 @@ import NotFoundException from 'App/Exceptions/NotFoundException'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
 
 export default class VideoRepo {
   public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
@@ -76,21 +77,24 @@ export default class VideoRepo {
 
   public static async getRecentVideos(
     page: number = 1,
-    limit: number = 15
+    limit: number = 15,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts
   ): Promise<ModelPaginatorContract<Video>> {
     const recentVideos = await Video.query()
       .preload('cover')
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('id', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
 
     return recentVideos
   }
 
   public static async getNewCommentAddedVideos(
     page: number = 1,
-    limit: number = 15
+    limit: number = 15,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts
   ): Promise<ModelPaginatorContract<Video>> {
     const newlyUpdatedVideos = await Video.query()
       .select('videos.*')
@@ -99,8 +103,7 @@ export default class VideoRepo {
       .innerJoin('comments', 'videos.id', 'comments.video_id')
       .where('comments.is_published', true)
       .orderByRaw('MAX(comments.id) desc')
-      .groupBy('videos.id')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
     for (const video of newlyUpdatedVideos) {
       await video.load('cover')
     }
@@ -110,7 +113,9 @@ export default class VideoRepo {
 
   public static async getNewReleaseVideos(
     page: number = 1,
-    limit: number = 15
+    limit: number = 15,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts,
   ): Promise<ModelPaginatorContract<Video>> {
     const now = DateTime.now().toFormat('yyyy-MM-dd')
 
@@ -119,17 +124,18 @@ export default class VideoRepo {
       .where('release_date', '<=', now)
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('release_date', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
 
     return videos
   }
 
   public static async getPopularVideos(
     page: number = 1,
-    limit: number = 15
+    limit: number = 15,
+    filters?: PaginatedFilters,
+    sorts?: PaginatedSorts
   ): Promise<ModelPaginatorContract<Video>> {
-    const sevenDaysAgo = DateTime.now().minus({ days: 7 }).toSQL()
+    const sevenDaysAgo = DateTime.now().minus({ year: 1 }).toSQL()
     const popularVideos = await Video.query()
       .preload('cover')
       .preload('casts')
@@ -139,8 +145,17 @@ export default class VideoRepo {
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('views.count', 'desc')
-      .paginate(page, limit)
+      .filterWithPaginate(page, limit, filters, sorts)
 
     return popularVideos
+  }
+
+  public static async getVideosByIds(ids: number[]): Promise<Video[]> {
+    return await Video.query()
+      .preload('cover')
+      .whereIn('id', ids)
+      .where('is_published', true)
+      .where('is_deleted', false)
+      .orderByRaw(`FIELD(id, ${ids.join(',')})`)
   }
 }

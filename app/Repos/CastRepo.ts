@@ -10,7 +10,7 @@ export class CastRepo {
   }
 
   public static async getCasts(name: string = '', page = 1, limit = 10) {
-    const query = Cast.query()
+    const query = Cast.query().preload('photo').withCount('videos')
     if (name) {
       query.whereRaw('name LIKE ?', [`%${name}%`])
     }
