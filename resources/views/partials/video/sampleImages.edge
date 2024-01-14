@@ -6,7 +6,7 @@
           <div class="image-preview__container">
               @each((image, index) in video.images)
                 <a class="image-preview__item">
-                  <img class="image-lazy" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
+                  <img class="lazy-image" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
                 </a>
               @end
           </div>

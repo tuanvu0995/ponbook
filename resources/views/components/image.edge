@@ -1,11 +1,11 @@
-<div class="image lazy">
-  <img src="{{ imageUrl(file, true) }}" data-src="{{ imageUrl(file) }}" alt="{{ alt || '' }}"
+  <img class="lazy-image" src="{{ imageUrl(file, true) }}" data-src="{{ imageUrl(file) }}" alt="{{ alt || '' }}"
     @if(file?.width)
     width="{{ file.width }}px"
-    @end
+    @endif
     @if(file?.height)
     height="{{ file.height }}px"
-    @end
+    @endif
+    @if(file?.thumbnailStyle)
     style="{{ file.thumbnailStyle || '' }}"
+    @endif
     />
-</div>

@@ -11,23 +11,7 @@
   flex-grow: 1;
 }
 
-.image.lazy{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img {
-    object-fit: cover;
-    filter: blur(4px);
-  }
-
-  &.loaded {
-    filter: none;
-    background-image: none !important;
-
-    img {
-      filter: none;
-    }
-  }
+img.lazy-image {
+  object-fit: cover;
+  filter: blur(4px);
 }

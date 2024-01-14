@@ -26,6 +26,7 @@
           <div class="field is-grouped is-grouped-multiline">
             @if(video.casts.length > 0)
               @each(cast in video.casts)
+              @if(cast.slug)
               <div class="control">
                 <div class="tags has-addons">
                   <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
@@ -34,7 +35,8 @@
                   </a>
                 </div>
               </div>
-              @end
+              @endif
+              @endeach
             @else
             ---
             @endif
