@@ -2,27 +2,12 @@
 |--------------------------------------------------------------------------
 | Routes
 |--------------------------------------------------------------------------
-|
-| This file is dedicated for defining HTTP routes. A single file is enough
-| for majority of projects, however you can define routes in different
-| files and just make sure to import them inside this file. For example
-|
-| Define routes in following two files
-| ├── start/routes/cart.ts
-| ├── start/routes/customer.ts
-|
-| and then import them inside `start/routes.ts` as follows
-|
-| import './routes/cart'
-| import './routes/customer''
-|
 */
 
 import Route from '@ioc:Adonis/Core/Route'
 
 import './routes/api'
 import './routes/public'
-
 
 /*
 |--------------------------------------------------------------------------
@@ -183,77 +168,3 @@ Route.group(() => {
 })
   .as('v1.comments')
   .prefix('v1/comments')
-
-/*
-|--------------------------------------------------------------------------
-| Pages Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.get('/:slug', 'PagesController.getPageFromSlug').as('getPageFromSlug')
-})
-  .as('v1.pages')
-  .prefix('v1/pages')
-
-/*
-|--------------------------------------------------------------------------
-| Search Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.post('', 'SearchesController.search').as('search')
-  Route.post('/search/at', 'SearchesController.atSearch').as('atSearch')
-  Route.post('/indexing', 'SearchesController.indexing').as('indexing')
-})
-  .as('v1.searches')
-  .prefix('v1/searches')
-
-/*
-|--------------------------------------------------------------------------
-| Contacts Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.post('/', 'ContactsController.store').as('store').middleware('throttle:sendContact')
-})
-  .as('v1.contacts')
-  .prefix('v1/contacts')
-
-/*
-|--------------------------------------------------------------------------
-| Categories Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.post('/recalculate', 'CategoryController.recalculate').as('recalculate')
-  Route.get('/', 'CategoryController.index').as('index').middleware('paginate')
-  Route.post('/', 'CategoryController.store').as('store')
-  Route.get('/:slug/videos', 'CategoryController.getVideosBySlug')
-    .as('getVideosBySlug')
-    .middleware('paginate')
-  Route.get('/:slug', 'CategoryController.getBySlug').as('getBySlug')
-})
-  .as('v1.categories')
-  .prefix('v1/categories')
-
-/*
-|--------------------------------------------------------------------------
-| Data Sources Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.post('/upset', 'DataSourcesController.upset').as('upset')
-})
-  .as('v1.data-sources')
-  .prefix('v1/data-sources')
-
-/*
-|--------------------------------------------------------------------------
-| Tasks Routes
-|--------------------------------------------------------------------------
-*/
-Route.group(() => {
-  Route.post('/run', 'TasksController.run').as('run')
-})
-  .as('v1.tasks')
-  .prefix('v1/tasks')

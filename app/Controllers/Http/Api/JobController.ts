@@ -1,14 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Event from '@ioc:Adonis/Core/Event'
 import { Queue } from '@ioc:Rlanz/Queue'
 import { DateTime } from 'luxon'
 
 export default class JobController {
-  public async run({ response }: HttpContextContract) {
-    Event.emit('task:run', undefined)
+  public async summary({ response }: HttpContextContract) {
+    const now = DateTime.now()
+    const job = await Queue.dispatch('App/Jobs/SummaryJob', {
+      startAt: now,
+    })
     return response.json({
-      success: true,
-      message: 'Tasks is running',
+      job,
     })
   }
 

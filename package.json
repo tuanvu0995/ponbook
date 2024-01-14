@@ -12,6 +12,10 @@
     "start:queue": "node ace queue:listen",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
+    "test": "node ace test",
+    "test:watch": "node ace test --watch",
+    "test:browser": "node ace test --browser",
+    "test:unit": "node ace test --files='test/unit/**/*.spec.ts'",
     "changeset": "changeset",
     "version": "changeset version"
   },

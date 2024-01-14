@@ -23,4 +23,19 @@ export default class VideoApiController {
       message: 'Video ' + state + ' to favorites',
     })
   }
+
+  public async getVideoByCode({ request, response }: HttpContextContract) {
+    const code = request.input('code')
+    const includes = request.input('includes', [])
+
+    const video = await VideoRepo.getVideoByCode(code)
+
+    if (!includes.length) {
+      return response.json(video)
+    }
+
+    await Promise.all(includes.map(async (include) => await video.load(include)))
+
+    return response.json(video)
+  }
 }
