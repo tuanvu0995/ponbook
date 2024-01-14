@@ -71,11 +71,6 @@ Encore.copyFiles({
 })
 
 Encore.copyFiles({
-  from: 'node_modules/owl.carousel/dist',
-  to: 'lib/[path][name].[hash:8].[ext]',
-})
-
-Encore.copyFiles({
   from: 'node_modules/feather-icons/dist',
   to: 'icon/[path][name].[hash:8].[ext]',
 })
