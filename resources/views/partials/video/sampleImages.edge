@@ -5,10 +5,12 @@
           <h3 class="title is-5">Sample images ({{ video.images.length }})</h3>
           <div class="image-preview__container">
               @each((image, index) in video.images)
-                <a class="image-preview__item">
-                  <img class="lazy-image" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
-                </a>
-              @end
+                <div class="image-preview__item" style="width: {{ image.width*80/image.height }}; flex-grow:{{image.width*200/image.height}}">
+                  <div style="padding-bottom:{{image.height/image.width*100}}%">
+                    <img class="lazy-image" src="{{ imageUrl(image, true) }}"  data-src="{{ imageUrl(image) }}" alt="{{ video.title }} {{ image.id }}" onclick="onVideoImageClick({{ index }})"/>
+                  </div>
+                </div>
+              @endeach
           </div>
       </div>
     </div>

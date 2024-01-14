@@ -192,15 +192,35 @@
 .image-preview__container {
   display: flex;
   flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   gap: 0.5rem;
+  &::after {
+    content: '';
+    flex-grow: 999999999;
+  }
 
   .image-preview__item {
+    margin: 2px;
+    position: relative;
     height: 80px;
+    flex-grow: 1;
+    background-color: violet;
+
+    &:nth-last-child(5),
+    &:nth-last-child(4),
+    &:nth-last-child(3),
+    &:nth-last-child(2),
+    &:nth-last-child(1) {
+      flex-grow: 0;
+    }
     img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      overflow: hidden;
+      max-width: 100%;
+      min-width: 100%;
+      height: 80px;
+      object-fit: cover;
+      vertical-align: bottom;
     }
 
     &:hover {
