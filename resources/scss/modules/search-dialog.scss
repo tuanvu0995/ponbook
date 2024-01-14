@@ -1,5 +1,6 @@
 .search-modal {
   justify-content: flex-start;
+  z-index: 1001 !important;
 
   .modal-card {
     border-radius: 0;
