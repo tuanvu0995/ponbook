@@ -8,8 +8,6 @@ import View from 'App/Models/View'
 import Video from 'App/Models/Video'
 import Mail from '@ioc:Adonis/Addons/Mail'
 
-export type summaryPayload = {}
-
 export default class implements JobHandlerContract {
   constructor(public job: Job) {
     this.job = job
@@ -18,7 +16,7 @@ export default class implements JobHandlerContract {
   /**
    * Base Entry point
    */
-  public async handle(payload: summaryPayload) {
+  public async handle() {
     try {
       Logger.info('Tasks is running')
 
