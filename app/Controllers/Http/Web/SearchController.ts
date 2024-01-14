@@ -38,6 +38,7 @@ export default class SearchController {
       title,
       description,
       keywords,
+      term,
       listTitle: title,
       listSubtitle: description,
       routerName: 'web.search',

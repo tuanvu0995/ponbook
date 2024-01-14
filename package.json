@@ -9,6 +9,7 @@
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node server.js",
+    "start:queue": "node ace queue:listen",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
     "changeset": "changeset",
