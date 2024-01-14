@@ -54,8 +54,8 @@
 
   @include('partials/footer')
 
-  <script src="{{ asset('assets/vendor.js') }}"></script>
-  <script src="{{ asset('assets/app.js') }}"></script>
+  <script defer src="{{ asset('assets/vendor.js') }}"></script>
+  <script defer src="{{ asset('assets/app.js') }}"></script>
   @entryPointScripts('search-dialog')
 
   @!section('script-links')
@@ -76,13 +76,12 @@
 
   @if(env('NODE_ENV') === 'production')
   <script type="text/javascript">
-    var juicy_tags = ['a', 'img'];
+  var juicy_tags = ['a', 'img'];
   </script>
-  <script type="text/javascript"
-    src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net"></script>
+  <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net"></script>
+  <script type="text/javascript" src="//cdn.tsyndicate.com/sdk/v1/bi.js" data-ts-spot="8a0f3131a8a841b78dbd58375d665b95" data-ts-width="300" data-ts-height="100" data-ts-extid="{extid}" async defer></script>
   @endif
 
-  <script type="text/javascript" src="//cdn.tsyndicate.com/sdk/v1/bi.js" data-ts-spot="8a0f3131a8a841b78dbd58375d665b95" data-ts-width="300" data-ts-height="100" data-ts-extid="{extid}" async defer></script>
   <div id="modal-root"></div>
 </body>
 
