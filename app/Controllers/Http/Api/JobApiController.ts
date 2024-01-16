@@ -9,8 +9,11 @@ export default class JobApiController {
     })
   }
 
-  public async reindex({ response }: HttpContextContract) {
-    const job = await Queue.dispatch('App/Jobs/ReindexJob', {})
+  public async reindex({ response, request }: HttpContextContract) {
+    const { incremental } = request.only(['incremental'])
+    const job = await Queue.dispatch('App/Jobs/ReindexJob', {
+      incremental: incremental === 'false' ? false : true,
+    })
     return response.json({
       job,
     })

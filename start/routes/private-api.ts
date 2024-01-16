@@ -24,8 +24,8 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
   Route.group(() => {
-    Route.post('/reindex', 'JobController.reindex').as('reindex')
-    Route.post('/summary', 'JobController.summary').as('summary')
+    Route.post('/reindex', 'JobApiController.reindex').as('reindex')
+    Route.post('/summary', 'JobApiController.summary').as('summary')
   })
     .as('jobs')
     .prefix('jobs')

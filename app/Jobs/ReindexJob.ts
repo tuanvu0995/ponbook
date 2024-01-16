@@ -2,6 +2,13 @@ import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
 import Video from 'App/Models/Video'
 import Logger from '@ioc:Adonis/Core/Logger'
 import MeiliSearch from '@ioc:MeiliSearch'
+import Redis from '@ioc:Adonis/Addons/Redis'
+
+const reindexJobKey = 'reindex_job_lastReindex'
+
+type ReindexJobPayload = {
+  incremental: boolean
+}
 
 export default class implements JobHandlerContract {
   constructor(public job: Job) {
@@ -11,17 +18,17 @@ export default class implements JobHandlerContract {
   /**
    * Base Entry point
    */
-  public async handle() {
+  public async handle({ incremental = true }: ReindexJobPayload) {
     Logger.info(`Start reindex job.`)
 
-    const count = await this.count()
+    const count = await this.count(incremental)
     Logger.info(`Start reindex for ${count[0].$extras.total} videos.`)
 
     let currentPage = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       Logger.info(`Start reindex for page ${currentPage + 1}`)
-      const videos = await this.getVideos(currentPage + 1)
+      const videos = await this.getVideos(currentPage + 1, incremental)
       Logger.info(`Start reindex for page ${videos.currentPage} of ${videos.lastPage}`)
 
       const documents = videos.all().map((video) => ({
@@ -48,6 +55,9 @@ export default class implements JobHandlerContract {
       currentPage = videos.currentPage
     }
 
+    const lastReindex = new Date().toISOString()
+    await Redis.set(reindexJobKey, lastReindex)
+
     Logger.info(`Completed reindex job. Exporting index.`)
   }
 
@@ -56,20 +66,34 @@ export default class implements JobHandlerContract {
    */
   public async failed() {}
 
-  private async getVideos(currentPage: number) {
-    return await Video.query()
+  private async getVideos(currentPage: number, incremental = true) {
+    const query = Video.query()
       .preload('casts')
       .preload('tags')
       .where('is_published', true)
       .where('is_deleted', false)
       .orderBy('id', 'desc')
-      .paginate(currentPage, 100)
+
+    if (incremental) {
+      const lastReindex = await Redis.get(reindexJobKey)
+      if (lastReindex) {
+        query.where('updated_at', '>', lastReindex)
+      }
+    }
+
+    return await query.paginate(currentPage, 100)
   }
 
-  private async count() {
-    return await Video.query()
-      .where('is_published', true)
-      .where('is_deleted', false)
-      .count('id as total')
+  private async count(incremental = true) {
+    const query = Video.query().where('is_published', true).where('is_deleted', false)
+
+    if (incremental) {
+      const lastReindex = await Redis.get(reindexJobKey)
+      if (lastReindex) {
+        query.where('updated_at', '>', lastReindex)
+      }
+    }
+
+    return await query.count('id as total')
   }
 }
