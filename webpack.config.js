@@ -47,7 +47,7 @@ Encore.setPublicPath('/assets')
 */
 Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('vendor', './resources/js/vendor.js')
-// Encore.addEntry('post-comment', './resources/js/post-comment.js')
+Encore.addEntry('lazy-image', './resources/js/lazy-image.js')
 // Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 Encore.addEntry('search-dialog', './resources/js/modules/search-dialog.js')
 // Encore.addEntry('add-to-box-modal', './resources/js/add-to-box-modal.js')

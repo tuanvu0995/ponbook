@@ -24,8 +24,6 @@
   <script defer src="{{ asset('assets/icon/feather.min.js') }}"></script>
 
   @if(env('NODE_ENV') == 'production')
-  <script defer src="/js/prebid-ads.js"></script>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -58,8 +56,8 @@
 
   @include('partials/footer')
 
-  <script defer src="{{ asset('assets/vendor.js') }}"></script>
   <script defer src="{{ asset('assets/app.js') }}"></script>
+  <script defer src="{{ asset('assets/lazy-image.js') }}"></script>
 
   @entryPointScripts('search-dialog')
 

@@ -7,9 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * Navbar burger
    */
-  $('.navbar-burger').click(function () {
-    $('.navbar-burger').toggleClass('is-active')
-    $('.sidemenu__container').toggleClass('is-active')
+  const navbarButtons = document.querySelectorAll('.navbar-burger')
+  navbarButtons.forEach(function (el) {
+    el.addEventListener('click', function () {
+      document.querySelector('.navbar-burger').classList.toggle('is-active')
+      document.querySelector('.sidemenu__container').classList.toggle('is-active')
+    })
   })
 
   dropdowns('.navbar-item.has-dropdown')

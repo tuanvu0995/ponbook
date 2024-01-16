@@ -45,8 +45,6 @@ export function initImageLazyLoad() {
     lazyImages.forEach(function (lazyImage) {
       lazyImageObserver.observe(lazyImage)
     })
-  } else {
-    // Possibly fall back to event handlers here
   }
 }
 
