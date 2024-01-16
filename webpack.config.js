@@ -48,12 +48,8 @@ Encore.setPublicPath('/assets')
 Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('vendor', './resources/js/vendor.js')
 Encore.addEntry('lazy-image', './resources/js/lazy-image.js')
-// Encore.addEntry('react-upload-form', './resources/js/react-upload-form.js')
 Encore.addEntry('search-dialog', './resources/js/modules/search-dialog.js')
-// Encore.addEntry('add-to-box-modal', './resources/js/add-to-box-modal.js')
-// Encore.addEntry('sticky-sidebar', './resources/js/sticky-sidebar.js')
 Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
-// Encore.addEntry('prebid-ads', './resources/js/prebid-ads.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -74,16 +70,6 @@ Encore.copyFiles({
   from: 'node_modules/feather-icons/dist',
   to: 'icon/[path][name].[hash:8].[ext]',
 })
-
-// Encore.copyFiles({
-//   from: 'node_modules/quill/dist',
-//   to: 'js/[path][name].[hash:8].[ext]',
-// })
-
-// Encore.copyFiles({
-//   from: './resources/js/lib',
-//   to: 'js/lib/[path][name].[hash:8].[ext]',
-// })
 
 /*
 |--------------------------------------------------------------------------
