@@ -50,4 +50,5 @@ Server.middleware.registerNamed({
   throttle: () => import('@adonisjs/limiter/build/throttle'),
   paginate: () => import('App/Middleware/PaginationQuery'),
   appAuth: () => import('App/Middleware/AppAuth'),
+  turnstile: () => import('App/Middleware/Turnstile'),
 })

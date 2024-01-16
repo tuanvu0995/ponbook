@@ -4,7 +4,12 @@ import Contact, { ContactStatus } from 'App/Models/Contact'
 import Event from '@ioc:Adonis/Core/Event'
 
 export default class SupportController {
-  public async sendContact({ request, response, session }: HttpContextContract) {
+  public async sendContact({ request, response, session, turnstile }: HttpContextContract) {
+    if (!turnstile?.success) {
+      session.flash('error', 'Please verify that you are not a robot.')
+      return response.redirect().back()
+    }
+
     session.flash('contact', {
       name: request.input('name'),
       email: request.input('email'),

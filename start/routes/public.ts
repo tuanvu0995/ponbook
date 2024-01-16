@@ -43,7 +43,7 @@ Route.group(() => {
   Route.get('/contact', 'WebController.contact').as('contact')
   Route.post('/contact', 'SupportController.sendContact')
     .as('sendContact')
-    .middleware('throttle:sendContact')
+    .middleware(['turnstile', 'throttle:sendContact'])
 
   /**
    * Pages

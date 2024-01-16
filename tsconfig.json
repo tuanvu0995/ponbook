@@ -39,7 +39,8 @@
       "adonis-lucid-soft-deletes",
       "@adonisjs/session",
       "@adonisjs/i18n",
-      "@rlanz/bull-queue"
+      "@rlanz/bull-queue",
+      "adonis-turnstile"
     ]
   }
 }

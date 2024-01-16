@@ -64,6 +64,7 @@
                 </div>
                 <div class="control">
                     <button type="submit" class="button is-link">Submit</button>
+                    {{ turnstileField() }}
                 </div>
             </form>
             </div>
@@ -72,4 +73,8 @@
     </div>
     </div>
 </section>
-@end
+@endsection
+
+@section('scripts')
+{{ turnstileScript() }}
+@endsection
