@@ -74,7 +74,12 @@ export default class ListController {
     })
   }
 
-  public async castsBySlug({ request, auth, view, pagination }: HttpContextContract & HttpRequestPagination) {
+  public async castsBySlug({
+    request,
+    auth,
+    view,
+    pagination,
+  }: HttpContextContract & HttpRequestPagination) {
     const slug = request.param('slug')
     const { page = 1, limit = 36, filters, sorts } = pagination
     const cast = await CastRepo.findBySlug(slug, true)
@@ -82,9 +87,11 @@ export default class ListController {
       return view.render('errors/not-found')
     }
 
-    await cast.load('users', (query) => {
-      query.where('user_id', auth.user!.id)
-    })
+    if (auth.user) {
+      await cast.load('users', (query) => {
+        query.where('user_id', auth.user!.id)
+      })
+    }
 
     const videos = await CastRepo.getVideosByCast(cast, page, limit, filters, sorts)
     videos.baseUrl(`/a/${cast.slug}`)
@@ -236,5 +243,4 @@ export default class ListController {
       listSubtitle: description,
     })
   }
-
 }

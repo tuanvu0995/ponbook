@@ -44,15 +44,27 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     }
   }
 
+  private getUser(ctx: HttpContextContract) {
+    if (!ctx.auth.user) {
+      return { name: 'Anonymous' }
+    }
+
+    return {
+      id: ctx.auth.user.id,
+      uid: ctx.auth.user.uid,
+      name: ctx.auth.user.fullName,
+      email: ctx.auth.user.email,
+      trackingId: ctx.auth.user.trackingId,
+    }
+  }
+
   public report(error: this, ctx: HttpContextContract) {
     if (!this.shouldReport(error)) {
       return
     }
 
     const captureContext: CaptureContext = {
-      user: {
-        name: 'guest',
-      },
+      user: this.getUser(ctx) as any,
       level: Severity.Error,
       contexts: {
         'http-context': this.context(ctx),
@@ -86,5 +98,4 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     const viewPath = this.codeMappings[statusCode] || 'server-error'
     return ctx.view.render(`errors/${viewPath}`)
   }
-
 }
