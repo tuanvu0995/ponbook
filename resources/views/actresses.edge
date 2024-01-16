@@ -9,7 +9,9 @@
            <div class="column is-half-mobile is-one-third-tablet is-2-desktop">
                 <div class="box p-2">
                     <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
-                    @!component('components/image', { file: star.photo, alt: star.name })
+                      <figure class="image is-1by1">
+                        @!component('components/image', { file: star.photo, alt: star.name })
+                      </figure>
                     </a>
                     <div>
                     <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
