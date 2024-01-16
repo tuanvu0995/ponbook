@@ -22,6 +22,7 @@ Route.group(() => {
   })
     .as('casts')
     .prefix('casts')
+    .middleware('auth')
 
   /*
   |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route.group(() => {
   })
     .as('videos')
     .prefix('videos')
+    .middleware('auth')
 })
   .prefix('api')
   .as('api')

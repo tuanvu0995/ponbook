@@ -1,3 +1,4 @@
+import { isbot } from 'isbot'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UserRepo from 'App/Repos/UserRepo'
 import Logger from '@ioc:Adonis/Core/Logger'
@@ -7,6 +8,10 @@ const COOKIE_TRACKING_ID = 'pb_tkid'
 
 export default class Tracker {
   public async handle({ auth, request, response }: HttpContextContract, next: () => Promise<void>) {
+    if (isbot(request.header('user-agent') || '')) {
+      return await next()
+    }
+
     if (!auth.user) {
       let tracker: User | null = null
       if (request.cookie(COOKIE_TRACKING_ID)) {

@@ -71,7 +71,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     const statusCode = error.status || 500
     const message = statusCode === 500 ? 'Internal server error' : error.message
 
-    Logger.error(error.message, this.context(ctx))
+    Logger.error(error, this.context(ctx))
 
     if (ctx.request.url().startsWith('/api')) {
       return ctx.response.status(statusCode).json({

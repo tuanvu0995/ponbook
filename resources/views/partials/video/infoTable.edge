@@ -30,7 +30,7 @@
               <div class="control">
                 <div class="tags has-addons">
                   <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
-                  <a class="tag is-action {{ inlinePrint(cast.users.length > 0, "is-active")}}" data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active">
+                  <a class="tag is-action {{ inlinePrint(cast.users?.length > 0, "is-active")}}" data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active">
                     <span class="icon is-small"  >
                       <i data-feather="heart"></i>
                     </span>
