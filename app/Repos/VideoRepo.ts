@@ -6,6 +6,8 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import { ModelPaginatorContract } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
 import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
+import slugify from 'App/Helpers/slugify'
+import meiliSearch from '@ioc:MeiliSearch'
 
 export default class VideoRepo {
   public static async getVideoByUid(
@@ -57,33 +59,18 @@ export default class VideoRepo {
   }
 
   public static async getRelatedVideos(video: Video, limit: number = 12): Promise<Video[]> {
-    if (!video.tags?.length) {
-      await video.load('tags')
-    }
+    const title = slugify(video.title?.replace(video.code, ''), ' ')
 
-    const tagIds = _.chain(video.tags)
-      .map((tag) => tag.id)
-      .filter((id) => !_.isNil(id))
-      .value()
+    const results = await meiliSearch.search('videos', title, {
+      limit,
+      filter: `code != ${video.code}`,
+      attributesToHighlight: ['title'],
+    })
 
-    const randomNumber = Date.now() * 1000 + Math.floor(Math.random() * 1000)
-    const randomVideoIds = await Database.from('video_tags')
-      .whereIn('tag_id', tagIds)
-      .orderByRaw(`RAND(${randomNumber})`)
-      .select('video_id')
-      .limit(limit)
+    const videoIds = results.hits.map((hit) => hit.id)
+    if (!videoIds.length) return []
 
-    const relatedVideos = await Video.query()
-      .whereIn(
-        'id',
-        randomVideoIds.map((video) => video.video_id)
-      )
-      .preload('cover')
-      .preload('casts')
-      .where('is_deleted', false)
-      .where('is_published', true)
-
-    return relatedVideos
+    return await VideoRepo.getVideosByIds(videoIds)
   }
 
   public static async getRecentVideos(

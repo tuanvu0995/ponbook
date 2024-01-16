@@ -89,7 +89,6 @@ export default class User extends AppBaseModel {
     return Boolean(this.trackingId)
   }
 
-
   @computed()
   public get fullName() {
     return _.chain([this.firstName, this.lastName]).filter(_.isString).join(' ').value()

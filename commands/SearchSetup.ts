@@ -30,18 +30,9 @@ export default class SearchSetup extends BaseCommand {
   public async run() {
     this.logger.info('Updating filterable attributes')
     const { default: MeiliSearch } = await import('@ioc:MeiliSearch')
-    await MeiliSearch.updateFilterableAttributes('videos', [
-      'code',
-      'title',
-      'casts',
-      'tags',
-    ])
+    await MeiliSearch.updateFilterableAttributes('videos', ['code', 'title', 'casts', 'tags'])
 
-    await MeiliSearch.updateSortableAttributes('videos', [
-      'releaseDate',
-      'createdAt',
-    ])
-
+    await MeiliSearch.updateSortableAttributes('videos', ['releaseDate', 'createdAt'])
 
     this.logger.info('Filterable attributes updated')
   }

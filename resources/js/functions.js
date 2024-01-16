@@ -83,7 +83,7 @@ export function actionButtons() {
     const toggle = element.dataset.toggle
 
     customFetch(url, {
-      method: "POST",
+      method: 'POST',
       body: data ?? null,
     })
       .then((response) => {

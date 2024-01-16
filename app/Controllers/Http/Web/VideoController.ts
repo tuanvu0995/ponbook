@@ -7,7 +7,7 @@ export default class VideoController {
     const { params, view } = ctx
     const video = await VideoRepo.getVideoByUid(ctx, params.uid, true)
 
-    const relatedVideos = await VideoRepo.getRelatedVideos(video, 18)
+    const relatedVideos = await VideoRepo.getRelatedVideos(video, 36)
 
     const title = `${video.title} - ${video.title}`
     const description = video.description

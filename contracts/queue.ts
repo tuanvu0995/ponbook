@@ -1,4 +1,3 @@
 declare module '@ioc:Rlanz/Queue' {
-  interface JobsList {
-  }
+  interface JobsList {}
 }

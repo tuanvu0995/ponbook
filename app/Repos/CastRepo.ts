@@ -9,8 +9,7 @@ export class CastRepo {
   public static async findBySlug(slug: string, withCount = false) {
     const query = Cast.query().where('slug', slug)
     if (withCount) {
-      query.withCount('videos')
-        .withCount('users')
+      query.withCount('videos').withCount('users')
     }
     return await query.first()
   }
