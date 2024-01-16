@@ -19,7 +19,7 @@ type VideoImage = {
   type: string
 }
 
-export default class DataSourcesController {
+export default class DataSourceApiController {
   public async upset({ request, response }: HttpContextContract) {
     const code = request.input('code')
     const override = request.input('override')

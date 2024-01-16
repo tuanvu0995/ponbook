@@ -7,7 +7,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
   Route.group(() => {
-    Route.post('/by-code', 'VideoController.getVideoByCode').as('videos.byCode')
+    Route.post('/by-code', 'VideoApiController.getVideoByCode').as('videos.byCode')
   })
     .as('videos')
     .prefix('videos')
@@ -30,7 +30,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
   Route.group(() => {
-    Route.post('/upset', 'DataSourcesController.upset').as('upset')
+    Route.post('/upset', 'DataSourceApiController.upset').as('upset')
   })
     .as('data-sources')
     .prefix('data-sources')
