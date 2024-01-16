@@ -44,4 +44,8 @@ export default Env.rules({
   MEILI_API_KEY: Env.schema.string(),
   TURNSTILE_SITE_KEY: Env.schema.string(),
   TURNSTILE_SECRET_KEY: Env.schema.string(),
+  INFLUX_HOST: Env.schema.string(),
+  INFLUX_API_KEY: Env.schema.string(),
+  INFLUX_BUCKET: Env.schema.string(),
+  INFLUX_ORG: Env.schema.string(),
 })

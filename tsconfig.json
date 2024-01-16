@@ -40,7 +40,8 @@
       "@adonisjs/session",
       "@adonisjs/i18n",
       "@rlanz/bull-queue",
-      "adonis-turnstile"
+      "adonis-turnstile",
+      "@adonisjs/redis"
     ]
   }
 }

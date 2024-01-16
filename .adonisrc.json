@@ -37,8 +37,10 @@
     "@rlanz/bull-queue",
     "./providers/ViewProvider",
     "./providers/MeiliSearch/Provider",
+    "./providers/Influx/Provider",
     "./providers/DatabaseProvider",
-    "adonis-turnstile"
+    "adonis-turnstile",
+    "@adonisjs/redis"
   ],
   "metaFiles": [
     {
