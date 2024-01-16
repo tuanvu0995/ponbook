@@ -14,7 +14,8 @@ import TooManyRequestException from 'App/Exceptions/TooManyRequestException'
 import Comment from 'App/Models/Comment'
 
 export default class CommentApiController {
-  public async store({ request, response, auth }: HttpContextContract) {
+  public async store(ctx: HttpContextContract) {
+    const { request, response, auth } = ctx
     const user = auth.user!
     const throttleKey = `send_comment_${user.uid}_${request.ip}`
     const limiter = Limiter.use({
@@ -36,7 +37,7 @@ export default class CommentApiController {
 
     let video
     if (body.videoUid) {
-      video = await VideoRepo.getVideoByUid(body.videoUid)
+      video = await VideoRepo.getVideoByUid(ctx, body.videoUid)
       if (_.isNil(video)) throw new NotFoundException('Video not found')
     }
 
@@ -70,13 +71,10 @@ export default class CommentApiController {
     return response.json(comment)
   }
 
-  public async getCommentsByVideoUid({
-    params,
-    response,
-    pagination,
-  }: HttpContextContract & HttpRequestPagination) {
+  public async getCommentsByVideoUid(ctx: HttpContextContract & HttpRequestPagination) {
+    const { params, response, pagination } = ctx
     const { uid } = params
-    const video = await VideoRepo.getVideoByUid(uid)
+    const video = await VideoRepo.getVideoByUid(ctx, uid)
     if (_.isNil(video)) throw new NotFoundException('Video not found')
     const comments = await CommentRepo.getCommentsByVideo(video, pagination.page, pagination.limit)
     return response.json(comments)

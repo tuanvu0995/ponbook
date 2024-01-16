@@ -3,9 +3,12 @@ import VideoRepo from 'App/Repos/VideoRepo'
 import { FavoriteStatus } from 'App/common/types'
 
 export default class VideoApiController {
-  public async favorite({ request, response, auth }: HttpContextContract) {
+  public async favorite(ctx: HttpContextContract) {
+    const { request, response, auth } = ctx
     const uid = request.param('uid')
-    const video = await VideoRepo.getVideoByUid(uid)
+    const video = await VideoRepo.getVideoByUid(ctx, uid)
+
+    console.log(video)
 
     const user = auth.user!
     let state: FavoriteStatus = 'added'

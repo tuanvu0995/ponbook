@@ -1,0 +1,61 @@
+@layout('layouts/main')
+
+@section('body')
+
+<section class="section">
+  <div class="container">
+    <nav class="breadcrumb has-succeeds-separator py-4 is-flex-grow-1 mb-0" aria-label="breadcrumbs">
+      <ul>
+          <li><a href="{{ route("web.home") }}">Home</a></li>
+          <li><a href="{{ route("web.list.actresses") }}">Actresses</a></li>
+          <li class="is-active"><a href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}" aria-current="page">{{ cast.name }}</a></li>
+      </ul>
+    </nav>
+
+      <div class="columns is-multiline is-mobile is-tablet is-desktop">
+          <div class="column is-12-mobile-xs is-6-mobile-md">
+            <h1 class="title is-4">
+              {{listTitle}}
+              <a class="button is-small is-action {{ inlinePrint(cast.users.length > 0, "is-active")}}" data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active">
+                <span class="icon is-small">
+                  <i data-feather="heart"></i>
+                </span>
+                @if(cast.users.length > 0)
+                <span>Favorited</span>
+                @else
+                <span>Favorite</span>
+                @endif
+              </a>
+            </h1>
+
+            <div class="tile">
+              <!-- The magical tile element! -->
+              <div class="tile is-vertical is-8">
+                {{ cast.$extras.videos_count }} videos
+                </div>
+                @if(cast.$extras.users_count > 0)
+                <div class="tile is-vertical is-8">
+                  {{ cast.$extras.users_count }} fans
+                </div>
+                @endif
+            </div>
+          </div>
+          <div class="column is-12-mobile-xs is-6-mobile-md">
+
+          </div>
+      </div>
+  </div>
+</section>
+
+@include('partials/listForm')
+
+
+@!component("components/collection", {
+  videos: videos,
+})
+
+@!component('components/pagination', {
+  paginator: videos,
+})
+
+@endsection

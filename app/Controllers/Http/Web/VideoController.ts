@@ -3,8 +3,9 @@ import VideoRepo from 'App/Repos/VideoRepo'
 import Event from '@ioc:Adonis/Core/Event'
 
 export default class VideoController {
-  public async show({ params, view }: HttpContextContract) {
-    const video = await VideoRepo.getVideoByUid(params.uid, true)
+  public async show(ctx: HttpContextContract) {
+    const { params, view } = ctx
+    const video = await VideoRepo.getVideoByUid(ctx, params.uid, true)
 
     const relatedVideos = await VideoRepo.getRelatedVideos(video, 18)
 

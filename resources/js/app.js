@@ -1,8 +1,7 @@
-import { dropdowns, initImageLazyLoad, copyToClipboard } from './functions'
+import { dropdowns, initImageLazyLoad, copyToClipboard, actionButtons } from './functions'
 import '../scss/app.scss'
 
-$(function () {
-
+document.addEventListener('DOMContentLoaded', function () {
   window.copyToClipboard = copyToClipboard
 
   /**
@@ -14,6 +13,7 @@ $(function () {
   })
 
   dropdowns('.navbar-item.has-dropdown')
+  actionButtons()
 
   initImageLazyLoad()
 })

@@ -15,3 +15,14 @@ img.lazy-image {
   object-fit: cover;
   filter: blur(4px);
 }
+
+.is-action {
+  &.is-active {
+    color: white;
+    background-color: $primary;
+    .icon {
+      color: white;
+    }
+  }
+}
+

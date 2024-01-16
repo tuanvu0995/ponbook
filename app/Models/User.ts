@@ -19,6 +19,7 @@ import Box from './Box'
 import AppBaseModel from './AppBaseModel'
 import Notification from './Notification'
 import Point from './Point'
+import Cast from './Cast'
 
 export type UserRank = 'egg' | 'bird' | 'chicken' | 'rooster' | 'rabbit' | 'phoenix' | 'dragon'
 
@@ -79,6 +80,15 @@ export default class User extends AppBaseModel {
 
   @column({ serializeAs: null })
   public isSocialActive: boolean
+
+  @column({ serializeAs: null })
+  public trackingId?: string
+
+  @computed()
+  public get isTrackingUser() {
+    return Boolean(this.trackingId)
+  }
+
 
   @computed()
   public get fullName() {
@@ -148,6 +158,12 @@ export default class User extends AppBaseModel {
 
   @hasMany(() => Point)
   public points: HasMany<typeof Point>
+
+  @manyToMany(() => Cast, {
+    pivotTable: 'users_casts',
+    pivotTimestamps: true,
+  })
+  public casts: ManyToMany<typeof Cast>
 
   public async hasPermission(permission: string): Promise<boolean> {
     const result = await Permission.query()

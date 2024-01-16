@@ -6,8 +6,13 @@ export class CastRepo {
     return await Cast.query().where('uid', uid).first()
   }
 
-  public static async findBySlug(slug: string) {
-    return await Cast.query().where('slug', slug).first()
+  public static async findBySlug(slug: string, withCount = false) {
+    const query = Cast.query().where('slug', slug)
+    if (withCount) {
+      query.withCount('videos')
+        .withCount('users')
+    }
+    return await query.first()
   }
 
   public static async getCasts(name: string = '', page = 1, limit = 10) {

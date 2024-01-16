@@ -14,6 +14,7 @@ import slugify from 'App/Helpers/slugify'
 import File from './File'
 import generateUid from 'App/Helpers/generateUid'
 import AppBaseModel from './AppBaseModel'
+import User from './User'
 
 export default class Cast extends AppBaseModel {
   @column()
@@ -79,6 +80,11 @@ export default class Cast extends AppBaseModel {
     pivotTable: 'video_casts',
   })
   public videos: ManyToMany<typeof Video>
+
+  @manyToMany(() => User, {
+    pivotTable: 'users_casts',
+  })
+  public users: ManyToMany<typeof User>
 
   @beforeCreate()
   public static async generateUID(cast: Cast) {

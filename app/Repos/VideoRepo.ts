@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Video from 'App/Models/Video'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import Database from '@ioc:Adonis/Lucid/Database'
@@ -7,7 +8,11 @@ import { DateTime } from 'luxon'
 import { PaginatedFilters, PaginatedSorts } from 'App/common/types'
 
 export default class VideoRepo {
-  public static async getVideoByUid(uid: string, loadRelation = false): Promise<Video> {
+  public static async getVideoByUid(
+    ctx: HttpContextContract,
+    uid: string,
+    loadRelation = false
+  ): Promise<Video> {
     const video = await Video.query()
       .where('uid', uid)
       .where('is_deleted', false)
@@ -21,7 +26,13 @@ export default class VideoRepo {
     if (loadRelation) {
       await video.load('director')
       await video.load('maker')
-      await video.load('casts')
+      await video.load('casts', (query) => {
+        if (ctx.auth.user) {
+          query.preload('users', (subQuery) => {
+            subQuery.where('users.id', ctx.auth.user!.id)
+          })
+        }
+      })
       await video.load('tags')
       await video.load('cover')
       await video.load('image')
