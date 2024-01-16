@@ -18,6 +18,7 @@ export default class implements JobHandlerContract {
     Logger.info(`Start reindex for ${count[0].$extras.total} videos.`)
 
     let currentPage = 0
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       Logger.info(`Start reindex for page ${currentPage + 1}`)
       const videos = await this.getVideos(currentPage + 1)

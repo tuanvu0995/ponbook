@@ -6,6 +6,7 @@ export default class MeiliSearchProvider {
   public register() {
     // Register your own bindings
     this.app.container.singleton('Influx', () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       return new (require('./Influx').default)()
     })
   }

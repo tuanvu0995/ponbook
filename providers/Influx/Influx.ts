@@ -1,5 +1,5 @@
 import Env from '@ioc:Adonis/Core/Env'
-import { InfluxDB, Point, HttpError, WriteApi } from '@influxdata/influxdb-client'
+import { InfluxDB, Point, WriteApi } from '@influxdata/influxdb-client'
 
 export default class Influx {
   private writeApi: WriteApi
