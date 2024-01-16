@@ -16,11 +16,11 @@
           <div class="column is-12-mobile-xs is-6-mobile-md">
             <h1 class="title is-4">
               {{listTitle}}
-              <a class="button is-small is-action {{ inlinePrint(cast.users.length > 0, "is-active")}}" data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active">
+              <a class="button is-small is-action {{ inlinePrint(cast.users?.length > 0, "is-active")}}" data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active">
                 <span class="icon is-small">
                   <i data-feather="heart"></i>
                 </span>
-                @if(cast.users.length > 0)
+                @if(cast.users?.length > 0)
                 <span>Favorited</span>
                 @else
                 <span>Favorite</span>

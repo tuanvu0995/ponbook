@@ -20,6 +20,7 @@ export default class Tracker {
       } else {
         // If the user doesn't have a tracking cookie, create one
         tracker = await UserRepo.createTrackingUser()
+
         Logger.info(`Tracker user created: ${tracker?.uid}`)
 
         // Set the tracking cookie
