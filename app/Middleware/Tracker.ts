@@ -24,11 +24,7 @@ export default class Tracker {
         Logger.info(`Tracker user created: ${tracker?.uid}`)
 
         // Set the tracking cookie
-        response.cookie(COOKIE_TRACKING_ID, tracker.trackingId, {
-          maxAge: '10y',
-          // 10 years
-          expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000),
-        })
+        response.cookie(COOKIE_TRACKING_ID, tracker.trackingId)
       }
 
       await auth.login(tracker!)

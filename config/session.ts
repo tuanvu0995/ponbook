@@ -88,7 +88,7 @@ export default sessionConfig({
     path: '/',
     httpOnly: true,
     sameSite: true,
-    maxAge: '1y',
+    maxAge: '7d',
     secure: true,
   },
 
