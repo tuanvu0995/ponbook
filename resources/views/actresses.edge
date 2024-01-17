@@ -6,21 +6,23 @@
     <div class="container">
         <div class="columns is-multiline is-mobile is-tablet is-desktop">
            @each(star in actresses)
+           @if(star.slug)
            <div class="column is-half-mobile is-one-third-tablet is-2-desktop">
-                <div class="box p-2">
-                    <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
-                      <figure class="image is-1by1">
-                        @!component('components/image', { file: star.photo, alt: star.name })
-                      </figure>
-                    </a>
-                    <div>
-                    <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
-                        <h2 class="title is-6 with-2-lines">{{ star.name }}</h2>
-                    </a>
-                    <p class="subtitle is-6">{{ star.$extras.videos_count }} videos</p>
-                    </div>
+            <div class="box p-2">
+                <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
+                  <figure class="image is-1by1">
+                    @!component('components/image', { file: star.photo, alt: star.name })
+                  </figure>
+                </a>
+                <div>
+                <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
+                    <h2 class="title is-6 with-2-lines">{{ star.name }}</h2>
+                </a>
+                <p class="subtitle is-6">{{ star.$extras.videos_count }} videos</p>
                 </div>
             </div>
+          </div>
+           @endif
            @end
         </div>
     </div>
