@@ -10,6 +10,7 @@ export default class QueueProvider {
       const application = this.app.container.resolveBinding('Adonis/Core/Application')
 
       return {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         Queue: new (require('./Queue').default)(config, logger, application),
       }
     })
