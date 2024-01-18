@@ -1,4 +1,4 @@
-import { customFetch } from './modules/utils/customFetch'
+import { customFetch } from './utils/customFetch'
 
 export function dropdowns(selector) {
   var dropdowns = document.querySelectorAll(`${selector}:not(.is-hoverable)`)
@@ -21,29 +21,6 @@ export function dropdowns(selector) {
   function closeDropdowns() {
     dropdowns.forEach(function (el) {
       el.classList.remove('is-active')
-    })
-  }
-}
-
-export function initImageLazyLoad() {
-  var lazyImages = [].slice.call(document.querySelectorAll('img.lazy-image'))
-
-  if ('IntersectionObserver' in window) {
-    let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target
-          lazyImage.src = lazyImage.dataset.src
-          lazyImageObserver.unobserve(lazyImage)
-          lazyImage.onload = function () {
-            lazyImage.classList.remove('lazy-image')
-          }
-        }
-      })
-    })
-
-    lazyImages.forEach(function (lazyImage) {
-      lazyImageObserver.observe(lazyImage)
     })
   }
 }

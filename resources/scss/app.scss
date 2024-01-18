@@ -229,3 +229,18 @@
     }
   }
 }
+
+.search-bar__container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: none;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  z-index: 999;
+
+  &.is-active {
+    display: block;
+  }
+}

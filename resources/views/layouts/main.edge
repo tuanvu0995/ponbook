@@ -55,12 +55,12 @@
   @include('partials/banners/h-banner.edge')
 
   @include('partials/footer')
+  @include('partials/search-dialog')
 
+  <script async src="{{ asset('assets/lazy-image.js') }}"></script>
   <script defer src="{{ asset('assets/vendor.js') }}"></script>
   <script defer src="{{ asset('assets/app.js') }}"></script>
-  <script defer src="{{ asset('assets/lazy-image.js') }}"></script>
-
-  @entryPointScripts('search-dialog')
+  <script defer src="{{ asset('assets/search-dialog.js') }}"></script>
 
   <script type="text/javascript">
     @if(auth.isLoggedIn)

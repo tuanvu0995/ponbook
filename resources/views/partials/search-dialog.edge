@@ -1,0 +1,35 @@
+<div id="search-dialog" class="modal search-modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head is-active">
+      <div class="field my-0">
+        <div class="control has-icons-left has-icons-right">
+          <input id="search-input" class="input" type="text" placeholder="Search..." />
+          <span class="icon is-small is-left">
+            <i data-feather="search"></i>
+          </span>
+          <span class="icon is-small is-right is-hidden-touch is-flex-desktop is-cursor-pointer"
+            onclick="closeSearchDialog()">
+            ESC
+          </span>
+        </div>
+      </div>
+      <a role="button" class="navbar-burger is-active" onclick="closeSearchDialog()">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </header>
+    <section class="modal-card-body is-flex is-flex-direction-column">
+      <div class="is-flex is-flex-direction-column" id="search-dialog-body">
+
+      </div>
+      <div id="search-dialog-message" class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center">
+        <span id="search-dialog-message-text" class="has-text-centered ">ABW-225, IPX0177, Aizawa Minami,...</span>
+      </div>
+    </section>
+    <footer class="modal-card-foot is-flex is-justify-content-flex-end">
+      <span class="has-text-weight-light is-text-sm">Ponbook Search</span>
+    </footer>
+  </div>
+</div>

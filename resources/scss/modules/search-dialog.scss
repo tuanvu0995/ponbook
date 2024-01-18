@@ -2,9 +2,19 @@
   justify-content: flex-start;
   z-index: 1001 !important;
 
+  @include from(769px) {
+    justify-content: center;
+  }
+
   .modal-card {
     border-radius: 0;
     min-height: 100dvh;
+
+    @include from(769px) {
+      height: 50dvh;
+      min-height: 50dvh;
+      border-radius: 0.5rem;
+    }
 
     .modal-card-head,
     .modal-card-foot {
