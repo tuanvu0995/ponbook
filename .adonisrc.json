@@ -5,8 +5,7 @@
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/mail/build/commands",
-    "@rlanz/bull-queue/build/commands"
+    "@adonisjs/mail/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -29,11 +28,11 @@
     "adonis-lucid-soft-deletes",
     "@adonisjs/session",
     "@adonisjs/i18n",
-    "@rlanz/bull-queue",
     "./providers/ViewProvider",
     "./providers/MeiliSearch/Provider",
     "./providers/Influx/Provider",
     "./providers/DatabaseProvider",
+    "./providers/Queue/Provider",
     "adonis-turnstile",
     "@adonisjs/redis"
   ],

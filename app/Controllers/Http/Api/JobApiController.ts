@@ -1,7 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { Queue } from '@ioc:Rlanz/Queue'
+import { Queue } from '@ioc:Queue'
 
 export default class JobApiController {
+  public async getJobById({ response, params }: HttpContextContract) {
+    const job = await Queue.getById('default', params.id)
+    return response.json({
+      job,
+    })
+  }
+
   public async summary({ response }: HttpContextContract) {
     const job = await Queue.dispatch('App/Jobs/SummaryJob', {})
     return response.json({

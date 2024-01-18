@@ -1,12 +1,10 @@
 import _ from 'lodash'
 import { DateTime } from 'luxon'
-import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
+import type { JobHandlerContract, Job } from '@ioc:Queue'
 import Logger from '@ioc:Adonis/Core/Logger'
 import CollectionRepo from 'App/Repos/CollectionRepo'
-import Env from '@ioc:Adonis/Core/Env'
 import View from 'App/Models/View'
 import Video from 'App/Models/Video'
-import Mail from '@ioc:Adonis/Addons/Mail'
 
 export default class implements JobHandlerContract {
   constructor(public job: Job) {
@@ -17,31 +15,27 @@ export default class implements JobHandlerContract {
    * Base Entry point
    */
   public async handle() {
-    try {
-      Logger.info('Tasks is running')
+    Logger.info('Tasks is running')
 
-      Logger.info("Sumaary view's task is running...")
-      await this.summaryViews()
-      Logger.info("Sumaary view's task is finished")
+    Logger.info("Sumaary view's task is running...")
+    await this.summaryViews()
+    Logger.info("Sumaary view's task is finished")
 
-      Logger.info('Calculation New Released task is running...')
-      await CollectionRepo.calculationNewRelease()
-      Logger.info('Calculation New Released task is finished')
+    Logger.info('Calculation New Released task is running...')
+    await CollectionRepo.calculationNewRelease()
+    Logger.info('Calculation New Released task is finished')
 
-      Logger.info('Calculation New Added task is running...')
-      await CollectionRepo.calculationNewAdded()
-      Logger.info('Calculation New Added task is finished')
+    Logger.info('Calculation New Added task is running...')
+    await CollectionRepo.calculationNewAdded()
+    Logger.info('Calculation New Added task is finished')
 
-      Logger.info('Calculation Popular task is running...')
-      await CollectionRepo.calculationPopular()
+    Logger.info('Calculation Popular task is running...')
+    await CollectionRepo.calculationPopular()
 
-      Logger.info('Calculation Popular task is finished')
-      Logger.info('Tasks is finished')
-      await this.sendAlertToAdmin(['Tasks is finished'])
-    } catch (err) {
-      Logger.error(err, 'Error in run')
-      await this.sendAlertToAdmin(['Error in run', err.message])
-    }
+    Logger.info('Calculation Popular task is finished')
+    Logger.info('Tasks is finished')
+
+    await this.job.updateProgress(1)
   }
 
   public async summaryViews() {
@@ -72,27 +66,6 @@ export default class implements JobHandlerContract {
         })
       )
     }
-  }
-
-  private async sendAlertToAdmin(messages: string[]) {
-    const adminEmail = Env.get('ADMIN_EMAIL')
-    if (_.isNil(adminEmail)) return
-
-    const template = _.template(`
-        ${messages.join('\n')}\n
-        Created At: ${DateTime.now().toFormat('yyyy-MM-dd HH:mm')}
-    `)
-
-    await Mail.use('mailgun').send((message) => {
-      message
-        .from(
-          Env.get('EMAIL_SENDER_EMAIL', 'no-reply@ponbook.net'),
-          Env.get('EMAIL_SENDER_NAME', 'Ponbook Website')
-        )
-        .to(adminEmail)
-        .subject('Hi Admin, Task is compeleted')
-        .text(template(messages))
-    })
   }
 
   /**

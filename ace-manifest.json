@@ -1,5 +1,65 @@
 {
   "commands": {
+    "make:job": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/MakeJob",
+      "commandName": "make:job",
+      "description": "Make a new dispatch-able job",
+      "args": [
+        {
+          "type": "string",
+          "propertyName": "name",
+          "name": "name",
+          "required": true,
+          "description": "Name of the job class"
+        }
+      ],
+      "aliases": [],
+      "flags": []
+    },
+    "queue:clear": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/QueueClear",
+      "commandName": "queue:clear",
+      "description": "Clears a queue of Jobs",
+      "args": [],
+      "aliases": [],
+      "flags": [
+        {
+          "name": "queue",
+          "propertyName": "queue",
+          "type": "array",
+          "alias": "q",
+          "description": "The queue(s) to clear"
+        }
+      ]
+    },
+    "queue:listen": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "./commands/QueueListener",
+      "commandName": "queue:listen",
+      "description": "Listen to one or multiple queues",
+      "args": [],
+      "aliases": [],
+      "flags": [
+        {
+          "name": "queue",
+          "propertyName": "queue",
+          "type": "array",
+          "alias": "q",
+          "description": "The queue(s) to listen on"
+        }
+      ]
+    },
     "search:setup": {
       "settings": {
         "loadApp": true,
@@ -576,46 +636,6 @@
           "name": "name",
           "required": true,
           "description": "Name of the mailer class"
-        }
-      ],
-      "aliases": [],
-      "flags": []
-    },
-    "queue:listen": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": true
-      },
-      "commandPath": "@rlanz/bull-queue/build/commands/QueueListener",
-      "commandName": "queue:listen",
-      "description": "Listen to one or multiple queues",
-      "args": [],
-      "aliases": [],
-      "flags": [
-        {
-          "name": "queue",
-          "propertyName": "queue",
-          "type": "array",
-          "alias": "q",
-          "description": "The queue(s) to listen on"
-        }
-      ]
-    },
-    "make:job": {
-      "settings": {
-        "loadApp": true,
-        "stayAlive": false
-      },
-      "commandPath": "@rlanz/bull-queue/build/commands/MakeJob",
-      "commandName": "make:job",
-      "description": "Make a new dispatch-able job",
-      "args": [
-        {
-          "type": "string",
-          "propertyName": "name",
-          "name": "name",
-          "required": true,
-          "description": "Name of the job class"
         }
       ],
       "aliases": [],

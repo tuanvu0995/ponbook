@@ -1,4 +1,4 @@
-import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
+import type { JobHandlerContract, Job } from '@ioc:Queue'
 import influx from '@ioc:Influx'
 import Logger from '@ioc:Adonis/Core/Logger'
 import { DateTime } from 'luxon'
@@ -45,7 +45,11 @@ export default class implements JobHandlerContract {
       Logger.info(`Upserting ${searchTermsArray.length} search terms`)
       await this.upsertSearchTerms(searchTermsArray)
 
-      lastOffset += 100
+      lastOffset += searchTermsArray.length
+
+      await this.job.updateData({ processed: lastOffset })
+
+      await this.job.updateProgress(1)
     }
 
     Logger.info('Search terms job completed')

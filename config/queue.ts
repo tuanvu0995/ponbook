@@ -1,5 +1,5 @@
 import Env from '@ioc:Adonis/Core/Env'
-import type { QueueConfig } from '@ioc:Rlanz/Queue'
+import type { QueueConfig } from '@ioc:Queue'
 
 const queueConfig: QueueConfig = {
   connection: {
@@ -8,8 +8,12 @@ const queueConfig: QueueConfig = {
     password: Env.get('QUEUE_REDIS_PASSWORD'),
   },
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   queue: {},
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   worker: {},
 
   jobs: {

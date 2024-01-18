@@ -1,4 +1,4 @@
-import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
+import type { JobHandlerContract, Job } from '@ioc:Queue'
 import Video from 'App/Models/Video'
 import Logger from '@ioc:Adonis/Core/Logger'
 import MeiliSearch from '@ioc:MeiliSearch'
@@ -24,7 +24,11 @@ export default class implements JobHandlerContract {
     const count = await this.count(incremental)
     Logger.info(`Start reindex for ${count[0].$extras.total} videos.`)
 
+    const total = count[0].$extras.total
+    await this.job.updateData({ total, processed: 0 })
+
     let currentPage = 0
+    let processed = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       Logger.info(`Start reindex for page ${currentPage + 1}`)
@@ -53,6 +57,10 @@ export default class implements JobHandlerContract {
         break
       }
       currentPage = videos.currentPage
+
+      processed += documents.length
+      await this.job.updateData({ processed })
+      await this.job.updateProgress(processed / total)
     }
 
     const lastReindex = new Date().toISOString()

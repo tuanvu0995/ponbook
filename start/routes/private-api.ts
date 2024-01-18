@@ -24,6 +24,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
   Route.group(() => {
+    Route.get('/:id', 'JobApiController.getJobById').as('show')
     Route.post('/reindex', 'JobApiController.reindex').as('reindex')
     Route.post('/summary', 'JobApiController.summary').as('summary')
     Route.post('/generate-search-terms', 'JobApiController.generateSearchTerms').as(
