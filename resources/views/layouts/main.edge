@@ -21,10 +21,10 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
   @!section('styles')
 
-  <script defer src="{{ asset('assets/icon/feather.min.js') }}"></script>
+  <script async src="{{ asset('assets/icon/feather.min.js') }}"></script>
 
   @if(env('NODE_ENV') == 'production')
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}

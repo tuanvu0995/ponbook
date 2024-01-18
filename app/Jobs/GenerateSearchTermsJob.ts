@@ -1,7 +1,8 @@
 import type { JobHandlerContract, Job } from '@ioc:Rlanz/Queue'
 import influx from '@ioc:Influx'
-import env from 'env'
-import Redis from '@ioc:Adonis/Addons/Redis'
+import Logger from '@ioc:Adonis/Core/Logger'
+import { DateTime } from 'luxon'
+import SearchTerm from 'App/Models/SearchTerm'
 
 export default class implements JobHandlerContract {
   constructor(public job: Job) {
@@ -12,19 +13,60 @@ export default class implements JobHandlerContract {
    * Base Entry point
    */
   public async handle() {
-    const queryApi = influx.getQueryApi()
+    Logger.info('Search terms job started')
 
-    const searchTermsQuery = `
+    const queryApi = influx.getQueryApi()
+    // unit timestamp like: 1621726200 (00 ending)
+    const last7Days = DateTime.now().minus({ days: 7 }).toISO()
+    const now = DateTime.now().toISO()
+
+    let lastOffset = 0
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const searchTermsQuery = `
       from(bucket: "${influx.bucket}")
-      |> range(start: 0)
-      |> filter(fn: (r) => r._measurement == "search:terms")
-      |> filter(fn: (r) => r._field == "${influx.location}")
+      |> range(start: ${last7Days}, stop: ${now})
+      |> limit(n:100, offset: ${lastOffset})
+      |> filter(fn: (r) => r["_measurement"] == "search:terms")
+      |> filter(fn: (r) => r["location"] == "${influx.location}")
+      |> group(columns: ["term"])
+      |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)
+      |> yield(name: "mean")
     `
 
-    console.log(searchTermsQuery)
+      const searchTerms = await queryApi.collectRows(searchTermsQuery)
 
-    const searchTerms = await queryApi.collectRows(searchTermsQuery)
-    console.log(searchTerms)
+      if (searchTerms.length === 0) {
+        break
+      }
+
+      const searchTermsArray = searchTerms.map((term: any) => term.term)
+
+      Logger.info(`Upserting ${searchTermsArray.length} search terms`)
+      await this.upsertSearchTerms(searchTermsArray)
+
+      lastOffset += 100
+    }
+
+    Logger.info('Search terms job completed')
+  }
+
+  private async upsertSearchTerms(searchTerms: string[]) {
+    for (const term of searchTerms) {
+      try {
+        const exists = await SearchTerm.query().where('term', term).first()
+        if (!exists) {
+          await SearchTerm.create({
+            term,
+            count: 1,
+          })
+        }
+      } catch (error) {
+        Logger.error(error)
+      }
+    }
+
+    Logger.info(`Upserted ${searchTerms.length} search terms`)
   }
 
   /**
