@@ -26,6 +26,9 @@ Route.group(() => {
   Route.group(() => {
     Route.post('/reindex', 'JobApiController.reindex').as('reindex')
     Route.post('/summary', 'JobApiController.summary').as('summary')
+    Route.post('/generate-search-terms', 'JobApiController.generateSearchTerms').as(
+      'generate-search-terms'
+    )
   })
     .as('jobs')
     .prefix('jobs')

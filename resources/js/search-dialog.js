@@ -1,5 +1,5 @@
-import { debounce } from 'lodash'
 import { customFetch } from './utils/customFetch'
+import { debounce } from './utils/debounce'
 ;(function () {
   var searchDialogMessage = document.getElementById('search-dialog-message')
   var searchDialogBody = document.getElementById('search-dialog-body')
@@ -52,7 +52,6 @@ import { customFetch } from './utils/customFetch'
     var debouncedFetchSearchResults = debounce(fetchSearchResults, 300)
 
     input.addEventListener('input', function (event) {
-      console.log(event.target.value)
       if (event.target.value) {
         debouncedFetchSearchResults(event.target.value)
       }
