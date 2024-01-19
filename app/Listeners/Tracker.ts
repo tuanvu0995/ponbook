@@ -11,8 +11,8 @@ export default class Tracker {
     const userId = tracker ? tracker.id : 0
     await influx.writePoint(
       'video:views',
-      { trackingId, userId: userId.toString() },
-      { videoId: video.id }
+      { trackingId, userId: userId.toString(), videoId: video.id.toString(), code: video.code },
+      { count: 1 }
     )
   }
 }
