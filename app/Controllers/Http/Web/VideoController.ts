@@ -13,7 +13,10 @@ export default class VideoController {
     const description = video.description
     const keywords = video.tags.map((tag) => tag.name)
 
-    Event.emit('tracker:videoViewed', video)
+    Event.emit('tracker:videoViewed', {
+      video,
+      tracker: ctx.auth.user,
+    })
 
     return view.render('video', { video, relatedVideos, title, description, keywords })
   }

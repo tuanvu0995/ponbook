@@ -6,7 +6,13 @@ export default class Tracker {
     await influx.writePoint('search:terms', { term: data.term }, { total: data.totalResults })
   }
 
-  public async onVideoViewed(video: EventsList['tracker:videoViewed']) {
-    await influx.writePoint('video:views', { code: video.code }, { value: video.id })
+  public async onVideoViewed({ video, tracker }: EventsList['tracker:videoViewed']) {
+    const trackingId = tracker?.trackingId ? tracker.trackingId : 'none'
+    const userId = tracker ? tracker.id : 0
+    await influx.writePoint(
+      'video:views',
+      { code: video.code, trackingId },
+      { videoId: video.id, userId }
+    )
   }
 }

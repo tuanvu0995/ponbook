@@ -35,6 +35,9 @@ declare module '@ioc:Adonis/Core/Event' {
       term: string
       totalResults: number
     }
-    'tracker:videoViewed': Video
+    'tracker:videoViewed': {
+      video: Video
+      tracker?: User
+    }
   }
 }
