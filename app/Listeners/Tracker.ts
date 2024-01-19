@@ -7,6 +7,6 @@ export default class Tracker {
   }
 
   public async onVideoViewed(video: EventsList['tracker:videoViewed']) {
-    await influx.writePoint('video:views', { videoId: video.id.toString() }, { code: video.code })
+    await influx.writePoint('video:views', { code: video.code }, { value: video.id })
   }
 }
