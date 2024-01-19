@@ -13,7 +13,6 @@ Event.on('user:created', 'User.onUserCreated')
 
 Event.on('video:created', 'Video.onVideoCreated')
 Event.on('video:updated', 'Video.onVideoUpdated')
-Event.on('video:updated', 'Video.onVideoUpdated')
 
 Event.on('comment:created', 'Comment.onCommentCreated')
 
