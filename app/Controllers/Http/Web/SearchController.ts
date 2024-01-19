@@ -24,7 +24,7 @@ export default class SearchController {
     const paginated = new SearchPaginator(videos, results.estimatedTotalHits, limit, page)
     paginated.baseUrl('/search').queryString(searchParams)
 
-    Event.emit('search:searched', {
+    Event.emit('tracker:searched', {
       term,
       totalResults: results.estimatedTotalHits,
     })

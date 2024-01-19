@@ -19,7 +19,6 @@ declare module '@ioc:Adonis/Core/Event' {
     'user:logged-in': User
     'video:created': Video
     'video:updated': Video
-    'video:viewed': Video
     'comment:created': Comment
     'contact:created': Contact
     'category:calculate': Category
@@ -32,9 +31,10 @@ declare module '@ioc:Adonis/Core/Event' {
       type: PointType
       description?: string
     }
-    'search:searched': {
+    'tracker:searched': {
       term: string
       totalResults: number
     }
+    'tracker:videoViewed': Video
   }
 }
