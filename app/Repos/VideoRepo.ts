@@ -46,6 +46,7 @@ export default class VideoRepo {
   public static async getVideoByCode(code: string): Promise<Video> {
     const video = await Video.query()
       .where('code', code)
+      .withCount('images')
       .where('is_deleted', false)
       .where('is_published', true)
       .first()

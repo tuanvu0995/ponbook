@@ -8,8 +8,6 @@ export default class VideoApiController {
     const uid = request.param('uid')
     const video = await VideoRepo.getVideoByUid(ctx, uid)
 
-    console.log(video)
-
     const user = auth.user!
     let state: FavoriteStatus = 'added'
 
@@ -32,13 +30,19 @@ export default class VideoApiController {
     const includes = request.input('includes', [])
 
     const video = await VideoRepo.getVideoByCode(code)
+    const totalImages = video.$extras?.images_count || 0
 
     if (!includes.length) {
-      return response.json(video)
+      return response.json({
+        ...video.toJSON(),
+        totalImages,
+      })
     }
 
     await Promise.all(includes.map(async (include) => await video.load(include)))
-
-    return response.json(video)
+    return response.json({
+      ...video.toJSON(),
+      totalImages,
+    })
   }
 }
