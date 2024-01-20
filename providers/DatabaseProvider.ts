@@ -1,6 +1,5 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import { PaginatedFilters, PaginatedSorts, SortType } from 'App/common/types'
-import { DateTime } from 'luxon'
 
 const defaultSorts = (sort: string): SortType => {
   return sort === 'asc' ? 'asc' : 'desc'
@@ -46,33 +45,16 @@ export default class DatabaseProvider {
             this.orderBy('code', defaultSorts(sorts.code))
           }
           if (sorts.views) {
-            this.leftJoin('views', 'videos.id', 'views.referer_id').orderBy(
-              'views.count',
-              defaultSorts(sorts.views)
-            )
+            this.orderBy('views', defaultSorts(sorts.views))
           }
           if (sorts.viewsInDay) {
-            const lastDay = DateTime.now().minus({ days: 1 }).toSQL()
-            this.leftJoin('views', 'videos.id', 'views.referer_id')
-              .where('views.range', 'day')
-              .where('views.created_at', '>=', lastDay)
-              .orderBy('views.count', defaultSorts(sorts.viewsInDay))
+            this.orderBy('view_count_day', defaultSorts(sorts.viewsInDay))
           }
           if (sorts.viewsInWeek) {
-            const lastWeek = DateTime.now().minus({ weeks: 1 }).toSQL()
-            this.leftJoin('views', 'videos.id', 'views.referer_id')
-              .where('views.range', 'week')
-              .orWhere('views.range', 'day')
-              .where('views.created_at', '>=', lastWeek)
-              .orderBy('views.count', defaultSorts(sorts.viewsInWeek))
+            this.orderBy('view_count_week', defaultSorts(sorts.viewsInWeek))
           }
           if (sorts.viewsInMonth) {
-            const lastMonth = DateTime.now().minus({ months: 1 }).toSQL()
-            this.leftJoin('views', 'videos.id', 'views.referer_id')
-              .where('views.range', 'month')
-              .orWhere('views.range', 'day')
-              .where('views.created_at', '>=', lastMonth)
-              .orderBy('views.count', defaultSorts(sorts.viewsInMonth))
+            this.orderBy('view_count_month', defaultSorts(sorts.viewsInMonth))
           }
         } else {
           this.orderBy('release_date', 'desc')

@@ -69,6 +69,15 @@ export default class Video extends AppBaseModel {
   public viewCount: number
 
   @column()
+  public viewCountDay: number
+
+  @column()
+  public viewCountWeek: number
+
+  @column()
+  public viewCountMonth: number
+
+  @column()
   public commentCount: number
 
   @column({ serializeAs: null })

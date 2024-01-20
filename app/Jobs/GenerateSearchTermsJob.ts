@@ -18,14 +18,14 @@ export default class implements JobHandlerContract {
     const queryApi = influx.getQueryApi()
     // unit timestamp like: 1621726200 (00 ending)
     const last7Days = DateTime.now().minus({ days: 7 }).toISO()
-    const now = DateTime.now().toISO()
+    const yesterday = DateTime.now().minus({ days: 1 })
 
     let lastOffset = 0
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const searchTermsQuery = `
       from(bucket: "${influx.bucket}")
-      |> range(start: ${last7Days}, stop: ${now})
+      |> range(start: ${last7Days}, stop: ${yesterday})
       |> limit(n:100, offset: ${lastOffset})
       |> filter(fn: (r) => r["_measurement"] == "search:terms")
       |> filter(fn: (r) => r["location"] == "${influx.location}")

@@ -132,16 +132,13 @@ export default class VideoRepo {
     limit: number = 15,
     filters?: PaginatedFilters
   ): Promise<ModelPaginatorContract<Video>> {
-    const sevenDaysAgo = DateTime.now().minus({ year: 1 }).toSQL()
     const popularVideos = await Video.query()
       .preload('cover')
       .preload('casts')
       .innerJoin('views', 'videos.id', 'views.referer_id')
-      .where('views.range', 'day')
-      .where('views.created_at', '>=', sevenDaysAgo)
       .where('is_published', true)
       .where('is_deleted', false)
-      .orderBy('views.count', 'desc')
+      .orderBy('view_count_day', 'desc')
       .filterWithPaginate(page, limit, filters)
 
     return popularVideos

@@ -2,8 +2,7 @@ import _ from 'lodash'
 import { DateTime } from 'luxon'
 import type { JobHandlerContract, Job } from '@ioc:Queue'
 import Logger from '@ioc:Adonis/Core/Logger'
-import CollectionRepo from 'App/Repos/CollectionRepo'
-import View from 'App/Models/View'
+import influx from '@ioc:Influx'
 import Video from 'App/Models/Video'
 
 export default class implements JobHandlerContract {
@@ -15,61 +14,75 @@ export default class implements JobHandlerContract {
    * Base Entry point
    */
   public async handle() {
-    Logger.info('Tasks is running')
+    Logger.info('Summary job started')
 
-    Logger.info("Sumaary view's task is running...")
-    await this.summaryViews()
-    Logger.info("Sumaary view's task is finished")
+    const queryApi = influx.getQueryApi()
+    const yesterday = DateTime.now()
 
-    Logger.info('Calculation New Released task is running...')
-    await CollectionRepo.calculationNewRelease()
-    Logger.info('Calculation New Released task is finished')
+    let lastOffset = 0
 
-    Logger.info('Calculation New Added task is running...')
-    await CollectionRepo.calculationNewAdded()
-    Logger.info('Calculation New Added task is finished')
+    // get data range 1h at a day
 
-    Logger.info('Calculation Popular task is running...')
-    await CollectionRepo.calculationPopular()
+    let offsetTime = yesterday.startOf('day')
+    let stopTime = offsetTime.plus({ minutes: 10 })
 
-    Logger.info('Calculation Popular task is finished')
-    Logger.info('Tasks is finished')
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const groupByVideoIdsQuery = `
+      from(bucket: "${influx.bucket}")
+      |> range(start: ${offsetTime.toISO()}, stop: ${stopTime.toISO()})
+      |> filter(fn: (r) => r["_measurement"] == "video:views")
+      |> filter(fn: (r) => r["location"] == "${influx.location}")
+      |> group(columns: ["videoId"])
+      |> count(column: "_value")
+    `
+
+      const data = await queryApi.collectRows(groupByVideoIdsQuery)
+      if (data.length === 0) {
+        break
+      }
+
+      console.log(data[0])
+
+      await this.updateVideosViewCount(data)
+
+      lastOffset += data.length
+
+      offsetTime = stopTime
+      stopTime = offsetTime.plus({ minutes: 10 })
+
+      if (offsetTime > yesterday.endOf('day')) {
+        break
+      }
+
+      await this.job.updateData({ processed: lastOffset })
+    }
 
     await this.job.updateProgress(1)
+
+    Logger.info('Summary job completed')
   }
 
-  public async summaryViews() {
-    const time = DateTime.now()
+  private async updateVideosViewCount(data: any[]) {
+    Logger.info(`Updating ${data.length} videos view count`)
+    const videoIds = data.map((item: any) => item.videoId)
+    const videos = await Video.query().whereIn('id', videoIds)
+    const videosById = _.keyBy(videos, 'id')
 
-    const startOfDay = time.startOf('day')
-    const endOfDay = time.endOf('day')
-
-    const views = await View.query()
-      .where('created_at', '>=', startOfDay.toSQL())
-      .where('created_at', '<=', endOfDay.toSQL())
-      .where('range', 'day')
-
-    const videoIds = views.map((view) => view.refererId)
-    const uniqueVideoIds = [...new Set(videoIds)]
-
-    const chunks = _.chunk(uniqueVideoIds, 100)
-    for (const chunk of chunks) {
-      const videos = await Video.query().whereIn('id', chunk)
-
-      await Promise.all(
-        videos.map(async (video) => {
-          const videoViews = views.filter(
-            (view) => view.refererType === 'videos' && view.refererId === video.id
-          )
-          video.viewCount += videoViews.reduce((acc, view) => acc + view.count, 0)
-          await video.save()
-        })
-      )
+    for (const item of data) {
+      const video = videosById[item.videoId]
+      if (video) {
+        const count = item._value | 0
+        video.viewCount += count
+        video.viewCountDay = count
+        video.viewCountWeek += count
+        video.viewCountMonth += count
+        await video.save()
+      }
     }
+
+    Logger.info(`Updated ${data.length} videos view count`)
   }
 
-  /**
-   * This is an optional method that gets called if it exists when the retries has exceeded and is marked failed.
-   */
   public async failed() {}
 }
