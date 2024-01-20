@@ -44,8 +44,6 @@ export default class User {
       }
     )
 
-    console.log(signedUrl)
-
     await Mail.use('mailgun').send(
       (message) => {
         message
