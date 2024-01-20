@@ -3,7 +3,7 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child is-flex">
-        @if(auth.isLoggedIn)
+        @if(auth.isLoggedIn && !auth.user.isTrackingUser)
         <div class="button__container p-2">
           <a class="button is-small" href="{{ route("web.home") }}">
             {{'@'+auth.user.username}}
