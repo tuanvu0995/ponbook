@@ -20,14 +20,15 @@ import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
+  protected statusPages = {
+    '404': 'errors/not-found',
+    '401': 'errors/unauthorized',
+    '400': 'errors/bad-request',
+    '500..599': 'errors/server-error',
+  }
+
   protected ignoreCodes = ['E_ROUTE_NOT_FOUND', 'E_RESOURCE_NOT_FOUND', 'E_VALIDATION_FAILURE']
   protected ignoreStatuses = [404, 422, 403, 401, 400]
-
-  protected codeMappings = {
-    404: 'not-found',
-    401: 'unauthorized',
-    500: 'server-error',
-  }
 
   constructor() {
     super(Logger)
@@ -59,9 +60,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public report(error: this, ctx: HttpContextContract) {
-    if (!this.shouldReport(error)) {
-      return
-    }
+    if (!this.shouldReport(error)) return
 
     const captureContext: CaptureContext = {
       user: this.getUser(ctx) as any,
@@ -79,27 +78,10 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     Sentry.captureException(error, captureContext)
   }
 
-  public async handle(error, ctx) {
-    const statusCode = error.status || 500
-    const message = statusCode === 500 ? 'Internal server error' : error.message
-
-    if (this.ignoreCodes.includes(error.code) || this.ignoreStatuses.includes(statusCode)) {
-      return
-    }
-
-    Logger.error(error, this.context(ctx))
-
-    if (ctx.request.url().startsWith('/api')) {
-      return ctx.response.status(statusCode).json({
-        errors: [
-          {
-            message: message,
-          },
-        ],
-      })
-    }
-
-    const viewPath = this.codeMappings[statusCode] || 'server-error'
-    return ctx.view.render(`errors/${viewPath}`)
+  public async handle(error: any, ctx: HttpContextContract) {
+    /**
+     * Forward rest of the exceptions to the parent class
+     */
+    return super.handle(error, ctx)
   }
 }

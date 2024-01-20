@@ -10,6 +10,7 @@
 import Event from '@ioc:Adonis/Core/Event'
 
 Event.on('user:created', 'User.onUserCreated')
+Event.on('user:request-reset-link', 'User.onUserRequestResetLink')
 
 Event.on('video:created', 'Video.onVideoCreated')
 Event.on('video:updated', 'Video.onVideoUpdated')

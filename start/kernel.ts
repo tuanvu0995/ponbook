@@ -52,4 +52,6 @@ Server.middleware.registerNamed({
   paginate: () => import('App/Middleware/PaginationQuery'),
   appAuth: () => import('App/Middleware/AppAuth'),
   turnstile: () => import('App/Middleware/Turnstile'),
+  trackerOnly: () => import('App/Middleware/TrackerOnly'),
+  userOnly: () => import('App/Middleware/UserOnly'),
 })

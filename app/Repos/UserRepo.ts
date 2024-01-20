@@ -22,4 +22,14 @@ export default class UserRepo {
     const user = await User.query().where('tracking_id', trackingId).first()
     return user
   }
+
+  public static async findByEmail(email: string) {
+    const user = await User.query().where('email', email).first()
+    return user
+  }
+
+  public static async findByUid(uid: string) {
+    const user = await User.query().where('uid', uid).first()
+    return user
+  }
 }

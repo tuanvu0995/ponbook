@@ -1,0 +1,21 @@
+import Route from '@ioc:Adonis/Core/Route'
+
+Route.group(() => {
+  Route.get('/login', 'LoginController.index').as('login')
+  Route.post('/login', 'LoginController.login').as('postLogin').middleware('trackerOnly')
+  Route.post('/logout', 'LoginController.logout').as('logout').middleware('userOnly')
+  Route.get('/register', 'RegisterController.index').as('register')
+  Route.post('/register', 'RegisterController.register')
+    .as('postRegister')
+    .middleware('trackerOnly')
+  Route.get('/password/forgot', 'PasswordController.forgotPassword').as('forgotPassword')
+  Route.post('/password/forgot', 'PasswordController.sendResetLinkEmail')
+    .as('sendResetLinkEmail')
+    .middleware('trackerOnly')
+  Route.get('/password/reset/:uid', 'PasswordController.resetPassword').as('resetPassword')
+  Route.post('/password/reset', 'PasswordController.reset')
+    .as('postResetPassword')
+    .middleware('trackerOnly')
+})
+  .as('auth')
+  .namespace('App/Controllers/Http/Web/Auth')

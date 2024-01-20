@@ -1,0 +1,61 @@
+@layout('layouts/main')
+@set('title', 'Login')
+
+@section('body')
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-5-tablet is-5-desktop is-3-widescreen box px-5 py-5">
+
+        <h3 class="title is-5">Login to your account</h3>
+
+        @if(flashMessages.has('error'))
+        <div class="notification is-danger">
+          <button class="delete"></button> {{ flashMessages.get('error') }}
+        </div>
+        @endif
+
+        <form action="{{ route("auth.postLogin") }}" method="POST">
+          {{ csrfField() }}
+
+          <div class="field">
+            <label for="" class="label">Email or username</label>
+            <div class="control has-icons-left">
+              <input type="text" placeholder="e.g. bobsmith@gmail.com" class="input is-primary" required name="uid">
+              <span class="icon is-small is-left">
+                <i data-feather="user"></i>
+              </span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="" class="label">Password</label>
+            <div class="control has-icons-left">
+              <input type="password" placeholder="*******" class="input is-primary" required name="password">
+              <span class="icon is-small is-left">
+                <i data-feather="lock"></i>
+              </span>
+            </div>
+            <a href="{{ route("auth.forgotPassword") }}" class="is-size-6 has-text-primary">Forgot password?</a>
+          </div>
+          <div class="field">
+            <label for="rememberMe" class="checkbox">
+              <input id="rememberMe" type="checkbox" name="remember_me" class="is-primary">
+              Remember me
+            </label>
+          </div>
+          <div class="field has-text-centered">
+            <button class="button is-primary is-fullwidth">
+              Login
+            </button>
+          </div>
+          <div class="has-text-centered">
+            <p class="is-size-6"> Don't have an account? <a href="{{ route("auth.register") }}"
+                class="has-text-primary">Sign up</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+@end

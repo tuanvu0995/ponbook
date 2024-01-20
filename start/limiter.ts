@@ -20,3 +20,9 @@ export const { httpLimiters } = Limiter.define('global', () => {
   .define('sendContact', () => {
     return Limiter.allowRequests(3).every('15 min')
   })
+  .define('login', () => {
+    return Limiter.allowRequests(5).every('15 min')
+  })
+  .define('register', () => {
+    return Limiter.allowRequests(2).every('1 day')
+  })

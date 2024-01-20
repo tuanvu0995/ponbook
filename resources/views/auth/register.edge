@@ -1,0 +1,74 @@
+@layout('layouts/main')
+@set('title', 'Signup')
+
+@section('body')
+<section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-5-desktop is-3-widescreen box px-5 py-5">
+
+          <h3 class="title is-5">Signup to Ponbook</h3>
+
+          @if(flashMessages.has('error'))
+          <div class="notification is-danger">
+            <button class="delete"></button> {{ flashMessages.get('error') }}
+          </div>
+          @endif
+
+          <form action="{{ route("auth.postRegister") }}" method="POST">
+            {{ csrfField() }}
+            <div class="field">
+              <label for="" class="label">Email</label>
+              <div class="control has-icons-left">
+                <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input is-primary" required
+                  name="email">
+                <span class="icon is-small is-left">
+                  <i data-feather="mail"></i>
+                </span>
+              </div>
+              @if(flashMessages.has('errors/email'))
+              <p class="help is-danger">{{ flashMessages.get('errors/email') }}</p>
+              @endif
+            </div>
+            <div class="field">
+              <label for="" class="label">Username</label>
+              <div class="control has-icons-left">
+                <input type="text" placeholder="e.g. elonmask" class="input is-primary" required name="username">
+                <span class="icon is-small is-left">
+                  <i data-feather="user"></i>
+                </span>
+              </div>
+              @if(flashMessages.has('errors/username'))
+              <p class="help is-danger">{{ flashMessages.get('errors/username') }}</p>
+              @endif
+            </div>
+
+            <div class="field">
+              <label for="" class="label">Password</label>
+              <div class="control has-icons-left">
+                <input type="password" placeholder="*******" class="input is-primary" required name="password">
+                <span class="icon is-small is-left">
+                  <i data-feather="lock"></i>
+                </span>
+              </div>
+              @if(flashMessages.has('errors/password'))
+              <p class="help is-danger">{{ flashMessages.get('errors/password') }}</p>
+              @endif
+            </div>
+
+            <div class="field has-text-centered">
+              <button class="button is-primary is-fullwidth">
+                Sign up
+              </button>
+            </div>
+            <div class="has-text-centered">
+              <p class="is-size-6"> Alrady have an account? <a href="{{ route("auth.login") }}"
+                  class="has-text-primary">Sign in</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</section>
+@endsection
