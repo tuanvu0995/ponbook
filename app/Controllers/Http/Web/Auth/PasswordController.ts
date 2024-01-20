@@ -4,7 +4,6 @@ import { isEmail } from 'App/Helpers/isEmail'
 import UserRepo from 'App/Repos/UserRepo'
 import Event from '@ioc:Adonis/Core/Event'
 import BadRequestException from 'App/Exceptions/BadRequestException'
-import Route from '@ioc:Adonis/Core/Route'
 
 export default class LoginController {
   public async forgotPassword({ view }: HttpContextContract) {
@@ -15,26 +14,10 @@ export default class LoginController {
     if (!request.hasValidSignature()) {
       throw new BadRequestException('Invalid reset password link.')
     }
-
-    const signedUrl = Route.makeSignedUrl(
-      'auth.postResetPassword',
-      {
-        uid: params.uid,
-      },
-      {
-        expiresIn: '5m',
-      }
-    )
-
-    const uid = params.uid
-    return view.render('auth/reset-password', { uid, signedUrl })
+    return view.render('auth/reset-password', { uid: params.uid })
   }
 
   public async sendResetLinkEmail({ request, session, response }: HttpContextContract) {
-    if (!request.hasValidSignature()) {
-      throw new BadRequestException('Invalid reset password link.')
-    }
-
     const throttleKey = `request-reset-link${request.ip()}`
     const limiter = Limiter.use({
       requests: 5,
@@ -66,30 +49,23 @@ export default class LoginController {
     return response.redirect().back()
   }
 
-  public async reset({ request, session, response }: HttpContextContract) {
-    const uid = request.input('uid')
+  public async reset({ request, session, params, response }: HttpContextContract) {
     const password = request.input('password')
-
-    if (!uid) {
-      session.flash('error', 'Invalid reset password link.')
-      return response.redirect().back()
-    }
 
     if (!password || password.length < 8 || password.length > 32) {
       session.flash('error', 'Invalid password. It must be between 8 and 32 characters.')
       return response.redirect().back()
     }
 
-    const user = await UserRepo.findByUid(uid)
+    const user = await UserRepo.findByUid(params.uid)
     if (!user) {
-      session.flash('error', 'Invalid reset password link.')
-      return response.redirect().back()
+      throw new BadRequestException('Invalid reset password link.')
     }
 
     user.password = password
     await user.save()
 
     session.flash('success', 'Your password has been reset successfully. You can now login.')
-    return response.redirect().back()
+    return response.redirect().toRoute('auth.login')
   }
 }
