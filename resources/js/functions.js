@@ -93,3 +93,19 @@ export function actionButtons() {
       })
   }
 }
+
+export function initLogout() {
+  var logoutButtons = document.getElementsByClassName('is-logout-trigger')
+  console.log(logoutButtons)
+
+  if (logoutButtons.length === 0) return
+
+  console.log('Found ' + logoutButtons.length + ' logout buttons.')
+
+  Array.from(logoutButtons).forEach(function (el) {
+    el.addEventListener('click', function (event) {
+      event.preventDefault()
+      document.getElementById('logout-form').submit()
+    })
+  })
+}

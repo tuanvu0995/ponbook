@@ -47,7 +47,7 @@
 }
 
 // SideMenu
-.menu.sidemenu__container {
+.sidemenu__container {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -70,6 +70,16 @@
 
   &.is-active {
     right: 0px;
+  }
+
+  .button__container {
+    display: flex;
+    flex-grow: 1;
+
+    .button {
+      display: flex;
+      flex-grow: 1;
+    }
   }
 
   .menu-label {

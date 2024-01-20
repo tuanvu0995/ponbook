@@ -27,7 +27,7 @@ export default class Tracker {
         session.put(COOKIE_TRACKING_ID, tracker.trackingId!)
       }
 
-      await auth.login(tracker!)
+      tracker && (await auth.login(tracker!))
       Logger.info(`Tracker user logged in: ${tracker?.uid}`)
     }
 

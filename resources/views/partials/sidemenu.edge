@@ -1,14 +1,35 @@
-<aside class="sidemenu__container menu">
-  {{-- <div class="pb-4 px-3">
-    <div class="field">
-      <div class="control has-icons-left">
-        <input class="input" type="email" placeholder="Search" />
-        <span class="icon is-small is-left">
-          <i data-feather="search"></i>
-        </span>
-      </div>
+<aside class="sidemenu__container">
+
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child is-flex">
+        @if(auth.isLoggedIn)
+        <div class="button__container p-2">
+          <a class="button is-small" href="{{ route("web.home") }}">
+            {{'@'+auth.user.username}}
+          </a>
+        </div>
+        <div class="button__container p-2">
+          <a class="button is-small is-primary is-logout-trigger">
+            <strong>Logout</strong>
+          </a>
+        </div>
+        @else
+        <div class="button__container  p-2">
+          <a class="button is-primary is-small" href="{{ route("auth.login") }}">
+            <strong>Login</strong>
+          </a>
+        </div>
+        <div class="button__container p-2">
+          <a class="button is-light is-small" href="{{ route("auth.register") }}">
+            Register
+          </a>
+        </div>
+        @endif
+      </article>
     </div>
-  </div> --}}
+  </div>
+
   <p class="menu-label">Watch</p>
   <ul class="menu-list">
     <li>

@@ -1,4 +1,4 @@
-import { dropdowns, copyToClipboard, actionButtons } from './functions'
+import { dropdowns, copyToClipboard, actionButtons, initLogout } from './functions'
 import '../scss/app.scss'
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,4 +16,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dropdowns('.navbar-item.has-dropdown')
   actionButtons()
+  initLogout()
 })

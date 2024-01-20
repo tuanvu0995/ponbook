@@ -20,11 +20,11 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-          <a class="navbar-item" href="/popular">Popular</a>
-          <a class="navbar-item" href="/new-release">New Release</a>
-          <a class="navbar-item" href="/recent">Recent</a>
-          <a class="navbar-item" href="/actresses">Actresses</a>
-          <a class="navbar-item" href="/generes">Generes</a>
+        <a class="navbar-item" href="/popular">Popular</a>
+        <a class="navbar-item" href="/new-release">New Release</a>
+        <a class="navbar-item" href="/recent">Recent</a>
+        <a class="navbar-item" href="/actresses">Actresses</a>
+        <a class="navbar-item" href="/generes">Generes</a>
       </div>
       <div class="navbar-end">
         <a class="navbar-item is-hidden-mobile" onclick="openSearchDialog()">
@@ -32,6 +32,41 @@
             <i data-feather="search"></i>
           </span>
         </a>
+        <div class="navbar-item">
+          @if(auth.isLoggedIn)
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link is-small" href="{{ route("web.home") }}">
+              {{'@'+auth.user.username}}
+            </a>
+
+            <div class="navbar-dropdown is-right is-boxed">
+              <a class="navbar-item">
+                Profile
+              </a>
+              <a class="navbar-item">
+                Settings
+              </a>
+              <a class="navbar-item">
+                Helps
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item is-logout-trigger">
+                Lgout
+              </a>
+            </div>
+          </div>
+          @else
+          <div class="buttons">
+            <a class="button is-primary is-small" href="{{ route("auth.login") }}">
+              <strong>Login</strong>
+            </a>
+            <a class="button is-light is-small" href="{{ route("auth.register") }}">
+              Register
+            </a>
+          </div>
+          @endif
+        </div>
       </div>
     </div>
+  </div>
 </nav>
