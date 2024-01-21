@@ -13,9 +13,15 @@ export default class SearchRepo {
   }
 
   public static async getSuggestions(keyword: string) {
-    return await SearchTerm.query()
-      .where('term', 'like', `${keyword}%`)
-      .where('is_hidden', false)
+    const query = SearchTerm.query().where('is_hidden', false)
+
+    if (keyword) {
+      query.where('term', 'like', `${keyword}%`)
+    }
+    return await query
+      .orderBy('last_day_count', 'desc')
+      .orderBy('last_week_count', 'desc')
+      .orderBy('last_month_count', 'desc')
       .limit(10)
   }
 

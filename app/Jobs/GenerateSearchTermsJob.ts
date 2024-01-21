@@ -30,8 +30,7 @@ export default class implements JobHandlerContract {
       |> filter(fn: (r) => r["_measurement"] == "search:terms")
       |> filter(fn: (r) => r["location"] == "${influx.location}")
       |> group(columns: ["term"])
-      |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)
-      |> yield(name: "mean")
+      |> count(name: "_value")
     `
 
       const searchTerms = await queryApi.collectRows(searchTermsQuery)
@@ -40,7 +39,10 @@ export default class implements JobHandlerContract {
         break
       }
 
-      const searchTermsArray = searchTerms.map((term: any) => term.term)
+      const searchTermsArray = searchTerms.map((term: any) => ({
+        term: term.term,
+        count: term._value || 0,
+      }))
 
       Logger.info(`Upserting ${searchTermsArray.length} search terms`)
       await this.upsertSearchTerms(searchTermsArray)
@@ -55,15 +57,26 @@ export default class implements JobHandlerContract {
     Logger.info('Search terms job completed')
   }
 
-  private async upsertSearchTerms(searchTerms: string[]) {
+  private async upsertSearchTerms(searchTerms: { term: string; count: number }[]) {
     for (const term of searchTerms) {
       try {
-        const exists = await SearchTerm.query().where('term', term).first()
+        const exists = await SearchTerm.query().where('term', term.term).first()
         if (!exists) {
           await SearchTerm.create({
-            term,
-            count: 1,
+            term: term.term,
+            count: term.count,
+            lastDayCount: term.count,
+            lastWeekCount: term.count,
+            lastMonthCount: term.count,
+            lastYearCount: term.count,
           })
+        } else {
+          exists.count += term.count
+          exists.lastDayCount = term.count
+          exists.lastWeekCount += term.count
+          exists.lastMonthCount += term.count
+          exists.lastYearCount += term.count
+          await exists.save()
         }
       } catch (error) {
         Logger.error(error)

@@ -36,6 +36,8 @@ export function initSearchDialog() {
     var dialog = document.getElementById('search-dialog')
     if (!dialog) return
 
+    fetchSearchResults('')
+
     dialog.classList.add('is-active')
 
     document.addEventListener('keydown', function (event) {

@@ -6,12 +6,7 @@ import SearchRepo from 'App/Repos/SearchRepo'
 
 export default class SearchController {
   public async suggestions({ request, response }: HttpContextContract) {
-    const keyword = request.input('keyword')
-    if (!keyword || keyword.length < 2) {
-      return {
-        suggestions: [],
-      }
-    }
+    const keyword = request.input('keyword') || ''
 
     const suggestions = await SearchRepo.getSuggestions(keyword)
 
