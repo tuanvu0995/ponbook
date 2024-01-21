@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=1">
 
   <title>{{ title || "Ponbook" }} - Ponbook.net</title>
   <meta name="title" content="{{ title || " Ponbook" }} - Ponbook.net">
@@ -17,8 +17,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}" defer>
+  <link defer href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <link defer rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
+
   @!section('styles')
 
   <script defer src="{{ asset('assets/icon/feather.min.js') }}"></script>
@@ -59,10 +60,8 @@
   @include('partials/footer')
   @include('partials/search-dialog')
 
-  <script async src="{{ asset('assets/lazy-image.js') }}"></script>
   <script defer src="{{ asset('assets/vendor.js') }}"></script>
   <script defer src="{{ asset('assets/app.js') }}"></script>
-  <script defer src="{{ asset('assets/search-dialog.js') }}"></script>
 
   <script type="text/javascript">
     @if (auth.isLoggedIn)

@@ -1,0 +1,22 @@
+{
+  "entrypoints": {
+    "app": {
+      "css": [
+        "http://localhost:8080/assets/app.css"
+      ],
+      "js": [
+        "http://localhost:8080/assets/app.js"
+      ]
+    },
+    "vendor": {
+      "js": [
+        "http://localhost:8080/assets/vendor.js"
+      ]
+    },
+    "image-viewer": {
+      "js": [
+        "http://localhost:8080/assets/image-viewer.js"
+      ]
+    }
+  }
+}

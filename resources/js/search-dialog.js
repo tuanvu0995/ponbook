@@ -1,6 +1,6 @@
 import { customFetch } from './utils/customFetch'
 import { debounce } from './utils/debounce'
-;(function () {
+export function initSearchDialog() {
   var searchDialogMessage = document.getElementById('search-dialog-message')
   var searchDialogBody = document.getElementById('search-dialog-body')
 
@@ -67,4 +67,4 @@ import { debounce } from './utils/debounce'
   }
   window.openSearchDialog = openSearchDialog
   window.closeSearchDialog = closeSearchDialog
-})()
+}

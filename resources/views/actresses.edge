@@ -11,7 +11,7 @@
             <div class="box p-2">
                 <a href="{{ route("web.list.castBySlug", { slug: star.slug }) }}" title="Collection of {{ star.name }}">
                   <figure class="image is-1by1">
-                    @!component('components/image', { file: star.photo, alt: star.name })
+                    @!component('components/lazy-image', { file: star.photo, alt: star.name })
                   </figure>
                 </a>
                 <div>

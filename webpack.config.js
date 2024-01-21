@@ -47,9 +47,7 @@ Encore.setPublicPath('/assets')
 */
 Encore.addEntry('app', './resources/js/app.js')
 Encore.addEntry('vendor', './resources/js/vendor.js')
-Encore.addEntry('lazy-image', './resources/js/lazy-image.js')
 Encore.addEntry('image-viewer', './resources/js/image-viewer.js')
-Encore.addEntry('search-dialog', './resources/js/search-dialog.js')
 
 /*
 |--------------------------------------------------------------------------

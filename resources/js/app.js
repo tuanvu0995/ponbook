@@ -1,8 +1,11 @@
-import { dropdowns, copyToClipboard, actionButtons, initLogout } from './functions'
+import { dropdowns, copyToClipboard, actionButtons, initLogout, lazyImages } from './functions'
+import {initSearchDialog} from './search-dialog'
 import '../scss/app.scss'
 
-document.addEventListener('DOMContentLoaded', function () {
-  window.copyToClipboard = copyToClipboard
+window.copyToClipboard = copyToClipboard
+
+;(function () {
+  lazyImages()
   /**
    * Navbar burger
    */
@@ -17,4 +20,5 @@ document.addEventListener('DOMContentLoaded', function () {
   dropdowns('.navbar-item.has-dropdown')
   actionButtons()
   initLogout()
-})
+  initSearchDialog()
+})()

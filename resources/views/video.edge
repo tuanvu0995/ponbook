@@ -7,11 +7,12 @@
 
     <nav class="breadcrumb has-succeeds-separator py-4 is-flex-grow-1 mb-0" aria-label="breadcrumbs">
       <ul>
-          <li><a href="{{ route("web.home") }}">Home</a></li>
-          @if(video.casts.length === 1)
-          <li><a href="{{ route("web.list.castBySlug", { slug: video.casts[0].slug }) }}">{{ video.casts[0].name }}</a></li>
-          @end
-          <li class="is-active"><a href="{{ route("web.video.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
+        <li><a href="{{ route("web.home") }}">Home</a></li>
+        @if(video.casts.length === 1)
+        <li><a href="{{ route("web.list.castBySlug", { slug: video.casts[0].slug }) }}">{{ video.casts[0].name }}</a>
+        </li>
+        @end
+        <li class="is-active"><a href="{{ route("web.video.show", { uid: video.uid }) }}" aria-current="page">{{ video.code }}</a></li>
       </ul>
     </nav>
 
@@ -21,16 +22,15 @@
       <div class="columns">
         <div class="column is-7">
           <div class="video__cover">
-            @!component('components/image', { file: video.image, alt: video.title })
+            @!component('components/lazy-image', { file: video.image, alt: video.title, fetchpriority: "high" })
           </div>
           <div class="pt-4">
-            <h3 class="title is-5 mb-2">Description</h3>
+            <h2 class="title is-5 mb-2">Description</h2>
             <p class="mb-5">{{ video.description || video.title }}</p>
           </div>
         </div>
         <div class="column is-5">
           @include('partials/video/infoTable')
-
           <div class="is-flex is-justify-content-center pt-2">
             <ins id="1045709" data-width="300" data-height="112"></ins>
           </div>
@@ -39,7 +39,7 @@
     </div>
 
     @if(video.images?.length)
-      @include('partials/video/sampleImages')
+    @include('partials/video/sampleImages')
     @endif
 
   </div>
@@ -51,8 +51,12 @@
   hideLastChild: true
 })
 
-@endsection
+@end
+
+@section("styles")
+<link rel="preload" fetchpriority="high" as="image" href="{{ imageUrl(file) }}" type="image/webp">
+@end
 
 @section('scripts')
-<script src="{{ asset('assets/image-viewer.js') }}"></script>
-@endsection
+<script src="{{ asset('assets/image-viewer.js') }}" defer></script>
+@end

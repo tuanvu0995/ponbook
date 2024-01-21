@@ -5,7 +5,7 @@
     >
     <div class="listing__image">
         <div class="inner-image">
-            @!component('components/image', { file: video.cover, alt: video.title })
+            @!component('components/lazy-image', { file: video.cover, alt: video.title })
         </div>
         {{--  <div class="card-action">
             <a class="button is-light is-danger is-small is-action is-ajax is-favorite-button" data-video-uid="{{ video.uid }}" data-url="{{ route('api.videos.favorite', { uid: video.uid }) }}" data-method="post" data-toggle-icon-on="fa fa-heart" data-toggle-icon-off="fa fa-heart-o">
