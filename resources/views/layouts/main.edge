@@ -27,14 +27,16 @@
   <script defer src="https://www.googletagmanager.com/gtag/js?id=G-X8M78633QL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-X8M78633QL');
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-X8M78633QL');
   </script>
   @endif
 
   <style>
-    body { font-family: 'Quicksand', sans-serif; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+    }
   </style>
 
   @!section('head')
@@ -63,13 +65,13 @@
   <script defer src="{{ asset('assets/search-dialog.js') }}"></script>
 
   <script type="text/javascript">
-    @if(auth.isLoggedIn)
+    @if (auth.isLoggedIn)
       const IS_LOGGED_IN = true;
     @else
-      const IS_LOGGED_IN = false;
+    const IS_LOGGED_IN = false;
     @endif
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
       feather.replace();
     });
   </script>
@@ -78,11 +80,12 @@
 
   @if(env('NODE_ENV') === 'production')
   <script type="text/javascript">
-  var juicy_tags = ['a', 'img'];
+    var juicy_tags = ['a', 'img'];
   </script>
-  <script type="text/javascript" src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net" defer></script>
-  {{-- <script type="text/javascript" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js" defer></script> --}}
-  {{-- <script type="text/javascript" data-cfasync="false" async>(adsbyjuicy = window.adsbyjuicy || []).push(...[{'adzone':1028882}, {'adzone':1037213}, {'adzone':1045709}]);</script> --}}
+  <script type="text/javascript"
+    src="https://js.juicyads.com/jp.php?c=34d4z213p254u4q2w2c4z2a474&u=https%3A%2F%2Fponbook.net" defer></script>
+  <script type="text/javascript" defer src="https://poweredby.jads.co/js/jads.js"></script>
+  <script type="text/javascript">(adsbyjuicy = window.adsbyjuicy || []).push(...[{ 'adzone': 1028882 }, { 'adzone': 1037213 }, { 'adzone': 1045709 }]);</script>
   @endif
 
   <div id="modal-root"></div>
