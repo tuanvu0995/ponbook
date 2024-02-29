@@ -26,7 +26,6 @@ export default class implements JobHandlerContract {
       const searchTermsQuery = `
       from(bucket: "${influx.bucket}")
       |> range(start: ${last7Days}, stop: ${yesterday})
-      |> limit(n:100, offset: ${lastOffset})
       |> filter(fn: (r) => r["_measurement"] == "search:terms")
       |> filter(fn: (r) => r["location"] == "${influx.location}")
       |> group(columns: ["term"])
