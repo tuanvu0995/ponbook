@@ -30,7 +30,7 @@ export default class implements JobHandlerContract {
       |> filter(fn: (r) => r["_measurement"] == "search:terms")
       |> filter(fn: (r) => r["location"] == "${influx.location}")
       |> group(columns: ["term"])
-      |> count(name: "_value")
+      |> count(column: "_value")
     `
 
       const searchTerms = await queryApi.collectRows(searchTermsQuery)
