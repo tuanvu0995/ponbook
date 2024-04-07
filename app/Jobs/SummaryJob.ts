@@ -42,8 +42,6 @@ export default class implements JobHandlerContract {
         break
       }
 
-      console.log(data[0])
-
       await this.updateVideosViewCount(data)
 
       lastOffset += data.length
