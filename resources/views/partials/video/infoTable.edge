@@ -1,5 +1,11 @@
 <table class="table">
   <tr>
+    <th>Ads</th>
+    <td class="pl-5">
+      <a href="https://ponsnap.com" target="_blank"><strong>Ponsnap.com</strong> 18+ photo social</a> .
+    </td>
+  </tr>
+  <tr>
     <th>Code</th>
     <td class="pl-5">
       <div class="control">
@@ -30,7 +36,7 @@
         @if(cast.slug)
         <div class="control">
           <div class="tags has-addons">
-            <a class="tag is-link" href="{{ route("web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
+            <a class="tag is-link" href="{{ route(" web.list.castBySlug", { slug: cast.slug }) }}">{{ cast.name }}</a>
             <a href="#" class="tag is-action {{ inlinePrint(cast.users?.length > 0, " is-active")}}"
               data-action="{{ route('api.casts.favorite', { uid: cast.uid }) }}" data-toggle="is-active"
               aria-label="Add or remove {{cast.name}} to/from your favorites">
@@ -52,7 +58,8 @@
     <th>Director</th>
     <td class="pl-5">
       @if(video.director)
-      <a class="tag is-light" href="{{ route("web.list.director", { uid: video.director.uid }) }}">{{ video.director.name }}</a>
+      <a class="tag is-light" href="{{ route(" web.list.director", { uid: video.director.uid }) }}">{{
+        video.director.name }}</a>
       @else
       ---
       @end
@@ -62,7 +69,7 @@
     <th>Maker</th>
     <td class="pl-5">
       @if(video.maker)
-      <a class="tag is-light" href="{{ route("web.list.maker", { uid: video.maker.uid }) }}">{{
+      <a class="tag is-light" href="{{ route(" web.list.maker", { uid: video.maker.uid }) }}">{{
         video.maker.name }}</a>
       @else
       ---
