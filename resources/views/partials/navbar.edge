@@ -1,7 +1,7 @@
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{ route(" web.home") }}" title="Home page">
+      <a class="navbar-item" href="{{ route("web.home") }}" title="Home page">
         <img src="{{ asset('assets/images/logo.svg') }}" width="100" height="28" alt="Ponbook Logo Full">
       </a>
 
@@ -38,7 +38,7 @@
         <div class="navbar-item">
           @if(auth.isLoggedIn && !auth.user.isTrackingUser)
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link is-small" href="{{ route(" web.home") }}">
+            <a class="navbar-link is-small" href="{{ route("web.home") }}">
               {{'@'+auth.user.username}}
             </a>
 
@@ -60,10 +60,10 @@
           </div>
           @else
           <div class="buttons">
-            <a class="button is-primary is-small" href="{{ route(" auth.login") }}">
+            <a class="button is-primary is-small" href="{{ route("auth.login") }}">
               <strong>Login</strong>
             </a>
-            <a class="button is-light is-small" href="{{ route(" auth.register") }}">
+            <a class="button is-light is-small" href="{{ route("auth.register") }}">
               Register
             </a>
           </div>
