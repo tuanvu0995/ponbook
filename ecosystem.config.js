@@ -7,12 +7,12 @@ module.exports = {
       exec_mode: 'cluster',
       autorestart: true,
     },
-    {
-      name: 'queue',
-      script: 'npm',
-      instances: '1',
-      autorestart: true,
-      args: 'run start:queue',
-    },
+    // {
+    //   name: 'queue',
+    //   script: 'npm',
+    //   instances: '1',
+    //   autorestart: true,
+    //   args: 'run start:queue',
+    // },
   ],
 }
