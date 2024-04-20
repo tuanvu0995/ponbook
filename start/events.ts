@@ -25,8 +25,8 @@ Event.on('contact:created', 'Contact.onContactCreated')
 
 Event.on('category:calculate', 'Category.calculate')
 
-Event.on('tracker:searched', 'Tracker.onSearched')
-Event.on('tracker:videoViewed', 'Tracker.onVideoViewed')
+// Event.on('tracker:searched', 'Tracker.onSearched')
+// Event.on('tracker:videoViewed', 'Tracker.onVideoViewed')
 
 Event.on('task:run', 'Task.run')
 

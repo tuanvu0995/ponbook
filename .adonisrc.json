@@ -30,11 +30,8 @@
     "@adonisjs/i18n",
     "./providers/ViewProvider",
     "./providers/MeiliSearch/Provider",
-    "./providers/Influx/Provider",
     "./providers/DatabaseProvider",
-    "./providers/Queue/Provider",
-    "adonis-turnstile",
-    "@adonisjs/redis"
+    "adonis-turnstile"
   ],
   "metaFiles": [
     {
